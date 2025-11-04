@@ -1,12 +1,139 @@
-<h1>Responsive Logo Image Creation</h1>
-<h2>Overview</h2>
+<h1>Responsive Logo Image Creation</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#overview">Overview</a>
+</li>
+<li>
+<a href="#automated-image-generation">Automated Image Generation</a>
+</li>
+<li>
+<a href="#quick-start-workflow">Quick Start Workflow</a>
+</li>
+<li>
+<a href="#image-files-required">Image Files Required</a>
+</li>
+<li>
+<a href="#file-naming-convention">File Naming Convention</a>
+</li>
+<li>
+<a href="#html-implementation">HTML Implementation</a>
+</li>
+<li>
+<a href="#benefits">Benefits</a>
+</li>
+<li>
+<a href="#file-size-comparison">File Size Comparison</a>
+</li>
+<li>
+<a href="#integration-with-build-process">Integration with Build Process</a>
+</li>
+<li>
+<a href="#testing">Testing</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#future-improvements">Future Improvements</a>
+<ul>
+<li>
+<a href="#using-the-python-script-recommended">Using the Python Script (Recommended)</a>
+</li>
+<li>
+<a href="#manual-generation-alternative">Manual Generation Alternative</a>
+</li>
+<li>
+<a href="#new-standard">New Standard</a>
+</li>
+<li>
+<a href="#how-it-works">How It Works</a>
+</li>
+<li>
+<a href="#mobile-savings-vs-largest">Mobile Savings vs. Largest</a>
+</li>
+<li>
+<a href="#automated-workflow-recommended">Automated Workflow (Recommended)</a>
+</li>
+<li>
+<a href="#manual-integration">Manual Integration</a>
+</li>
+<li>
+<a href="#script-issues">Script Issues</a>
+</li>
+<li>
+<a href="#image-quality-issues">Image Quality Issues</a>
+</li>
+<li>
+<a href="#browser-loading-issues">Browser Loading Issues</a>
+</li>
+<li>
+<a href="#potential-future-additions">Potential Future Additions</a>
+<ul>
+<li>
+<a href="#location">Location</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#generated-files">Generated Files</a>
+</li>
+<li>
+<a href="#requirements">Requirements</a>
+</li>
+<li>
+<a href="#result">Result</a>
+</li>
+<li>
+<a href="#python-script-fails-with-modulenotfounderror-no-module-named-inquirerpy">Python script fails with "ModuleNotFoundError: No module named 'InquirerPy'"</a>
+</li>
+<li>
+<a href="#script-fails-with-imagemagick-not-installed">Script fails with "ImageMagick not installed"</a>
+</li>
+<li>
+<a href="#permission-denied-or-script-wont-execute">"Permission denied" or script won't execute</a>
+</li>
+<li>
+<a href="#images-look-blurry">Images look blurry</a>
+</li>
+<li>
+<a href="#file-sizes-are-too-large">File sizes are too large</a>
+</li>
+<li>
+<a href="#wrong-image-loads-on-mobile">Wrong image loads on mobile</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<h2 id="overview">Overview</h2>
 <p>This guide explains how to create responsive logo images with the comprehensive 5-tier sizing system and automated generation tools.</p>
-<h2>Automated Image Generation</h2>
-<h3>Using the Python Script (Recommended)</h3>
+<h2 id="automated-image-generation">Automated Image Generation</h2>
+<h3 id="using-the-python-script-recommended">Using the Python Script (Recommended)</h3>
 <p>The GAZ Tank project includes an automated script for generating all responsive logo variants:</p>
-<h4>Location</h4>
+<h4 id="location">Location</h4>
 <p><code>dev/create_responsive_images.py</code></p>
-<h4>Usage</h4>
+<h4 id="usage">Usage</h4>
 <pre><code class="language-bash"># Navigate to your images directory
 cd src/images
 
@@ -16,7 +143,7 @@ python ../../dev/create_responsive_images.py
 # Or specify source image directly
 python ../../dev/create_responsive_images.py your_source_logo.png
 </code></pre>
-<h4>Features</h4>
+<h4 id="features">Features</h4>
 <ul>
 <li>🔍 <strong>Interactive file browser</strong> - Navigate directories and select source images</li>
 <li>📏 <strong>Automatic sizing</strong> - Generates all 5 logo sizes (512, 256, 128, 75, 50) + favicons (32, 16)</li>
@@ -25,7 +152,7 @@ python ../../dev/create_responsive_images.py your_source_logo.png
 <li>📝 <strong>Smart naming</strong> - Uses configurable prefix (default: "gaztank")</li>
 <li>📊 <strong>File info display</strong> - Shows file sizes, dates, and preview of generated filenames</li>
 </ul>
-<h4>Generated Files</h4>
+<h4 id="generated-files">Generated Files</h4>
 <ul>
 <li><code>gaztank_logo_512x512.webp</code></li>
 <li><code>gaztank_logo_256x256.webp</code></li>
@@ -35,12 +162,12 @@ python ../../dev/create_responsive_images.py your_source_logo.png
 <li><code>gaztank_favicon_32x32.webp</code></li>
 <li><code>gaztank_favicon_16x16.webp</code></li>
 </ul>
-<h4>Requirements</h4>
+<h4 id="requirements">Requirements</h4>
 <ul>
 <li>Python 3.11+ with <code>InquirerPy</code> package (<code>pip install InquirerPy</code>)</li>
 <li>ImageMagick installed and available in PATH</li>
 </ul>
-<h2>Quick Start Workflow</h2>
+<h2 id="quick-start-workflow">Quick Start Workflow</h2>
 <ol>
 <li><strong>Prepare your source logo</strong> - High-quality PNG/JPG file (recommended: 1024×1024 or larger)</li>
 <li><strong>Run the generation script</strong>:<pre><code class="language-bash">cd src/images
@@ -52,9 +179,9 @@ python ../../dev/create_responsive_images.py your_logo.png
 <li><strong>Verify output</strong> - Check that all 7 files were generated successfully</li>
 <li><strong>Test responsiveness</strong> - Use browser dev tools to verify correct images load at different viewport sizes</li>
 </ol>
-<h4>Result</h4>
+<h4 id="result">Result</h4>
 <p>Complete responsive logo system ready for deployment! 🚀</p>
-<h3>Manual Generation Alternative</h3>
+<h3 id="manual-generation-alternative">Manual Generation Alternative</h3>
 <p>If you prefer manual creation or need custom settings:</p>
 <pre><code class="language-bash"># Logo variants
 magick source_logo.png -resize 512x512 -quality 85 gaztank_logo_512x512.webp
@@ -67,7 +194,7 @@ magick source_logo.png -resize 50x50 -quality 85 gaztank_logo_50x50.webp
 magick source_logo.png -resize 32x32 -quality 85 gaztank_favicon_32x32.webp
 magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
 </code></pre>
-<h2>Image Files Required</h2>
+<h2 id="image-files-required">Image Files Required</h2>
 <ol>
 <li><p><strong>gaztank_logo_512x512.webp</strong> (512×512 pixels)</p>
 <ul>
@@ -105,8 +232,8 @@ magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
 </ul>
 </li>
 </ol>
-<h2>File Naming Convention</h2>
-<h3>New Standard</h3>
+<h2 id="file-naming-convention">File Naming Convention</h2>
+<h3 id="new-standard">New Standard</h3>
 <p><code>{name}_{descriptor}_{width}x{height}.{ext}</code></p>
 <p>Examples:</p>
 <ul>
@@ -115,7 +242,7 @@ magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
 <li><code>gaztank_favicon-32x32.webp</code> ✅</li>
 <li><code>gaztank_favicon-16x16.webp</code> ✅</li>
 </ul>
-<h2>HTML Implementation</h2>
+<h2 id="html-implementation">HTML Implementation</h2>
 <p>The logo in <code>src/index.html</code> uses comprehensive responsive srcset:</p>
 <pre><code class="language-html">&lt;img src="images/gaztank_logo_256x256.webp" 
      srcset="images/gaztank_logo_50x50.webp 50w,
@@ -133,7 +260,7 @@ magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
      width="256"
      height="256"&gt;
 </code></pre>
-<h3>How It Works</h3>
+<h3 id="how-it-works">How It Works</h3>
 <ul>
 <li>Ultra-mobile (≤480px): Browser loads 50×50 version (minimal bandwidth)</li>
 <li>Mobile (481px-768px): Browser loads 75×75 version (compact, readable)</li>
@@ -142,7 +269,7 @@ magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
 <li>High-res/Large (&gt;1440px): Browser loads 512×512 version (maximum quality)</li>
 <li><code>width</code> and <code>height</code> attributes prevent layout shift (CLS)</li>
 </ul>
-<h2>Benefits</h2>
+<h2 id="benefits">Benefits</h2>
 <p>✅ <strong>Optimized for all devices</strong> - 5 sizes cover ultra-mobile to high-res displays<br/>
 ✅ <strong>Faster mobile loading</strong> - 50×50 image is ~95% smaller than 512×512<br/>
 ✅ <strong>Better performance</strong> - Appropriate bandwidth usage for each device class<br/>
@@ -151,7 +278,7 @@ magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
 ✅ <strong>No layout shift</strong> - Width/height attributes prevent CLS<br/>
 ✅ <strong>Future-proof</strong> - 512×512 supports emerging high-DPI displays<br/>
 ✅ <strong>Clear naming</strong> - Dimensions in filename prevent confusion</p>
-<h2>File Size Comparison</h2>
+<h2 id="file-size-comparison">File Size Comparison</h2>
 <p>Typical WebP compression results:</p>
 <ul>
 <li>512×512 image: ~20-30 KB (high-resolution displays)</li>
@@ -160,28 +287,28 @@ magick source_logo.png -resize 16x16 -quality 85 gaztank_favicon_16x16.webp
 <li>75×75 image: ~2-3 KB (mobile)</li>
 <li>50×50 image: ~1-2 KB (ultra-mobile)</li>
 </ul>
-<h3>Mobile Savings vs. Largest</h3>
+<h3 id="mobile-savings-vs-largest">Mobile Savings vs. Largest</h3>
 <ul>
 <li>Ultra-mobile: ~28 KB saved (vs 512×512)</li>
 <li>Mobile: ~25 KB saved (vs 512×512)</li>
 <li>Tablet: ~22 KB saved (vs 512×512)</li>
 </ul>
-<h2>Integration with Build Process</h2>
-<h3>Automated Workflow (Recommended)</h3>
+<h2 id="integration-with-build-process">Integration with Build Process</h2>
+<h3 id="automated-workflow-recommended">Automated Workflow (Recommended)</h3>
 <ol>
 <li><strong>Generate images</strong>: Use <code>dev/create_responsive_images.py</code> to create all variants</li>
 <li><strong>Configure</strong>: Images are automatically configured in <code>config/site.ini</code> (logo_512, logo_256, etc.)</li>
 <li><strong>Deploy</strong>: The <code>scripts\package.cmd</code> script includes all image files in deployment</li>
 <li><strong>HTML</strong>: Responsive srcset is already configured in <code>src/index.html</code></li>
 </ol>
-<h3>Manual Integration</h3>
+<h3 id="manual-integration">Manual Integration</h3>
 <p>The <code>scripts\package.cmd</code> script will automatically include all responsive image files in the deployment package:</p>
 <ul>
 <li>All logo variants are copied from <code>src/images/</code> to <code>publish/staging/images/</code></li>
 <li>Favicon variants are included for browser compatibility</li>
 <li>No additional configuration needed beyond running the image generation script</li>
 </ul>
-<h2>Testing</h2>
+<h2 id="testing">Testing</h2>
 <p>After creating the images:</p>
 <ol>
 <li><p><strong>Visual check:</strong></p>
@@ -212,54 +339,54 @@ start src\images\gaztank_logo_50x50.webp
 </ul>
 </li>
 </ol>
-<h2>Troubleshooting</h2>
-<h3>Script Issues</h3>
-<h4>Python script fails with "ModuleNotFoundError: No module named 'InquirerPy'"</h4>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="script-issues">Script Issues</h3>
+<h4 id="python-script-fails-with-modulenotfounderror-no-module-named-inquirerpy">Python script fails with "ModuleNotFoundError: No module named 'InquirerPy'"</h4>
 <ul>
 <li>Install required package: <code>pip install InquirerPy</code></li>
 <li>Or use pip3 if you have multiple Python versions: <code>pip3 install InquirerPy</code></li>
 </ul>
-<h4>Script fails with "ImageMagick not installed"</h4>
+<h4 id="script-fails-with-imagemagick-not-installed">Script fails with "ImageMagick not installed"</h4>
 <ul>
 <li>Install ImageMagick from: <a href="https://imagemagick.org/script/download.php">https://imagemagick.org/script/download.php</a></li>
 <li>Restart PowerShell/Terminal after installation</li>
 <li>Verify installation: <code>magick -version</code></li>
 </ul>
-<h4>"Permission denied" or script won't execute</h4>
+<h4 id="permission-denied-or-script-wont-execute">"Permission denied" or script won't execute</h4>
 <ul>
 <li>Ensure you have write permissions in the target directory</li>
 <li>Run from a location where you can create files</li>
 <li>Check that ImageMagick is properly installed and in PATH</li>
 </ul>
-<h3>Image Quality Issues</h3>
-<h4>Images look blurry</h4>
+<h3 id="image-quality-issues">Image Quality Issues</h3>
+<h4 id="images-look-blurry">Images look blurry</h4>
 <ul>
 <li>Increase quality setting (try 90-95 for highest quality)</li>
 <li>Ensure source image is high resolution (1024×1024+ recommended)</li>
 <li>ImageMagick uses high-quality resampling by default</li>
 </ul>
-<h4>File sizes are too large</h4>
+<h4 id="file-sizes-are-too-large">File sizes are too large</h4>
 <ul>
 <li>Reduce quality setting (try 75-80 for smaller files)</li>
 <li>Consider if source image has unnecessary details/complexity</li>
 <li>WebP format is already highly optimized</li>
 </ul>
-<h3>Browser Loading Issues</h3>
-<h4>Wrong image loads on mobile</h4>
+<h3 id="browser-loading-issues">Browser Loading Issues</h3>
+<h4 id="wrong-image-loads-on-mobile">Wrong image loads on mobile</h4>
 <ul>
 <li>Check browser width in DevTools</li>
 <li>Verify srcset syntax in HTML</li>
 <li>Clear browser cache and test again</li>
 <li>Clear browser cache and test again</li>
 </ul>
-<h2>Future Improvements</h2>
+<h2 id="future-improvements">Future Improvements</h2>
 <p>The current implementation provides comprehensive coverage for all common use cases:</p>
 <p>✅ <strong>Ultra-mobile devices</strong> (≤480px): 50×50 version<br/>
 ✅ <strong>Standard mobile</strong> (481px-768px): 75×75 version<br/>
 ✅ <strong>Tablets</strong> (769px-1024px): 128×128 version<br/>
 ✅ <strong>Desktop</strong> (1025px-1440px): 256×256 version<br/>
 ✅ <strong>High-resolution displays</strong> (&gt;1440px): 512×512 version</p>
-<h3>Potential Future Additions</h3>
+<h3 id="potential-future-additions">Potential Future Additions</h3>
 <ul>
 <li><strong>SVG fallback</strong>: For ultra-sharp vector logo at any size</li>
 <li><strong>AVIF format</strong>: Next-generation image format (when browser support improves)</li>
@@ -267,6 +394,6 @@ start src\images\gaztank_logo_50x50.webp
 </ul>
 <p>Current implementation covers 99% of real-world usage scenarios efficiently.</p>
 <div>
-<br><br>
+<br/><br/>
 <p><em>This content was automatically generated from <code>RESPONSIVE_IMAGES.md</code></em></p>
 </div>

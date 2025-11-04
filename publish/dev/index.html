@@ -12,20 +12,20 @@
 <meta content="superguru, gazorper" name="author"/>
 <meta content="index, follow" name="robots"/>
 <!-- Canonical URL -->
-<link href="https://gaztank.com/" rel="canonical"/>
+<link href="https://gaztank.org/" rel="canonical"/>
 <!-- Open Graph / Facebook -->
 <meta content="website" property="og:type"/>
-<meta content="https://gaztank.com/" property="og:url"/>
+<meta content="https://gaztank.org/" property="og:url"/>
 <meta content="GAZ Tank - GAZ Tank Website System" property="og:title"/>
 <meta content="Welcome to the canonical implementation of the GAZ Tank Website System. Explore our content and resources." property="og:description"/>
-<meta content="https://gaztank.com/images/site_logo_256x256.webp" property="og:image"/>
+<meta content="https://gaztank.org/images/site_logo_256x256.webp" property="og:image"/>
 <meta content="GAZ Tank" property="og:site_name"/>
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="https://gaztank.com/" name="twitter:url"/>
+<meta content="https://gaztank.org/" name="twitter:url"/>
 <meta content="GAZ Tank - GAZ Tank Website System" property="twitter:title"/>
 <meta content="Welcome to the canonical implementation of the GAZ Tank Website System. Explore our content and resources." name="twitter:description"/>
-<meta content="https://gaztank.com/images/site_logo_256x256.webp" name="twitter:image"/>
+<meta content="https://gaztank.org/images/site_logo_256x256.webp" name="twitter:image"/>
 <!-- Favicons -->
 <link href="images/gaztank_favicon_32x32.webp" rel="icon" sizes="32x32" type="image/webp"/>
 <link href="images/gaztank_favicon_16x16.webp" rel="icon" sizes="16x16" type="image/webp"/>
@@ -42,7 +42,7 @@
     "@type": "WebSite",
     "name": "GAZ Tank",
     "alternateName": "GAZ Tank",
-    "url": "https://gaztank.com/",
+    "url": "https://gaztank.org/",
     "description": "Welcome to the canonical implementation of the GAZ Tank Website System. Explore our content and resources.",
     "author": [
         {
@@ -59,7 +59,7 @@
         "@type": "SearchAction",
         "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://gaztank.com/#{search_term_string}"
+            "urlTemplate": "https://gaztank.org/#{search_term_string}"
         },
         "query-input": "required name=search_term_string"
     }
@@ -228,13 +228,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ini.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-<!-- Mermaid.js library -->
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+<!-- Mermaid.js library - using UMD build for better compatibility -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
     // Initialize mermaid with dark theme
-    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-    // Expose to global scope for dynamic content loading
-    window.mermaid = mermaid;
+    if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ 
+            startOnLoad: false,  // Don't auto-start, app.js will trigger manually
+            theme: 'dark' 
+        });
+        window.mermaidReady = true;
+    }
 </script>
 <script src="js/app.js"></script>
 </body>

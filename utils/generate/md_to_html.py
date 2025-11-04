@@ -36,7 +36,8 @@ def plugin_mermaid(md):
         """Render code block with special handling for mermaid"""
         if info and info.strip().lower() == 'mermaid':
             # Return mermaid code wrapped in proper HTML structure
-            return f'<pre class="mermaid">\n{code}\n</pre>\n'
+            # Use a special marker to prevent BeautifulSoup from processing it
+            return f'<!--MERMAID_START--><pre class="mermaid">\n{code}\n</pre><!--MERMAID_END-->\n'
         # For other code blocks, use the original renderer
         return original_code_block(code, info)
     
@@ -75,6 +76,20 @@ class MarkdownConverter:
         Returns:
             str: HTML with fixed image paths
         """
+        # Extract mermaid blocks before BeautifulSoup processing
+        import re
+        mermaid_blocks = []
+        def save_mermaid(match):
+            mermaid_blocks.append(match.group(0))
+            return f'<!--MERMAID_PLACEHOLDER_{len(mermaid_blocks)-1}-->'
+        
+        html_content = re.sub(
+            r'<!--MERMAID_START-->.*?<!--MERMAID_END-->',
+            save_mermaid,
+            html_content,
+            flags=re.DOTALL
+        )
+        
         soup = BeautifulSoup(html_content, 'html.parser')
         fixed_count = 0
         
@@ -93,7 +108,16 @@ class MarkdownConverter:
         if fixed_count > 0:
             print(f"    ✓ Fixed {fixed_count} image path(s)")
         
-        return str(soup)
+        result = str(soup)
+        
+        # Restore mermaid blocks
+        for i, block in enumerate(mermaid_blocks):
+            result = result.replace(f'<!--MERMAID_PLACEHOLDER_{i}-->', block)
+        
+        # Remove markers
+        result = result.replace('<!--MERMAID_START-->', '').replace('<!--MERMAID_END-->', '')
+        
+        return result
     
     def convert(self, input_path, output_path):
         """

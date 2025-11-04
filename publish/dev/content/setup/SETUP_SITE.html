@@ -1,8 +1,339 @@
-<h1>🚀 GAZ Website System: Generic Content Site - Quick Start Guide</h1>
-<h2>Setup your own!</h2>
+<h1>🚀 GAZ Website System: Generic Content Site - Quick Start Guide</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#setup-your-own">Setup your own!</a>
+</li>
+<li>
+<a href="#table-of-contents">📋 Table of Contents</a>
+</li>
+<li>
+<a href="#features">✨ Features</a>
+</li>
+<li>
+<a href="#quick-start">🚀 Quick Start</a>
+</li>
+<li>
+<a href="#initial-setup">🔧 Initial Setup</a>
+</li>
+<li>
+<a href="#configuration">⚙️ Configuration</a>
+</li>
+<li>
+<a href="#customization-guide">🎨 Customization Guide</a>
+</li>
+<li>
+<a href="#file-structure">📁 File Structure</a>
+</li>
+<li>
+<a href="#development-tools">🛠️ Development Tools</a>
+</li>
+<li>
+<a href="#architecture-overview">🏗️ Architecture Overview</a>
+</li>
+<li>
+<a href="#deployment">🚀 Deployment</a>
+</li>
+<li>
+<a href="#license">📜 License</a>
+</li>
+<li>
+<a href="#contributing">🤝 Contributing</a>
+</li>
+<li>
+<a href="#support">📞 Support</a>
+</li>
+<li>
+<a href="#use-cases">🎯 Use Cases</a>
+</li>
+<li>
+<a href="#recent-updates-october-2025">📝 Recent Updates (October 2025)</a>
+</li>
+<li>
+<a href="#quick-tips">⚡ Quick Tips</a>
+<ul>
+<li>
+<a href="#core-features">Core Features</a>
+</li>
+<li>
+<a href="#built-in-tools">Built-in Tools</a>
+</li>
+<li>
+<a href="#advanced-features">Advanced Features</a>
+</li>
+<li>
+<a href="#prerequisites">Prerequisites</a>
+</li>
+<li>
+<a href="#clone-or-download">1. Clone or Download</a>
+</li>
+<li>
+<a href="#run-setup-wizard">2. Run Setup Wizard</a>
+</li>
+<li>
+<a href="#add-your-content">3. Add Your Content</a>
+</li>
+<li>
+<a href="#test-locally">4. Test Locally</a>
+</li>
+<li>
+<a href="#build-and-deploy">5. Build and Deploy</a>
+</li>
+<li>
+<a href="#step-by-step-configuration">Step-by-Step Configuration</a>
+</li>
+<li>
+<a href="#configuration-file-configsitetoml">Configuration File: config/site.toml</a>
+</li>
+<li>
+<a href="#re-running-setup">Re-running Setup</a>
+</li>
+<li>
+<a href="#theme-customization">Theme Customization</a>
+</li>
+<li>
+<a href="#content-templates">Content Templates</a>
+</li>
+<li>
+<a href="#navigation-structure">Navigation Structure</a>
+</li>
+<li>
+<a href="#setup-wizard">1. Setup Wizard</a>
+</li>
+<li>
+<a href="#code-linter-gzlint">2. Code Linter (GZLint)</a>
+</li>
+<li>
+<a href="#sitemap-generator">3. Sitemap Generator</a>
+</li>
+<li>
+<a href="#build-system">4. Build System</a>
+</li>
+<li>
+<a href="#deployment-1">5. Deployment</a>
+</li>
+<li>
+<a href="#image-tools">6. Image Tools</a>
+</li>
+<li>
+<a href="#setup-wizard-modular-design">Setup Wizard - Modular Design</a>
+</li>
+<li>
+<a href="#build-pipeline-validation-first">Build Pipeline - Validation First</a>
+</li>
+<li>
+<a href="#cross-platform-support">Cross-Platform Support</a>
+</li>
+<li>
+<a href="#development-workflow">Development Workflow</a>
+</li>
+<li>
+<a href="#local-testing">Local Testing</a>
+</li>
+<li>
+<a href="#production-deployment">Production Deployment</a>
+</li>
+<li>
+<a href="#apache-configuration">Apache Configuration</a>
+</li>
+<li>
+<a href="#https-setup">HTTPS Setup</a>
+</li>
+<li>
+<a href="#table-of-contents-enhancements">Table of Contents Enhancements</a>
+</li>
+<li>
+<a href="#seo-configuration">SEO &amp; Configuration</a>
+</li>
+<li>
+<a href="#gzlint-improvements">GZLint Improvements</a>
+</li>
+<li>
+<a href="#documentation">Documentation</a>
+</li>
+<li>
+<a href="#happy-building">Happy building! 🚀</a>
+<ul>
+<li>
+<a href="#windows">Windows</a>
+</li>
+<li>
+<a href="#linuxmac">Linux/Mac</a>
+</li>
+<li>
+<a href="#force-configuration-skip-prompts-use-config-file-only">Force Configuration (skip prompts, use config file only):</a>
+</li>
+<li>
+<a href="#windows-1">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-1">Linux/Mac</a>
+</li>
+<li>
+<a href="#windows-2">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-2">Linux/Mac</a>
+</li>
+<li>
+<a href="#run-setup-wizard-1">1. Run Setup Wizard</a>
+</li>
+<li>
+<a href="#review-generated-files">2. Review Generated Files</a>
+</li>
+<li>
+<a href="#customize-styling">3. Customize Styling</a>
+</li>
+<li>
+<a href="#add-your-logo">4. Add Your Logo</a>
+</li>
+<li>
+<a href="#create-content-pages">5. Create Content Pages</a>
+</li>
+<li>
+<a href="#update-navigation">6. Update Navigation</a>
+</li>
+<li>
+<a href="#site-section">Site Section</a>
+</li>
+<li>
+<a href="#theme-section">Theme Section</a>
+</li>
+<li>
+<a href="#features-section">Features Section</a>
+</li>
+<li>
+<a href="#seo-section">SEO Section</a>
+</li>
+<li>
+<a href="#analytics-section">Analytics Section</a>
+</li>
+<li>
+<a href="#common-scenarios">Common scenarios:</a>
+</li>
+<li>
+<a href="#using-css-variables">Using CSS Variables</a>
+</li>
+<li>
+<a href="#color-scheme">Color Scheme</a>
+</li>
+<li>
+<a href="#basic-content-page">Basic Content Page</a>
+</li>
+<li>
+<a href="#content-with-images">Content with Images</a>
+</li>
+<li>
+<a href="#content-with-code-blocks">Content with Code Blocks</a>
+</li>
+<li>
+<a href="#flat-navigation">Flat Navigation</a>
+</li>
+<li>
+<a href="#hierarchical-navigation">Hierarchical Navigation</a>
+</li>
+<li>
+<a href="#default-page-configuration">🎯 Default Page Configuration</a>
+</li>
+<li>
+<a href="#windows-3">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-3">Linux/Mac</a>
+</li>
+<li>
+<a href="#build-pipeline-features">Build Pipeline Features:</a>
+</li>
+<li>
+<a href="#build-process">Build Process:</a>
+</li>
+<li>
+<a href="#error-handling">Error Handling:</a>
+</li>
+<li>
+<a href="#windows-4">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-4">Linux/Mac</a>
+</li>
+<li>
+<a href="#deployment-workflow">Deployment Workflow:</a>
+</li>
+<li>
+<a href="#configuration-1">Configuration:</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure:</a>
+</li>
+<li>
+<a href="#key-features">Key Features:</a>
+</li>
+<li>
+<a href="#running-the-setup-wizard">Running the Setup Wizard:</a>
+</li>
+<li>
+<a href="#pipeline-stages">Pipeline Stages:</a>
+</li>
+<li>
+<a href="#exit-codes">Exit Codes:</a>
+</li>
+<li>
+<a href="#error-handling-1">Error Handling:</a>
+</li>
+<li>
+<a href="#windows-5">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-5">Linux/Mac</a>
+</li>
+<li>
+<a href="#recommended-workflow">Recommended workflow:</a>
+</li>
+<li>
+<a href="#windows-6">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-6">Linux/Mac</a>
+</li>
+<li>
+<a href="#cicd-integration">CI/CD Integration:</a>
+</li>
+<li>
+<a href="#windows-7">Windows</a>
+</li>
+<li>
+<a href="#linuxmac-7">Linux/Mac</a>
+</li>
+<li>
+<a href="#option-1-using-deploy-script">Option 1: Using Deploy Script</a>
+</li>
+<li>
+<a href="#option-2-manual-deployment">Option 2: Manual Deployment</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<h2 id="setup-your-own">Setup your own!</h2>
 <p>This is a generic, configuration-driven website template that can be easily customized for various content types: gaming sites, blogs, documentation, portfolios, knowledge bases, and more!</p>
 <hr/>
-<h2>📋 Table of Contents</h2>
+<h2 id="table-of-contents">📋 Table of Contents</h2>
 <ul>
 <li><a href="#features">Features</a></li>
 <li><a href="#quick-start">Quick Start</a></li>
@@ -15,8 +346,8 @@
 <li><a href="#license">License</a></li>
 </ul>
 <hr/>
-<h2>✨ Features</h2>
-<h3>Core Features</h3>
+<h2 id="features">✨ Features</h2>
+<h3 id="core-features">Core Features</h3>
 <ul>
 <li>✅ <strong>Single-Page Application (SPA)</strong> - Fast, seamless navigation</li>
 <li>✅ <strong>Fully Responsive</strong> - Mobile-first design</li>
@@ -27,7 +358,7 @@
 <li>✅ <strong>Security Headers</strong> - CSP, HSTS, XSS protection</li>
 <li>✅ <strong>Theme Support</strong> - CSS variables for easy styling</li>
 </ul>
-<h3>Built-in Tools</h3>
+<h3 id="built-in-tools">Built-in Tools</h3>
 <ul>
 <li>🛠️ <strong>Setup Wizard</strong> - Interactive configuration (modular architecture)</li>
 <li>🔍 <strong>GZLint</strong> - HTML/JS linter for code quality (automatic pre-build validation)</li>
@@ -35,7 +366,7 @@
 <li>📦 <strong>Build System</strong> - Minification and packaging with validation</li>
 <li>🚀 <strong>Deployment Tools</strong> - Automated deployment scripts (Windows CMD &amp; Linux Bash)</li>
 </ul>
-<h3>Advanced Features</h3>
+<h3 id="advanced-features">Advanced Features</h3>
 <ul>
 <li>Dynamic table of contents (h2, h3, h4 headings with auto-generated IDs)</li>
 <li>Smart TOC filtering (excludes headings ending with colon)</li>
@@ -47,26 +378,26 @@
 <li>Session state persistence</li>
 </ul>
 <hr/>
-<h2>🚀 Quick Start</h2>
-<h3>Prerequisites</h3>
+<h2 id="quick-start">🚀 Quick Start</h2>
+<h3 id="prerequisites">Prerequisites</h3>
 <ul>
 <li><strong>Python 3.11+</strong> (for build tools and setup wizard)</li>
 <li><strong>Web server</strong> (Apache, Nginx, or Python's built-in server)</li>
 <li><strong>Git</strong> (optional, for cloning)</li>
 </ul>
-<h3>1. Clone or Download</h3>
+<h3 id="clone-or-download">1. Clone or Download</h3>
 <pre><code class="language-bash">git clone https://github.com/yourusername/your-site.git
 cd your-site
 </code></pre>
 <p>Or download and extract the ZIP file.</p>
-<h3>2. Run Setup Wizard</h3>
-<h4>Windows</h4>
+<h3 id="run-setup-wizard">2. Run Setup Wizard</h3>
+<h4 id="windows">Windows</h4>
 <pre><code class="language-cmd">scripts\setup_site.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac">Linux/Mac</h4>
 <pre><code class="language-bash">./scripts/setup_site.sh
 </code></pre>
-<h4>Force Configuration (skip prompts, use config file only):</h4>
+<h4 id="force-configuration-skip-prompts-use-config-file-only">Force Configuration (skip prompts, use config file only):</h4>
 <pre><code class="language-cmd"># Windows
 scripts\setup_site.cmd --force-apply
 </code></pre>
@@ -101,7 +432,7 @@ scripts\setup_site.cmd --force-apply
 <li><code>src/css/variables.css</code> (CSS theme variables)</li>
 <li>Documentation files (branding references)</li>
 </ul>
-<h3>3. Add Your Content</h3>
+<h3 id="add-your-content">3. Add Your Content</h3>
 <ol>
 <li><p><strong>Add your logo images</strong> to <code>src/images/</code>:</p>
 <ul>
@@ -124,23 +455,23 @@ scripts\setup_site.cmd --force-apply
 </ul>
 </li>
 </ol>
-<h3>4. Test Locally</h3>
-<h4>Windows</h4>
+<h3 id="test-locally">4. Test Locally</h3>
+<h4 id="windows-1">Windows</h4>
 <pre><code class="language-cmd">scripts\server.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-1">Linux/Mac</h4>
 <pre><code class="language-bash">./scripts/server.sh
 </code></pre>
 <p>Visit <code>http://localhost:7190</code> in your browser (default port).</p>
-<h3>5. Build and Deploy</h3>
-<h4>Windows</h4>
+<h3 id="build-and-deploy">5. Build and Deploy</h3>
+<h4 id="windows-2">Windows</h4>
 <pre><code class="language-cmd"># Package for production (includes validation &amp; sitemap generation)
 scripts\package.cmd
 
 # Deploy to your server (includes sitemap generation &amp; packaging)
 scripts\deploy.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-2">Linux/Mac</h4>
 <pre><code class="language-bash"># Package for production
 ./scripts/package.sh
 
@@ -157,9 +488,9 @@ scripts\deploy.cmd
 <li>✅ Creates timestamped archive</li>
 </ol>
 <hr/>
-<h2>🔧 Initial Setup</h2>
-<h3>Step-by-Step Configuration</h3>
-<h4>1. Run Setup Wizard</h4>
+<h2 id="initial-setup">🔧 Initial Setup</h2>
+<h3 id="step-by-step-configuration">Step-by-Step Configuration</h3>
+<h4 id="run-setup-wizard-1">1. Run Setup Wizard</h4>
 <p>The setup wizard (<code>scripts\setup_site.cmd</code>) will guide you through configuration:</p>
 <pre><code>============================================
   SITE SETUP WIZARD
@@ -200,7 +531,7 @@ scripts\deploy.cmd
 <li>File generation (CSS, HTML updates)</li>
 <li>Backup management</li>
 </ul>
-<h4>2. Review Generated Files</h4>
+<h4 id="review-generated-files">2. Review Generated Files</h4>
 <p>After setup, check these files:</p>
 <p><strong><code>config/site.toml</code></strong> - Main configuration</p>
 <pre><code class="language-ini">[site]
@@ -217,7 +548,7 @@ primary_color = #E58822
     ...
 }
 </code></pre>
-<h4>3. Customize Styling</h4>
+<h4 id="customize-styling">3. Customize Styling</h4>
 <p>Edit <code>src/css/styles.css</code> to use CSS variables:</p>
 <pre><code class="language-css">/* Before (hardcoded) */
 body {
@@ -231,7 +562,7 @@ body {
     color: var(--text-primary);
 }
 </code></pre>
-<h4>4. Add Your Logo</h4>
+<h4 id="add-your-logo">4. Add Your Logo</h4>
 <p>Place your logo files in <code>src/images/</code>:</p>
 <ul>
 <li><strong>256x256</strong> - Desktop version</li>
@@ -246,7 +577,7 @@ dev\create_responsive_images.cmd
 <pre><code class="language-bash"># Linux/Mac
 ./dev/create_responsive_images.sh
 </code></pre>
-<h4>5. Create Content Pages</h4>
+<h4 id="create-content-pages">5. Create Content Pages</h4>
 <p>Create HTML files in <code>src/content/</code>:</p>
 <h5>Example: <code>src/content/about.html</code></h5>
 <pre><code class="language-html">&lt;div data-hashtags="about, info"&gt;
@@ -257,7 +588,7 @@ dev\create_responsive_images.cmd
     &lt;p&gt;We strive to provide great content...&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
-<h4>6. Update Navigation</h4>
+<h4 id="update-navigation">6. Update Navigation</h4>
 <p>Edit the sidebar in <code>src/index.html</code>:</p>
 <pre><code class="language-html">&lt;nav id="sidebar"&gt;
     &lt;ul class="nav-level-1"&gt;
@@ -281,10 +612,10 @@ dev\create_responsive_images.cmd
 &lt;/nav&gt;
 </code></pre>
 <hr/>
-<h2>⚙️ Configuration</h2>
-<h3>Configuration File: <code>config/site.toml</code></h3>
+<h2 id="configuration">⚙️ Configuration</h2>
+<h3 id="configuration-file-configsitetoml">Configuration File: <code>config/site.toml</code></h3>
 <p>All site settings are centralized in this file.</p>
-<h4>Site Section</h4>
+<h4 id="site-section">Site Section</h4>
 <pre><code class="language-ini">[site]
 name = My Site Name
 tagline = My Site Tagline
@@ -293,7 +624,7 @@ domain = example.com
 description = Site description for SEO
 author = Your Name
 </code></pre>
-<h4>Theme Section</h4>
+<h4 id="theme-section">Theme Section</h4>
 <pre><code class="language-ini">[theme]
 primary_color = #E58822
 primary_color_hover = #d47a1a
@@ -301,14 +632,14 @@ background_main = #0A3A3A
 text_primary = #E0E0E0
 text_link = #80D0D0
 </code></pre>
-<h4>Features Section</h4>
+<h4 id="features-section">Features Section</h4>
 <pre><code class="language-ini">[features]
 enable_breadcrumbs = true
 enable_toc = true
 enable_lazy_loading = true
 enable_sidebar_toggle = true
 </code></pre>
-<h4>SEO Section</h4>
+<h4 id="seo-section">SEO Section</h4>
 <pre><code class="language-ini">[seo]
 google_site_verification = your-code-here
 canonical_base = https://example.com/
@@ -316,7 +647,7 @@ keywords = "gaming, mods, tutorials, your keywords"
 robots_directive = "index, follow"
 </code></pre>
 <p><strong>Note:</strong> SEO keywords and robots directive are automatically applied to meta tags in <code>index.html</code>.</p>
-<h4>Analytics Section</h4>
+<h4 id="analytics-section">Analytics Section</h4>
 <pre><code class="language-ini">[analytics]
 plausible_domain = example.com
 google_analytics_id = GA-XXXXXXX
@@ -324,7 +655,7 @@ matomo_url = ""
 matomo_site_id = ""
 </code></pre>
 <p><strong>Note:</strong> Analytics configuration is documented in <code>docs/SEO_IMPLEMENTATION.md</code>.</p>
-<h3>Re-running Setup</h3>
+<h3 id="re-running-setup">Re-running Setup</h3>
 <p>To reconfigure your site (including changing the domain):</p>
 <pre><code class="language-cmd"># Windows
 scripts\setup_site.cmd
@@ -333,7 +664,7 @@ scripts\setup_site.cmd
 ./scripts/setup_site.sh
 </code></pre>
 <p>The wizard will detect existing configuration and ask if you want to reconfigure.</p>
-<h4>Common scenarios:</h4>
+<h4 id="common-scenarios">Common scenarios:</h4>
 <ul>
 <li><strong>Changing domain:</strong> Run the wizard and enter your new domain when prompted</li>
 <li><strong>Moving from development to production:</strong> Run wizard with your live domain</li>
@@ -359,9 +690,9 @@ scripts\setup_site.cmd
 </ul>
 <p><strong>No manual updates needed!</strong> The wizard handles everything automatically.</p>
 <hr/>
-<h2>🎨 Customization Guide</h2>
-<h3>Theme Customization</h3>
-<h4>Using CSS Variables</h4>
+<h2 id="customization-guide">🎨 Customization Guide</h2>
+<h3 id="theme-customization">Theme Customization</h3>
+<h4 id="using-css-variables">Using CSS Variables</h4>
 <p>The setup wizard generates <code>src/css/variables.css</code> with all your theme colors and settings.</p>
 <h5>Example: Change button color</h5>
 <pre><code class="language-css">/* In styles.css */
@@ -374,7 +705,7 @@ button:hover {
     background-color: var(--color-primary-hover);
 }
 </code></pre>
-<h4>Color Scheme</h4>
+<h4 id="color-scheme">Color Scheme</h4>
 <p>Edit <code>config/site.toml</code> and re-run setup:</p>
 <pre><code class="language-ini">[theme]
 primary_color = #3498db       # Change to blue
@@ -388,8 +719,8 @@ scripts\setup_site.cmd --force-apply
 <pre><code class="language-bash"># Linux/Mac
 ./scripts/setup_site.sh --force
 </code></pre>
-<h3>Content Templates</h3>
-<h4>Basic Content Page</h4>
+<h3 id="content-templates">Content Templates</h3>
+<h4 id="basic-content-page">Basic Content Page</h4>
 <pre><code class="language-html">&lt;div data-hashtags="tutorial, guide"&gt;
     &lt;h2&gt;Page Title&lt;/h2&gt;
     &lt;p&gt;Introduction paragraph...&lt;/p&gt;
@@ -401,7 +732,7 @@ scripts\setup_site.cmd --force-apply
     &lt;p&gt;More content...&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
-<h4>Content with Images</h4>
+<h4 id="content-with-images">Content with Images</h4>
 <pre><code class="language-html">&lt;div&gt;
     &lt;h2&gt;Gallery Page&lt;/h2&gt;
     
@@ -414,7 +745,7 @@ scripts\setup_site.cmd --force-apply
     &lt;p&gt;Image caption or description...&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
-<h4>Content with Code Blocks</h4>
+<h4 id="content-with-code-blocks">Content with Code Blocks</h4>
 <pre><code class="language-html">&lt;div&gt;
     &lt;h2&gt;Tutorial&lt;/h2&gt;
     
@@ -426,15 +757,15 @@ scripts\setup_site.cmd --force-apply
 example.doSomething();&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </code></pre>
-<h3>Navigation Structure</h3>
-<h4>Flat Navigation</h4>
+<h3 id="navigation-structure">Navigation Structure</h3>
+<h4 id="flat-navigation">Flat Navigation</h4>
 <pre><code class="language-html">&lt;ul class="nav-level-1"&gt;
     &lt;li&gt;&lt;a href="#" data-content="welcome"&gt;Welcome&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="#" data-content="about"&gt;About&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="#" data-content="contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </code></pre>
-<h4>Hierarchical Navigation</h4>
+<h4 id="hierarchical-navigation">Hierarchical Navigation</h4>
 <pre><code class="language-html">&lt;ul class="nav-level-1"&gt;
     &lt;li class="has-children"&gt;
         &lt;div class="nav-item-wrapper"&gt;
@@ -457,7 +788,7 @@ example.doSomething();&lt;/code&gt;&lt;/pre&gt;
     &lt;/li&gt;
 &lt;/ul&gt;
 </code></pre>
-<h4>🎯 Default Page Configuration</h4>
+<h4 id="default-page-configuration">🎯 Default Page Configuration</h4>
 <p>The site automatically loads the <strong>first navigation item</strong> when visitors arrive. To change what loads initially:</p>
 <ol>
 <li><strong>Reorder navigation items</strong> in <code>src/index.html</code></li>
@@ -472,7 +803,7 @@ example.doSomething();&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 </code></pre>
 <hr/>
-<h2>📁 File Structure</h2>
+<h2 id="file-structure">📁 File Structure</h2>
 <pre><code>your-site/
 ├── config/
 │   └── site.toml                # Main configuration
@@ -537,8 +868,8 @@ example.doSomething();&lt;/code&gt;&lt;/pre&gt;
 └── README.md                    # Project README
 </code></pre>
 <hr/>
-<h2>🛠️ Development Tools</h2>
-<h3>1. Setup Wizard</h3>
+<h2 id="development-tools">🛠️ Development Tools</h2>
+<h3 id="setup-wizard">1. Setup Wizard</h3>
 <p>Interactive configuration tool:</p>
 <pre><code class="language-cmd"># Windows
 scripts\setup_site.cmd
@@ -546,7 +877,7 @@ scripts\setup_site.cmd
 <pre><code class="language-bash"># Linux/Mac
 ./scripts/setup_site.sh
 </code></pre>
-<h3>2. Code Linter (GZLint)</h3>
+<h3 id="code-linter-gzlint">2. Code Linter (GZLint)</h3>
 <p>Check HTML and JavaScript quality:</p>
 <pre><code class="language-cmd"># Windows
 scripts\gzlint.cmd
@@ -562,7 +893,7 @@ scripts\gzlint.cmd
 <li>Processes all files recursively including subdirectories</li>
 <li>Code quality issues</li>
 </ul>
-<h3>3. Sitemap Generator</h3>
+<h3 id="sitemap-generator">3. Sitemap Generator</h3>
 <p>Generate SEO sitemap:</p>
 <pre><code class="language-cmd"># Windows
 scripts\generate_sitemap.cmd
@@ -571,15 +902,15 @@ scripts\generate_sitemap.cmd
 ./scripts/generate_sitemap.sh
 </code></pre>
 <p>Auto-generates <code>src/sitemap.xml</code> from your content.</p>
-<h3>4. Build System</h3>
+<h3 id="build-system">4. Build System</h3>
 <p>Package for production:</p>
-<h4>Windows</h4>
+<h4 id="windows-3">Windows</h4>
 <pre><code class="language-cmd">scripts\package.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-3">Linux/Mac</h4>
 <pre><code class="language-bash">./scripts/package.sh
 </code></pre>
-<h4>Build Pipeline Features:</h4>
+<h4 id="build-pipeline-features">Build Pipeline Features:</h4>
 <ul>
 <li>✅ <strong>Pre-flight validation</strong> - Runs GZLint before packaging</li>
 <li>✅ <strong>Automatic sitemap</strong> - Generates sitemap.xml if validation passes</li>
@@ -591,7 +922,7 @@ scripts\generate_sitemap.cmd
 <li>✅ <strong>Backup management</strong> - Keeps 4 most recent packages</li>
 <li>✅ <strong>Exit codes</strong> - Returns proper codes for CI/CD integration</li>
 </ul>
-<h4>Build Process:</h4>
+<h4 id="build-process">Build Process:</h4>
 <pre><code>[Pre-flight] Running validation checks...
   ✓ All validation checks passed
 
@@ -612,21 +943,21 @@ scripts\generate_sitemap.cmd
 
 ✓ PACKAGING COMPLETED SUCCESSFULLY
 </code></pre>
-<h4>Error Handling:</h4>
+<h4 id="error-handling">Error Handling:</h4>
 <ul>
 <li>If validation fails → packaging aborts</li>
 <li>If sitemap generation fails → packaging aborts</li>
 <li>If validation scripts not found → continues with warning</li>
 </ul>
-<h3>5. Deployment</h3>
+<h3 id="deployment-1">5. Deployment</h3>
 <p>Deploy to your server:</p>
-<h4>Windows</h4>
+<h4 id="windows-4">Windows</h4>
 <pre><code class="language-cmd">scripts\deploy.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-4">Linux/Mac</h4>
 <pre><code class="language-bash">./scripts/deploy.sh
 </code></pre>
-<h4>Deployment Workflow:</h4>
+<h4 id="deployment-workflow">Deployment Workflow:</h4>
 <ol>
 <li>Generates sitemap (<code>sitemap module</code>)</li>
 <li>Validates and packages files (<code>package.py</code>)<ul>
@@ -640,7 +971,7 @@ scripts\generate_sitemap.cmd
 </ul>
 </li>
 </ol>
-<h4>Configuration:</h4>
+<h4 id="configuration-1">Configuration:</h4>
 <p>Create <code>deploy.config</code> (not tracked in git):</p>
 <pre><code class="language-ini">[server]
 host = ftp.yourserver.com
@@ -648,7 +979,7 @@ username = your-username
 password = your-password
 remote_path = /public_html/
 </code></pre>
-<h3>6. Image Tools</h3>
+<h3 id="image-tools">6. Image Tools</h3>
 <p>Create responsive image sizes:</p>
 <pre><code class="language-cmd"># Windows
 dev\create_responsive_images.cmd
@@ -658,10 +989,10 @@ dev\create_responsive_images.cmd
 </code></pre>
 <p>Requires <a href="https://imagemagick.org/">ImageMagick</a> or <a href="https://pillow.readthedocs.io/">Pillow</a>.</p>
 <hr/>
-<h2>🏗️ Architecture Overview</h2>
-<h3>Setup Wizard - Modular Design</h3>
+<h2 id="architecture-overview">🏗️ Architecture Overview</h2>
+<h3 id="setup-wizard-modular-design">Setup Wizard - Modular Design</h3>
 <p>The setup wizard has been refactored into a modular architecture for better maintainability:</p>
-<h4>Module Structure:</h4>
+<h4 id="module-structure">Module Structure:</h4>
 <pre><code>utils/setup/
 ├── __init__.py              # Package exports
 ├── setup_site.py            # Main orchestrator (~200 lines)
@@ -672,7 +1003,7 @@ dev\create_responsive_images.cmd
 ├── user_interaction.py      # Interactive prompts (~400 lines)
 └── file_generators.py       # CSS/HTML generation (~550 lines)
 </code></pre>
-<h4>Key Features:</h4>
+<h4 id="key-features">Key Features:</h4>
 <ul>
 <li><strong>Separation of concerns</strong> - Each module has a single responsibility</li>
 <li><strong>Absolute imports</strong> - Supports direct script execution</li>
@@ -680,7 +1011,7 @@ dev\create_responsive_images.cmd
 <li><strong>Backup system</strong> - Automatic backups before major changes</li>
 <li><strong>Error handling</strong> - Graceful degradation and clear error messages</li>
 </ul>
-<h4>Running the Setup Wizard:</h4>
+<h4 id="running-the-setup-wizard">Running the Setup Wizard:</h4>
 <pre><code class="language-cmd"># Windows - Interactive mode (prompts for all settings)
 scripts\setup_site.cmd
 
@@ -699,9 +1030,9 @@ scripts\setup_site.cmd --help
 # Linux/Mac - Show help
 ./scripts/setup_site.sh --help
 </code></pre>
-<h3>Build Pipeline - Validation First</h3>
+<h3 id="build-pipeline-validation-first">Build Pipeline - Validation First</h3>
 <p>The packaging system now includes <strong>automatic validation and sitemap generation</strong>:</p>
-<h4>Pipeline Stages:</h4>
+<h4 id="pipeline-stages">Pipeline Stages:</h4>
 <ol>
 <li><p><strong>Pre-flight: Validation</strong> (<code>run_validation()</code>)</p>
 <ul>
@@ -740,34 +1071,34 @@ scripts\setup_site.cmd --help
 </ul>
 </li>
 </ol>
-<h4>Exit Codes:</h4>
+<h4 id="exit-codes">Exit Codes:</h4>
 <ul>
 <li><code>0</code> - Success (all stages passed)</li>
 <li><code>1</code> - Failure (validation, sitemap, or packaging failed)</li>
 </ul>
-<h4>Error Handling:</h4>
+<h4 id="error-handling-1">Error Handling:</h4>
 <ul>
 <li>Missing validation scripts → Warning + continue</li>
 <li>Validation failure → Abort with error message</li>
 <li>Sitemap failure → Abort with error message</li>
 <li>Missing minification libraries → Skip minification with warning</li>
 </ul>
-<h3>Cross-Platform Support</h3>
-<h4>Windows</h4>
+<h3 id="cross-platform-support">Cross-Platform Support</h3>
+<h4 id="windows-5">Windows</h4>
 <ul>
 <li><code>setup_site.cmd</code> → Calls <code>python utils/setup/setup_site.py</code></li>
 <li><code>package.cmd</code> → Calls <code>python -m package</code></li>
 <li><code>deploy.cmd</code> → Calls <code>python utils/deploy/</code></li>
 <li><code>gzlint.cmd</code> → Calls <code>python utils/gzlint/</code></li>
 </ul>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-5">Linux/Mac</h4>
 <ul>
 <li><code>deploy.sh</code> → Bash script with error checking</li>
 <li>Proper exit code propagation for CI/CD</li>
 </ul>
-<h3>Development Workflow</h3>
-<h4>Recommended workflow:</h4>
-<h4>Windows</h4>
+<h3 id="development-workflow">Development Workflow</h3>
+<h4 id="recommended-workflow">Recommended workflow:</h4>
+<h4 id="windows-6">Windows</h4>
 <pre><code class="language-cmd"># 1. Configure site (first time or when changing settings)
 scripts\setup_site.cmd
 
@@ -785,7 +1116,7 @@ scripts\package.cmd
 # 6. Deploy to server (includes full build pipeline)
 scripts\deploy.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-6">Linux/Mac</h4>
 <pre><code class="language-bash"># 1. Configure site (first time or when changing settings)
 ./scripts/setup_site.sh
 
@@ -803,7 +1134,7 @@ scripts\deploy.cmd
 # 6. Deploy to server (includes full build pipeline)
 ./scripts/deploy.sh
 </code></pre>
-<h4>CI/CD Integration:</h4>
+<h4 id="cicd-integration">CI/CD Integration:</h4>
 <pre><code class="language-bash"># In your CI/CD pipeline
 ./scripts/package.sh
 exit_code=$?
@@ -817,17 +1148,17 @@ else
 fi
 </code></pre>
 <hr/>
-<h2>🚀 Deployment</h2>
-<h3>Local Testing</h3>
-<h4>Windows</h4>
+<h2 id="deployment">🚀 Deployment</h2>
+<h3 id="local-testing">Local Testing</h3>
+<h4 id="windows-7">Windows</h4>
 <pre><code class="language-cmd">scripts\server.cmd
 </code></pre>
-<h4>Linux/Mac</h4>
+<h4 id="linuxmac-7">Linux/Mac</h4>
 <pre><code class="language-bash">./scripts/server.sh
 </code></pre>
 <p>Visit <code>http://localhost:7190</code> (default port)</p>
-<h3>Production Deployment</h3>
-<h4>Option 1: Using Deploy Script</h4>
+<h3 id="production-deployment">Production Deployment</h3>
+<h4 id="option-1-using-deploy-script">Option 1: Using Deploy Script</h4>
 <ol>
 <li><p>Configure deployment in <code>deploy.config</code> (not in git):</p>
 <pre><code class="language-ini">[server]
@@ -842,7 +1173,7 @@ remote_path = /public_html/
 </code></pre>
 </li>
 </ol>
-<h4>Option 2: Manual Deployment</h4>
+<h4 id="option-2-manual-deployment">Option 2: Manual Deployment</h4>
 <ol>
 <li><p>Build production files:</p>
 <pre><code class="language-cmd"># Windows
@@ -858,7 +1189,7 @@ scripts\package.cmd
 </li>
 </ol>
 <p><strong>Note:</strong> The build system creates archives in <code>publish/packages/</code> for backup purposes. The <code>publish/staging/</code> directory contains the actual files to deploy.</p>
-<h3>Apache Configuration</h3>
+<h3 id="apache-configuration">Apache Configuration</h3>
 <p>The included <code>.htaccess</code> provides:</p>
 <ul>
 <li>Gzip/Deflate compression</li>
@@ -866,7 +1197,7 @@ scripts\package.cmd
 <li>Cache headers for performance</li>
 <li>Browser compatibility fixes</li>
 </ul>
-<h3>HTTPS Setup</h3>
+<h3 id="https-setup">HTTPS Setup</h3>
 <ol>
 <li>Enable SSL on your server (Let's Encrypt recommended)</li>
 <li>Update <code>config/site.toml</code>:<pre><code class="language-ini">[security]
@@ -878,11 +1209,11 @@ hsts_enabled = true
 </li>
 </ol>
 <hr/>
-<h2>📜 License</h2>
+<h2 id="license">📜 License</h2>
 <p>This project is licensed under the GNU General Public License v3.0 (GPL-3.0).</p>
 <p>See <a href="LICENSE">LICENSE</a> for details.</p>
 <hr/>
-<h2>🤝 Contributing</h2>
+<h2 id="contributing">🤝 Contributing</h2>
 <p>Contributions are welcome! Please:</p>
 <ol>
 <li>Fork the repository</li>
@@ -892,7 +1223,7 @@ hsts_enabled = true
 <li>Submit a pull request</li>
 </ol>
 <hr/>
-<h2>📞 Support</h2>
+<h2 id="support">📞 Support</h2>
 <p>For issues, questions, or suggestions:</p>
 <ol>
 <li>Check the documentation in <code>docs/</code><ul>
@@ -908,7 +1239,7 @@ hsts_enabled = true
 <li>Create an issue on GitHub</li>
 </ol>
 <hr/>
-<h2>🎯 Use Cases</h2>
+<h2 id="use-cases">🎯 Use Cases</h2>
 <p>This template works great for:</p>
 <ul>
 <li><strong>Gaming Content Sites</strong> - Mods, guides, campaign runs</li>
@@ -919,34 +1250,34 @@ hsts_enabled = true
 <li><strong>Community Sites</strong> - Forums, groups, resources</li>
 </ul>
 <hr/>
-<h2>📝 Recent Updates (October 2025)</h2>
-<h3>Table of Contents Enhancements</h3>
+<h2 id="recent-updates-october-2025">📝 Recent Updates (October 2025)</h2>
+<h3 id="table-of-contents-enhancements">Table of Contents Enhancements</h3>
 <ul>
 <li><strong>H2 heading support</strong> - TOC now includes h2, h3, and h4 headings (was h3, h4 only)</li>
 <li><strong>Smart filtering</strong> - Headings ending with colon (:) automatically excluded from TOC</li>
 <li><strong>Auto-generated IDs</strong> - All h2, h3, h4 headings get IDs for deep linking</li>
 <li><strong>Three-level hierarchy</strong> - Proper h2 &gt; h3 &gt; h4 nesting with collapsible sections</li>
 </ul>
-<h3>SEO &amp; Configuration</h3>
+<h3 id="seo-configuration">SEO &amp; Configuration</h3>
 <ul>
 <li><strong>Keywords configuration</strong> - Added <code>keywords</code> field to <code>[seo]</code> section</li>
 <li><strong>Robots directive</strong> - Added <code>robots_directive</code> field (e.g., "index, follow")</li>
 <li><strong>Config documentation</strong> - New <code>dev/00TODO/CONFIG_DRIVEN_INDEX.md</code> tracks config-driven items</li>
 <li><strong>SEO documentation</strong> - Expanded <code>docs/SEO_IMPLEMENTATION.md</code> with analytics examples</li>
 </ul>
-<h3>GZLint Improvements</h3>
+<h3 id="gzlint-improvements">GZLint Improvements</h3>
 <ul>
 <li><strong>HTML validation</strong> - Detects malformed tags and mismatched closing tags</li>
 <li><strong>Subdirectory support</strong> - Recursively processes all files including nested folders</li>
 <li><strong>H1 validation</strong> - Checks for missing h1 tags and duplicate h1 tags</li>
 </ul>
-<h3>Documentation</h3>
+<h3 id="documentation">Documentation</h3>
 <ul>
 <li><strong>Analytics guide</strong> - Comprehensive Plausible, GA4, and Matomo configuration</li>
 <li><strong>Config reference</strong> - Complete tracking of what's config-driven vs hardcoded</li>
 </ul>
 <hr/>
-<h2>⚡ Quick Tips</h2>
+<h2 id="quick-tips">⚡ Quick Tips</h2>
 <ol>
 <li><strong>Start with the wizard</strong> - Run <code>scripts\setup_site.cmd</code> first for automatic configuration</li>
 <li><strong>Run wizard multiple times</strong> - It's safe and updates everything automatically</li>
@@ -962,8 +1293,8 @@ hsts_enabled = true
 <li><strong>Check Lighthouse</strong> - Monitor performance scores</li>
 </ol>
 <hr/>
-<h3>Happy building! 🚀</h3>
+<h3 id="happy-building">Happy building! 🚀</h3>
 <div>
-<br><br>
+<br/><br/>
 <p><em>This content was automatically generated from <code>SETUP_SITE.md</code></em></p>
 </div>
