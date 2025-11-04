@@ -10,7 +10,7 @@
 <img src="src/images/gaztank_logo_75x75.webp" alt="GAZ Tank Logo" class="no-lazy"/>
 <p>
 A modern, single-page web application built with native CSS Grid, Flexbox, and vanilla JavaScript - no frameworks or libraries required.
-<br><em>Some JS libraries are used for optional features, which will not be loaded at all in the site if turned off<em>
+<br><em>Some JS libraries are used for optional features, which will not be loaded at all in the site if turned off, for example Prism and Mermaid<em>
 </p>
 </div> 
 
