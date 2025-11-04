@@ -77,7 +77,7 @@
 <IfModule mod_headers.c>
     # Content Security Policy (CSP)
     # Prevents XSS attacks, data injection, and clickjacking
-    Header set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+    Header set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
     
     # Prevent clickjacking attacks
     # Only allow this site to frame itself (not recommended for embedding in iframes)

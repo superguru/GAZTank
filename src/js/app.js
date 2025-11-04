@@ -519,7 +519,7 @@ function updatePageMetadata(contentKey, contentDiv) {
   // Update Open Graph URL
   let ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) {
-    ogUrl.setAttribute('content', `https://gaztank.com/#${contentKey}`);
+    ogUrl.setAttribute('content', `https://gaztank.org/#${contentKey}`);
   }
 
   // Update Twitter title
@@ -537,13 +537,13 @@ function updatePageMetadata(contentKey, contentDiv) {
   // Update Twitter URL
   let twitterUrl = document.querySelector('meta[name="twitter:url"]');
   if (twitterUrl) {
-    twitterUrl.setAttribute('content', `https://gaztank.com/#${contentKey}`);
+    twitterUrl.setAttribute('content', `https://gaztank.org/#${contentKey}`);
   }
 
   // Update canonical URL
   let canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) {
-    canonical.setAttribute('href', `https://gaztank.com/#${contentKey}`);
+    canonical.setAttribute('href', `https://gaztank.org/#${contentKey}`);
   }
 }
 
@@ -676,16 +676,39 @@ async function loadContent(contentKey, saveToStorage = true, updateHash = true) 
       Prism.highlightAllUnder(pageContent);
     }
 
-    // Render Mermaid diagrams if present
-    if (typeof mermaid !== 'undefined') {
-      // Find all mermaid blocks and render them
-      const mermaidBlocks = pageContent.querySelectorAll('pre.mermaid');
-      if (mermaidBlocks.length > 0) {
-        mermaid.run({
-          nodes: mermaidBlocks,
-          suppressErrors: true
-        });
+    // Render Mermaid diagrams if present (with retry logic for async module loading)
+    const renderMermaidDiagrams = () => {
+      if (typeof mermaid !== 'undefined') {
+        // Find all mermaid blocks and render them
+        const mermaidBlocks = pageContent.querySelectorAll('pre.mermaid');
+        if (mermaidBlocks.length > 0) {
+          mermaid.run({
+            nodes: mermaidBlocks,
+            suppressErrors: true
+          }).catch(err => {
+            console.warn('Mermaid rendering error:', err);
+          });
+        }
       }
+    };
+
+    // Try immediate render
+    if (typeof mermaid !== 'undefined') {
+      renderMermaidDiagrams();
+    } else {
+      // Wait for mermaid module to load (check every 50ms for up to 2 seconds)
+      let attempts = 0;
+      const maxAttempts = 40;
+      const checkInterval = setInterval(() => {
+        attempts++;
+        if (typeof mermaid !== 'undefined' || window.mermaidReady) {
+          clearInterval(checkInterval);
+          renderMermaidDiagrams();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          console.warn('Mermaid.js failed to load within timeout period');
+        }
+      }, 50);
     }
 
     // Add click handlers to TOC links and toggle button

@@ -1,8 +1,12 @@
-<!-- Mermaid.js library -->
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+<!-- Mermaid.js library - using UMD build for better compatibility -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
     // Initialize mermaid with dark theme
-    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-    // Expose to global scope for dynamic content loading
-    window.mermaid = mermaid;
+    if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ 
+            startOnLoad: false,  // Don't auto-start, app.js will trigger manually
+            theme: 'dark' 
+        });
+        window.mermaidReady = true;
+    }
 </script>
