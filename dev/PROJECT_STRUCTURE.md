@@ -122,7 +122,7 @@ GAZTank/
 │   ├── deploy.example.toml      # Deployment config template
 │   ├── generate.toml            # Content generation configuration
 │   ├── gzlogrotate.toml         # Log rotation configuration
-│   ├── pipeline.toml            # Environment-specific pipeline configuration
+│   ├── environments.toml        # Environment-specific configuration (ports, paths)
 │   └── tools.toml               # Tools configuration
 │
 ├── docs/                         # Documentation (Markdown sources)
@@ -230,7 +230,7 @@ TOML configuration files accessed via gzconfig library:
 - **deploy.toml**: FTP/FTPS credentials (gitignored, use deploy.example.toml as template)
 - **generate.toml**: Content generation file groups and mappings
 - **gzlogrotate.toml**: Log rotation settings
-- **pipeline.toml**: Environment-specific directory paths (dev/staging/prod)
+- **environments.toml**: Environment-specific directory paths and server ports (dev/staging/prod)
 - **tools.toml**: Tools and utilities configuration
 
 ### `/docs/` - Documentation Sources

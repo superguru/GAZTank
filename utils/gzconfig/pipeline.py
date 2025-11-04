@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 """
-Pipeline Configuration Handler
-===============================
-Handles reading and providing access to pipeline.toml configuration.
+Pipeline Configuration Module
+==============================
+Handles reading and providing access to environments.toml configuration.
 
 Authors: superguru, gazorper
 License: GPL v3.0
@@ -25,7 +25,7 @@ except ModuleNotFoundError:
 
 class PipelineEnvironment:
     """
-    Represents a single environment configuration from pipeline.toml.
+    Represents a single environment configuration from environments.toml.
     
     Provides property-based access to environment settings.
     """
@@ -96,7 +96,7 @@ class PipelineConfig:
         Initialize pipeline configuration.
         
         Args:
-            config_dict: Raw configuration dictionary from pipeline.toml
+            config_dict: Raw configuration dictionary from environments.toml
         """
         self._config = config_dict
         self._environments = {}
@@ -122,7 +122,7 @@ class PipelineConfig:
         if name not in self._environments:
             available = ', '.join(self._environments.keys())
             raise ValueError(
-                f"Environment '{name}' is not defined in pipeline.toml. "
+                f"Environment '{name}' is not defined in environments.toml. "
                 f"Available environments: {available}"
             )
         
@@ -180,13 +180,13 @@ def _find_project_root() -> Path:
 
 def _load_pipeline_toml() -> dict:
     """
-    Load and parse pipeline.toml configuration file.
+    Load and parse environments.toml configuration file.
     
     Returns:
         Dictionary containing pipeline configuration
     
     Raises:
-        FileNotFoundError: If pipeline.toml is not found
+        FileNotFoundError: If environments.toml is not found
         ValueError: If configuration is invalid or cannot be parsed
         ImportError: If toml library is not available
     """
@@ -198,29 +198,29 @@ def _load_pipeline_toml() -> dict:
     
     # Find and load config file
     project_root = _find_project_root()
-    config_path = project_root / 'config' / 'pipeline.toml'
+    config_path = project_root / 'config' / 'environments.toml'
     
     if not config_path.exists():
         raise FileNotFoundError(
-            f"Pipeline configuration not found: {config_path}\n"
-            f"Expected location: config/pipeline.toml in project root"
+            f"Environment configuration not found: {config_path}\n"
+            f"Expected location: config/environments.toml in project root"
         )
     
     try:
         with open(config_path, 'rb') as f:
             config = tomllib.load(f)
     except Exception as e:
-        raise ValueError(f"Failed to parse pipeline.toml: {e}")
+        raise ValueError(f"Failed to parse environments.toml: {e}")
     
     # Validate required structure
     if 'environments' not in config:
         raise ValueError(
-            "Invalid pipeline.toml: missing 'environments' section"
+            "Invalid environments.toml: missing 'environments' section"
         )
     
     if not config['environments']:
         raise ValueError(
-            "Invalid pipeline.toml: 'environments' section is empty"
+            "Invalid environments.toml: 'environments' section is empty"
         )
     
     return config

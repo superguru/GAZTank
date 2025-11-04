@@ -51,12 +51,12 @@ Update recommendations.txt to reflect what has been done and what needs to be do
 ## Task: Create new Python module
 Create a new python module in .\utils named `gzhost`
 The module should use gzlogging and output to both log file and console.
-The module should use the pipeline.toml config file, which should be extended to include a new attr named ftpd_port, which works the same as httpd_port, and with defaults of 2190, 2191, 2192 for the dev, staging, and prod environments.
+The module should use the environments.toml config file, which should be extended to include a new attr named ftpd_port, which works the same as httpd_port, and with defaults of 2190, 2191, 2192 for the dev, staging, and prod environments.
 The function of gzhost is to be a simple FTP server, using pyftpdlib. In general it should work the same as the utils.gzserve module, but just for FTP
 gzhost exists to simulate a remote host where a package of the website is deployed using FTP.
 Add another toml file to .\config\ named ftp_users.toml
 This file should have sections per environment, just like tools.toml has
-Add the same linting rules for ftp_users.toml to utils.gzlint that are already checked for the tools.toml file to make sure sections align, with pipeline.toml being the source of truth
+Add the same linting rules for ftp_users.toml to utils.gzlint that are already checked for the tools.toml file to make sure sections align, with environments.toml being the source of truth
 The ftp_users.toml file should be fully supported for reading by gzconfig
 For now, only support one ftp user definition per environment to ftp_users.toml
 Each user should have username, password, and permissions attrs.

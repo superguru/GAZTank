@@ -540,7 +540,7 @@ Examples:
   python -m utils.toc -e dev --dry-run      # Preview changes without writing
   python -m utils.toc -e dev --force        # Force regeneration of all TOCs
 
-Environments are configured in config/pipeline.toml
+Environments are configured in config/environments.toml
         """
     )
     

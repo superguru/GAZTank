@@ -339,7 +339,7 @@ Examples:
   python -m sitemap -e prod                # Generate sitemap for production
   python -m sitemap -e dev --dry-run       # Preview without writing files
 
-Environments are configured in config/pipeline.toml
+Environments are configured in config/environments.toml
         """
     )
     

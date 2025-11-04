@@ -563,7 +563,7 @@ Examples:
   python -m package -e dev --force        # Force package all files
   python -m package -e dev --dry-run      # Preview changes without modifying files
 
-Environments are configured in config/pipeline.toml
+Environments are configured in config/environments.toml
         """
     )
     

@@ -483,7 +483,7 @@ def copy_modified_files_to_environment(
 ) -> Optional[Path]:
     """Copy all tracked modified files to the environment directory
     
-    Reads environment directory from config/pipeline.toml and copies files
+    Reads environment directory from config/environments.toml and copies files
     from src/ directory to the configured environment directory.
     Preserves directory structure. Generates a manifest file listing all copies.
     

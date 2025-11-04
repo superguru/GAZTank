@@ -158,7 +158,7 @@ Of all of the checklist conditions have been ticked off, then mark the module as
 **Design Decision Notes:**
 - **Extracted from package module**: Orphaned file cleanup logic moved to dedicated clean module (October 23, 2025)
 - **Pipeline integration**: Runs before package module to ensure environment is clean before syncing/archiving
-- **Environment-aware**: Uses gzconfig.pipeline to get environment directory from pipeline.toml
+- **Environment-aware**: Uses gzconfig.pipeline to get environment directory from environments.toml
 - **Orphaned file detection**: Compares publish/{env}/ against src/ - src/ is source of truth
 - **Separation of concerns**: Clean module handles orphaned files, package module handles sync/minify/archive
 

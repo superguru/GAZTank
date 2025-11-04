@@ -6,7 +6,7 @@
 # - log_dir: Directory path relative to logs/ where tool logs are stored
 # - description: Human-readable description of the environment
 #
-# Note: Environment sections must match those in pipeline.toml
+# Note: Environment sections must match those in environments.toml
 #
 # Tool-Specific Log Rotation Overrides:
 # Individual tools can override global rotation settings from gzlogrotate.toml

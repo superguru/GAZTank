@@ -205,7 +205,7 @@ Configuration is stored in `config/site.toml` which serves as the source of trut
 
 ### Running the Development Server
 
-The development server supports multiple environments (dev/staging/prod) configured in `config/pipeline.toml`.
+The development server supports multiple environments (dev/staging/prod) configured in `config/environments.toml`.
 
 #### Windows:
 ```bash
@@ -227,7 +227,7 @@ python -m utils.gzserve -e dev             # Development (port from config)
 python -m utils.gzserve -e staging -p 8080 # Staging with custom port
 ```
 
-##### Default Ports (configured in `config/pipeline.toml`):
+##### Default Ports (configured in `config/environments.toml`):
 - Development: http://localhost:7190
 - Staging: http://localhost:7191
 - Production: http://localhost:7192

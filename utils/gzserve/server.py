@@ -419,7 +419,7 @@ Examples:
   python -m utils.serve -e staging -p 7190     # Serve staging on port 7190
   python -m utils.serve -e prod                # Serve production environment
 
-Environments are configured in config/pipeline.toml
+Environments are configured in config/environments.toml
         """
     )
     

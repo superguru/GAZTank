@@ -612,7 +612,7 @@ python -m utils.clean -e staging
 python -m utils.package -e prod
 ```
 
-**Valid environments:** `dev`, `staging`, `prod` (defined in `config/pipeline.toml`)
+**Valid environments:** `dev`, `staging`, `prod` (defined in `config/environments.toml`)
 
 #### Exception: Foundational Modules
 
@@ -643,7 +643,7 @@ from pathlib import Path
 
 def my_function(environment: str):
     # Don't do this!
-    config_file = Path("config/pipeline.toml")
+    config_file = Path("config/environments.toml")
     with open(config_file) as f:
         config = tomlkit.load(f)
     dir_path = Path(config['environments'][environment]['dir'])
@@ -982,7 +982,7 @@ publish/
     └── ...                   # Same structure as dev
 
 config/
-├── pipeline.toml             # Environment definitions (paths, ports)
+├── environments.toml         # Environment definitions (paths, ports)
 ├── generate.toml             # Content generation configuration
 ├── site.toml                 # Site settings (colors, branding, SEO)
 ├── tools.toml                # Tools configuration (logging, etc.)
@@ -1006,7 +1006,7 @@ config/
 
 #### Environment Configuration
 
-Environments are defined in `config/pipeline.toml`:
+Environments are defined in `config/environments.toml`:
 
 ```toml
 [environments.dev]
@@ -1033,7 +1033,7 @@ The development server requires an environment parameter:
 # Required: specify environment
 .\scripts\gzserve.cmd -e dev
 
-# Different environments, different ports (from pipeline.toml)
+# Different environments, different ports (from environments.toml)
 .\scripts\gzserve.cmd -e staging    # Uses port 7191
 
 # Error: no environment specified

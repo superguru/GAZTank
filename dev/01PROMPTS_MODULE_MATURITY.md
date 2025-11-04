@@ -6,7 +6,7 @@ Verify that this is a proper module that can run with python -m <modulename>
 Ensure the module has a --help command line argument
 
 ## Must have -e <environment> command line argument
-Ensure there is a mandatory command line argument -e <environment>, which corresponds to environment sections in .\config\pipeline.toml. Examples: "-e dev" or "-e staging".
+Ensure there is a mandatory command line argument -e <environment>, which corresponds to environment sections in .\config\environments.toml. Examples: "-e dev" or "-e staging".
 The output dir should depend on the environment passed in.
 
 ## Uses gzconfig

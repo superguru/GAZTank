@@ -472,7 +472,7 @@ python -m utils.serve
 
 Visit: `http://localhost:7190` (dev) or `http://localhost:7191` (staging)
 
-**Environment Configuration:** Ports and directories are configured in `config/pipeline.toml`
+**Environment Configuration:** Ports and directories are configured in `config/environments.toml`
 
 #### 2. Make Changes
 
