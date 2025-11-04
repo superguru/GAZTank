@@ -18,7 +18,6 @@ from pathlib import Path
 from datetime import datetime
 from xml.etree.ElementTree import Element, SubElement, tostring
 from xml.dom import minidom
-import re
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -27,16 +26,18 @@ from utils.gzconfig import get_pipeline_config
 
 
 def get_content_files(content_dir, log):
-    """Get all HTML content files"""
+    """Get all HTML content files (including subdirectories)"""
     if not content_dir.exists():
         log.wrn(f"Content directory not found: {content_dir}")
         print(f"Warning: Content directory not found: {content_dir}")
         return []
     
     content_files = []
-    for file in content_dir.glob('*.html'):
-        # Extract content key from filename (without .html extension)
-        content_key = file.stem
+    for file in content_dir.rglob('*.html'):
+        # Extract content key as relative path from content_dir (without .html extension)
+        # Convert backslashes to forward slashes for URL compatibility
+        relative_path = file.relative_to(content_dir)
+        content_key = str(relative_path.with_suffix('')).replace('\\', '/')
         content_files.append(content_key)
     
     log.inf(f"Found {len(content_files)} content files in {content_dir}")
@@ -46,7 +47,7 @@ def get_content_files(content_dir, log):
 def parse_navigation_structure(index_file, log):
     """
     Parse index.html to extract navigation hierarchy and determine priorities
-    Returns dict with content_key -> {'level': int, 'parent': str}
+    Returns dict with content_key -> {'level': int, 'priority': float}
     """
     if not index_file.exists():
         log.wrn(f"index.html not found: {index_file}")
@@ -58,30 +59,33 @@ def parse_navigation_structure(index_file, log):
     
     structure = {}
     
-    # Find all data-content attributes and their nav levels
-    # Pattern: <a href="#" data-content="CONTENT_KEY">
-    pattern = r'<a\s+href="#"\s+data-content="([^"]+)"'
-    
-    # Find nav level classes to determine hierarchy
-    # Look for nav-level-1, nav-level-2, etc.
+    # Parse line by line to find nav levels and data-content attributes
     lines = html.split('\n')
     current_level = 1
     
     for line in lines:
-        # Detect nav level
+        # Detect nav level by looking for class="nav-level-N"
         if 'class="nav-level-' in line:
-            level_match = re.search(r'nav-level-(\d+)', line)
-            if level_match:
-                current_level = int(level_match.group(1))
+            # Extract the level number
+            start = line.find('nav-level-') + 10  # length of 'nav-level-'
+            end = start
+            while end < len(line) and line[end].isdigit():
+                end += 1
+            if end > start:
+                current_level = int(line[start:end])
         
         # Find data-content links
-        match = re.search(pattern, line)
-        if match:
-            content_key = match.group(1)
-            structure[content_key] = {
-                'level': current_level,
-                'priority': calculate_priority(current_level, content_key)
-            }
+        # Look for data-content="CONTENT_KEY" in anchor tags
+        if 'data-content="' in line and '<a ' in line:
+            # Extract content key from data-content attribute
+            start = line.find('data-content="') + 14  # length of 'data-content="'
+            end = line.find('"', start)
+            if end > start:
+                content_key = line[start:end]
+                structure[content_key] = {
+                    'level': current_level,
+                    'priority': calculate_priority(current_level, content_key)
+                }
     
     log.inf(f"Parsed {len(structure)} navigation entries from {index_file.name}")
     return structure
@@ -221,7 +225,8 @@ def generate_sitemap(base_url, content_dir, index_file, output_file, log, dry_ru
         
         # Last modified date
         lastmod = SubElement(url, 'lastmod')
-        content_file = content_dir / f"{content_key}.html"
+        # content_key may include subdirectories (e.g., "setup/README")
+        content_file = content_dir / (content_key + '.html')
         lastmod.text = get_file_last_modified(content_file)
         
         # Change frequency
