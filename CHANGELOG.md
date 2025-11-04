@@ -14,6 +14,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added `https://cdnjs.cloudflare.com` for Prism.js syntax highlighting
   - Fixes mermaid diagram rendering on production site
 
+### Changed
+- **Clean Module: Automatic Deploy Backup Removal** (November 5, 2025)
+  - Automatically removes old deploy backup directories (e.g., `.20251105_092533_309_tnfs2`)
+  - Runs every time clean module executes, regardless of mode or arguments
+  - No prompts or confirmation required for backup removal
+  - Preserves `.metainfo` directory (system metadata)
+  - Backup removal statistics included in logs and console output
+  
+- **Sitemap Module: Removed Regex Dependency** (November 5, 2025)
+  - Rewrote navigation parsing to use string methods instead of `re` module
+  - Now scans subdirectories recursively for all HTML content files
+  - Fixed sitemap generation to include all 33 content files (was only including 6)
+  - Improved performance and maintainability
+
 ### Added
 - **10-Step Pipeline Architecture** (November 4, 2025)
   - **Compose Module**: Source content generation from templates (step 2)

@@ -48,6 +48,7 @@ This separation ensures:
 ### Core Functionality
 
 - **Orphaned File Detection**: Compares environment directory against source directory
+- **Deploy Backup Cleanup**: Automatically removes old deploy backup directories (always runs)
 - **Identify-Only Mode** (default): Lists orphaned files without removing them
 - **Clean-Orphaned Mode**: Removes orphaned files with confirmation prompt (`--clean-orphaned`)
 - **Clean-All Mode**: Remove ALL files from environment directory (`--clean-all`)
@@ -58,6 +59,20 @@ This separation ensures:
 - **Environment-Aware**: Works with dev/staging/prod environments
 - **Structured Logging**: Logs to `logs/{environment}/clean_YYYYMMDD.log`
 - **Console Output**: Emoji-decorated progress indicators and summaries
+
+### Deploy Backup Cleanup
+
+The clean module **automatically removes old deploy backup directories** every time it runs, regardless of operating mode or arguments. This cleanup:
+
+- **Runs automatically**: No flags needed, no prompts shown
+- **Targets backup directories**: Removes directories starting with `.2` (date-based deploy backups)
+- **Examples of removed directories**: `.20251105_092533_309_tnfs2`, `.20251105_092921_309_iom87`
+- **Preserved directories**: `.metainfo` and other dot-directories not starting with `.2`
+- **Created by**: Deploy module when uploading files via FTP
+- **Safe to remove**: These are temporary backup directories from deployment operations
+- **Always logged**: Backup removal is logged and included in statistics
+
+Deploy backups are created by the deploy module during FTP uploads to prevent data loss. Once confirmed successful, these backups can be safely removed to save disk space. The clean module specifically targets date-based backup directories (starting with `.2` for year 2xxx) while preserving system directories like `.metainfo`.
 
 ### Orphaned File Detection Logic
 

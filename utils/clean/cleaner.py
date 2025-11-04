@@ -34,6 +34,86 @@ def get_project_root() -> Path:
     return Path(__file__).parent.parent.parent
 
 
+def remove_deploy_backups(env_dir: Path) -> tuple[int, int]:
+    """
+    Remove deploy backup directories (created by deploy module).
+    These are directories starting with a dot and timestamp pattern.
+    Always runs without prompting.
+    
+    Args:
+        env_dir: Environment directory (publish/environment/)
+        
+    Returns:
+        Tuple of (files_removed, directories_removed)
+    """
+    backup_dirs = []
+
+    # Find all directories that look like deploy backups (e.g. .20251105_092533_309_tnfs2)
+    for item in env_dir.iterdir():
+        if item.is_dir() and item.name.startswith('.2'):
+            # Skip .metainfo directory (used by the system)
+            if item.name != '.metainfo':
+                backup_dirs.append(item)
+    
+    if not backup_dirs:
+        return (0, 0)
+    
+    # Count files in backup directories
+    total_files = 0
+    for backup_dir in backup_dirs:
+        total_files += sum(1 for _ in backup_dir.rglob('*') if _.is_file())
+    
+    print(f"  🗑️  Removing {len(backup_dirs)} deploy backup directory(ies) with {total_files} file(s)...")
+    if log:
+        log.inf(f"Removing {len(backup_dirs)} deploy backup directories with {total_files} files")
+    
+    # Remove files and directories
+    removed_files = 0
+    removed_dirs = 0
+    
+    for backup_dir in backup_dirs:
+        # Remove all files in the backup directory
+        for item in backup_dir.rglob('*'):
+            if item.is_file():
+                try:
+                    item.unlink()
+                    removed_files += 1
+                    if log:
+                        log.dbg(f"Removed backup file: {item.relative_to(env_dir)}")
+                except Exception as e:
+                    if log:
+                        log.wrn(f"Could not remove backup file {item.name}: {e}")
+        
+        # Remove empty directories bottom-up
+        for item in sorted(backup_dir.rglob('*'), reverse=True):
+            if item.is_dir() and item.exists():
+                try:
+                    item.rmdir()
+                    removed_dirs += 1
+                    if log:
+                        log.dbg(f"Removed backup subdirectory: {item.relative_to(env_dir)}")
+                except Exception as e:
+                    if log:
+                        log.wrn(f"Could not remove backup subdirectory {item.name}: {e}")
+        
+        # Remove the backup directory itself
+        try:
+            backup_dir.rmdir()
+            removed_dirs += 1
+            if log:
+                log.inf(f"Removed deploy backup directory: {backup_dir.name}")
+        except Exception as e:
+            print(f"    ⚠️  Warning: Could not remove backup directory {backup_dir.name}: {e}")
+            if log:
+                log.wrn(f"Could not remove backup directory {backup_dir.name}: {e}")
+    
+    print(f"  ✓ Removed {removed_files} backup file(s) and {removed_dirs} backup directory(ies)")
+    if log:
+        log.inf(f"Removed {removed_files} backup files and {removed_dirs} backup directories")
+    
+    return (removed_files, removed_dirs)
+
+
 def get_orphaned_files(src_dir: Path, env_dir: Path) -> List[Path]:
     """
     Identify files in env_dir that no longer exist in src_dir (orphaned files).
@@ -340,6 +420,13 @@ def clean_site(environment: str, force: bool = False, dry_run: bool = False, cle
             log.inf("Environment Cleaner completed successfully")
         return True
     
+    # Always remove deploy backup directories (no prompt needed)
+    print("\nRemoving deploy backup directories...")
+    if log:
+        log.inf("Removing deploy backup directories")
+    
+    backup_files_removed, backup_dirs_removed = remove_deploy_backups(env_dir)
+    
     # Handle clean-all mode
     if clean_all:
         print("\nRemoving ALL files from environment directory...")
@@ -401,6 +488,8 @@ def clean_site(environment: str, force: bool = False, dry_run: bool = False, cle
             print(f"  Would remove: {file_count} orphaned file(s)")
         else:
             print(f"  Found: {len(orphaned_files)} orphaned file(s)")
+        if backup_files_removed > 0 or backup_dirs_removed > 0:
+            print(f"  Removed: {backup_files_removed} backup file(s), {backup_dirs_removed} backup directory(ies)")
         if log:
             log.inf("Dry-run completed: No files were modified")
             if clean_all or clean_orphaned:
@@ -416,7 +505,9 @@ def clean_site(environment: str, force: bool = False, dry_run: bool = False, cle
         else:
             print(f"  Found: {len(orphaned_files)} orphaned file(s)")
         if dir_count > 0:
-            print(f"  Removed: {dir_count} directory(ies)")
+            print(f"  Removed: {dir_count} empty directory(ies)")
+        if backup_files_removed > 0 or backup_dirs_removed > 0:
+            print(f"  Removed: {backup_files_removed} backup file(s), {backup_dirs_removed} backup directory(ies)")
         if log:
             log.inf("Environment Cleaner completed successfully")
             if clean_all or clean_orphaned:
@@ -425,6 +516,8 @@ def clean_site(environment: str, force: bool = False, dry_run: bool = False, cle
                     log.inf(f"Removed: {dir_count} directories")
             else:
                 log.inf(f"Found: {len(orphaned_files)} orphaned files (not removed)")
+            if backup_files_removed > 0 or backup_dirs_removed > 0:
+                log.inf(f"Removed: {backup_files_removed} backup files, {backup_dirs_removed} backup directories")
     
     return True
 

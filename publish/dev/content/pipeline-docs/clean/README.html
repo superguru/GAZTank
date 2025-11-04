@@ -66,6 +66,9 @@
 <a href="#core-functionality">Core Functionality</a>
 </li>
 <li>
+<a href="#deploy-backup-cleanup">Deploy Backup Cleanup</a>
+</li>
+<li>
 <a href="#orphaned-file-detection-logic">Orphaned File Detection Logic</a>
 </li>
 <li>
@@ -255,6 +258,7 @@
 <h3 id="core-functionality">Core Functionality</h3>
 <ul>
 <li><strong>Orphaned File Detection</strong>: Compares environment directory against source directory</li>
+<li><strong>Deploy Backup Cleanup</strong>: Automatically removes old deploy backup directories (always runs)</li>
 <li><strong>Identify-Only Mode</strong> (default): Lists orphaned files without removing them</li>
 <li><strong>Clean-Orphaned Mode</strong>: Removes orphaned files with confirmation prompt (<code>--clean-orphaned</code>)</li>
 <li><strong>Clean-All Mode</strong>: Remove ALL files from environment directory (<code>--clean-all</code>)</li>
@@ -266,6 +270,17 @@
 <li><strong>Structured Logging</strong>: Logs to <code>logs/{environment}/clean_YYYYMMDD.log</code></li>
 <li><strong>Console Output</strong>: Emoji-decorated progress indicators and summaries</li>
 </ul>
+<h3 id="deploy-backup-cleanup">Deploy Backup Cleanup</h3>
+<p>The clean module <strong>automatically removes old deploy backup directories</strong> every time it runs, regardless of operating mode or arguments. This cleanup:</p>
+<ul>
+<li><strong>Runs automatically</strong>: No flags needed, no prompts shown</li>
+<li><strong>Targets backup directories</strong>: Removes directories starting with <code>.</code> (except <code>.metainfo</code>)</li>
+<li><strong>Examples of removed directories</strong>: <code>.20251105_092533_309_tnfs2</code>, <code>.20251105_092921_309_iom87</code></li>
+<li><strong>Created by</strong>: Deploy module when uploading files via FTP</li>
+<li><strong>Safe to remove</strong>: These are temporary backup directories from deployment operations</li>
+<li><strong>Always logged</strong>: Backup removal is logged and included in statistics</li>
+</ul>
+<p>Deploy backups are created by the deploy module during FTP uploads to prevent data loss. Once confirmed successful, these backups can be safely removed to save disk space.</p>
 <h3 id="orphaned-file-detection-logic">Orphaned File Detection Logic</h3>
 <p>The cleaner determines orphaned files by:</p>
 <ol>
