@@ -237,7 +237,7 @@ def deploy_package(environment: str, dry_run: bool = False, force: bool = False)
     # Load configurations
     try:
         env_config: PipelineEnvironment = get_pipeline_config(environment)  # type: ignore
-        deploy_config: DeployConfig = get_deploy_config()  # type: ignore
+        deploy_config: DeployConfig = get_deploy_config(environment)  # type: ignore
     except (FileNotFoundError, ValueError) as e:
         log.err(f"Configuration error: {e}")
         print(f"❌ Configuration error: {e}")

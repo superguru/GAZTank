@@ -66,30 +66,24 @@ class DeployConfig:
         )
 
 
-# Module-level cache
-_cached_config: Optional[DeployConfig] = None
-
-
-def get_deploy_config() -> DeployConfig:
+def get_deploy_config(environment: str) -> DeployConfig:
     """
-    Load and parse deploy.toml configuration file.
+    Load and parse deploy.toml configuration file for specific environment.
+    
+    Args:
+        environment: Environment name (dev, staging, prod)
     
     Returns:
-        DeployConfig object with FTP deployment settings
+        DeployConfig object with FTP deployment settings for the environment
         
     Raises:
         FileNotFoundError: If deploy.toml doesn't exist
-        ValueError: If required fields are missing or invalid
+        ValueError: If required fields are missing or invalid, or environment not found
         
     Note:
-        Results are cached after first load. The config file is only
-        read once per process.
+        Configuration is read fresh each time to support different environments.
+        The environment parameter determines which [ftp.env] section to use.
     """
-    global _cached_config
-    
-    if _cached_config is not None:
-        return _cached_config
-    
     # Find config file
     config_path = Path(__file__).parent.parent.parent / "config" / "deploy.toml"
     
@@ -107,18 +101,29 @@ def get_deploy_config() -> DeployConfig:
     if "ftp" not in data:
         raise ValueError("deploy.toml must contain [ftp] section")
     
-    ftp_data = data["ftp"]
+    ftp_section = data["ftp"]
+    
+    # Check if environment exists
+    if environment not in ftp_section:
+        available_envs = ', '.join(ftp_section.keys())
+        raise ValueError(
+            f"Environment '{environment}' not found in deploy.toml [ftp] section.\n"
+            f"Available environments: {available_envs}\n"
+            f"Add a [ftp.{environment}] section to config/deploy.toml"
+        )
+    
+    ftp_data = ftp_section[environment]
     
     # Check required fields
     required_fields = ["server", "username", "password", "target_dir"]
     missing = [field for field in required_fields if field not in ftp_data]
     if missing:
         raise ValueError(
-            f"Missing required fields in [ftp] section: {', '.join(missing)}"
+            f"Missing required fields in [ftp.{environment}] section: {', '.join(missing)}"
         )
     
     # Create config object with defaults
-    _cached_config = DeployConfig(
+    return DeployConfig(
         server=ftp_data["server"],
         username=ftp_data["username"],
         password=ftp_data["password"],
@@ -128,5 +133,3 @@ def get_deploy_config() -> DeployConfig:
         upload_subdir_fmt=ftp_data.get("upload_subdir_fmt", "%Y%m%d_%H%M%S_%j"),
         upload_subdir_postfix_len=ftp_data.get("upload_subdir_postfix_len", 5),
     )
-    
-    return _cached_config
