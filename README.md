@@ -1,9 +1,9 @@
 # GAZ Tank
 
-![GitHub release](https://img.shields.io/github/v/release/username/GAZTank)
-![License](https://img.shields.io/github/license/username/GAZTank)
+![GitHub release](https://img.shields.io/github/v/release/superguru/GAZTank)
+![License](https://img.shields.io/github/license/superguru/GAZTank)
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
-![Issues](https://img.shields.io/github/issues/username/GAZTank)
+![Issues](https://img.shields.io/github/issues/superguru/GAZTank)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 <div class="image-text-row">
