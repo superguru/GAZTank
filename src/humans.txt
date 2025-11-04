@@ -1,6 +1,6 @@
 /* TEAM */
 Authors: superguru, gazorper
-Site: https://mygaztank.com
+Site: https://gaztank.com
 Location: Online
 
 /* SITE */

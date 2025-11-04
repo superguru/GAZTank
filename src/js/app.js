@@ -519,7 +519,7 @@ function updatePageMetadata(contentKey, contentDiv) {
   // Update Open Graph URL
   let ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) {
-    ogUrl.setAttribute('content', `https://mygaztank.com/#${contentKey}`);
+    ogUrl.setAttribute('content', `https://gaztank.com/#${contentKey}`);
   }
 
   // Update Twitter title
@@ -537,13 +537,13 @@ function updatePageMetadata(contentKey, contentDiv) {
   // Update Twitter URL
   let twitterUrl = document.querySelector('meta[name="twitter:url"]');
   if (twitterUrl) {
-    twitterUrl.setAttribute('content', `https://mygaztank.com/#${contentKey}`);
+    twitterUrl.setAttribute('content', `https://gaztank.com/#${contentKey}`);
   }
 
   // Update canonical URL
   let canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) {
-    canonical.setAttribute('href', `https://mygaztank.com/#${contentKey}`);
+    canonical.setAttribute('href', `https://gaztank.com/#${contentKey}`);
   }
 }
 
@@ -985,9 +985,9 @@ async function loadContent(contentKey, saveToStorage = true, updateHash = true) 
 }
 
 /**
- * Get the first navigation item's content key
- * @returns {string} The data-content value of the first navigation link
- */
+* Get the first navigation item's content key
+* @returns {string} The data-content value of the first navigation link
+*/
 function getFirstNavigationItem() {
   const firstNavLink = document.querySelector('#sidebar .nav-level-1 > li:first-child a[data-content]');
   return firstNavLink ? firstNavLink.dataset.content : 'home'; // fallback to 'home' if not found

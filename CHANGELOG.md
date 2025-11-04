@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **10-Step Pipeline Architecture** (November 4, 2025)
+  - **Compose Module**: Source content generation from templates (step 2)
+  - **Normalise Module**: Markdown file formatting normalization (step 5)
+  - Pipeline now: clean → compose → setup → gzlint → normalise → generate → sitemap → toc → package → deploy
+  - Separation of concerns: normalise handles formatting, generate handles conversion
+  - Batch normaliser (`utils/normalise/batch.py`) for pipeline integration
+  
+- **Clean Module Safety Features v1.2** (November 4, 2025)
+  - **Identify-Only Default**: Clean step no longer deletes files by default
+  - `--clean-orphaned` flag: Targeted cleanup of orphaned files (requires confirmation)
+  - `--clean-all` flag: Complete environment cleanup (requires confirmation)
+  - `--force` flag: Skip confirmation prompts for automation
+  - Three operating modes: identify-only (default), clean-orphaned, clean-all
+  - Confirmation prompts require typing "yes" to proceed
+  - Safe defaults prevent accidental data loss
+  
 - Developer setup documentation (`docs/DEVELOPER_SETUP.md`)
 - Professional repository structure (LICENSE, CONTRIBUTING, CHANGELOG)
 - Python requirements.txt for dependency management
@@ -60,6 +76,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Can only be used with `-e` and optionally `--force` (no other parameters allowed)
 
 ### Changed
+- **Pipeline Architecture** (November 4, 2025)
+  - Expanded from 8 to 10 steps for better separation of concerns
+  - Generate module no longer handles markdown normalization
+  - Normalise step runs before generate to ensure consistent formatting
+  - All documentation updated to reflect 10-step pipeline
+  
+- **Module Documentation Updates** (November 4, 2025)
+  - `utils/clean/README.md` → v1.2: Documents three operating modes, confirmation prompts
+  - `utils/gzbuild/README.md` → v1.1: Updated to 10-step pipeline, safe clean defaults
+  - `README.md`: Updated with current 10-step pipeline and clean safety notes
+  - `dev/00TODO/PROFESSIONAL_REPO_SETUP.md`: Reflects current architecture
+  
 - **Parameter Rename**: `--force-apply` renamed to `--force` for brevity
   - Usage: `python utils/setup/setup_site.py -e dev --force`
   - Skips all prompts and applies current site.toml configuration
@@ -100,6 +128,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Setup modifies files in src/ directory based on site.toml configuration
   - Modified files are automatically copied to specified environment directory (publish/dev, publish/prod, etc.)
   - Ensures environment directories stay synchronized with latest configuration
+
+## [0.0.1] - 2025-11-04
+
+### Added
+- **10-Step Build Pipeline**
+  - Added compose module for source content generation
+  - Added normalise module for markdown formatting
+  - Complete pipeline: clean → compose → setup → gzlint → normalise → generate → sitemap → toc → package → deploy
+  - Better separation of concerns between modules
+
+- **Enhanced Clean Module (v1.2)**
+  - Safe defaults: identify-only mode (no deletion)
+  - `--clean-orphaned` flag with confirmation prompt
+  - `--clean-all` flag with confirmation prompt
+  - `--force` flag to skip confirmations
+  - Three operating modes documented
+
+### Changed
+- Generate module no longer handles markdown normalization
+- All documentation updated to reflect 10-step pipeline
+- Clean module now requires explicit flags for deletion
+- Improved safety with confirmation prompts
+
+### Documentation
+- Updated `utils/clean/README.md` to v1.2
+- Updated `utils/gzbuild/README.md` to v1.1
+- Updated main `README.md` with 10-step pipeline
+- Updated `dev/00TODO/PROFESSIONAL_REPO_SETUP.md`
 
 ## [1.0.0] - 2025-10-20
 
@@ -258,11 +314,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
-- **1.0.0** (2025-10-20) - Major feature release with TOC enhancements, SEO improvements, GZLint validation
-- **0.9.0** (2025-10-15) - Setup wizard modularization and build pipeline automation
-- **0.8.0** (2025-10-10) - Navigation system, SEO features, and content management
-- **0.7.0** (2025-10-05) - Development tools and configuration system
-- **0.6.0** (2025-09-30) - Initial public release
+- **0.0.1** (2025-11-04) - Pipeline expansion to 10 steps, clean module safety enhancements, comprehensive documentation updates
+- **0.0.0** (2025-10-20) - Major feature release with TOC enhancements, SEO improvements, GZLint validation
+- **0.0.0** (2025-10-15) - Setup wizard modularization and build pipeline automation
+- **0.0.0** (2025-10-10) - Navigation system, SEO features, and content management
+- **0.0.0** (2025-10-05) - Development tools and configuration system
+- **0.0.0** (2025-09-30) - Initial public release
 
 ---
 
@@ -277,9 +334,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/yourusername/GAZTank/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/GAZTank/compare/v0.9.0...v1.0.0
-[0.9.0]: https://github.com/yourusername/GAZTank/compare/v0.8.0...v0.9.0
-[0.8.0]: https://github.com/yourusername/GAZTank/compare/v0.7.0...v0.8.0
-[0.7.0]: https://github.com/yourusername/GAZTank/compare/v0.6.0...v0.7.0
-[0.6.0]: https://github.com/yourusername/GAZTank/releases/tag/v0.6.0
+[Unreleased]: https://github.com/yourusername/GAZTank/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/yourusername/GAZTank/compare/v1.0.0...v0.0.1

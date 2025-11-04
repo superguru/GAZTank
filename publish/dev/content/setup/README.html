@@ -1,9 +1,14 @@
 <h1>GAZ Tank</h1>
+<p><img alt="GitHub release" src="https://img.shields.io/github/v/release/superguru/GAZTank"/><br/>
+<img alt="License" src="https://img.shields.io/github/license/superguru/GAZTank"/><br/>
+<img alt="Python" src="https://img.shields.io/badge/python-3.11+-blue.svg"/><br/>
+<img alt="Issues" src="https://img.shields.io/github/issues/superguru/GAZTank"/><br/>
+<img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/></p>
 <div class="image-text-row">
 <img alt="GAZ Tank Logo" class="no-lazy" src="../images/gaztank_logo_75x75.webp"/>
 <p>
 A modern, single-page web application built with native CSS Grid, Flexbox, and vanilla JavaScript - no frameworks or libraries required.
-<br/><em>Some JS libraries are used for optional features, which will not be loaded at all in the site if turned off<em>
+<br/><em>Some JS libraries are used for optional features, which will not be loaded at all in the site if turned off, for example Prism and Mermaid<em>
 </em></em></p>
 </div>
 <pre><code class="language-textfile">Note:
@@ -297,9 +302,11 @@ scripts\gzbuild.cmd -e dev
 </code></pre>
 <p>This executes the full pipeline in order:</p>
 <ol>
-<li><strong>clean</strong> - Remove orphaned files from target environment</li>
+<li><strong>clean</strong> - Identify orphaned files in target environment (no deletion by default)</li>
+<li><strong>compose</strong> - Generate source content from templates</li>
 <li><strong>setup --force</strong> - Apply site configuration and regenerate config-driven files</li>
 <li><strong>gzlint</strong> - Run linting checks on all content</li>
+<li><strong>normalise</strong> - Normalize markdown file formatting</li>
 <li><strong>generate</strong> - Generate fresh content files</li>
 <li><strong>sitemap</strong> - Generate sitemap.xml</li>
 <li><strong>toc</strong> - Generate table of contents</li>
@@ -307,6 +314,7 @@ scripts\gzbuild.cmd -e dev
 <li><strong>deploy</strong> - Deploy to target environment</li>
 </ol>
 <p>Perfect for a complete site rebuild and deployment.</p>
+<p><strong>Note:</strong> The clean step identifies orphaned files but doesn't delete them by default. Use <code>scripts\gzbuild.cmd -e dev --clean-orphaned</code> or <code>--clean-all</code> separately if you need to remove files (requires confirmation prompt).</p>
 <h3>Deploying to FTP Server</h3>
 <h4>First-time setup</h4>
 <ol>
