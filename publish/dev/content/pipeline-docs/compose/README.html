@@ -1,0 +1,959 @@
+<h1>HTML Composition Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#how-it-works">How It Works</a>
+</li>
+<li>
+<a href="#component-types">Component Types</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#customisation">Customisation</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#key-capabilities">Key Capabilities</a>
+</li>
+<li>
+<a href="#design-goals">Design Goals</a>
+</li>
+<li>
+<a href="#typical-workflow">Typical Workflow:</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-file-example">Log File Example</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#from-python-code">From Python Code</a>
+</li>
+<li>
+<a href="#examples">Examples:</a>
+</li>
+<li>
+<a href="#key-classes">Key Classes</a>
+</li>
+<li>
+<a href="#composition-markers">Composition Markers</a>
+</li>
+<li>
+<a href="#conditional-inclusion">Conditional Inclusion</a>
+</li>
+<li>
+<a href="#component-transformations">Component Transformations</a>
+</li>
+<li>
+<a href="#composetoml">compose.toml</a>
+</li>
+<li>
+<a href="#sitetoml-integration">site.toml Integration</a>
+</li>
+<li>
+<a href="#execution-flow">Execution Flow</a>
+</li>
+<li>
+<a href="#example-execution">Example Execution</a>
+</li>
+<li>
+<a href="#markdown-components">Markdown Components</a>
+</li>
+<li>
+<a href="#raw-html-components">Raw HTML Components</a>
+</li>
+<li>
+<a href="#command-line-scripts">1. Command Line Scripts</a>
+</li>
+<li>
+<a href="#python-module">2. Python Module</a>
+</li>
+<li>
+<a href="#pipeline-orchestrator">3. Pipeline Orchestrator</a>
+</li>
+<li>
+<a href="#python-import">4. Python Import</a>
+</li>
+<li>
+<a href="#adding-new-transform-types">Adding New Transform Types</a>
+</li>
+<li>
+<a href="#adding-new-compositions">Adding New Compositions</a>
+</li>
+<li>
+<a href="#custom-component-directory">Custom Component Directory</a>
+</li>
+<li>
+<a href="#multiple-markers">Multiple Markers</a>
+</li>
+<li>
+<a href="#conditional-css-classes">Conditional CSS Classes</a>
+</li>
+<li>
+<a href="#issue-component-not-injected">Issue: Component not injected</a>
+</li>
+<li>
+<a href="#issue-markdown-not-transformed-correctly">Issue: Markdown not transformed correctly</a>
+</li>
+<li>
+<a href="#issue-component-source-not-found">Issue: "Component source not found"</a>
+</li>
+<li>
+<a href="#issue-feature-flag-not-working">Issue: Feature flag not working</a>
+</li>
+<li>
+<a href="#component-organization">Component Organization</a>
+</li>
+<li>
+<a href="#marker-comments">Marker Comments</a>
+</li>
+<li>
+<a href="#git-ignore-generated-files">Git Ignore Generated Files</a>
+</li>
+<li>
+<a href="#composition-order">Composition Order</a>
+</li>
+<li>
+<a href="#testing">Testing</a>
+</li>
+<li>
+<a href="#planned-features">Planned Features</a>
+</li>
+<li>
+<a href="#extension-points">Extension Points</a>
+<ul>
+<li>
+<a href="#logged-to-file">Logged to file:</a>
+</li>
+<li>
+<a href="#console-output">Console output:</a>
+</li>
+<li>
+<a href="#componenttransformer">ComponentTransformer</a>
+</li>
+<li>
+<a href="#htmlcomposer">HTMLComposer</a>
+</li>
+<li>
+<a href="#markdown-to-navigation-html">Markdown to Navigation HTML:</a>
+</li>
+<li>
+<a href="#composition-fields">Composition Fields:</a>
+</li>
+<li>
+<a href="#component-fields">Component Fields:</a>
+</li>
+<li>
+<a href="#input-files">Input Files:</a>
+</li>
+<li>
+<a href="#command">Command:</a>
+</li>
+<li>
+<a href="#output-srcindexhtml">Output (src/index.html):</a>
+</li>
+<li>
+<a href="#example">Example:</a>
+</li>
+<li>
+<a href="#example-1">Example:</a>
+</li>
+<li>
+<a href="#windows">Windows:</a>
+</li>
+<li>
+<a href="#linuxmac">Linux/Mac:</a>
+</li>
+<li>
+<a href="#causes">Causes:</a>
+</li>
+<li>
+<a href="#solutions">Solutions:</a>
+</li>
+<li>
+<a href="#causes-1">Causes:</a>
+</li>
+<li>
+<a href="#solutions-1">Solutions:</a>
+</li>
+<li>
+<a href="#causes-2">Causes:</a>
+</li>
+<li>
+<a href="#solutions-2">Solutions:</a>
+</li>
+<li>
+<a href="#causes-3">Causes:</a>
+</li>
+<li>
+<a href="#solutions-3">Solutions:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Assembles HTML files from source components based on configuration. Enables conditional inclusion of HTML sections based on feature flags.</p>
+<p><strong>Version:</strong> 1.0<br/>
+<strong>Last Updated:</strong> November 4, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#how-it-works">How It Works</a></li>
+<li><a href="#component-types">Component Types</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#customisation">Customisation</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The Composition Module assembles HTML files from source components, enabling:</p>
+<ol>
+<li><strong>Conditional HTML Sections</strong> - Include/exclude components based on feature flags</li>
+<li><strong>Markdown Navigation</strong> - Define navigation in markdown, transform to HTML</li>
+<li><strong>Component Reusability</strong> - Separate reusable components from base templates</li>
+<li><strong>Build-Time Assembly</strong> - Compose HTML before configuration and deployment</li>
+<li><strong>Clear Separation</strong> - Source components tracked in git, output ignored</li>
+</ol>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<ul>
+<li>Reads composition definitions from <code>config/compose.toml</code></li>
+<li>Processes <code>&lt;!-- COMPOSE:KEY:config_flag --&gt;</code> markers in base HTML</li>
+<li>Transforms markdown components to proper HTML structures</li>
+<li>Conditionally includes/excludes based on <code>site.toml</code> feature flags</li>
+<li>Adds CSS classes when components disabled (e.g., <code>no-sidebar</code>)</li>
+<li>Supports multiple compositions in configurable execution order</li>
+</ul>
+<h3 id="design-goals">Design Goals</h3>
+<ul>
+<li><strong>Source vs Output</strong>: Clear separation between source components and generated files</li>
+<li><strong>Configuration-Driven</strong>: All compositions defined in compose.toml</li>
+<li><strong>Pipeline Integration</strong>: Runs as step 0 before setup/generate</li>
+<li><strong>Extensible</strong>: Easy to add new component types and transformers</li>
+<li><strong>Safe</strong>: Validates paths and provides clear error messages</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The composition module is <strong>Step 0</strong> in the GAZTank build pipeline:</p>
+<pre><code>Build Pipeline:
+  0. compose  → Assemble index.html from src/components/
+  1. clean    → Clean orphaned files
+  2. setup    → Apply config to composed index.html
+  3. gzlint   → Lint checks
+  4. generate → Markdown to HTML
+  5. sitemap  → Generate sitemap
+  6. toc      → Generate TOC
+  7. package  → Package files
+  8. deploy   → Deploy to environment
+</code></pre>
+<h3 id="typical-workflow">Typical Workflow:</h3>
+<pre><code class="language-powershell"># Windows
+.\scripts\compose.cmd -e dev
+.\scripts\setup.cmd -e dev
+.\scripts\generate.cmd -e dev
+
+# Linux/Mac
+./scripts/compose.sh -e dev
+./scripts/setup.sh -e dev
+./scripts/generate.sh -e dev
+</code></pre>
+<h2 id="logging">Logging</h2>
+<p>The module uses <strong>gzlogging</strong> infrastructure for environment-aware operational logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> Specified via <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>compose</code></li>
+<li><strong>Log Location:</strong> <code>logs/{environment}/compose_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> File + Console</li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<h4 id="logged-to-file">Logged to file:</h4>
+<ul>
+<li>HTML Composition started</li>
+<li>Environment and force flag</li>
+<li>Number of compositions to process</li>
+<li>Each composition: description and result</li>
+<li>Component injection/skipping events</li>
+<li>Composition markers processed</li>
+<li>Success/failure status</li>
+<li>Errors and warnings</li>
+</ul>
+<h4 id="console-output">Console output:</h4>
+<ul>
+<li>Progress indicators: [1/N] through [N/N]</li>
+<li>Success checkmarks (✓) and crosses (❌)</li>
+<li>Composition summaries</li>
+<li>Warning symbols (⚠) for missing components</li>
+</ul>
+<h3 id="log-file-example">Log File Example</h3>
+<pre><code class="language-log">[2025-11-04 14:32:10] [dev] [INF] ============================================================
+[2025-11-04 14:32:10] [dev] [INF] HTML Composition started
+[2025-11-04 14:32:10] [dev] [INF] Environment: dev
+[2025-11-04 14:32:10] [dev] [INF] Force: False
+[2025-11-04 14:32:10] [dev] [INF] Processing 1 composition(s)
+[2025-11-04 14:32:10] [dev] [INF] Composition 1/1: Main site HTML with conditional sidebar navigation
+[2025-11-04 14:32:10] [dev] [INF] Marker SIDEBAR (flag: enable_sidebar_toggle = True)
+[2025-11-04 14:32:10] [dev] [INF] Wrote composed HTML: src\index.html
+[2025-11-04 14:32:10] [dev] [INF] Successfully composed 1/1 file(s)
+[2025-11-04 14:32:10] [dev] [INF] HTML Composition completed successfully
+[2025-11-04 14:32:10] [dev] [INF] ============================================================
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<pre><code class="language-powershell"># Windows
+.\scripts\compose.cmd -e dev
+.\scripts\compose.cmd -e staging --force
+.\scripts\compose.cmd -e prod
+
+# Linux/Mac
+./scripts/compose.sh -e dev
+./scripts/compose.sh -e staging --force
+./scripts/compose.sh -e prod
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<pre><code class="language-python">python -m utils.compose -e dev
+python -m utils.compose -e staging --force
+python -m utils.compose --help
+</code></pre>
+<h3 id="from-python-code">From Python Code</h3>
+<pre><code class="language-python">from utils.compose.composer import HTMLComposer
+from gzconfig import get_site_config, get_compose_config
+from gzlogging import get_logger
+
+# Initialize
+logger = get_logger('compose', 'dev')
+site_config = get_site_config()
+compose_config = get_compose_config()
+
+# Create composer
+composer = HTMLComposer(
+    site_config=site_config,
+    compose_config=compose_config,
+    environment='dev',
+    logger=logger,
+    force=False
+)
+
+# Execute all compositions
+result = composer.compose_all()
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-e</code>, <code>--environment</code></td>
+<td>Yes</td>
+<td>Target environment: <code>dev</code>, <code>staging</code>, or <code>prod</code></td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td>No</td>
+<td>Force recomposition even if files are up-to-date</td>
+</tr>
+<tr>
+<td><code>-h</code>, <code>--help</code></td>
+<td>No</td>
+<td>Show help message and exit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples:</h3>
+<pre><code class="language-bash"># Compose for development
+python -m utils.compose -e dev
+
+# Force recomposition for staging
+python -m utils.compose -e staging --force
+
+# Show help
+python -m utils.compose --help
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>utils/compose/
+├── __init__.py           # Module exports
+├── __main__.py           # CLI entry point (python -m utils.compose)
+├── composer.py           # Main composition logic
+├── README.md             # This file
+└── tests/                # Unit tests (future)
+    └── test_composer.py
+</code></pre>
+<h3 id="key-classes">Key Classes</h3>
+<h4 id="componenttransformer"><code>ComponentTransformer</code></h4>
+<ul>
+<li>Transforms component sources to HTML</li>
+<li>Supports 'navigation' and 'raw' transform types</li>
+<li>Converts markdown lists to navigation HTML structures</li>
+</ul>
+<h4 id="htmlcomposer"><code>HTMLComposer</code></h4>
+<ul>
+<li>Main composition orchestrator</li>
+<li>Reads compose.toml and site.toml</li>
+<li>Processes composition markers</li>
+<li>Manages component injection/removal</li>
+<li>Writes composed output files</li>
+</ul>
+<h2 id="features">Features</h2>
+<h3 id="composition-markers">Composition Markers</h3>
+<p>Insert markers in base HTML files:</p>
+<pre><code class="language-html">&lt;div class="main-container"&gt;
+  &lt;!-- COMPOSE:SIDEBAR:enable_sidebar_toggle --&gt;
+  &lt;main id="content"&gt;
+    ...
+  &lt;/main&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>Marker Format:</strong> <code>&lt;!-- COMPOSE:COMPONENT_KEY:config_flag --&gt;</code></p>
+<ul>
+<li><code>COMPONENT_KEY</code>: Matches <code>key</code> field in compose.toml component</li>
+<li><code>config_flag</code>: Feature flag name from <code>site.toml [features]</code> section</li>
+</ul>
+<h3 id="conditional-inclusion">Conditional Inclusion</h3>
+<p>If <code>site.toml</code> has:</p>
+<pre><code class="language-toml">[features]
+enable_sidebar_toggle = true
+</code></pre>
+<p>Then marker <code>&lt;!-- COMPOSE:SIDEBAR:enable_sidebar_toggle --&gt;</code> will:</p>
+<ul>
+<li>✅ <strong>true</strong>: Inject sidebar component at marker location</li>
+<li>❌ <strong>false</strong>: Remove marker, add <code>no-sidebar</code> class to <code>.main-container</code></li>
+</ul>
+<h3 id="component-transformations">Component Transformations</h3>
+<h4 id="markdown-to-navigation-html">Markdown to Navigation HTML:</h4>
+<p>Input (<code>src/components/sidebar.md</code>):</p>
+<pre><code class="language-markdown">- [Home](#home)
+- [Guide](#guide)
+  - [Setup](#guide/setup)
+  - [Tutorial](#guide/tutorial)
+</code></pre>
+<p>Output (injected):</p>
+<pre><code class="language-html">&lt;nav id="sidebar"&gt;
+  &lt;button aria-label="Toggle sidebar" class="sidebar-toggle" id="sidebar-toggle"&gt;◀&lt;/button&gt;
+  &lt;ul class="nav-level-1"&gt;
+    &lt;li&gt;&lt;a data-content="home" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="has-children"&gt;
+      &lt;div class="nav-item-wrapper"&gt;
+        &lt;a data-content="guide" href="#"&gt;Guide&lt;/a&gt;
+        &lt;button aria-label="Toggle submenu" class="nav-toggle"&gt;▼&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;ul class="nav-level-2"&gt;
+        &lt;li&gt;&lt;a data-content="guide/setup" href="#"&gt;Setup&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a data-content="guide/tutorial" href="#"&gt;Tutorial&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<h3 id="composetoml">compose.toml</h3>
+<p>Location: <code>config/compose.toml</code></p>
+<pre><code class="language-toml">[[compositions]]
+output = "src/index.html"
+base = "src/components/index-base.html"
+description = "Main site HTML with conditional sidebar navigation"
+
+[[compositions.components]]
+key = "SIDEBAR"
+source = "src/components/sidebar.md"
+type = "markdown"
+description = "Navigation sidebar (markdown source)"
+transform = "navigation"  # Special transformer for nav lists
+</code></pre>
+<h4 id="composition-fields">Composition Fields:</h4>
+<ul>
+<li><code>output</code>: Target file path (where to write composed HTML)</li>
+<li><code>base</code>: Base HTML template with composition markers</li>
+<li><code>description</code>: Human-readable description for logs</li>
+<li><code>components</code>: Array of component definitions</li>
+</ul>
+<h4 id="component-fields">Component Fields:</h4>
+<ul>
+<li><code>key</code>: Unique identifier (matches COMPOSE:KEY in markers)</li>
+<li><code>source</code>: Path to component source file</li>
+<li><code>type</code>: Component type (<code>markdown</code>, <code>html</code>, etc.)</li>
+<li><code>description</code>: Human-readable description</li>
+<li><code>transform</code>: Transformation type (<code>navigation</code>, <code>raw</code>)</li>
+</ul>
+<h3 id="sitetoml-integration">site.toml Integration</h3>
+<p>Composition module reads feature flags from <code>config/site.toml</code>:</p>
+<pre><code class="language-toml">[features]
+enable_sidebar_toggle = true
+enable_breadcrumbs = true
+enable_toc = true
+</code></pre>
+<p>Each <code>&lt;!-- COMPOSE:KEY:config_flag --&gt;</code> marker checks the corresponding flag.</p>
+<h2 id="how-it-works">How It Works</h2>
+<h3 id="execution-flow">Execution Flow</h3>
+<ol>
+<li><p><strong>Load Configurations</strong></p>
+<ul>
+<li>Read <code>config/compose.toml</code> for composition definitions</li>
+<li>Read <code>config/site.toml</code> for feature flags</li>
+</ul>
+</li>
+<li><p><strong>Process Each Composition</strong> (in order)</p>
+<ul>
+<li>Read base HTML file</li>
+<li>Parse with BeautifulSoup</li>
+</ul>
+</li>
+<li><p><strong>Find Composition Markers</strong></p>
+<ul>
+<li>Search for <code>&lt;!-- COMPOSE:KEY:flag --&gt;</code> comments</li>
+<li>Extract component KEY and config flag</li>
+</ul>
+</li>
+<li><p><strong>Check Feature Flag</strong></p>
+<ul>
+<li>Look up flag in <code>site.toml [features]</code></li>
+<li>Default to <code>true</code> if not specified</li>
+</ul>
+</li>
+<li><p><strong>Generate Component</strong></p>
+<ul>
+<li>If enabled: Load component source</li>
+<li>Transform based on type (e.g., markdown → HTML)</li>
+<li>Inject at marker location</li>
+</ul>
+</li>
+<li><p><strong>Handle Disabled Components</strong></p>
+<ul>
+<li>If disabled: Remove marker</li>
+<li>Add <code>no-{KEY}</code> class to <code>.main-container</code></li>
+</ul>
+</li>
+<li><p><strong>Write Output</strong></p>
+<ul>
+<li>Save composed HTML to output path</li>
+<li>Create directories if needed</li>
+</ul>
+</li>
+</ol>
+<h3 id="example-execution">Example Execution</h3>
+<h4 id="input-files">Input Files:</h4>
+<p><code>src/components/index-base.html</code>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div class="main-container"&gt;
+    &lt;!-- COMPOSE:SIDEBAR:enable_sidebar_toggle --&gt;
+    &lt;main id="content"&gt;...&lt;/main&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><code>src/components/sidebar.md</code>:</p>
+<pre><code class="language-markdown">- [Home](#home)
+- [About](#about)
+</code></pre>
+<p><code>config/site.toml</code>:</p>
+<pre><code class="language-toml">[features]
+enable_sidebar_toggle = true
+</code></pre>
+<h4 id="command">Command:</h4>
+<pre><code class="language-bash">python -m utils.compose -e dev
+</code></pre>
+<h4 id="output-srcindexhtml">Output (<code>src/index.html</code>):</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;div class="main-container"&gt;
+    &lt;nav id="sidebar"&gt;
+      &lt;button aria-label="Toggle sidebar" class="sidebar-toggle" id="sidebar-toggle"&gt;◀&lt;/button&gt;
+      &lt;ul class="nav-level-1"&gt;
+        &lt;li&gt;&lt;a data-content="home" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a data-content="about" href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+    &lt;main id="content"&gt;...&lt;/main&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="component-types">Component Types</h2>
+<h3 id="markdown-components">Markdown Components</h3>
+<p><strong>Type:</strong> <code>markdown</code></p>
+<p><strong>Transform:</strong> <code>navigation</code></p>
+<p>Converts markdown lists to HTML navigation structures with proper classes, attributes, and toggle buttons.</p>
+<p><strong>Use Case:</strong> Sidebar navigation, menus, TOC</p>
+<h4 id="example">Example:</h4>
+<pre><code class="language-toml">[[compositions.components]]
+key = "SIDEBAR"
+source = "src/components/sidebar.md"
+type = "markdown"
+transform = "navigation"
+</code></pre>
+<h3 id="raw-html-components">Raw HTML Components</h3>
+<p><strong>Type:</strong> <code>html</code> (or any non-markdown type)</p>
+<p><strong>Transform:</strong> <code>raw</code></p>
+<p>Injects HTML content as-is without transformation.</p>
+<p><strong>Use Case:</strong> Footer, header, custom sections</p>
+<h4 id="example-1">Example:</h4>
+<pre><code class="language-toml">[[compositions.components]]
+key = "FOOTER"
+source = "src/components/footer.html"
+type = "html"
+transform = "raw"
+</code></pre>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="command-line-scripts">1. Command Line Scripts</h3>
+<h4 id="windows">Windows:</h4>
+<pre><code class="language-cmd">.\scripts\compose.cmd -e dev
+</code></pre>
+<h4 id="linuxmac">Linux/Mac:</h4>
+<pre><code class="language-bash">./scripts/compose.sh -e dev
+</code></pre>
+<h3 id="python-module">2. Python Module</h3>
+<pre><code class="language-bash">python -m utils.compose -e staging --force
+</code></pre>
+<h3 id="pipeline-orchestrator">3. Pipeline Orchestrator</h3>
+<p>Called by <code>gzbuild</code> as step 0:</p>
+<pre><code class="language-python"># In utils/gzbuild/builder.py
+steps = [
+    (0, "Composing HTML from components", "utils.compose"),
+    (1, "Cleaning orphaned files", "utils.clean"),
+    # ...
+]
+</code></pre>
+<h3 id="python-import">4. Python Import</h3>
+<pre><code class="language-python">from utils.compose.composer import HTMLComposer
+# Use directly in scripts
+</code></pre>
+<h2 id="development">Development</h2>
+<h3 id="adding-new-transform-types">Adding New Transform Types</h3>
+<ol>
+<li><strong>Add transformer method to <code>ComponentTransformer</code> class:</strong></li>
+</ol>
+<pre><code class="language-python">def _transform_custom(self, content: str, component_key: str) -&gt; str:
+    """Transform content for custom type"""
+    # Your transformation logic
+    return transformed_html
+</code></pre>
+<ol start="2">
+<li><strong>Update <code>transform()</code> method:</strong></li>
+</ol>
+<pre><code class="language-python">def transform(self, content: str, transform_type: str, component_key: str) -&gt; str:
+    if transform_type == "navigation":
+        return self._transform_navigation(content, component_key)
+    elif transform_type == "custom":
+        return self._transform_custom(content, component_key)
+    # ...
+</code></pre>
+<ol start="3">
+<li><strong>Use in compose.toml:</strong></li>
+</ol>
+<pre><code class="language-toml">[[compositions.components]]
+key = "MYCONTENT"
+source = "src/components/content.md"
+type = "markdown"
+transform = "custom"
+</code></pre>
+<h3 id="adding-new-compositions">Adding New Compositions</h3>
+<p>Simply add to <code>config/compose.toml</code>:</p>
+<pre><code class="language-toml">[[compositions]]
+output = "src/about.html"
+base = "src/components/about-base.html"
+description = "About page"
+
+[[compositions.components]]
+key = "TEAMLIST"
+source = "src/components/team.md"
+type = "markdown"
+transform = "raw"
+</code></pre>
+<h2 id="customisation">Customisation</h2>
+<h3 id="custom-component-directory">Custom Component Directory</h3>
+<p>Modify paths in <code>compose.toml</code>:</p>
+<pre><code class="language-toml">[[compositions.components]]
+key = "SIDEBAR"
+source = "custom/components/nav.md"  # Custom location
+type = "markdown"
+transform = "navigation"
+</code></pre>
+<h3 id="multiple-markers">Multiple Markers</h3>
+<p>Add multiple markers in base HTML:</p>
+<pre><code class="language-html">&lt;div class="main-container"&gt;
+  &lt;!-- COMPOSE:SIDEBAR:enable_sidebar_toggle --&gt;
+  &lt;main id="content"&gt;
+    &lt;!-- COMPOSE:TOC:enable_toc --&gt;
+    &lt;div id="content-container"&gt;&lt;/div&gt;
+  &lt;/main&gt;
+  &lt;!-- COMPOSE:FOOTER:show_footer --&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Define corresponding components:</p>
+<pre><code class="language-toml">[[compositions.components]]
+key = "SIDEBAR"
+# ...
+
+[[compositions.components]]
+key = "TOC"
+# ...
+
+[[compositions.components]]
+key = "FOOTER"
+# ...
+</code></pre>
+<h3 id="conditional-css-classes">Conditional CSS Classes</h3>
+<p>When component disabled, <code>no-{key}</code> class added automatically:</p>
+<pre><code class="language-html">&lt;!-- Component enabled --&gt;
+&lt;div class="main-container"&gt;...&lt;/div&gt;
+
+&lt;!-- Component disabled --&gt;
+&lt;div class="main-container no-sidebar"&gt;...&lt;/div&gt;
+</code></pre>
+<p>Handle in CSS:</p>
+<pre><code class="language-css">.main-container.no-sidebar {
+  grid-template-columns: 1fr;  /* Remove sidebar column */
+}
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="issue-component-not-injected">Issue: Component not injected</h3>
+<p><strong>Symptoms:</strong> Marker remains in output, component missing</p>
+<h4 id="causes">Causes:</h4>
+<ul>
+<li>Component <code>key</code> doesn't match marker KEY</li>
+<li>Component source file not found</li>
+<li>Transform type not supported</li>
+</ul>
+<h4 id="solutions">Solutions:</h4>
+<ol>
+<li>Check <code>compose.toml</code> component <code>key</code> matches <code>&lt;!-- COMPOSE:KEY:flag --&gt;</code></li>
+<li>Verify source file exists at specified path</li>
+<li>Check logs for specific error messages</li>
+<li>Ensure feature flag exists in <code>site.toml [features]</code></li>
+</ol>
+<h3 id="issue-markdown-not-transformed-correctly">Issue: Markdown not transformed correctly</h3>
+<p><strong>Symptoms:</strong> Raw HTML instead of navigation structure</p>
+<h4 id="causes-1">Causes:</h4>
+<ul>
+<li>Wrong transform type specified</li>
+<li>Markdown formatting issues (indentation)</li>
+</ul>
+<h4 id="solutions-1">Solutions:</h4>
+<ol>
+<li>Set <code>transform = "navigation"</code> in compose.toml</li>
+<li>Check markdown list indentation (use 2 spaces)</li>
+<li>Validate markdown syntax</li>
+</ol>
+<h3 id="issue-component-source-not-found">Issue: "Component source not found"</h3>
+<p><strong>Symptoms:</strong> Error message about missing source file</p>
+<h4 id="causes-2">Causes:</h4>
+<ul>
+<li>Incorrect path in <code>compose.toml</code></li>
+<li>File not created yet</li>
+<li>Working directory incorrect</li>
+</ul>
+<h4 id="solutions-2">Solutions:</h4>
+<ol>
+<li>Verify path relative to project root</li>
+<li>Create source file: <code>src/components/sidebar.md</code></li>
+<li>Run from project root directory</li>
+</ol>
+<h3 id="issue-feature-flag-not-working">Issue: Feature flag not working</h3>
+<p><strong>Symptoms:</strong> Component always included/excluded</p>
+<h4 id="causes-3">Causes:</h4>
+<ul>
+<li>Flag name mismatch</li>
+<li><code>site.toml</code> syntax error</li>
+<li>Feature flag missing</li>
+</ul>
+<h4 id="solutions-3">Solutions:</h4>
+<ol>
+<li>Check marker: <code>&lt;!-- COMPOSE:KEY:exact_flag_name --&gt;</code></li>
+<li>Verify <code>site.toml</code> has <code>[features]</code> section</li>
+<li>Check flag name spelling: <code>enable_sidebar_toggle</code></li>
+<li>Reload configurations after changes</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="component-organization">Component Organization</h3>
+<pre><code>src/components/
+├── README.md           # Document component structure
+├── index-base.html     # Main HTML base
+├── sidebar.md          # Navigation
+├── footer.html         # Footer
+└── ...
+</code></pre>
+<h3 id="marker-comments">Marker Comments</h3>
+<p>Add descriptive comments:</p>
+<pre><code class="language-html">&lt;!-- Main container with optional sidebar --&gt;
+&lt;div class="main-container"&gt;
+  &lt;!-- COMPOSE:SIDEBAR:enable_sidebar_toggle --&gt;
+  &lt;!-- Sidebar injected here if enabled --&gt;
+  
+  &lt;main id="content"&gt;
+    ...
+  &lt;/main&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="git-ignore-generated-files">Git Ignore Generated Files</h3>
+<p>Add to <code>.gitignore</code>:</p>
+<pre><code class="language-gitignore"># Generated HTML (composed from components)
+src/index.html
+
+# Track source components
+!src/components/
+</code></pre>
+<h3 id="composition-order">Composition Order</h3>
+<p>Order matters! Process foundations before details:</p>
+<pre><code class="language-toml"># Process layout structure first
+[[compositions]]
+output = "src/index.html"
+# ...
+
+# Then process specialized pages
+[[compositions]]
+output = "src/about.html"
+# ...
+</code></pre>
+<h3 id="testing">Testing</h3>
+<p>Test both enabled and disabled states:</p>
+<pre><code class="language-bash"># Test enabled
+# Edit site.toml: enable_sidebar_toggle = true
+python -m utils.compose -e dev
+# Verify sidebar present in src/index.html
+
+# Test disabled
+# Edit site.toml: enable_sidebar_toggle = false
+python -m utils.compose -e dev --force
+# Verify no sidebar, no-sidebar class added
+</code></pre>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<h3 id="planned-features">Planned Features</h3>
+<ol>
+<li><strong>Variable Substitution</strong> - Replace <code>{{PLACEHOLDERS}}</code> during composition</li>
+<li><strong>Conditional Nesting</strong> - Support nested COMPOSE markers</li>
+<li><strong>Component Validation</strong> - Verify required components exist before composition</li>
+<li><strong>Hot Reload</strong> - Watch component files during development</li>
+<li><strong>Component Library</strong> - Reusable component templates</li>
+<li><strong>YAML Front Matter</strong> - Metadata in component files</li>
+<li><strong>Template Inheritance</strong> - Base templates with blocks</li>
+<li><strong>Multi-Output</strong> - One composition generates multiple files</li>
+</ol>
+<h3 id="extension-points">Extension Points</h3>
+<ul>
+<li>Add custom transformers in <code>ComponentTransformer</code></li>
+<li>Create component preprocessors</li>
+<li>Implement component validators</li>
+<li>Add composition post-processors</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../gzbuild/README.md">Pipeline Overview</a></strong> - Complete build pipeline</li>
+<li><strong><a href="../setup/README.md">Setup Module</a></strong> - Configuration application (step 2)</li>
+<li><strong><a href="../generate/README.md">Generate Module</a></strong> - Content generation (step 4)</li>
+<li><strong><a href="../gzconfig/README.md">GZConfig Module</a></strong> - Configuration access</li>
+<li><strong><a href="../gzlogging/README.md">GZLogging Module</a></strong> - Logging infrastructure</li>
+<li><strong><a href="../../dev/PROJECT_STRUCTURE.md">Project Structure</a></strong> - Overall project organization</li>
+<li><strong><a href="../../docs/DESIGN_RULES.md">Design Rules</a></strong> - Module design guidelines</li>
+</ul>
+<h2 id="license">License</h2>
+<p>This project is licensed under the GNU General Public License v3.0 or later.<br/>
+See the <a href="../../LICENSE">LICENSE</a> file for details.</p>
+<h2 id="authors">Authors</h2>
+<ul>
+<li><strong>superguru</strong> - Initial implementation</li>
+<li><strong>gazorper</strong> - Testing and feedback</li>
+</ul>
+<hr/>
+<p><strong>GAZTank Website System</strong> - HTML Composition Module v1.0<br/>
+Last Updated: November 4, 2025</p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

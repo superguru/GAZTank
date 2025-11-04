@@ -1,0 +1,68 @@
+# HTML Composition Configuration
+# ===============================
+# Defines HTML compositions that assemble output files from source components.
+#
+# Each composition specifies:
+# - output: Target file path (relative to project root)
+# - base: Base HTML template with composition markers
+# - components: List of component files to inject
+# - order: Execution order (compositions run in the order they appear)
+#
+# Composition Markers in Base HTML:
+#   <!-- COMPOSE:component_key:config_flag -->
+#   - component_key: Matches a component's "key" field
+#   - config_flag: Feature flag from site.toml [features] section
+#
+# Example:
+#   Base HTML: <!-- COMPOSE:SIDEBAR:enable_sidebar_toggle -->
+#   Component: { key = "SIDEBAR", source = "src/components/sidebar.md" }
+#   Config: [features] enable_sidebar_toggle = true
+#
+# Usage:
+#   python -m utils.compose -e dev
+#   scripts\compose.cmd -e staging
+#   scripts\compose.sh -e prod
+
+[[compositions]]
+# Main index.html composition
+output = "src/index.html"
+base = "src/components/index-base.html"
+description = "Main site HTML with conditional sidebar navigation"
+
+[[compositions.components]]
+key = "SIDEBAR"
+source = "src/components/sidebar.md"
+type = "markdown"
+description = "Navigation sidebar (markdown source)"
+transform = "navigation"  # Special transformer for nav lists
+
+[[compositions.components]]
+key = "PRISM_CSS"
+source = "src/components/prism-css.html"
+type = "raw"
+description = "Prism.js CSS stylesheet"
+
+[[compositions.components]]
+key = "PRISM_JS"
+source = "src/components/prism-js.html"
+type = "raw"
+description = "Prism.js library and language components"
+
+[[compositions.components]]
+key = "MERMAID_CSS"
+source = "src/components/mermaid-css.html"
+type = "raw"
+description = "Mermaid.js CSS styles"
+
+[[compositions.components]]
+key = "MERMAID_JS"
+source = "src/components/mermaid-js.html"
+type = "raw"
+description = "Mermaid.js library script"
+
+# Future compositions can be added here:
+# [[compositions]]
+# output = "src/about.html"
+# base = "src/components/about-base.html"
+# description = "About page with conditional sections"
+# ...

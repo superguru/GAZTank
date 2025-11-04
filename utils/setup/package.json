@@ -1,0 +1,23 @@
+{
+  "name": "gaztank-setup-js-updater",
+  "version": "1.0.0",
+  "description": "Node.js script to update JavaScript files using Babel AST parsing",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@babel/parser": "^7.23.0",
+    "@babel/traverse": "^7.23.0",
+    "@babel/generator": "^7.23.0"
+  },
+  "scripts": {
+    "test": "node js_updater.mjs"
+  },
+  "keywords": [
+    "babel",
+    "ast",
+    "javascript",
+    "transform"
+  ],
+  "author": "GAZ Tank",
+  "license": "GPL-3.0-or-later"
+}

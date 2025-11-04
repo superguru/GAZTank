@@ -1,0 +1,148 @@
+# Static Content Generation Configuration
+#
+# Define file groups for converting various input types to HTML.
+# Each [[group]] represents a set of files with a common output directory.
+#
+# Required attributes:
+#   name:       Descriptive name for the group (used in logs)
+#   input_type: Type of input files (currently only "markdown" is supported)
+#   output_dir: Directory path relative to content/ where HTML files will be saved
+#   files:      List of input files relative to project root
+#
+# Optional attributes:
+#   enabled:            Boolean flag to enable/disable the group (default: false if not specified)
+#                       Set to true to process this group, false or omit to skip it
+#   path_transform:     How to transform input paths to output paths (default: "flatten")
+#                       - "flatten": Use only the filename (utils/clean/README.md → README.html)
+#                       - "preserve_parent": Keep immediate parent directory (utils/clean/README.md → clean/README.html)
+#                       - "preserve_all": Keep full relative path (utils/clean/README.md → utils/clean/README.html)
+#                       - "strip_prefix": Remove strip_path_prefix then use remaining path
+#   strip_path_prefix:  Path prefix to remove when path_transform = "strip_prefix" (default: "")
+#                       Example: strip_path_prefix = "utils/" removes "utils/" from all paths
+#                       - utils/README.md → README.html
+#                       - utils/clean/README.md → clean/README.html
+#
+# The generator is environment-aware and outputs to:
+#   publish/{environment}/content/{output_dir}/
+#
+# Example with environment:
+#   generate -e dev   → publish/dev/content/{output_dir}/
+#   generate -e prod  → publish/prod/content/{output_dir}/
+#
+# Output file naming:
+#   Input:  docs/SETUP_SITE.md
+#   Output: {output_dir}/SETUP_SITE.html (with path_transform = "flatten")
+#
+# Output file naming with path_transform:
+#   flatten:          docs/SETUP_SITE.md → {output_dir}/SETUP_SITE.html
+#   preserve_parent:  docs/SETUP_SITE.md → {output_dir}/docs/SETUP_SITE.html
+#   preserve_all:     docs/sub/SETUP.md  → {output_dir}/docs/sub/SETUP.html
+#   strip_prefix:     utils/clean/README.md → {output_dir}/clean/README.html (with strip_path_prefix = "utils/")
+#
+# output_dir examples:
+#   output_dir = "setup"        → publish/{env}/content/setup/
+#   output_dir = "docs"         → publish/{env}/content/docs/
+#   output_dir = "dev/rules"    → publish/{env}/content/dev/rules/
+#   output_dir = ""             → publish/{env}/content/ (root)
+#
+# Timestamp-based regeneration:
+#   - Files are only regenerated if source is newer than output (unless --force)
+#   - Use --force to regenerate all files regardless of timestamps
+#   - Use --dry-run to preview what would be generated without writing files
+#
+# Command line examples:
+#   python -m utils.generate -e dev           # Generate for dev environment
+#   python -m utils.generate -e dev --force   # Force regenerate all files
+#   python -m utils.generate -e prod --dry-run  # Preview prod generation
+#
+
+[[group]]
+name = "website_setup_docs"
+enabled = true
+input_type = "markdown"
+output_dir = "setup"
+files = [
+    "docs/SETUP_SITE.md",
+    "docs/DESIGN_RULES.md",
+    "docs/DEVELOPER_SETUP.md",
+    "docs/SEO_IMPLEMENTATION.md",
+    "docs/RESPONSIVE_IMAGES.md",
+    "README.md",
+    "dev/PROJECT_STRUCTURE.md",
+]
+
+[[group]]
+name = "pipeline_docs"
+enabled = true
+input_type = "markdown"
+output_dir = "pipeline-docs"
+path_transform = "strip_prefix"
+strip_path_prefix = "utils/"
+files = [
+    "utils/README.md",
+    "utils/clean/README.md",
+    "utils/compose/README.md",
+    "utils/deploy/README.md",
+    "utils/generate/README.md",
+    "utils/gzbuild/README.md",
+    "utils/gzconfig/README.md",
+    "utils/gzhost/README.md",
+    "utils/gzlint/README.md",
+    "utils/gzlogging/README.md",
+    "utils/gzserve/README.md",
+    "utils/normalise/README.md",
+    "utils/package/README.md",
+    "utils/setup/README.md",
+    "utils/sitemap/README.md",
+    "utils/toc/README.md",
+]
+
+# Example: Additional group for other documentation (flatten - default)
+# [[group]]
+# name = "developer_guides"
+# enabled = true
+# input_type = "markdown"
+# output_dir = "dev"
+# path_transform = "flatten"  # Optional - this is the default
+# files = [
+#     "dev/MODULE_README_STRUCTURE.md",    # → dev/MODULE_README_STRUCTURE.html
+#     "utils/FLOW_PIPELINE.md",            # → dev/FLOW_PIPELINE.html
+# ]
+
+# Example: Root-level content files with preserve_parent
+# [[group]]
+# name = "main_pages"
+# enabled = false  # Disabled - will be skipped
+# input_type = "markdown"
+# output_dir = "docs"
+# path_transform = "preserve_parent"  # Keep immediate parent directory
+# files = [
+#     "CONTRIBUTING.md",                   # → docs/CONTRIBUTING.html (no parent)
+#     "docs/CHANGELOG.md",                 # → docs/docs/CHANGELOG.html
+# ]
+
+# Example: Nested structure with preserve_all
+# [[group]]
+# name = "api_docs"
+# enabled = false
+# input_type = "markdown"
+# output_dir = "api"
+# path_transform = "preserve_all"  # Keep full path structure
+# files = [
+#     "api/v1/endpoints.md",               # → api/api/v1/endpoints.html
+#     "api/v2/endpoints.md",               # → api/api/v2/endpoints.html
+# ]
+
+# Example: Strip common prefix with strip_prefix
+# [[group]]
+# name = "module_docs"
+# enabled = false
+# input_type = "markdown"
+# output_dir = "modules"
+# path_transform = "strip_prefix"
+# strip_path_prefix = "src/modules/"
+# files = [
+#     "src/modules/README.md",             # → modules/README.html
+#     "src/modules/auth/README.md",        # → modules/auth/README.html
+#     "src/modules/api/v1/README.md",      # → modules/api/v1/README.html
+# ]

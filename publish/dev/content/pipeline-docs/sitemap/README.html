@@ -1,0 +1,1195 @@
+<h1>Sitemap Generator</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#how-it-works">How It Works</a>
+</li>
+<li>
+<a href="#priority-calculation">Priority Calculation</a>
+</li>
+<li>
+<a href="#change-frequency">Change Frequency</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#xml-sitemap-specification">XML Sitemap Specification</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#environment-aware">Environment-Aware</a>
+</li>
+<li>
+<a href="#workflow">Workflow:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#pre-flight-integration">Pre-flight Integration</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-example">Log Example</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#required-arguments">Required Arguments</a>
+</li>
+<li>
+<a href="#optional-arguments">Optional Arguments</a>
+</li>
+<li>
+<a href="#examples">Examples</a>
+</li>
+<li>
+<a href="#key-files">Key Files</a>
+</li>
+<li>
+<a href="#current-features">✅ Current Features</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#pipeline-configuration">Pipeline Configuration</a>
+</li>
+<li>
+<a href="#base-url-configuration">Base URL Configuration</a>
+</li>
+<li>
+<a href="#priority-customization">Priority Customization</a>
+</li>
+<li>
+<a href="#change-frequency-customization">Change Frequency Customization</a>
+</li>
+<li>
+<a href="#higher-priority-more-important-to-search-engines">Higher priority = More important to search engines</a>
+</li>
+<li>
+<a href="#priority-logic">Priority Logic</a>
+</li>
+<li>
+<a href="#this-helps-search-engines-optimize-crawl-frequency">This helps search engines optimize crawl frequency</a>
+</li>
+<li>
+<a href="#frequency-options">Frequency Options</a>
+</li>
+<li>
+<a href="#direct-invocation">Direct Invocation</a>
+</li>
+<li>
+<a href="#programmatic-invocation">Programmatic Invocation</a>
+</li>
+<li>
+<a href="#build-pipeline-integration">Build Pipeline Integration</a>
+</li>
+<li>
+<a href="#running-tests">Running Tests</a>
+</li>
+<li>
+<a href="#adding-new-features">Adding New Features</a>
+</li>
+<li>
+<a href="#code-style">Code Style</a>
+</li>
+<li>
+<a href="#submit-to-search-engines">1. Submit to Search Engines</a>
+</li>
+<li>
+<a href="#reference-in-robotstxt">2. Reference in robots.txt</a>
+</li>
+<li>
+<a href="#update-regularly">3. Update Regularly</a>
+</li>
+<li>
+<a href="#use-dry-run-for-validation">4. Use Dry-Run for Validation</a>
+</li>
+<li>
+<a href="#verify-in-browser">5. Verify in Browser</a>
+</li>
+<li>
+<a href="#monitor-search-engine-indexing">6. Monitor Search Engine Indexing</a>
+</li>
+<li>
+<a href="#content-directory-not-found">"Content directory not found"</a>
+</li>
+<li>
+<a href="#indexhtml-not-found">"index.html not found"</a>
+</li>
+<li>
+<a href="#no-content-files-found">"No content files found"</a>
+</li>
+<li>
+<a href="#unknown-environment-xyz">"Unknown environment: 'xyz'"</a>
+</li>
+<li>
+<a href="#environment-directory-not-found">"Environment directory not found"</a>
+</li>
+<li>
+<a href="#incorrect-priorities-or-frequencies">Incorrect Priorities or Frequencies</a>
+</li>
+<li>
+<a href="#missing-pages-in-sitemap">Missing Pages in Sitemap</a>
+</li>
+<li>
+<a href="#dry-run-shows-different-count">Dry-Run Shows Different Count</a>
+</li>
+<li>
+<a href="#required-elements">Required Elements</a>
+</li>
+<li>
+<a href="#optional-elements-all-used">Optional Elements (all used)</a>
+</li>
+<li>
+<a href="#output-format">Output Format</a>
+</li>
+<li>
+<a href="#sitemap-limits">Sitemap Limits</a>
+</li>
+<li>
+<a href="#url-format">URL Format</a>
+</li>
+<li>
+<a href="#internal-documentation">Internal Documentation</a>
+</li>
+<li>
+<a href="#external-resources">External Resources</a>
+<ul>
+<li>
+<a href="#logged-to-file-clean-operational-log">Logged to file (clean operational log):</a>
+</li>
+<li>
+<a href="#console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</a>
+</li>
+<li>
+<a href="#not-logged-kept-clean">Not logged (kept clean):</a>
+</li>
+<li>
+<a href="#high-level">High-Level</a>
+</li>
+<li>
+<a href="#configuration-1">Configuration</a>
+</li>
+<li>
+<a href="#content-discovery">Content Discovery</a>
+</li>
+<li>
+<a href="#navigation-parsing">Navigation Parsing</a>
+</li>
+<li>
+<a href="#priority-frequency">Priority &amp; Frequency</a>
+</li>
+<li>
+<a href="#utilities">Utilities</a>
+</li>
+<li>
+<a href="#how-its-used">How it's used:</a>
+</li>
+<li>
+<a href="#google-search-console">Google Search Console:</a>
+</li>
+<li>
+<a href="#bing-webmaster-tools">Bing Webmaster Tools:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+<li>
+<a href="#solution-5">Solution:</a>
+</li>
+<li>
+<a href="#solution-6">Solution:</a>
+</li>
+<li>
+<a href="#solution-7">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Automatically generates XML sitemaps for search engine optimization (SEO). Scans content files and navigation structure to create properly formatted sitemap.xml with priorities and change frequencies.</p>
+<p><strong>Version:</strong> 1.1<br/>
+<strong>Last Updated:</strong> October 22, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#how-it-works">How It Works</a></li>
+<li><a href="#priority-calculation">Priority Calculation</a></li>
+<li><a href="#change-frequency">Change Frequency</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#xml-sitemap-specification">XML Sitemap Specification</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The Sitemap Generator creates XML sitemaps that help search engines discover and index all pages on your website. It automatically:</p>
+<ol>
+<li><strong>Scans content files</strong> - Finds all HTML content in environment-specific directories</li>
+<li><strong>Parses navigation</strong> - Extracts hierarchy from index.html</li>
+<li><strong>Assigns priorities</strong> - Sets SEO priorities based on page importance (0.0-1.0)</li>
+<li><strong>Determines change frequency</strong> - Estimates how often pages are updated</li>
+<li><strong>Generates sitemap.xml</strong> - Creates properly formatted XML output</li>
+</ol>
+<h3 id="environment-aware">Environment-Aware</h3>
+<p>The generator is fully integrated with the pipeline configuration system:</p>
+<ul>
+<li>Supports multiple environments: <strong>dev</strong>, <strong>staging</strong>, <strong>prod</strong></li>
+<li>Reads from <code>config/pipeline.toml</code> for environment paths</li>
+<li>Generates sitemaps for specific deployment targets</li>
+<li>Ensures sitemaps match deployed content structure</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The sitemap generator integrates with the GAZTank build and deployment pipeline:</p>
+<pre><code>Sitemap Generation Pipeline:
+  1. Read environment from -e argument (dev/staging/prod)
+  2. Load pipeline.toml configuration
+  3. Resolve environment directory: publish/{env}/
+  4. Scan content files: publish/{env}/content/*.html
+  5. Parse navigation: publish/{env}/index.html
+  6. Build XML structure with priorities and frequencies
+  7. Write sitemap: publish/{env}/sitemap.xml
+  8. Log completion statistics
+</code></pre>
+<p><strong>Purpose:</strong> Generates SEO-optimized sitemaps for deployed environments</p>
+<p><strong>Location:</strong> Called via <code>scripts/generate_sitemap.cmd</code> or as part of packaging pre-flight</p>
+<h3 id="workflow">Workflow:</h3>
+<pre><code>pipeline.toml → sitemapper.py → scans publish/{env}/ → writes sitemap.xml
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Environment-specific sitemap generation</li>
+<li>Automatic priority calculation based on navigation hierarchy</li>
+<li>Intelligent change frequency estimation</li>
+<li>Search engine submission ready</li>
+<li>Dry-run mode for preview without writing</li>
+</ul>
+<h3 id="pre-flight-integration">Pre-flight Integration</h3>
+<p>The sitemap generator runs as part of the packaging pre-flight checks:</p>
+<pre><code>Package Pre-flight:
+  1. Run validation (gzlint)
+  2. Convert markdown to HTML (generate)
+  3. Generate sitemap ← This module
+  4. Continue with packaging...
+</code></pre>
+<p>This ensures the sitemap is always up-to-date before deployment.</p>
+<h2 id="logging">Logging</h2>
+<p>The generator uses the <strong>gzlogging</strong> infrastructure for operational logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> Matches <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>sitemapper</code></li>
+<li><strong>Log Location:</strong> <code>logs/{env}/sitemapper_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> File + console (console shows progress with emojis)</li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<h4 id="logged-to-file-clean-operational-log">Logged to file (clean operational log):</h4>
+<ul>
+<li>Sitemap Generator started</li>
+<li>Environment and mode settings (DRY RUN MODE enabled if applicable)</li>
+<li>Pipeline configuration loaded</li>
+<li>Target directory identified</li>
+<li>Starting sitemap generation</li>
+<li>Base URL, content directory, output file paths</li>
+<li>Number of content files found</li>
+<li>Number of navigation entries parsed</li>
+<li>Building sitemap XML structure</li>
+<li>Writing sitemap or dry-run completion</li>
+<li>URLs written/prepared count</li>
+<li>Sitemap Generator completed successfully</li>
+</ul>
+<h4 id="console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</h4>
+<ul>
+<li>Progress indicators: [1/4] 📄 [2/4] 🗺️ [3/4] 🔨 [4/4] 📝/👁️</li>
+<li>Statistics: file counts, URLs included</li>
+<li>Mode warnings: ⚠️ DRY RUN MODE</li>
+<li>Success indicators: ✅ SITEMAP GENERATION COMPLETE</li>
+<li>Next steps guidance</li>
+<li>Error messages if failures occur</li>
+</ul>
+<h4 id="not-logged-kept-clean">Not logged (kept clean):</h4>
+<ul>
+<li>No blank lines in log files</li>
+<li>No separator lines (===) in logs</li>
+<li>No emoji or formatting characters in log files</li>
+</ul>
+<h3 id="log-example">Log Example</h3>
+<pre><code>[2025-10-22 14:15:30] [dev] [INF] Sitemap Generator started
+[2025-10-22 14:15:30] [dev] [INF] Environment: dev
+[2025-10-22 14:15:30] [dev] [INF] DRY RUN MODE enabled
+[2025-10-22 14:15:30] [dev] [DBG] Pipeline configuration loaded successfully
+[2025-10-22 14:15:30] [dev] [INF] Target directory: D:\Projects\www\GAZTank\publish\dev
+[2025-10-22 14:15:30] [dev] [INF] Starting sitemap generation
+[2025-10-22 14:15:30] [dev] [INF] Base URL: https://mygaztank.com/
+[2025-10-22 14:15:30] [dev] [INF] Content directory: D:\Projects\www\GAZTank\publish\dev\content
+[2025-10-22 14:15:30] [dev] [INF] Output file: D:\Projects\www\GAZTank\publish\dev\sitemap.xml
+[2025-10-22 14:15:30] [dev] [INF] Found 6 content files in D:\Projects\www\GAZTank\publish\dev\content
+[2025-10-22 14:15:30] [dev] [INF] Parsed 0 navigation entries from index.html
+[2025-10-22 14:15:30] [dev] [INF] Building sitemap XML structure
+[2025-10-22 14:15:30] [dev] [INF] Dry-run complete: 6 URLs prepared (not written)
+[2025-10-22 14:15:30] [dev] [INF] Sitemap Generator completed successfully
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<pre><code class="language-bash"># Using the launcher script (recommended)
+scripts\generate_sitemap.cmd -e dev              # Windows
+./scripts/generate_sitemap.sh -e dev             # Linux/Mac
+
+# Generate for different environments
+scripts\generate_sitemap.cmd -e dev              # Development
+scripts\generate_sitemap.cmd -e staging          # Staging
+scripts\generate_sitemap.cmd -e prod             # Production
+
+# Dry-run mode (preview without writing)
+scripts\generate_sitemap.cmd -e dev --dry-run
+
+# Or directly as a Python module
+python -m sitemap -e dev
+python -m sitemap -e staging --dry-run
+
+# From utils directory with PYTHONPATH set
+export PYTHONPATH="$PWD/utils:$PYTHONPATH"  # Linux/Mac
+set PYTHONPATH=%CD%\utils;%PYTHONPATH%      # Windows
+python -m sitemap -e dev
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<p>You can import and use the sitemap functions in your own Python scripts:</p>
+<pre><code class="language-python">from sitemap import generate_sitemap
+from pathlib import Path
+from utils.gzlogging import get_logging_context
+
+# Initialize logging
+log = get_logging_context('dev', 'sitemapper', console=True)
+
+# Define paths
+content_dir = Path('publish/dev/content')
+index_file = Path('publish/dev/index.html')
+output_file = Path('publish/dev/sitemap.xml')
+base_url = 'https://mygaztank.com/'
+
+# Generate sitemap
+generate_sitemap(base_url, content_dir, index_file, output_file, log, dry_run=False)
+</code></pre>
+<p>For more granular control:</p>
+<pre><code class="language-python">from sitemap.sitemapper import (
+    get_content_files,
+    parse_navigation_structure,
+    calculate_priority,
+    determine_changefreq,
+    get_environment_directory,
+    load_pipeline_config
+)
+
+# Load configuration
+config = load_pipeline_config()
+
+# Get environment directory
+env_dir = get_environment_directory('dev', config)
+content_dir = env_dir / 'content'
+
+# Get list of content files
+content_files = get_content_files(content_dir, log)
+print(f"Found {len(content_files)} content files")
+
+# Parse navigation
+index_file = env_dir / 'index.html'
+nav_structure = parse_navigation_structure(index_file, log)
+for key, info in nav_structure.items():
+    print(f"{key}: level={info['level']}, priority={info['priority']}")
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required-arguments">Required Arguments</h3>
+<ul>
+<li><strong><code>-e, --environment</code></strong> - Environment to generate sitemap for<ul>
+<li>Choices: <code>dev</code>, <code>staging</code>, <code>prod</code></li>
+<li>Reads configuration from <code>config/pipeline.toml</code></li>
+<li>Determines input/output directories: <code>publish/{env}/</code></li>
+<li>Example: <code>-e dev</code> generates from <code>publish/dev/</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<ul>
+<li><p><strong><code>--dry-run</code></strong> - Show what would be done without writing files</p>
+<ul>
+<li>Performs all scanning and analysis</li>
+<li>Displays statistics and preview information</li>
+<li>Does not modify sitemap.xml</li>
+<li>Useful for testing and validation</li>
+<li>Example: <code>--dry-run</code> shows "Would write to: publish/dev/sitemap.xml"</li>
+</ul>
+</li>
+<li><p><strong><code>--help</code></strong> - Show help message with usage examples</p>
+</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<pre><code class="language-bash"># Generate sitemap for dev environment
+python -m sitemap -e dev
+
+# Preview what would be generated for staging
+python -m sitemap -e staging --dry-run
+
+# Generate for production deployment
+python -m sitemap -e prod
+
+# Show help and usage information
+python -m sitemap --help
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>sitemap/
+├── __init__.py      # Package initialization and exports
+├── __main__.py      # Entry point for python -m sitemap
+├── sitemapper.py    # Core sitemap generation logic (renamed from generator.py)
+└── README.md        # This file
+</code></pre>
+<h3 id="key-files">Key Files</h3>
+<ul>
+<li><strong><code>sitemapper.py</code></strong> - Main module containing all sitemap generation logic</li>
+<li><strong><code>__init__.py</code></strong> - Exports public functions for module usage</li>
+<li><strong><code>__main__.py</code></strong> - Entry point that calls <code>main()</code> from sitemapper.py</li>
+</ul>
+<h2 id="features">Features</h2>
+<h3 id="current-features">✅ Current Features</h3>
+<ul>
+<li><strong>Environment-aware generation</strong> - Supports dev/staging/prod from pipeline.toml</li>
+<li><strong>Automatic content scanning</strong> - Finds all HTML files in content directory</li>
+<li><strong>Navigation hierarchy parsing</strong> - Extracts structure from index.html</li>
+<li><strong>Intelligent priority assignment</strong> - Based on navigation level and page type</li>
+<li><strong>Change frequency estimation</strong> - Estimates update frequency per content type</li>
+<li><strong>Last modification tracking</strong> - Uses file timestamps for <code>&lt;lastmod&gt;</code> dates</li>
+<li><strong>Pretty-printed XML</strong> - Human-readable formatted output</li>
+<li><strong>Hash-based URLs</strong> - Supports SPA navigation pattern (#content-key)</li>
+<li><strong>Dry-run mode</strong> - Preview generation without writing files</li>
+<li><strong>Comprehensive logging</strong> - Structured logs via gzlogging</li>
+<li><strong>Console progress indicators</strong> - Visual feedback with emojis</li>
+<li><strong>Exit code support</strong> - Proper error codes for automation</li>
+<li><strong>UTF-8 encoding</strong> - Full Unicode support in console and files</li>
+</ul>
+<h3 id="key-functions">Key Functions</h3>
+<h4 id="high-level">High-Level</h4>
+<ul>
+<li><strong><code>generate_sitemap(base_url, content_dir, index_file, output_file, log, dry_run=False)</code></strong><ul>
+<li>Main function that generates complete sitemap.xml</li>
+<li>Handles entire workflow from scanning to writing</li>
+<li>Supports dry-run mode for preview</li>
+</ul>
+</li>
+</ul>
+<h4 id="configuration-1">Configuration</h4>
+<ul>
+<li><p><strong><code>load_pipeline_config()</code></strong></p>
+<ul>
+<li>Loads pipeline configuration from config/pipeline.toml</li>
+<li>Validates required [environments] section</li>
+<li>Returns configuration dictionary</li>
+</ul>
+</li>
+<li><p><strong><code>get_environment_directory(environment, config=None)</code></strong></p>
+<ul>
+<li>Resolves environment name to directory path</li>
+<li>Returns Path to publish/{env_dir}/</li>
+<li>Validates directory exists</li>
+</ul>
+</li>
+<li><p><strong><code>get_project_root()</code></strong></p>
+<ul>
+<li>Returns Path to project root directory</li>
+<li>Used for resolving relative paths</li>
+</ul>
+</li>
+</ul>
+<h4 id="content-discovery">Content Discovery</h4>
+<ul>
+<li><strong><code>get_content_files(content_dir, log)</code></strong><ul>
+<li>Scans content directory for HTML files</li>
+<li>Returns sorted list of content keys (filenames without .html)</li>
+<li>Logs count of files found</li>
+</ul>
+</li>
+</ul>
+<h4 id="navigation-parsing">Navigation Parsing</h4>
+<ul>
+<li><strong><code>parse_navigation_structure(index_file, log)</code></strong><ul>
+<li>Parses index.html to extract navigation hierarchy</li>
+<li>Finds data-content attributes and nav-level classes</li>
+<li>Returns dict mapping content keys to level and priority</li>
+<li>Logs count of navigation entries</li>
+</ul>
+</li>
+</ul>
+<h4 id="priority-frequency">Priority &amp; Frequency</h4>
+<ul>
+<li><p><strong><code>calculate_priority(level, content_key)</code></strong></p>
+<ul>
+<li>Calculates SEO priority (0.0-1.0) based on nav level</li>
+<li>Special handling for home page (1.0) and important sections</li>
+<li>Returns float priority value</li>
+</ul>
+</li>
+<li><p><strong><code>determine_changefreq(content_key, level)</code></strong></p>
+<ul>
+<li>Determines change frequency (weekly, monthly, yearly)</li>
+<li>Based on content type and expected update patterns</li>
+<li>Returns frequency string</li>
+</ul>
+</li>
+</ul>
+<h4 id="utilities">Utilities</h4>
+<ul>
+<li><strong><code>get_file_last_modified(content_file)</code></strong><ul>
+<li>Gets last modification date of content file</li>
+<li>Returns formatted date string (YYYY-MM-DD)</li>
+<li>Used for <code>&lt;lastmod&gt;</code> element in sitemap</li>
+</ul>
+</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<h3 id="pipeline-configuration">Pipeline Configuration</h3>
+<p>The module reads <code>config/pipeline.toml</code> for environment definitions:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+port = 8000
+
+[environments.staging]
+dir = "staging"
+port = 8080
+
+[environments.prod]
+dir = "prod"
+port = 8888
+</code></pre>
+<h4 id="how-its-used">How it's used:</h4>
+<ul>
+<li><code>-e dev</code> → reads <code>[environments.dev]</code> → uses <code>publish/dev/</code> directory</li>
+<li><code>-e staging</code> → reads <code>[environments.staging]</code> → uses <code>publish/staging/</code> directory</li>
+<li><code>-e prod</code> → reads <code>[environments.prod]</code> → uses <code>publish/prod/</code> directory</li>
+</ul>
+<h3 id="base-url-configuration">Base URL Configuration</h3>
+<p>The base URL is hardcoded in <code>sitemapper.py</code>:</p>
+<pre><code class="language-python"># Base URL for the site
+base_url = 'https://mygaztank.com/'
+</code></pre>
+<p><strong>To change:</strong> Edit line ~448 in <code>utils/sitemap/sitemapper.py</code></p>
+<h3 id="priority-customization">Priority Customization</h3>
+<p>Priorities are calculated in <code>calculate_priority()</code> function:</p>
+<pre><code class="language-python">def calculate_priority(level, content_key):
+    if content_key == 'home':
+        return 1.0  # Home page always highest
+    if level == 1:
+        return 0.9  # Top-level pages
+    if level == 2:
+        return 0.8  # Important sub-pages (schedule, campaigns)
+        return 0.7  # Regular sub-pages
+    if level == 3:
+        return 0.6  # Sub-sub-pages (missions)
+    return 0.5  # Default for deep pages
+</code></pre>
+<p><strong>To customize:</strong> Edit <code>calculate_priority()</code> in <code>sitemapper.py</code></p>
+<h3 id="change-frequency-customization">Change Frequency Customization</h3>
+<p>Change frequencies are determined in <code>determine_changefreq()</code> function:</p>
+<pre><code class="language-python">def determine_changefreq(content_key, level):
+    if content_key == 'home':
+        return 'weekly'      # Landing page
+    if 'schedule' in content_key:
+        return 'weekly'      # Active schedule
+    if 'campaign1' in content_key:
+        return 'weekly'      # Current campaigns
+    if 'campaign2' in content_key:
+        return 'monthly'     # Older campaigns
+    if 'mods' in content_key:
+        return 'monthly'     # Mods section
+    if content_key in ['about', 'contact', 'future']:
+        return 'yearly'      # Static pages
+    return 'monthly'         # Default
+</code></pre>
+<p><strong>To customize:</strong> Edit <code>determine_changefreq()</code> in <code>sitemapper.py</code></p>
+<h2 id="how-it-works">How It Works</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                   SITEMAP GENERATION                        │
+├─────────────────────────────────────────────────────────────┤
+│  [1/4] 📄 Scan Content Files                                │
+│     └─ Read all *.html files from publish/{env}/content/    │
+│     └─ Extract content keys (filenames without .html)       │
+│     └─ Sort alphabetically for consistent ordering          │
+│                                                             │
+│  [2/4] 🗺️  Parse Navigation Structure                       │
+│     └─ Read publish/{env}/index.html                        │
+│     └─ Find all data-content="key" attributes               │
+│     └─ Detect nav-level-1, nav-level-2, etc. classes        │
+│     └─ Build hierarchy map with levels and priorities       │
+│                                                             │
+│  [3/4] 🔨 Build Sitemap XML                                 │
+│     └─ Create &lt;urlset&gt; root element with xmlns              │
+│     └─ Sort content: home first, then by priority           │
+│     └─ For each content file:                               │
+│         ├─ &lt;loc&gt; Base URL + #content-key                    │
+│         ├─ &lt;lastmod&gt; File modification timestamp            │
+│         ├─ &lt;changefreq&gt; Estimated from content type         │
+│         └─ &lt;priority&gt; Calculated from nav hierarchy         │
+│     └─ Pretty-print XML with 4-space indentation            │
+│                                                             │
+│  [4/4] 📝/👁️  Write or Preview Sitemap                      │
+│     └─ Normal: Write to publish/{env}/sitemap.xml           │
+│     └─ Dry-run: Display preview, don't write file           │
+│     └─ Report statistics: URLs written/prepared             │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="priority-calculation">Priority Calculation</h2>
+<p>Pages are assigned priorities (0.0 to 1.0) based on their position in the navigation hierarchy:</p>
+<table>
+<thead>
+<tr>
+<th>Page Type</th>
+<th>Nav Level</th>
+<th>Priority</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Home page</td>
+<td>Special</td>
+<td>1.0</td>
+<td><code>home</code></td>
+</tr>
+<tr>
+<td>Top-level pages</td>
+<td>1</td>
+<td>0.9</td>
+<td><code>about</code>, <code>runs</code>, <code>mods</code></td>
+</tr>
+<tr>
+<td>Important sub-pages</td>
+<td>2</td>
+<td>0.8</td>
+<td><code>runs_schedule</code>, <code>mods_campaign1</code></td>
+</tr>
+<tr>
+<td>Regular sub-pages</td>
+<td>2</td>
+<td>0.7</td>
+<td>Other level 2 pages</td>
+</tr>
+<tr>
+<td>Sub-sub-pages</td>
+<td>3</td>
+<td>0.6</td>
+<td><code>mods_campaign1_mission1</code></td>
+</tr>
+<tr>
+<td>Deep pages</td>
+<td>4+</td>
+<td>0.5</td>
+<td>Mission parts</td>
+</tr>
+</tbody>
+</table>
+<h3 id="higher-priority-more-important-to-search-engines">Higher priority = More important to search engines</h3>
+<h3 id="priority-logic">Priority Logic</h3>
+<ol>
+<li><strong>Home page</strong> always gets 1.0 (highest priority)</li>
+<li><strong>Top-level navigation</strong> (level 1) gets 0.9</li>
+<li><strong>Second level</strong> gets 0.8 for important pages (schedule, campaigns), 0.7 otherwise</li>
+<li><strong>Third level</strong> (missions) gets 0.6</li>
+<li><strong>Deeper levels</strong> get 0.5 (default)</li>
+</ol>
+<h2 id="change-frequency">Change Frequency</h2>
+<p>The module estimates how often pages are updated:</p>
+<table>
+<thead>
+<tr>
+<th>Content Type</th>
+<th>Change Frequency</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Home page</td>
+<td><code>weekly</code></td>
+<td>Landing page, updated frequently</td>
+</tr>
+<tr>
+<td>Schedule</td>
+<td><code>weekly</code></td>
+<td>Active schedule, changes regularly</td>
+</tr>
+<tr>
+<td>Active campaigns</td>
+<td><code>weekly</code></td>
+<td>Current content being updated</td>
+</tr>
+<tr>
+<td>Older campaigns</td>
+<td><code>monthly</code></td>
+<td>Historical content, occasional updates</td>
+</tr>
+<tr>
+<td>Mods section</td>
+<td><code>monthly</code></td>
+<td>Mods updated periodically</td>
+</tr>
+<tr>
+<td>Static pages</td>
+<td><code>yearly</code></td>
+<td>About, Contact, Future - rarely change</td>
+</tr>
+<tr>
+<td>Missions</td>
+<td><code>monthly</code></td>
+<td>Campaign missions, moderate updates</td>
+</tr>
+</tbody>
+</table>
+<h3 id="this-helps-search-engines-optimize-crawl-frequency">This helps search engines optimize crawl frequency</h3>
+<h3 id="frequency-options">Frequency Options</h3>
+<p>XML sitemaps support these frequency values:</p>
+<ul>
+<li><code>always</code> - Changes with every access (not used)</li>
+<li><code>hourly</code> - Changes every hour (not used)</li>
+<li><code>daily</code> - Changes daily (not used)</li>
+<li><code>weekly</code> - Changes weekly (used for active content)</li>
+<li><code>monthly</code> - Changes monthly (used for stable content)</li>
+<li><code>yearly</code> - Changes yearly (used for static pages)</li>
+<li><code>never</code> - Archived content (not used)</li>
+</ul>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="direct-invocation">Direct Invocation</h3>
+<pre><code class="language-bash"># Windows launcher
+scripts\generate_sitemap.cmd -e dev
+
+# Linux/Mac launcher
+./scripts/generate_sitemap.sh -e dev
+
+# Direct Python module
+python -m sitemap -e dev
+</code></pre>
+<h3 id="programmatic-invocation">Programmatic Invocation</h3>
+<pre><code class="language-python"># From Python code
+from sitemap.sitemapper import generate_sitemap, get_environment_directory, load_pipeline_config
+from utils.gzlogging import get_logging_context
+from pathlib import Path
+
+# Initialize logging
+log = get_logging_context('prod', 'sitemapper', console=True)
+
+# Load configuration and resolve paths
+config = load_pipeline_config()
+env_dir = get_environment_directory('prod', config)
+
+# Generate sitemap
+generate_sitemap(
+    base_url='https://mygaztank.com/',
+    content_dir=env_dir / 'content',
+    index_file=env_dir / 'index.html',
+    output_file=env_dir / 'sitemap.xml',
+    log=log,
+    dry_run=False
+)
+</code></pre>
+<h3 id="build-pipeline-integration">Build Pipeline Integration</h3>
+<p>Called by <code>utils/package/packager.py</code> during pre-flight checks:</p>
+<pre><code class="language-python"># Inside packager.py pre-flight checks
+import subprocess
+
+result = subprocess.run(
+    [sys.executable, '-m', 'sitemap', '-e', environment],
+    capture_output=True,
+    text=True,
+    encoding='utf-8'
+)
+
+if result.returncode != 0:
+    log.err("Sitemap generation failed")
+    return False
+</code></pre>
+<h2 id="development">Development</h2>
+<h3 id="running-tests">Running Tests</h3>
+<pre><code class="language-bash"># Test with different environments
+python -m sitemap -e dev
+python -m sitemap -e staging
+python -m sitemap -e prod
+
+# Test dry-run mode
+python -m sitemap -e dev --dry-run
+
+# Verify output
+cat publish/dev/sitemap.xml       # Linux/Mac
+type publish\dev\sitemap.xml      # Windows
+</code></pre>
+<h3 id="adding-new-features">Adding New Features</h3>
+<ol>
+<li><p><strong>Add new priority rules:</strong></p>
+<ul>
+<li>Edit <code>calculate_priority()</code> in <code>sitemapper.py</code></li>
+<li>Add conditions for new content types</li>
+<li>Update this README's priority table</li>
+</ul>
+</li>
+<li><p><strong>Add new change frequencies:</strong></p>
+<ul>
+<li>Edit <code>determine_changefreq()</code> in <code>sitemapper.py</code></li>
+<li>Add conditions for new update patterns</li>
+<li>Update this README's frequency table</li>
+</ul>
+</li>
+<li><p><strong>Support new environments:</strong></p>
+<ul>
+<li>Add environment to <code>config/pipeline.toml</code></li>
+<li>No code changes needed (automatically supported)</li>
+</ul>
+</li>
+<li><p><strong>Change base URL:</strong></p>
+<ul>
+<li>Edit line ~448 in <code>sitemapper.py</code>: <code>base_url = 'https://newsite.com/'</code></li>
+<li>Consider making this configurable in future enhancement</li>
+</ul>
+</li>
+</ol>
+<h3 id="code-style">Code Style</h3>
+<p>The module follows GAZTank Python coding standards:</p>
+<ul>
+<li><strong>UTF-8 encoding</strong> with BOM markers in Python files</li>
+<li><strong>Type hints</strong> where applicable (Path objects)</li>
+<li><strong>Docstrings</strong> for all public functions</li>
+<li><strong>Clean logging</strong> - no separators or blank lines in log files</li>
+<li><strong>Rich console</strong> - emojis and formatting for user experience</li>
+<li><strong>Error handling</strong> - try/except with proper logging</li>
+<li><strong>Exit codes</strong> - 0 for success, 1 for failure</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="submit-to-search-engines">1. Submit to Search Engines</h3>
+<p>After generating sitemap.xml, submit it to:</p>
+<h4 id="google-search-console">Google Search Console:</h4>
+<ol>
+<li>Go to <a href="https://search.google.com/search-console">https://search.google.com/search-console</a></li>
+<li>Select your property</li>
+<li>Navigate to Sitemaps</li>
+<li>Enter: <code>https://mygaztank.com/sitemap.xml</code></li>
+<li>Click Submit</li>
+</ol>
+<h4 id="bing-webmaster-tools">Bing Webmaster Tools:</h4>
+<ol>
+<li>Go to <a href="https://www.bing.com/webmasters">https://www.bing.com/webmasters</a></li>
+<li>Select your site</li>
+<li>Navigate to Sitemaps</li>
+<li>Enter: <code>https://mygaztank.com/sitemap.xml</code></li>
+<li>Click Submit</li>
+</ol>
+<h3 id="reference-in-robotstxt">2. Reference in robots.txt</h3>
+<p>Add to <code>publish/{env}/robots.txt</code>:</p>
+<pre><code>Sitemap: https://mygaztank.com/sitemap.xml
+</code></pre>
+<p><strong>Note:</strong> This is already configured in the project templates.</p>
+<h3 id="update-regularly">3. Update Regularly</h3>
+<p>Regenerate sitemap when:</p>
+<ul>
+<li>Adding new content pages</li>
+<li>Restructuring navigation hierarchy</li>
+<li>Changing page priorities or frequencies</li>
+<li>Before deploying to production</li>
+</ul>
+<p><strong>Automation:</strong> The packaging pipeline automatically regenerates sitemaps.</p>
+<h3 id="use-dry-run-for-validation">4. Use Dry-Run for Validation</h3>
+<p>Before generating for production:</p>
+<pre><code class="language-bash"># Preview what will be generated
+python -m sitemap -e prod --dry-run
+
+# Review output and statistics
+# If satisfied, generate actual file
+python -m sitemap -e prod
+</code></pre>
+<h3 id="verify-in-browser">5. Verify in Browser</h3>
+<p>After generation:</p>
+<ol>
+<li>Open <code>publish/{env}/sitemap.xml</code> in a browser</li>
+<li>Verify all expected pages are listed</li>
+<li>Check URLs are correct (base URL + #content-key)</li>
+<li>Confirm priorities make sense for your SEO strategy</li>
+<li>Validate change frequencies match update patterns</li>
+</ol>
+<h3 id="monitor-search-engine-indexing">6. Monitor Search Engine Indexing</h3>
+<p>After submission:</p>
+<ul>
+<li>Check Google Search Console for crawl errors</li>
+<li>Monitor Bing Webmaster Tools for indexing status</li>
+<li>Review search engine logs for sitemap access</li>
+<li>Adjust priorities/frequencies based on analytics</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="content-directory-not-found">"Content directory not found"</h3>
+<p><strong>Problem:</strong> Cannot find <code>publish/{env}/content/</code> directory</p>
+<h4 id="solution">Solution:</h4>
+<ul>
+<li>Ensure you specified correct environment: <code>-e dev</code>, <code>-e staging</code>, or <code>-e prod</code></li>
+<li>Verify <code>publish/{env}/</code> directory exists</li>
+<li>Check that <code>config/pipeline.toml</code> has correct <code>dir</code> attribute</li>
+<li>Run generation pipeline first to create content: <code>scripts\generate.cmd</code></li>
+</ul>
+<h3 id="indexhtml-not-found">"index.html not found"</h3>
+<p><strong>Problem:</strong> Cannot find <code>publish/{env}/index.html</code></p>
+<h4 id="solution-1">Solution:</h4>
+<ul>
+<li>Verify <code>publish/{env}/index.html</code> exists</li>
+<li>Ensure navigation structure is present</li>
+<li>Run packaging to copy index.html to environment directory</li>
+<li>Check file permissions</li>
+</ul>
+<h3 id="no-content-files-found">"No content files found"</h3>
+<p><strong>Problem:</strong> No HTML files in content directory</p>
+<h4 id="solution-2">Solution:</h4>
+<ul>
+<li>Verify content files exist in <code>publish/{env}/content/</code></li>
+<li>Run content generation: <code>scripts\generate.cmd</code></li>
+<li>Check that files have <code>.html</code> extension</li>
+<li>Ensure files are not hidden or have permission issues</li>
+</ul>
+<h3 id="unknown-environment-xyz">"Unknown environment: 'xyz'"</h3>
+<p><strong>Problem:</strong> Specified environment not in pipeline.toml</p>
+<h4 id="solution-3">Solution:</h4>
+<ul>
+<li>Check available environments: <code>dev</code>, <code>staging</code>, <code>prod</code></li>
+<li>Verify <code>config/pipeline.toml</code> has <code>[environments.xyz]</code> section</li>
+<li>Use correct environment name with <code>-e</code> argument</li>
+</ul>
+<h3 id="environment-directory-not-found">"Environment directory not found"</h3>
+<p><strong>Problem:</strong> Directory specified in pipeline.toml doesn't exist</p>
+<h4 id="solution-4">Solution:</h4>
+<ul>
+<li>Check <code>config/pipeline.toml</code> for <code>dir</code> attribute</li>
+<li>Create directory: <code>mkdir publish/{env_dir}</code></li>
+<li>Run packaging to create full environment structure</li>
+</ul>
+<h3 id="incorrect-priorities-or-frequencies">Incorrect Priorities or Frequencies</h3>
+<p><strong>Problem:</strong> Pages have unexpected priorities or change frequencies</p>
+<h4 id="solution-5">Solution:</h4>
+<ol>
+<li>Check navigation structure in <code>publish/{env}/index.html</code></li>
+<li>Verify <code>data-content</code> attributes match filenames</li>
+<li>Review <code>calculate_priority()</code> logic in <code>sitemapper.py</code></li>
+<li>Review <code>determine_changefreq()</code> logic in <code>sitemapper.py</code></li>
+<li>Customize functions if your site has different priorities</li>
+</ol>
+<h3 id="missing-pages-in-sitemap">Missing Pages in Sitemap</h3>
+<p><strong>Problem:</strong> Some pages not included in generated sitemap</p>
+<h4 id="solution-6">Solution:</h4>
+<ol>
+<li>Verify files exist in <code>publish/{env}/content/</code></li>
+<li>Check console output for file count: "Found X content files"</li>
+<li>Ensure files have <code>.html</code> extension</li>
+<li>Run with dry-run to see what would be included</li>
+<li>Check log file for warnings: <code>logs/{env}/sitemapper_YYYYMMDD.log</code></li>
+</ol>
+<h3 id="dry-run-shows-different-count">Dry-Run Shows Different Count</h3>
+<p><strong>Problem:</strong> Dry-run shows different URL count than expected</p>
+<h4 id="solution-7">Solution:</h4>
+<ol>
+<li>Review console output for file listing</li>
+<li>Check navigation structure parsing results</li>
+<li>Compare content directory files with navigation links</li>
+<li>Some files may not be in navigation (expected)</li>
+<li>Use dry-run to validate before actual generation</li>
+</ol>
+<h2 id="xml-sitemap-specification">XML Sitemap Specification</h2>
+<p>The generated sitemap follows the official protocol defined at:</p>
+<ul>
+<li><a href="https://www.sitemaps.org/protocol.html">https://www.sitemaps.org/protocol.html</a></li>
+</ul>
+<h3 id="required-elements">Required Elements</h3>
+<ul>
+<li><code>&lt;urlset&gt;</code> - Root element with xmlns attribute</li>
+<li><code>&lt;url&gt;</code> - Container for each URL entry</li>
+<li><code>&lt;loc&gt;</code> - URL of the page (required)</li>
+</ul>
+<h3 id="optional-elements-all-used">Optional Elements (all used)</h3>
+<ul>
+<li><code>&lt;lastmod&gt;</code> - Last modification date (YYYY-MM-DD format)</li>
+<li><code>&lt;changefreq&gt;</code> - Expected change frequency (weekly, monthly, yearly)</li>
+<li><code>&lt;priority&gt;</code> - Relative priority (0.0-1.0 float)</li>
+</ul>
+<h3 id="output-format">Output Format</h3>
+<pre><code class="language-xml">&lt;?xml version="1.0" ?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+    &lt;url&gt;
+        &lt;loc&gt;https://mygaztank.com/#home&lt;/loc&gt;
+        &lt;lastmod&gt;2025-10-20&lt;/lastmod&gt;
+        &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+        &lt;priority&gt;1.0&lt;/priority&gt;
+    &lt;/url&gt;
+    &lt;url&gt;
+        &lt;loc&gt;https://mygaztank.com/#runs_schedule&lt;/loc&gt;
+        &lt;lastmod&gt;2025-10-15&lt;/lastmod&gt;
+        &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+        &lt;priority&gt;0.8&lt;/priority&gt;
+    &lt;/url&gt;
+    &lt;!-- ... more URLs ... --&gt;
+&lt;/urlset&gt;
+</code></pre>
+<h3 id="sitemap-limits">Sitemap Limits</h3>
+<ul>
+<li><strong>Maximum URLs:</strong> 50,000 per sitemap</li>
+<li><strong>Maximum size:</strong> 50MB uncompressed</li>
+<li><strong>Format:</strong> UTF-8 encoding</li>
+<li><strong>Compression:</strong> Can be gzipped (.xml.gz) for submission</li>
+</ul>
+<p><strong>Our site:</strong> ~18 content files, well under limits</p>
+<h3 id="url-format">URL Format</h3>
+<p>The module uses <strong>hash-based navigation</strong> for Single Page Application (SPA) pattern:</p>
+<pre><code>https://mygaztank.com/#content-key
+</code></pre>
+<p>This allows:</p>
+<ul>
+<li>All content served from single domain</li>
+<li>Client-side navigation without page reloads</li>
+<li>Search engines can index individual content sections</li>
+<li>Back/forward browser buttons work correctly</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Potential improvements:</p>
+<ul>
+<li>[ ] <strong>Configuration file for priorities and frequencies</strong> - Move hardcoded values to TOML</li>
+<li>[ ] <strong>Make base URL configurable</strong> - Read from pipeline.toml or separate config</li>
+<li>[ ] <strong>Support for multiple base URLs</strong> - Multi-domain/subdomain sites</li>
+<li>[ ] <strong>Image sitemap generation</strong> - Separate sitemap for images</li>
+<li>[ ] <strong>Video sitemap generation</strong> - Separate sitemap for video content</li>
+<li>[ ] <strong>News sitemap</strong> - Time-sensitive news content format</li>
+<li>[ ] <strong>Automatic submission via API</strong> - Submit to Google/Bing programmatically</li>
+<li>[ ] <strong>Sitemap index</strong> - For very large sites with multiple sitemaps</li>
+<li>[ ] <strong>XML schema validation</strong> - Validate against sitemap.org XSD</li>
+<li>[ ] <strong>Incremental updates</strong> - Only regenerate changed pages</li>
+<li>[ ] <strong>Alternative URL patterns</strong> - Support for non-hash URLs</li>
+<li>[ ] <strong>Sitemap styling</strong> - XSLT stylesheet for browser viewing</li>
+<li>[ ] <strong>Multi-language support</strong> - hreflang annotations for i18n</li>
+<li>[x] <strong>Environment support</strong> - Generate for dev/staging/prod (v1.1)</li>
+<li>[x] <strong>Dry-run mode</strong> - Preview without writing files (v1.1)</li>
+<li>[x] <strong>gzlogging integration</strong> - Structured logging (v1.1)</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<h3 id="internal-documentation">Internal Documentation</h3>
+<ul>
+<li><strong>DESIGN_RULES.md</strong> - GAZTank coding standards and patterns</li>
+<li><strong>generate module</strong> - Content generation (runs before sitemap)</li>
+<li><strong>package module</strong> - Calls sitemap during pre-flight checks</li>
+<li><strong>pipeline.toml</strong> - Environment configuration</li>
+</ul>
+<h3 id="external-resources">External Resources</h3>
+<ul>
+<li><strong>Sitemap Protocol:</strong> <a href="https://www.sitemaps.org/">https://www.sitemaps.org/</a></li>
+<li><strong>Google Sitemap Guidelines:</strong> <a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview">https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview</a></li>
+<li><strong>Bing Sitemap Guidelines:</strong> <a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed">https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed</a></li>
+<li><strong>Google Search Console:</strong> <a href="https://search.google.com/search-console">https://search.google.com/search-console</a></li>
+<li><strong>Bing Webmaster Tools:</strong> <a href="https://www.bing.com/webmasters">https://www.bing.com/webmasters</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 22, 2025</em><br/>
+<em>Sitemap Generator version: 1.1</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

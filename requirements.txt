@@ -1,0 +1,43 @@
+# GAZ Tank - Python Dependencies
+# ================================
+# Install all: pip install -r requirements.txt
+# Minimal:     pip install beautifulsoup4 tomlkit mistune
+# Python 3.11+ has tomllib built-in (no need for tomli)
+
+# Core Dependencies (Required)
+# ----------------------------
+beautifulsoup4>=4.12.0    # HTML parsing and manipulation
+                          # Used by: toc, setup, generate
+                          
+lxml>=5.0.0              # Fast XML/HTML parser for BeautifulSoup
+                          # Used by: toc (4% faster than html.parser, scales better)
+                          
+tomlkit>=0.12.0          # TOML config with comment preservation
+                          # Used by: setup (preserves comments when writing config)
+                          
+mistune>=3.0.0           # Markdown to HTML conversion
+                          # Used by: generate (md_to_html.py)
+                          
+tomli>=2.0.0 ; python_version < "3.11"  
+                          # TOML parsing for Python < 3.11
+                          # Used by: gzconfig, gzlint, deploy
+                          # Note: Python 3.11+ uses built-in tomllib
+
+# Optional Dependencies (for minification & FTP)
+# -----------------------------------------------
+rcssmin>=1.1.0           # CSS minification
+                          # Used by: package (optional, graceful fallback)
+                          
+rjsmin>=1.2.0            # JavaScript minification
+                          # Used by: package (optional, graceful fallback)
+
+pyftpdlib>=1.5.0         # FTP server library
+                          # Used by: gzhost (FTP simulation server for testing deployments)
+
+# Development Dependencies (Optional)
+# -----------------------------------
+# Uncomment if needed for development
+# black>=23.0.0          # Code formatter
+# flake8>=6.0.0          # Linter
+# pytest>=7.0.0          # Testing framework
+# mypy>=1.0.0            # Type checker

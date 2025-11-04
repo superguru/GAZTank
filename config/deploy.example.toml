@@ -1,0 +1,26 @@
+# Deploy Configuration Template
+# Copy this file to 'deploy.toml' in the config/ directory and fill in your FTP details
+# Note: deploy.toml is in .gitignore and will not be committed
+
+[ftp]
+server = "ftp.example.com"
+port = 21
+use_ftps = true
+username = "your-username"
+password = "your-password"
+target_dir = "/public_html"
+
+# Upload subdirectory configuration
+# Creates timestamped subdirectories for each upload to organize packages
+upload_subdir_fmt = "%Y%m%d_%H%M%S_%j"  # Python strftime format string (default: YYYYMMDD_HHMMSS_DayOfYear)
+upload_subdir_postfix_len = 5           # Length of random alphanumeric postfix (1-10, default: 5)
+
+# Configuration Options:
+# - port: FTP server port (default: 21, can be omitted)
+# - use_ftps: Use secure FTPS (FTP over TLS) - true or false (default: true)
+#   Set to false for regular FTP (not recommended for production)
+# - upload_subdir_fmt: Date format for upload subdirectory (default: "%Y%m%d_%H%M%S_%j")
+#   Examples: "%Y%m%d" -> 20251019, "%Y-%m-%d_%H%M" -> 2025-10-19_1430
+#   Set to empty string "" to disable subdirectory creation
+# - upload_subdir_postfix_len: Random alphanumeric characters appended to subdir (1-10, default: 5)
+# - Common ports: 21 (FTP/FTPS), 990 (implicit FTPS), 22 (SFTP - not supported)

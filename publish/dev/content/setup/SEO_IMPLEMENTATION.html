@@ -1,0 +1,374 @@
+<h1>SEO Implementation Summary</h1>
+<h2>1. Meta Tags (index.html)</h2>
+<p>✅ <strong>Primary Meta Tags:</strong></p>
+<ul>
+<li>Title: "GAZ Tank - Gaming Content, Mods &amp; Campaign Runs"</li>
+<li>Description: Comprehensive description for search engines</li>
+<li>Keywords: gaming, mods, campaigns, 7 days to die, game walkthroughs, etc.</li>
+<li>Author: superguru, gazorper</li>
+<li>Robots: index, follow</li>
+</ul>
+<p>✅ <strong>Canonical URL:</strong></p>
+<ul>
+<li>Set to: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+</ul>
+<p>✅ <strong>Open Graph Tags (Facebook/Social):</strong></p>
+<ul>
+<li>og:type, og:url, og:title, og:description</li>
+<li>og:image (using site logo)</li>
+<li>og:site_name</li>
+</ul>
+<p>✅ <strong>Twitter Card Tags:</strong></p>
+<ul>
+<li>twitter:card (summary_large_image)</li>
+<li>twitter:url, twitter:title, twitter:description, twitter:image</li>
+</ul>
+<h2>2. Structured Data (JSON-LD)</h2>
+<p>✅ <strong>WebSite Schema:</strong></p>
+<ul>
+<li>Added schema.org structured data</li>
+<li>Includes site name, description, authors</li>
+<li>SearchAction for search engines</li>
+<li>Language specification (en-US)</li>
+</ul>
+<h2>3. Resource Optimization</h2>
+<p>✅ <strong>Preload Critical Resources:</strong></p>
+<ul>
+<li>Preload CSS (styles.css)</li>
+<li>Preload JavaScript (app.js)</li>
+</ul>
+<h2>4. Dynamic Meta Updates (app.js)</h2>
+<p>✅ <strong>New Functions Added:</strong></p>
+<ul>
+<li><code>updatePageMetadata()</code> - Updates title and meta tags on content load</li>
+<li><code>formatPageTitle()</code> - Formats content keys into readable titles</li>
+</ul>
+<p>✅ <strong>Dynamic Updates:</strong></p>
+<ul>
+<li>Document title changes per page</li>
+<li>Meta description updates from first paragraph</li>
+<li>Open Graph tags update per page</li>
+<li>Twitter Card tags update per page</li>
+<li>Canonical URL updates per page</li>
+</ul>
+<h2>5. Sitemap.xml</h2>
+<p>✅ <strong>Complete Site Map:</strong></p>
+<ul>
+<li>All 18 pages listed with URLs</li>
+<li>Priority settings (1.0 for home, decreasing for nested pages)</li>
+<li>Change frequency specified (weekly, monthly, yearly)</li>
+<li>Last modified dates</li>
+<li>Proper XML format for search engines</li>
+</ul>
+<h2>6. Robots.txt</h2>
+<p>✅ <strong>Search Engine Directives:</strong></p>
+<ul>
+<li>Allow all user agents</li>
+<li>Disallow utils/ and publish/ directories</li>
+<li>Sitemap location specified</li>
+</ul>
+<h2>7. Humans.txt</h2>
+<p>✅ <strong>Attribution File:</strong></p>
+<ul>
+<li>Team credits (superguru, gazorper)</li>
+<li>Site technology stack</li>
+<li>Development tools used</li>
+</ul>
+<h2>Files Created/Modified</h2>
+<h3>Created:</h3>
+<ol>
+<li><code>src/robots.txt</code> - Search engine directives</li>
+<li><code>src/sitemap.xml</code> - Complete site map</li>
+<li><code>src/humans.txt</code> - Team attribution</li>
+</ol>
+<h3>Modified:</h3>
+<ol>
+<li><code>src/index.html</code> - Comprehensive meta tags, structured data</li>
+<li><code>src/js/app.js</code> - Dynamic metadata updates</li>
+</ol>
+<h2>SEO Benefits</h2>
+<h3>Search Engine Optimization</h3>
+<ul>
+<li>✅ Proper indexing with robots.txt</li>
+<li>✅ Complete sitemap for crawlers</li>
+<li>✅ Rich meta descriptions for better snippets</li>
+<li>✅ Structured data for enhanced search results</li>
+<li>✅ Dynamic title/description per page</li>
+</ul>
+<h3>Social Media Optimization</h3>
+<ul>
+<li>✅ Open Graph tags for Facebook, LinkedIn</li>
+<li>✅ Twitter Cards for better tweet previews</li>
+<li>✅ Proper image sharing with logo</li>
+</ul>
+<h3>Technical SEO</h3>
+<ul>
+<li>✅ Canonical URLs prevent duplicate content</li>
+<li>✅ Proper HTML5 semantic markup</li>
+<li>✅ Resource preloading for faster loads</li>
+<li>✅ Mobile-friendly meta viewport</li>
+</ul>
+<h2>Analytics Configuration</h2>
+<h3>Configuration Fields (config/site.toml)</h3>
+<p>The <code>[analytics]</code> section in <code>config/site.toml</code> provides fields for popular web analytics services:</p>
+<pre><code class="language-toml">[analytics]
+plausible_domain = ""           # Your domain for Plausible Analytics (e.g., "example.com")
+google_analytics_id = ""        # Google Analytics 4 Measurement ID (e.g., "G-XXXXXXXXXX")
+matomo_url = "" # Matomo instance URL (e.g., "https://mygaztank.com/")
+matomo_site_id = "" # Matomo site ID (e.g., "1")
+</code></pre>
+<h3>Supported Analytics Services</h3>
+<h4>1. Plausible Analytics (Privacy-Friendly)</h4>
+<h5>What is Plausible?</h5>
+<ul>
+<li>Open-source, privacy-friendly analytics</li>
+<li>No cookies, GDPR compliant by default</li>
+<li>Lightweight script (~1KB)</li>
+<li>Simple, easy-to-understand dashboard</li>
+</ul>
+<h5>Configuration</h5>
+<ol>
+<li>Set <code>plausible_domain</code> to your site's domain (without <a href="https://mygaztank.com">https://mygaztank.com</a>):</li>
+</ol>
+<pre><code class="language-toml">plausible_domain = "mygaztank.com"
+</code></pre>
+<ol start="2">
+<li><strong>Implementation Status:</strong> ⚠️ NOT YET IMPLEMENTED</li>
+</ol>
+<ul>
+<li>Config field exists and is stored</li>
+<li>Script injection not yet implemented in <code>file_generators.py</code></li>
+<li>Manual implementation: Add to <code>src/index.html</code> <code>&lt;head&gt;</code>:</li>
+</ul>
+<pre><code class="language-html">&lt;script defer data-domain="mygaztank.com" src="https://mygaztank.com/js/script.js"&gt;&lt;/script&gt;
+</code></pre>
+<h5>Resources</h5>
+<ul>
+<li>Website: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+<li>Pricing: Free self-hosted, paid cloud service (~$9/month)</li>
+<li>Documentation: <a href="https://mygaztank.com/docs">https://mygaztank.com/docs</a></li>
+</ul>
+<h4>2. Google Analytics 4</h4>
+<h5>What is Google Analytics?</h5>
+<ul>
+<li>Industry-standard analytics platform</li>
+<li>Comprehensive tracking and reporting</li>
+<li>Free for most sites</li>
+<li>Integration with Google Ads and Search Console</li>
+</ul>
+<h5>Configuration</h5>
+<ol>
+<li>Create a GA4 property at <a href="https://analytics.google.com/">https://analytics.google.com/</a></li>
+<li>Get your Measurement ID (format: G-XXXXXXXXXX)</li>
+<li>Set <code>google_analytics_id</code> in config:</li>
+</ol>
+<pre><code class="language-toml">google_analytics_id = "G-XXXXXXXXXX"
+</code></pre>
+<ol start="4">
+<li><strong>Implementation Status:</strong> ⚠️ NOT YET IMPLEMENTED</li>
+</ol>
+<ul>
+<li>Config field exists and is stored</li>
+<li>Script injection not yet implemented in <code>file_generators.py</code></li>
+<li>Manual implementation: Add to <code>src/index.html</code> <code>&lt;head&gt;</code>:</li>
+</ul>
+<pre><code class="language-html">&lt;!-- Google tag (gtag.js) --&gt;
+&lt;script async src="https://mygaztank.com/gtag/js?id=G-XXXXXXXXXX"&gt;&lt;/script&gt;
+&lt;script&gt;
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX');
+&lt;/script&gt;
+</code></pre>
+<h5>Privacy Considerations</h5>
+<ul>
+<li>Requires cookie consent in EU (GDPR)</li>
+<li>Consider using anonymize IP option</li>
+<li>Inform users in privacy policy</li>
+</ul>
+<h5>Resources</h5>
+<ul>
+<li>Setup: <a href="https://analytics.google.com/">https://analytics.google.com/</a></li>
+<li>Documentation: <a href="https://support.google.com/analytics">https://support.google.com/analytics</a></li>
+</ul>
+<h4>3. Matomo (Self-Hosted Analytics)</h4>
+<h5>What is Matomo?</h5>
+<ul>
+<li>Open-source analytics platform</li>
+<li>Self-hosted option for complete data control</li>
+<li>GDPR compliant with proper configuration</li>
+<li>Alternative to Google Analytics</li>
+</ul>
+<h5>Configuration</h5>
+<ol>
+<li>Install Matomo on your server or use cloud hosting</li>
+<li>Create a site in Matomo dashboard</li>
+<li>Note your Matomo URL and Site ID</li>
+<li>Set values in config:</li>
+</ol>
+<pre><code class="language-toml">matomo_url = "https://mygaztank.com/"
+matomo_site_id = "1"
+</code></pre>
+<ol start="5">
+<li><strong>Implementation Status:</strong> ⚠️ NOT YET IMPLEMENTED</li>
+</ol>
+<ul>
+<li>Config fields exist and are stored</li>
+<li>Script injection not yet implemented in <code>file_generators.py</code></li>
+<li>Manual implementation: Add to <code>src/index.html</code> before <code>&lt;/head&gt;</code>:</li>
+</ul>
+<pre><code class="language-html">&lt;!-- Matomo --&gt;
+&lt;script&gt;
+var _paq = window._paq = window._paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function() {
+var u="https://mygaztank.com/";
+_paq.push(['setTrackerUrl', u+'matomo.php']);
+_paq.push(['setSiteId', '1']);
+var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+})();
+&lt;/script&gt;
+&lt;!-- End Matomo Code --&gt;
+</code></pre>
+<h5>Resources</h5>
+<ul>
+<li>Website: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+<li>Pricing: Free self-hosted, paid cloud service</li>
+<li>Documentation: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+</ul>
+<h3>Implementation Roadmap</h3>
+<h4>Current State</h4>
+<ul>
+<li>✅ Config fields exist in <code>config/site.toml</code></li>
+<li>✅ User prompts in interactive setup (optional section)</li>
+<li>✅ Config values are stored and preserved</li>
+<li>❌ No automatic script injection into HTML</li>
+<li>❌ Manual implementation required</li>
+</ul>
+<h4>To Implement Analytics Script Injection</h4>
+<p>Create a new function in <code>utils/setup/file_generators.py</code>:</p>
+<pre><code class="language-python">def update_analytics_scripts(config_data):
+"""Add analytics tracking scripts to index.html based on config
+
+Args:
+config_data: Dictionary containing configuration values
+"""
+from bs4 import BeautifulSoup
+
+index_path = Path('src/index.html')
+if not index_path.exists():
+return
+
+create_backup(index_path)
+content = index_path.read_text(encoding='utf-8')
+soup = BeautifulSoup(content, 'html.parser')
+
+head = soup.find('head')
+if not head:
+return
+
+# Remove existing analytics scripts (for updates)
+# ... implementation here ...
+
+# Add Plausible if configured
+plausible_domain = config_data.get('plausible_domain', '')
+if plausible_domain:
+# Create and insert Plausible script tag
+pass
+
+# Add Google Analytics if configured
+ga_id = config_data.get('google_analytics_id', '')
+if ga_id:
+# Create and insert GA4 script tags
+pass
+
+# Add Matomo if configured
+matomo_url = config_data.get('matomo_url', '')
+matomo_site_id = config_data.get('matomo_site_id', '')
+if matomo_url and matomo_site_id:
+# Create and insert Matomo script
+pass
+
+index_path.write_text(str(soup), encoding='utf-8')
+</code></pre>
+<h4>Call from <code>setup_site.py</code></h4>
+<pre><code class="language-python"># After other updates
+update_analytics_scripts(config_data)
+</code></pre>
+<h3>Privacy &amp; Legal Considerations</h3>
+<h4>GDPR Compliance</h4>
+<ul>
+<li>If targeting EU users, analytics may require cookie consent</li>
+<li>Plausible: No consent needed (cookieless)</li>
+<li>Google Analytics: Typically requires consent banner</li>
+<li>Matomo: Can be configured without cookies</li>
+</ul>
+<h4>Recommendations</h4>
+<ol>
+<li>Add a privacy policy page explaining data collection</li>
+<li>Consider using cookieless analytics (Plausible)</li>
+<li>Implement cookie consent banner if using GA4</li>
+<li>Anonymize IP addresses where possible</li>
+<li>Provide opt-out mechanism for users</li>
+</ol>
+<h4>Cookie Consent Solutions</h4>
+<ul>
+<li>CookieYes: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+<li>Osano: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+<li>Cookiebot: <a href="https://mygaztank.com/">https://mygaztank.com/</a></li>
+</ul>
+<h2>Next Steps for SEO (Future Enhancements)</h2>
+<h3>When Site Goes Live</h3>
+<ol>
+<li>Submit sitemap to Google Search Console</li>
+<li>Submit sitemap to Bing Webmaster Tools</li>
+<li><strong>Configure analytics</strong> (see Analytics Configuration section above)</li>
+<li>Verify Open Graph tags with Facebook Debugger</li>
+<li>Test Twitter Cards with Twitter Card Validator</li>
+</ol>
+<h3>Content Optimization</h3>
+<ol>
+<li>Add unique meta descriptions to each content HTML file</li>
+<li>Include alt text for all images (already has logo alt)</li>
+<li>Add more internal linking between related pages</li>
+<li>Consider adding a blog section for fresh content</li>
+</ol>
+<h3>Technical</h3>
+<ol>
+<li>Implement lazy loading for images</li>
+<li>Minify CSS and JavaScript for production</li>
+<li>Enable Gzip compression on server</li>
+<li>Set up proper caching headers</li>
+<li>Consider adding a service worker for offline support</li>
+</ol>
+<h2>Testing Recommendations</h2>
+<h3>SEO Testing Tools</h3>
+<ul>
+<li>Google Search Console</li>
+<li>Google Lighthouse (SEO audit)</li>
+<li>Bing Webmaster Tools</li>
+<li>Schema.org Validator (for JSON-LD)</li>
+</ul>
+<h3>Social Media Testing</h3>
+<ul>
+<li>Facebook Sharing Debugger: <a href="https://developers.facebook.com/tools/debug/">https://developers.facebook.com/tools/debug/</a></li>
+<li>Twitter Card Validator: <a href="https://cards-dev.twitter.com/validator">https://cards-dev.twitter.com/validator</a></li>
+<li>LinkedIn Post Inspector</li>
+</ul>
+<h3>Technical Testing</h3>
+<ul>
+<li>Mobile-Friendly Test: <a href="https://search.google.com/test/mobile-friendly">https://search.google.com/test/mobile-friendly</a></li>
+<li>PageSpeed Insights: <a href="https://pagespeed.web.dev/">https://pagespeed.web.dev/</a></li>
+<li>GTmetrix: <a href="https://gtmetrix.com/">https://gtmetrix.com/</a></li>
+</ul>
+<h2>Contact &amp; Attribution</h2>
+<p>Site: <a href="https://mygaztank.com">https://mygaztank.com</a><br/>
+Authors: superguru, gazorper<br/>
+Implementation Date: October 16, 2025</p>
+<div>
+<br><br>
+<p><em>This content was automatically generated from <code>SEO_IMPLEMENTATION.md</code></em></p>
+</div>

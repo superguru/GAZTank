@@ -1,0 +1,1520 @@
+<h1>GZLint Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#logging-1">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#output-examples">Output Examples</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#customization">Customization</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#performance">Performance</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#how-it-works">How It Works</a>
+</li>
+<li>
+<a href="#architecture">Architecture</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#exit-codes">Exit Codes:</a>
+</li>
+<li>
+<a href="#usage-in-scripts">Usage in Scripts:</a>
+</li>
+<li>
+<a href="#javascript-rules">JavaScript Rules</a>
+</li>
+<li>
+<a href="#configuration-rules">Configuration Rules</a>
+</li>
+<li>
+<a href="#severity-levels">Severity Levels</a>
+</li>
+<li>
+<a href="#warning">⚠️ Warning</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-file-example">Log File Example</a>
+</li>
+<li>
+<a href="#viewing-logs">Viewing Logs</a>
+</li>
+<li>
+<a href="#log-retention">Log Retention</a>
+</li>
+<li>
+<a href="#command-line-recommended">Command Line (Recommended)</a>
+</li>
+<li>
+<a href="#direct-module-execution">Direct Module Execution</a>
+</li>
+<li>
+<a href="#help">Help</a>
+</li>
+<li>
+<a href="#exit-codes-1">Exit Codes</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#console-output">Console Output</a>
+</li>
+<li>
+<a href="#report-file-gzlint-issuestxt">Report File (gzlint-issues.txt)</a>
+</li>
+<li>
+<a href="#reading-issue-entries">Reading Issue Entries</a>
+</li>
+<li>
+<a href="#architecture-1">Architecture</a>
+</li>
+<li>
+<a href="#key-classes">Key Classes</a>
+</li>
+<li>
+<a href="#validation-rules">Validation Rules</a>
+</li>
+<li>
+<a href="#high-level">High-Level</a>
+</li>
+<li>
+<a href="#configuration-validation">Configuration Validation</a>
+</li>
+<li>
+<a href="#html-validation">HTML Validation</a>
+</li>
+<li>
+<a href="#javascript-validation">JavaScript Validation</a>
+</li>
+<li>
+<a href="#issue-reporting">Issue Reporting</a>
+</li>
+<li>
+<a href="#logging-2">Logging</a>
+</li>
+<li>
+<a href="#called-by">Called By</a>
+</li>
+<li>
+<a href="#integration-with-build-pipeline">Integration with Build Pipeline</a>
+</li>
+<li>
+<a href="#file-locations">File Locations</a>
+</li>
+<li>
+<a href="#add-new-html-rules">Add New HTML Rules</a>
+</li>
+<li>
+<a href="#add-new-javascript-rules">Add New JavaScript Rules</a>
+</li>
+<li>
+<a href="#change-severity-levels">Change Severity Levels</a>
+</li>
+<li>
+<a href="#no-html-or-javascript-files-found">"No HTML or JavaScript files found"</a>
+</li>
+<li>
+<a href="#failed-to-parse-file">"Failed to parse file"</a>
+</li>
+<li>
+<a href="#false-positives-for-consolelog">False positives for console.log()</a>
+</li>
+<li>
+<a href="#report-not-generated">Report not generated</a>
+</li>
+<li>
+<a href="#log-files-not-created">Log files not created</a>
+</li>
+<li>
+<a href="#unicodeemoji-not-displaying">Unicode/Emoji not displaying</a>
+</li>
+<li>
+<a href="#config-validation-errors">Config validation errors</a>
+</li>
+<li>
+<a href="#run-before-every-commit">1. Run Before Every Commit</a>
+</li>
+<li>
+<a href="#fix-errors-immediately">2. Fix Errors Immediately</a>
+</li>
+<li>
+<a href="#address-warnings">3. Address Warnings</a>
+</li>
+<li>
+<a href="#review-report-file">4. Review Report File</a>
+</li>
+<li>
+<a href="#keep-rules-up-to-date">5. Keep Rules Up to Date</a>
+</li>
+<li>
+<a href="#build-pipeline-1">Build Pipeline</a>
+</li>
+<li>
+<a href="#html">HTML</a>
+</li>
+<li>
+<a href="#javascript">JavaScript</a>
+</li>
+<li>
+<a href="#infrastructure">Infrastructure</a>
+<ul>
+<li>
+<a href="#h1-missing">H1_MISSING</a>
+</li>
+<li>
+<a href="#h1-multiple">H1_MULTIPLE</a>
+</li>
+<li>
+<a href="#h1-order">H1_ORDER</a>
+</li>
+<li>
+<a href="#console-log">CONSOLE_LOG</a>
+</li>
+<li>
+<a href="#input-type-missing">INPUT_TYPE_MISSING</a>
+</li>
+<li>
+<a href="#output-dir-missing">OUTPUT_DIR_MISSING</a>
+</li>
+<li>
+<a href="#files-missing">FILES_MISSING</a>
+</li>
+<li>
+<a href="#empty-files-list">EMPTY_FILES_LIST</a>
+</li>
+<li>
+<a href="#log-dir-missing">LOG_DIR_MISSING</a>
+</li>
+<li>
+<a href="#config-mismatch">CONFIG_MISMATCH</a>
+</li>
+<li>
+<a href="#error">❌ Error</a>
+</li>
+<li>
+<a href="#info">ℹ️ Info</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>HTML, JavaScript, and configuration linter for the GAZTank project with automated validation.</p>
+<p><strong>Version:</strong> 0.03<br/>
+<strong>Last Updated:</strong> October 22, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line-recommended">Command Line (Recommended)</a></li>
+<li><a href="#direct-module-execution">Direct Module Execution</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a><ul>
+<li><a href="#help">Help</a></li>
+<li><a href="#exit-codes">Exit Codes</a></li>
+</ul>
+</li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a><ul>
+<li><a href="#validation-rules">Validation Rules</a></li>
+<li><a href="#severity-levels">Severity Levels</a></li>
+</ul>
+</li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#output-examples">Output Examples</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#customization">Customization</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>This module scans HTML, JavaScript, and configuration files for common issues and best practice violations:</p>
+<ol>
+<li><strong>HTML validation</strong> - Detects malformed tags, unclosed elements</li>
+<li><strong>Heading structure</strong> - Ensures proper <code>&lt;h1&gt;</code> usage and hierarchy</li>
+<li><strong>JavaScript quality</strong> - Finds <code>console.log()</code> statements</li>
+<li><strong>Configuration validation</strong> - Validates <code>generate.toml</code> and <code>tools.toml</code> structure and consistency</li>
+<li><strong>SEO compliance</strong> - Validates heading structure for search engines</li>
+<li><strong>Audit logging</strong> - Logs all validation activities to <code>logs/dev/gzlint_YYYYMMDD.log</code></li>
+</ol>
+<h3 id="how-it-works">How It Works</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                      GZLINT WORKFLOW                        │
+├─────────────────────────────────────────────────────────────┤
+│  [1/4] Initialize Logging                                   │
+│     └─ Set up gzlogging with 'dev' environment              │
+│     └─ Log to logs/dev/gzlint_YYYYMMDD.log                  │
+│     └─ Enable dual output (console + file)                  │
+│                                                             │
+│  [2/4] Scan Files                                           │
+│     └─ Recursively find *.html and *.js in src/             │
+│     └─ Find config files: generate.toml, tools.toml         │
+│     └─ Include all subdirectories                           │
+│                                                             │
+│  [3/4] Validate Each File                                   │
+│     Config Files:                                           │
+│     ├─ Validate generate.toml structure                     │
+│     ├─ Validate tools.toml structure                        │
+│     └─ Check consistency with pipeline.toml                 │
+│                                                             │
+│     HTML Files:                                             │
+│     ├─ Parse HTML structure (check malformed tags)          │
+│     ├─ Extract heading hierarchy (h1-h6)                    │
+│     ├─ Count &lt;h1&gt; tags (should be exactly 1)                │
+│     └─ Verify &lt;h1&gt; appears before other headings            │
+│                                                             │
+│     JavaScript Files:                                       │
+│     ├─ Scan for console.log() statements                    │
+│     └─ Ignore commented lines                               │
+│                                                             │
+│  [4/4] Generate Report                                      │
+│     └─ Write gzlint-issues.txt with all findings            │
+│     └─ Group by severity (errors, warnings, info)           │
+│     └─ Include line numbers and suggestions                 │
+│     └─ Log final status to log file                         │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="architecture">Architecture</h3>
+<pre><code>GZLinter (Main)
+├── ConfigLinter - Validates configuration files
+│   ├── lint_generate_config() - Validates generate.toml structure
+│   ├── lint_tools_config() - Validates tools.toml structure
+│   └── lint_config_consistency() - Cross-checks pipeline.toml/tools.toml
+├── HTMLValidator - Validates HTML structure (malformed/unclosed tags)
+├── HTMLLinter - Checks HTML files
+│   └── HeadingParser - Extracts heading hierarchy
+└── JSLinter - Checks JavaScript files
+
+Logging: gzlogging (logs/dev/gzlint_YYYYMMDD.log)
+</code></pre>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>GZLint runs as the first pre-flight check in the packaging pipeline:</p>
+<pre><code>Package Pre-flight:
+  1. Run validation (gzlint)  ← This module
+     ↓
+     ✓ No errors → Continue
+     ✗ Errors found → Abort packaging
+     ↓
+  2. Convert markdown to HTML
+  3. Generate sitemap
+  4. Continue with packaging...
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Prevents deploying code with errors</li>
+<li>Enforces quality standards automatically</li>
+<li>Catches issues before production</li>
+<li>No manual linting step required</li>
+</ul>
+<h3 id="exit-codes">Exit Codes:</h3>
+<table>
+<thead>
+<tr>
+<th>Exit Code</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Success</td>
+<td>No errors found (warnings are OK)</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Failure</td>
+<td>Errors found - must fix before production</td>
+</tr>
+</tbody>
+</table>
+<h3 id="usage-in-scripts">Usage in Scripts:</h3>
+<pre><code class="language-bash"># Windows (CMD)
+.\scripts\gzlint.cmd
+if %errorlevel% neq 0 exit /b 1
+
+# Linux/Mac (Bash)
+./scripts/gzlint.sh
+if [ $? -ne 0 ]; then exit 1; fi
+
+# Python
+import subprocess
+result = subprocess.run(['python', '-m', 'gzlint'])
+if result.returncode != 0:
+    sys.exit(1)
+</code></pre>
+<h2 id="logging">Logging</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                      GZLINT WORKFLOW                        │
+├─────────────────────────────────────────────────────────────┤
+│  [1/4] Initialize Logging                                   │
+│     └─ Set up gzlogging with 'dev' environment              │
+│     └─ Log to logs/dev/gzlint_YYYYMMDD.log                  │
+│     └─ Enable dual output (console + file)                  │
+│                                                             │
+│  [2/4] Scan Files                                           │
+│     └─ Recursively find *.html and *.js in src/             │
+│     └─ Find config files: generate.toml, tools.toml         │
+│     └─ Include all subdirectories                           │
+│                                                             │
+│  [3/4] Validate Each File                                   │
+│     Config Files:                                           │
+│     ├─ Validate generate.toml structure                     │
+│     ├─ Validate tools.toml structure                        │
+│     └─ Check consistency with pipeline.toml                 │
+│                                                             │
+│     HTML Files:                                             │
+│     ├─ Parse HTML structure (check malformed tags)          │
+│     ├─ Extract heading hierarchy (h1-h6)                    │
+│     ├─ Count &lt;h1&gt; tags (should be exactly 1)                │
+│     └─ Verify &lt;h1&gt; appears before other headings            │
+│                                                             │
+│     JavaScript Files:                                       │
+│     ├─ Scan for console.log() statements                    │
+│     └─ Ignore commented lines                               │
+│                                                             │
+│  [4/4] Generate Report                                      │
+│     └─ Write gzlint-issues.txt with all findings            │
+│     └─ Group by severity (errors, warnings, info)           │
+│     └─ Include line numbers and suggestions                 │
+│     └─ Log final status to log file                         │
+└─────────────────────────────────────────────────────────────┘
+## Logging
+
+GZLint uses the **gzlogging** infrastructure for comprehensive audit logging.
+
+### HTML Rules
+
+#### HTML_INVALID
+
+**Severity:** ❌ Error
+
+**Description:** Malformed HTML (mismatched/unclosed tags)
+
+**Why This Matters:**
+- Breaks page rendering
+- Creates accessibility issues
+- Prevents accurate content parsing
+- Other checks cannot run until HTML is valid
+
+**Example (Bad):**
+```html
+&lt;h1&gt;Title
+&lt;h2&gt;Subtitle&lt;/h1&gt;  &lt;!-- ❌ Mismatched closing tag --&gt;
+&lt;p&gt;Text...         &lt;!-- ❌ Unclosed tag --&gt;
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-html">&lt;h1&gt;Title&lt;/h1&gt;
+&lt;h2&gt;Subtitle&lt;/h2&gt;
+&lt;p&gt;Text...&lt;/p&gt;
+</code></pre>
+<p><strong>Suggestion:</strong> Fix the malformed HTML tags before other checks can run.</p>
+<hr/>
+<h4 id="h1-missing">H1_MISSING</h4>
+<p><strong>Severity:</strong> ⚠️ Warning</p>
+<p><strong>Description:</strong> No <code>&lt;h1&gt;</code> tag found. Pages should have exactly one <code>&lt;h1&gt;</code> for SEO.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>Search engines use <code>&lt;h1&gt;</code> to understand page content</li>
+<li>Screen readers rely on proper heading hierarchy</li>
+<li>Users expect a clear page title</li>
+<li>Impacts SEO rankings</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-html">&lt;h2&gt;Welcome to My Page&lt;/h2&gt;
+&lt;p&gt;This page has no h1 tag...&lt;/p&gt;
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-html">&lt;h1&gt;Welcome to My Page&lt;/h1&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This page has proper heading structure...&lt;/p&gt;
+</code></pre>
+<p><strong>Suggestion:</strong> Add an <code>&lt;h1&gt;</code> tag as the main heading for this page.</p>
+<hr/>
+<h4 id="h1-multiple">H1_MULTIPLE</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Found multiple <code>&lt;h1&gt;</code> tags. Pages should have exactly one <code>&lt;h1&gt;</code>.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>Multiple <code>&lt;h1&gt;</code> tags confuse search engines</li>
+<li>Dilutes SEO value across multiple headings</li>
+<li>Creates accessibility issues for screen reader users</li>
+<li>Violates HTML5 document outline best practices</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-html">&lt;h1&gt;Main Title&lt;/h1&gt;
+&lt;p&gt;Some content...&lt;/p&gt;
+&lt;h1&gt;Another Main Title&lt;/h1&gt;  &lt;!-- ❌ Second h1 --&gt;
+&lt;p&gt;More content...&lt;/p&gt;
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-html">&lt;h1&gt;Main Title&lt;/h1&gt;
+&lt;p&gt;Some content...&lt;/p&gt;
+&lt;h2&gt;Another Section&lt;/h2&gt;  &lt;!-- ✅ Use h2 instead --&gt;
+&lt;p&gt;More content...&lt;/p&gt;
+</code></pre>
+<p><strong>Suggestion:</strong> Keep only one <code>&lt;h1&gt;</code> tag and change others to <code>&lt;h2&gt;</code> or appropriate levels.</p>
+<hr/>
+<h4 id="h1-order">H1_ORDER</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> <code>&lt;h1&gt;</code> should appear before other heading tags.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>Logical heading order is crucial for SEO</li>
+<li>Screen readers expect headings in hierarchical order</li>
+<li>Users scan pages top-to-bottom expecting proper structure</li>
+<li>Search engines may misinterpret page hierarchy</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-html">&lt;h2&gt;Introduction&lt;/h2&gt;  &lt;!-- ❌ h2 before h1 --&gt;
+&lt;p&gt;Welcome to our site...&lt;/p&gt;
+&lt;h1&gt;Main Page Title&lt;/h1&gt;
+&lt;h3&gt;Details&lt;/h3&gt;
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-html">&lt;h1&gt;Main Page Title&lt;/h1&gt;  &lt;!-- ✅ h1 first --&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Welcome to our site...&lt;/p&gt;
+&lt;h3&gt;Details&lt;/h3&gt;
+</code></pre>
+<p><strong>Suggestion:</strong> Move the <code>&lt;h1&gt;</code> tag before all other heading tags.</p>
+<hr/>
+<h3 id="javascript-rules">JavaScript Rules</h3>
+<h4 id="console-log">CONSOLE_LOG</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Found <code>console.log()</code> statement. Remove before production.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>Clutters browser console in production</li>
+<li>May expose sensitive information or implementation details</li>
+<li>Can cause performance issues with excessive logging</li>
+<li>Indicates code is not production-ready</li>
+<li>Professional sites should not have debug output</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-javascript">function loadContent(key) {
+    console.log("Loading content:", key);  // ❌ Remove this
+    fetch(`content/${key}.html`)
+        .then(response =&gt; response.text())
+        .then(html =&gt; {
+            console.log("Content loaded:", html);  // ❌ Remove this
+            displayContent(html);
+        });
+}
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-javascript">function loadContent(key) {
+    // Clean production code - no console.log
+    fetch(`content/${key}.html`)
+        .then(response =&gt; response.text())
+        .then(html =&gt; {
+            displayContent(html);
+        });
+}
+</code></pre>
+<p><strong>Alternative (If logging needed):</strong></p>
+<pre><code class="language-javascript">function loadContent(key) {
+    fetch(`content/${key}.html`)
+        .then(response =&gt; response.text())
+        .then(html =&gt; displayContent(html))
+        .catch(error =&gt; {
+            console.error("Failed to load content:", error);  // ✅ OK for errors
+        });
+}
+</code></pre>
+<p><strong>Suggestion:</strong> Remove the <code>console.log()</code> statement. For intentional production logging (errors, warnings), use <code>console.error()</code> or <code>console.warn()</code> instead.</p>
+<p><strong>Note:</strong> The linter skips <code>console.log()</code> in line comments (<code>//</code>).</p>
+<hr/>
+<h3 id="configuration-rules">Configuration Rules</h3>
+<h4 id="input-type-missing">INPUT_TYPE_MISSING</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Config group missing required <code>input_type</code> attribute in <code>generate.toml</code>.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>The generate system needs to know what converter to use</li>
+<li>Missing input_type prevents content generation</li>
+<li>Each group must specify its input format (e.g., "markdown")</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "documentation"
+output_dir = "src/content/setup"
+files = ["docs/*.md"]
+# ❌ Missing input_type attribute
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "documentation"
+input_type = "markdown"  # ✅ Required
+output_dir = "src/content/setup"
+files = ["docs/*.md"]
+</code></pre>
+<p><strong>Suggestion:</strong> Add <code>input_type = "markdown"</code> (or other supported type) to the config group.</p>
+<hr/>
+<h4 id="output-dir-missing">OUTPUT_DIR_MISSING</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Config group missing required <code>output_dir</code> attribute in <code>generate.toml</code>.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>The generate system needs to know where to write output files</li>
+<li>Missing output_dir prevents content generation</li>
+<li>Build process will fail without output location</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "content"
+input_type = "markdown"
+files = ["content/*.md"]
+# ❌ Missing output_dir attribute
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "content"
+input_type = "markdown"
+output_dir = "src/content"  # ✅ Required
+files = ["content/*.md"]
+</code></pre>
+<p><strong>Suggestion:</strong> Add <code>output_dir = "path/to/output"</code> to the config group.</p>
+<hr/>
+<h4 id="files-missing">FILES_MISSING</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Config group missing required <code>files</code> attribute in <code>generate.toml</code>.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>The generate system needs to know which files to process</li>
+<li>Missing files list prevents any content generation</li>
+<li>Build process cannot proceed without file list</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "content"
+input_type = "markdown"
+output_dir = "src/content"
+# ❌ Missing files attribute
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "content"
+input_type = "markdown"
+output_dir = "src/content"
+files = ["content/*.md"]  # ✅ Required
+</code></pre>
+<p><strong>Suggestion:</strong> Add <code>files = ["glob/pattern/*.md"]</code> to the config group.</p>
+<hr/>
+<h4 id="empty-files-list">EMPTY_FILES_LIST</h4>
+<p><strong>Severity:</strong> ⚠️ Warning</p>
+<p><strong>Description:</strong> Config group has empty <code>files</code> list in <code>generate.toml</code>.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>Empty files list means nothing will be processed</li>
+<li>Likely indicates incomplete configuration</li>
+<li>May be intentional (placeholder) but should be reviewed</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "future_content"
+input_type = "markdown"
+output_dir = "src/content"
+files = []  # ⚠️ Empty list
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-toml">[[group]]
+name = "content"
+input_type = "markdown"
+output_dir = "src/content"
+files = ["content/*.md"]  # ✅ Has files
+</code></pre>
+<p><strong>Suggestion:</strong> Add file patterns to the <code>files</code> list or remove the empty group.</p>
+<hr/>
+<h4 id="log-dir-missing">LOG_DIR_MISSING</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Environment in <code>tools.toml</code> missing required <code>log_dir</code> attribute.</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>All tools need a log directory for audit trails</li>
+<li>Missing log_dir prevents logging initialization</li>
+<li>Build and deployment tools will fail without logging</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-toml">[dev]
+# ❌ Missing log_dir attribute
+description = "Development environment"
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-toml">[dev]
+log_dir = "logs/dev"  # ✅ Required
+description = "Development environment"
+</code></pre>
+<p><strong>Suggestion:</strong> Add <code>log_dir = "logs/{env}"</code> to the environment configuration.</p>
+<hr/>
+<h4 id="config-mismatch">CONFIG_MISMATCH</h4>
+<p><strong>Severity:</strong> ❌ Error</p>
+<p><strong>Description:</strong> Environment exists in <code>pipeline.toml</code> but not in <code>tools.toml</code> (or vice versa).</p>
+<p><strong>Why This Matters:</strong></p>
+<ul>
+<li>All environments must be defined in both config files for consistency</li>
+<li>Missing environment definitions cause runtime errors</li>
+<li>Build pipeline cannot function with inconsistent configs</li>
+</ul>
+<p><strong>Example (Bad):</strong></p>
+<pre><code class="language-toml"># pipeline.toml
+[prod]  # Defined here
+# ...
+
+# tools.toml
+[dev]   # ❌ 'prod' not defined in tools.toml
+</code></pre>
+<p><strong>Example (Good):</strong></p>
+<pre><code class="language-toml"># pipeline.toml
+[prod]
+# ...
+
+# tools.toml
+[prod]  # ✅ Matches pipeline.toml
+log_dir = "logs/prod"
+</code></pre>
+<p><strong>Suggestion:</strong> Ensure all environments in <code>pipeline.toml</code> are also defined in <code>tools.toml</code> with required attributes.</p>
+<hr/>
+<h3 id="severity-levels">Severity Levels</h3>
+<h4 id="error">❌ Error</h4>
+<p><strong>Impact:</strong> High - Must be fixed before production</p>
+<p>Errors indicate serious issues that:</p>
+<ul>
+<li>Break SEO best practices</li>
+<li>Violate web standards</li>
+<li>Create accessibility problems</li>
+<li>Leave debug code in production</li>
+</ul>
+<p><strong>Build Impact:</strong> Causes build/package script to fail (exit code 1)</p>
+<h3 id="warning">⚠️ Warning</h3>
+<p><strong>Impact:</strong> Medium - Should be fixed but not critical</p>
+<p>Warnings indicate issues that:</p>
+<ul>
+<li>May impact SEO performance</li>
+<li>Could affect user experience</li>
+<li>Suggest improvements to code quality</li>
+<li>Are best practices violations</li>
+</ul>
+<p><strong>Build Impact:</strong> Build succeeds but issues are reported (exit code 0)</p>
+<h4 id="info">ℹ️ Info</h4>
+<p><strong>Impact:</strong> Low - Informational only</p>
+<p>Info messages provide:</p>
+<ul>
+<li>Best practice suggestions</li>
+<li>Optional improvements</li>
+<li>Code style recommendations</li>
+</ul>
+<p><strong>Build Impact:</strong> Build succeeds (exit code 0)</p>
+<h2 id="logging-1">Logging</h2>
+<p>GZLint uses the <strong>gzlogging</strong> infrastructure for comprehensive audit logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> <code>dev</code> (hardcoded, no parameter needed)</li>
+<li><strong>Log Location:</strong> <code>logs/dev/gzlint_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> Dual output (both console and log file)</li>
+<li><strong>Encoding:</strong> UTF-8 with emoji support (❌ ⚠️ ℹ️ ✅)</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<p><strong>Logged to file:</strong></p>
+<ul>
+<li>Startup banner and initialization</li>
+<li>Each file being validated (per-file actions)</li>
+<li>All errors, warnings, and info messages found during validation</li>
+<li>Final status (pass/fail with counts)</li>
+</ul>
+<p><strong>Console-only (NOT logged):</strong></p>
+<ul>
+<li>Detailed summary reports</li>
+<li>File count statistics</li>
+<li>Formatted issue tables</li>
+<li>Progress indicators</li>
+</ul>
+<p>This design ensures the log file provides a clean audit trail of what was checked and what issues were found, while keeping the console output readable with detailed formatting and summaries.</p>
+<h3 id="log-file-example">Log File Example</h3>
+<pre><code class="language-log">[2025-10-22 16:52:25] [dev] [INF] GZLint - HTML, JavaScript &amp; Config Linter started
+[2025-10-22 16:52:25] [dev] [INF] Linting config file: config\generate.toml
+[2025-10-22 16:52:25] [dev] [INF] Linting HTML file: src\content\about.html
+[2025-10-22 16:52:25] [dev] [INF] Linting HTML file: src\content\contact.html
+[2025-10-22 16:52:25] [dev] [INF] Linting JavaScript file: src\js\app.js
+[2025-10-22 16:52:25] [dev] [ERR] Multiple &lt;h1&gt; tags in src\content\about.html on lines: 12, 45
+[2025-10-22 16:52:25] [dev] [WRN] console.log found in src\js\app.js line 87
+[2025-10-22 16:52:25] [dev] [INF] Linting completed with 1 error(s) and 1 warning(s)
+</code></pre>
+<p><strong>Note:</strong> Log files contain only timestamped operational messages. No separator lines (===), no blank lines, no visual formatting. This provides a clean audit trail.</p>
+<h3 id="viewing-logs">Viewing Logs</h3>
+<pre><code class="language-bash"># View today's log
+cat logs/dev/gzlint_$(date +%Y%m%d).log       # Linux/Mac
+type logs\dev\gzlint_%date:~-4,4%%date:~-10,2%%date:~-7,2%.log  # Windows
+
+# View most recent log
+ls -t logs/dev/gzlint_*.log | head -1 | xargs cat  # Linux/Mac
+Get-ChildItem logs\dev\gzlint_*.log | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | Get-Content  # PowerShell
+</code></pre>
+<h3 id="log-retention">Log Retention</h3>
+<p>Logs are date-stamped and accumulate over time. Consider setting up log rotation:</p>
+<ul>
+<li>Keep logs for development troubleshooting</li>
+<li>Archive or delete old logs periodically</li>
+<li>Typical retention: 30-90 days for development logs</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line-recommended">Command Line (Recommended)</h3>
+<pre><code class="language-bash"># Windows
+.\scripts\gzlint.cmd
+.\scripts\gzlint.cmd --help
+
+# Linux/Mac
+./scripts/gzlint.sh
+./scripts/gzlint.sh --help
+</code></pre>
+<h3 id="direct-module-execution">Direct Module Execution</h3>
+<pre><code class="language-bash"># From project root
+python -m gzlint
+python -m gzlint --help
+
+# With explicit PYTHONPATH
+set PYTHONPATH=%CD%\utils;%PYTHONPATH%      # Windows
+export PYTHONPATH="$PWD/utils:$PYTHONPATH"  # Linux/Mac
+python -m gzlint
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="help">Help</h3>
+<pre><code class="language-bash">.\scripts\gzlint.cmd --help
+</code></pre>
+<p><strong>Output:</strong></p>
+<pre><code>usage: python.exe -m gzlint [-h]
+
+GZLint - HTML, JavaScript &amp; Config Linter
+
+options:
+  -h, --help            show this help message and exit
+
+Examples:
+  python -m gzlint              # Lint all files in src/
+  python -m gzlint --help       # Show this help message
+
+Exit codes:
+  0 - No errors found (warnings are OK)
+  1 - Errors found that must be fixed
+</code></pre>
+<h3 id="exit-codes-1">Exit Codes</h3>
+<table>
+<thead>
+<tr>
+<th>Exit Code</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Success</td>
+<td>No errors found (warnings are OK)</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Failure</td>
+<td>Errors found - must fix before production</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Console Output Example:</strong></p>
+<pre><code>[2025-10-22 16:57:43] [dev] [INF] GZLint - HTML, JavaScript &amp; Config Linter started
+============================================================
+GZLINT - HTML, JAVASCRIPT &amp; CONFIG LINTER
+============================================================
+Scanning: D:\Projects\www\GAZTank\src
+
+Checking configuration files...
+  config\generate.toml
+[2025-10-22 16:57:43] [dev] [INF] Linting config file: config\generate.toml
+  
+Found 18 HTML file(s) (including subdirectories)
+Found 1 JavaScript file(s) (including subdirectories)
+
+...
+
+✅ ALL CHECKS PASSED!
+
+============================================================
+✅ LINTING PASSED - No issues
+============================================================
+[2025-10-22 16:57:43] [dev] [INF] Linting passed - no issues found
+</code></pre>
+<pre><code class="language-bash"># From project root
+python -m gzlint
+
+# With explicit PYTHONPATH
+set PYTHONPATH=%CD%\utils;%PYTHONPATH%      # Windows
+export PYTHONPATH="$PWD/utils:$PYTHONPATH"  # Linux/Mac
+python -m gzlint
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<p>Import and use linting functions in your own Python scripts:</p>
+<pre><code class="language-python">from gzlint import GZLinter
+from pathlib import Path
+
+# Create linter instance
+src_dir = Path('src')
+output_file = 'gzlint-issues.txt'
+linter = GZLinter(src_dir, output_file)
+
+# Run scan
+linter.scan()
+
+# Check for issues
+all_issues = linter.html_linter.issues + linter.js_linter.issues
+if all_issues:
+    print(f"Found {len(all_issues)} issues")
+</code></pre>
+<p>For individual file linting:</p>
+<pre><code class="language-python">from gzlint import HTMLLinter, JSLinter
+from pathlib import Path
+
+# Lint HTML file
+html_linter = HTMLLinter()
+html_linter.lint_file(Path('src/index.html'))
+for issue in html_linter.issues:
+    print(issue)
+
+# Lint JavaScript file
+js_linter = JSLinter()
+js_linter.lint_file(Path('src/js/app.js'))
+for issue in js_linter.issues:
+    print(issue)
+</code></pre>
+<h2 id="output-examples">Output Examples</h2>
+<h3 id="console-output">Console Output</h3>
+<pre><code>[2025-10-22 16:57:43] [dev] [INF] GZLint - HTML, JavaScript &amp; Config Linter started
+============================================================
+GZLINT - HTML, JAVASCRIPT &amp; CONFIG LINTER
+============================================================
+Scanning: D:\Projects\www\GAZTank\src
+
+Checking configuration files...
+  config\generate.toml
+[2025-10-22 16:57:43] [dev] [INF] Linting config file: config\generate.toml
+  config\tools.toml
+
+Found 18 HTML file(s) (including subdirectories)
+Found 1 JavaScript file(s) (including subdirectories)
+
+Checking HTML files (including subdirectories)...
+  src\content\about.html
+[2025-10-22 16:57:43] [dev] [INF] Linting HTML file: src\content\about.html
+  src\content\contact.html
+[2025-10-22 16:57:43] [dev] [INF] Linting HTML file: src\content\contact.html
+  ...
+
+Checking JavaScript files (including subdirectories)...
+  src\js\app.js
+[2025-10-22 16:57:43] [dev] [INF] Linting JavaScript file: src\js\app.js
+
+============================================================
+GENERATING REPORT
+============================================================
+✅ Report written to: gzlint-issues.txt
+
+SUMMARY
+  Files scanned: 21
+  Files with issues: 0
+  ❌ Errors: 0
+  ⚠️  Warnings: 0
+  ℹ️  Info: 0
+
+✅ ALL CHECKS PASSED!
+
+============================================================
+✅ LINTING PASSED - No issues
+============================================================
+[2025-10-22 16:57:43] [dev] [INF] Linting passed - no issues found
+</code></pre>
+<p><strong>Note:</strong> Lines starting with timestamps like <code>[2025-10-22 16:57:43] [dev] [INF]</code> appear in both console and log file. Lines without timestamps (like "Scanning:", "SUMMARY", separator lines etc.) appear only in console output. Log files contain clean operational data without visual formatting.</p>
+<h3 id="report-file-gzlint-issuestxt">Report File (<code>gzlint-issues.txt</code>)</h3>
+<pre><code>================================================================================
+GZLINT REPORT - GAZ TANK HTML LINTER
+================================================================================
+Generated: 2025-10-20 22:15:30
+Scanned: 7 file(s)
+Files with issues: 2
+
+SUMMARY
+--------------------------------------------------------------------------------
+  ❌ Errors:   2
+  ⚠️  Warnings: 1
+  ℹ️  Info:     0
+
+================================================================================
+ERRORS
+================================================================================
+
+❌ [H1_MULTIPLE] src\content\about.html (line 12)
+   Found 2 &lt;h1&gt; tags (lines: 12, 45). Pages should have exactly one &lt;h1&gt;.
+   💡 Suggestion: Keep only one &lt;h1&gt; tag and change others to &lt;h2&gt; or appropriate levels.
+
+❌ [CONSOLE_LOG] src\js\app.js (line 87)
+   console.log() statement found. Remove console.log() before production.
+   💡 Suggestion: Remove this console.log() or use console.error()/console.warn() for intentional logging.
+
+================================================================================
+WARNINGS
+================================================================================
+
+⚠️ [H1_MISSING] src\content\future.html
+   No &lt;h1&gt; tag found. Pages should have exactly one &lt;h1&gt; for SEO.
+   💡 Suggestion: Add an &lt;h1&gt; tag as the main heading for this page.
+
+================================================================================
+RULES CHECKED
+================================================================================
+
+HTML Rules:
+  HTML_INVALID    - Malformed HTML (mismatched/unclosed tags)
+  H1_MISSING      - Pages should have exactly one &lt;h1&gt; tag
+  H1_MULTIPLE     - Pages should not have multiple &lt;h1&gt; tags
+  H1_ORDER        - &lt;h1&gt; should appear before other heading tags
+
+JavaScript Rules:
+  CONSOLE_LOG     - No console.log() statements in production code
+
+================================================================================
+END OF REPORT
+================================================================================
+</code></pre>
+<h3 id="reading-issue-entries">Reading Issue Entries</h3>
+<p>Each issue shows:</p>
+<pre><code>[Severity Icon] [RULE_CODE] file/path (line X)
+   Issue description
+   💡 Suggestion: How to fix it
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code>❌ [H1_ORDER] src/content/mods.html (line 5)
+   &lt;h2&gt; appears before &lt;h1&gt; (line 5). The &lt;h1&gt; should be the first heading.
+   💡 Suggestion: Move the &lt;h1&gt; tag before this &lt;h2&gt; tag.
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>gzlint/
+├── __init__.py        # Module initialization and exports
+├── __main__.py        # Entry point for python -m gzlint
+├── gzlinter.py        # Core linting logic (parsers, validators, reporters)
+└── README.md          # This file (comprehensive documentation)
+</code></pre>
+<h3 id="architecture-1">Architecture</h3>
+<pre><code>GZLinter (Main)
+├── ConfigLinter - Validates configuration files
+│   ├── lint_generate_config() - Validates generate.toml structure
+│   ├── lint_tools_config() - Validates tools.toml structure
+│   └── lint_config_consistency() - Cross-checks pipeline.toml/tools.toml
+├── HTMLValidator - Validates HTML structure (malformed/unclosed tags)
+├── HTMLLinter - Checks HTML files
+│   └── HeadingParser - Extracts heading hierarchy
+└── JSLinter - Checks JavaScript files
+
+Logging: gzlogging (logs/dev/gzlint_YYYYMMDD.log)
+</code></pre>
+<h3 id="key-classes">Key Classes</h3>
+<p><strong>High-Level:</strong></p>
+<ul>
+<li><strong><code>GZLinter</code></strong><ul>
+<li>Main linter class that orchestrates scanning</li>
+<li>Manages HTML, JavaScript, and configuration linters</li>
+<li>Generates reports</li>
+<li>Initializes logging</li>
+</ul>
+</li>
+</ul>
+<p><strong>Configuration Validation:</strong></p>
+<ul>
+<li><strong><code>ConfigLinter</code></strong><ul>
+<li>Validates configuration file structure and consistency</li>
+<li><code>lint_generate_config()</code> - Checks generate.toml structure</li>
+<li><code>lint_tools_config()</code> - Checks tools.toml structure</li>
+<li><code>lint_config_consistency()</code> - Verifies pipeline.toml and tools.toml match</li>
+</ul>
+</li>
+</ul>
+<p><strong>HTML Validation:</strong></p>
+<ul>
+<li><p><strong><code>HTMLLinter</code></strong></p>
+<ul>
+<li>Lints individual HTML files</li>
+<li>Runs all HTML validation rules</li>
+<li>Collects issues</li>
+</ul>
+</li>
+<li><p><strong><code>HTMLValidator</code></strong></p>
+<ul>
+<li>HTML parser for structure validation</li>
+<li>Detects malformed and unclosed tags</li>
+<li>Tracks line numbers</li>
+</ul>
+</li>
+<li><p><strong><code>HeadingParser</code></strong></p>
+<ul>
+<li>Extracts heading tags and content</li>
+<li>Tracks heading hierarchy</li>
+<li>Used for SEO validation</li>
+</ul>
+</li>
+</ul>
+<p><strong>JavaScript Validation:</strong></p>
+<ul>
+<li><strong><code>JSLinter</code></strong><ul>
+<li>Lints individual JavaScript files</li>
+<li>Checks for console.log() statements</li>
+<li>Handles comment detection</li>
+</ul>
+</li>
+</ul>
+<p><strong>Issue Reporting:</strong></p>
+<ul>
+<li><strong><code>LintIssue</code></strong><ul>
+<li>Represents a single linting issue</li>
+<li>Contains severity, rule, message, line number</li>
+<li>Provides formatted output</li>
+</ul>
+</li>
+</ul>
+<p><strong>Logging:</strong></p>
+<ul>
+<li><strong><code>gzlogging</code></strong><ul>
+<li>Centralized logging infrastructure (utils/gzlogging/)</li>
+<li><code>get_logging_context(env, tool, console)</code> - Initializes logging</li>
+<li>Returns LoggingContext with <code>.inf()</code>, <code>.wrn()</code>, <code>.err()</code> methods</li>
+<li>Logs to <code>logs/{env}/{tool}_YYYYMMDD.log</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Multi-file type validation</strong>: HTML, JavaScript, and TOML configuration files</li>
+<li><strong>Comprehensive HTML checks</strong>: Structure validation, heading hierarchy, SEO compliance</li>
+<li><strong>JavaScript quality checks</strong>: Detects console.log() statements and other issues</li>
+<li><strong>Configuration validation</strong>: Ensures config files are properly structured and consistent</li>
+<li><strong>Detailed error reporting</strong>: Line numbers, descriptions, and suggestions for each issue</li>
+<li><strong>Severity levels</strong>: Errors (block deployment), warnings (should fix), info (FYI)</li>
+<li><strong>Integrated logging</strong>: Uses gzlogging for audit trails with dual output (console + file)</li>
+<li><strong>UTF-8 support</strong>: Handles Unicode and emoji characters correctly</li>
+<li><strong>Cross-platform</strong>: Works on Windows, Linux, and Mac</li>
+<li><strong>CI/CD integration</strong>: Exit codes for automated build pipelines</li>
+<li><strong>Report generation</strong>: Creates detailed <code>gzlint-issues.txt</code> report file</li>
+</ul>
+<h3 id="validation-rules">Validation Rules</h3>
+<h3 id="high-level">High-Level</h3>
+<ul>
+<li><strong><code>GZLinter</code></strong><ul>
+<li>Main linter class that orchestrates scanning</li>
+<li>Manages HTML, JavaScript, and configuration linters</li>
+<li>Generates reports</li>
+<li>Initializes logging</li>
+</ul>
+</li>
+</ul>
+<h3 id="configuration-validation">Configuration Validation</h3>
+<ul>
+<li><strong><code>ConfigLinter</code></strong><ul>
+<li>Validates configuration file structure and consistency</li>
+<li><code>lint_generate_config()</code> - Checks generate.toml structure</li>
+<li><code>lint_tools_config()</code> - Checks tools.toml structure</li>
+<li><code>lint_config_consistency()</code> - Verifies pipeline.toml and tools.toml match</li>
+</ul>
+</li>
+</ul>
+<h3 id="html-validation">HTML Validation</h3>
+<ul>
+<li><p><strong><code>HTMLLinter</code></strong></p>
+<ul>
+<li>Lints individual HTML files</li>
+<li>Runs all HTML validation rules</li>
+<li>Collects issues</li>
+</ul>
+</li>
+<li><p><strong><code>HTMLValidator</code></strong></p>
+<ul>
+<li>HTML parser for structure validation</li>
+<li>Detects malformed and unclosed tags</li>
+<li>Tracks line numbers</li>
+</ul>
+</li>
+<li><p><strong><code>HeadingParser</code></strong></p>
+<ul>
+<li>Extracts heading tags and content</li>
+<li>Tracks heading hierarchy</li>
+<li>Used for SEO validation</li>
+</ul>
+</li>
+</ul>
+<h3 id="javascript-validation">JavaScript Validation</h3>
+<ul>
+<li><strong><code>JSLinter</code></strong><ul>
+<li>Lints individual JavaScript files</li>
+<li>Checks for console.log() statements</li>
+<li>Handles comment detection</li>
+</ul>
+</li>
+</ul>
+<h3 id="issue-reporting">Issue Reporting</h3>
+<ul>
+<li><strong><code>LintIssue</code></strong><ul>
+<li>Represents a single linting issue</li>
+<li>Contains severity, rule, message, line number</li>
+<li>Provides formatted output</li>
+</ul>
+</li>
+</ul>
+<h3 id="logging-2">Logging</h3>
+<ul>
+<li><strong><code>gzlogging</code></strong><ul>
+<li>Centralized logging infrastructure (utils/gzlogging/)</li>
+<li><code>get_logging_context(env, tool, console)</code> - Initializes logging</li>
+<li>Returns LoggingContext with <code>.inf()</code>, <code>.wrn()</code>, <code>.err()</code> methods</li>
+<li>Logs to <code>logs/{env}/{tool}_YYYYMMDD.log</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="called-by">Called By</h3>
+<ul>
+<li><code>scripts/gzlint.cmd</code> - Windows launcher</li>
+<li><code>scripts/gzlint.sh</code> - Linux/Mac launcher</li>
+<li><code>utils/package/packager.py</code> - Pre-flight validation in build pipeline</li>
+</ul>
+<h3 id="integration-with-build-pipeline">Integration with Build Pipeline</h3>
+<p>See <a href="#build-pipeline">Build Pipeline</a> section for details on how gzlint integrates into the packaging workflow.</p>
+<h2 id="development">Development</h2>
+<h3 id="file-locations">File Locations</h3>
+<pre><code>GAZTank/
+├── gzlint-issues.txt           # Generated report (in project root)
+│
+├── logs/
+│   └── dev/
+│       └── gzlint_YYYYMMDD.log # Daily log files (audit trail)
+│
+├── config/
+│   ├── generate.toml           # Validated by ConfigLinter
+│   ├── tools.toml              # Validated by ConfigLinter
+│   └── pipeline.toml           # Cross-checked with tools.toml
+│
+├── src/                        # Files scanned by linter
+│   ├── index.html
+│   ├── content/
+│   │   ├── about.html
+│   │   └── ...
+│   └── js/
+│       └── app.js
+│
+├── scripts/
+│   ├── gzlint.cmd              # Windows launcher
+│   └── gzlint.sh               # Linux/Mac launcher
+│
+└── utils/
+    ├── gzlogging/              # Centralized logging system
+    │   └── gzlogging.py        # Used by gzlint
+    │
+    └── gzlint/                 # This module
+        ├── __init__.py
+        ├── __main__.py
+        ├── gzlinter.py
+        └── README.md
+</code></pre>
+<h2 id="customization">Customization</h2>
+<h3 id="add-new-html-rules">Add New HTML Rules</h3>
+<p>Edit <code>utils/gzlint/gzlinter.py</code> in the <code>HTMLLinter</code> class:</p>
+<pre><code class="language-python">def lint_file(self, file_path, report_path=None):
+    # ... existing code ...
+    
+    # Add your new check
+    self.check_your_new_rule(report_path, parser.headings)
+
+def check_your_new_rule(self, file_path, headings):
+    """Your custom validation logic"""
+    if condition_fails:
+        self.issues.append(LintIssue(
+            file_path,
+            LintIssue.SEVERITY_ERROR,
+            'YOUR_RULE_NAME',
+            "Description of the issue",
+            line=line_number,
+            suggestion="How to fix it"
+        ))
+</code></pre>
+<h3 id="add-new-javascript-rules">Add New JavaScript Rules</h3>
+<p>Edit <code>utils/gzlint/gzlinter.py</code> in the <code>JSLinter</code> class:</p>
+<pre><code class="language-python">def lint_file(self, file_path, report_path=None):
+    # ... existing code ...
+    
+    # Add your new check
+    self.check_your_new_rule(report_path, lines)
+
+def check_your_new_rule(self, file_path, lines):
+    """Your custom JavaScript validation"""
+    for i, line in enumerate(lines, start=1):
+        if your_condition:
+            self.issues.append(LintIssue(
+                file_path,
+                LintIssue.SEVERITY_WARNING,
+                'YOUR_JS_RULE',
+                "What's wrong",
+                line=i,
+                suggestion="How to fix it"
+            ))
+</code></pre>
+<h3 id="change-severity-levels">Change Severity Levels</h3>
+<p>Modify the severity in rule checks:</p>
+<pre><code class="language-python"># Error (blocks deployment)
+LintIssue.SEVERITY_ERROR    # '❌'
+
+# Warning (allowed, but flagged)
+LintIssue.SEVERITY_WARNING  # '⚠️'
+
+# Info (FYI only)
+LintIssue.SEVERITY_INFO     # 'ℹ️'
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="no-html-or-javascript-files-found">"No HTML or JavaScript files found"</h3>
+<p><strong>Problem:</strong> Linter can't find files to scan</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify <code>src/</code> directory exists</li>
+<li>Check that files have <code>.html</code> or <code>.js</code> extensions</li>
+<li>Ensure you're running from project root</li>
+</ol>
+<h3 id="failed-to-parse-file">"Failed to parse file"</h3>
+<p><strong>Problem:</strong> File encoding or structure issues</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Ensure files are UTF-8 encoded</li>
+<li>Check for binary files incorrectly named <code>.html/.js</code></li>
+<li>Verify file permissions</li>
+</ol>
+<h3 id="false-positives-for-consolelog">False positives for <code>console.log()</code></h3>
+<p><strong>Problem:</strong> Commented console.log() flagged as error</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>The linter ignores lines starting with <code>//</code></li>
+<li>Block comments <code>/* ... */</code> may not be detected correctly</li>
+<li>Consider removing console.log() entirely in production code</li>
+</ul>
+<h3 id="report-not-generated">Report not generated</h3>
+<p><strong>Problem:</strong> <code>gzlint-issues.txt</code> not created</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Check write permissions in project root</li>
+<li>Ensure disk space available</li>
+<li>Check console for error messages</li>
+</ol>
+<h3 id="log-files-not-created">Log files not created</h3>
+<p><strong>Problem:</strong> No log files appearing in <code>logs/dev/</code></p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify <code>logs/dev/</code> directory exists (should be auto-created)</li>
+<li>Check write permissions for logs directory</li>
+<li>Ensure <code>utils/gzlogging/gzlogging.py</code> is present</li>
+<li>Check console for logging initialization errors</li>
+</ol>
+<h3 id="unicodeemoji-not-displaying">Unicode/Emoji not displaying</h3>
+<p><strong>Problem:</strong> Emojis show as <code>?</code> or garbled characters</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Set encoding before running: <code>$env:PYTHONIOENCODING = 'utf-8'</code> (PowerShell)</li>
+<li>Use modern terminal (Windows Terminal, VS Code terminal)</li>
+<li>Check that log files are UTF-8 encoded</li>
+</ol>
+<h3 id="config-validation-errors">Config validation errors</h3>
+<p><strong>Problem:</strong> False positives for config file validation</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Verify TOML syntax is correct (no unquoted strings, proper arrays)</li>
+<li>Check that all required attributes are present (input_type, output_dir, files, log_dir)</li>
+<li>Ensure environment names match between pipeline.toml and tools.toml</li>
+<li>Review detailed error messages in log file</li>
+</ol>
+<h2 id="performance">Performance</h2>
+<p><strong>Typical Scan Times:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Files</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 10</td>
+<td>&lt; 1 second</td>
+</tr>
+<tr>
+<td>10-50</td>
+<td>1-2 seconds</td>
+</tr>
+<tr>
+<td>50-100</td>
+<td>2-5 seconds</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Current project:</strong> ~13 files, scans in &lt; 1 second</p>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="run-before-every-commit">1. Run Before Every Commit</h3>
+<pre><code class="language-bash"># Add to pre-commit hook
+.\scripts\gzlint.cmd
+if %errorlevel% neq 0 exit /b 1
+</code></pre>
+<h3 id="fix-errors-immediately">2. Fix Errors Immediately</h3>
+<ul>
+<li>❌ Errors block deployment</li>
+<li>Fix before continuing development</li>
+</ul>
+<h3 id="address-warnings">3. Address Warnings</h3>
+<ul>
+<li>⚠️ Warnings don't block, but should be fixed</li>
+<li>Improve SEO and code quality</li>
+</ul>
+<h3 id="review-report-file">4. Review Report File</h3>
+<pre><code class="language-bash"># Check detailed report
+cat gzlint-issues.txt       # Linux/Mac
+type gzlint-issues.txt      # Windows
+</code></pre>
+<h3 id="keep-rules-up-to-date">5. Keep Rules Up to Date</h3>
+<ul>
+<li>Review validation rules periodically</li>
+<li>Add rules for new best practices</li>
+<li>Update severity as needed</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Potential improvements:</p>
+<h3 id="build-pipeline-1">Build Pipeline</h3>
+<p>We currently lint the source code, but maybe in future we should also add the ability to lint a specified environment? Still considering if this would be useful or not.</p>
+<h3 id="html">HTML</h3>
+<ul>
+<li>[ ] <code>IMG_ALT_MISSING</code> - Images should have alt text</li>
+<li>[ ] <code>HEADING_SKIP</code> - Heading levels should not skip (e.g., h2 → h4)</li>
+<li>[ ] <code>EMPTY_HEADING</code> - Headings should have content</li>
+<li>[ ] <code>DUPLICATE_ID</code> - IDs should be unique within a page</li>
+</ul>
+<h3 id="javascript">JavaScript</h3>
+<ul>
+<li>[ ] <code>VAR_USAGE</code> - Use <code>const</code>/<code>let</code> instead of <code>var</code></li>
+<li>[ ] <code>CONSOLE_ERROR</code> - Check for other console methods</li>
+<li>[ ] <code>EVAL_USAGE</code> - Avoid using <code>eval()</code></li>
+<li>[ ] <code>ALERT_USAGE</code> - Remove <code>alert()</code> statements</li>
+</ul>
+<h3 id="infrastructure">Infrastructure</h3>
+<ul>
+<li>[ ] CSS validation (syntax, best practices)</li>
+<li>[ ] Accessibility checks (ARIA, alt text)</li>
+<li>[ ] Link validation (broken links)</li>
+<li>[ ] Image optimization checks</li>
+<li>[ ] Performance hints (inline scripts, large files)</li>
+<li>[ ] Configuration file support (<code>config/gzlint.toml</code>)</li>
+<li>[ ] Plugin system for custom rules</li>
+<li>[ ] HTML5 semantic tag validation</li>
+<li>[ ] JSON/TOML report output formats</li>
+<li>[ ] VS Code extension integration</li>
+<li>[ ] Incremental scanning (only changed files)</li>
+<li>[ ] Parallel file processing</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong>HTML Validation:</strong> <a href="https://validator.w3.org/">https://validator.w3.org/</a></li>
+<li><strong>SEO Best Practices:</strong> <a href="https://developers.google.com/search/docs">https://developers.google.com/search/docs</a></li>
+<li><strong>Python HTMLParser:</strong> <a href="https://docs.python.org/3/library/html.parser.html">https://docs.python.org/3/library/html.parser.html</a></li>
+<li><strong>WCAG Accessibility:</strong> <a href="https://www.w3.org/WAI/WCAG21/quickref/">https://www.w3.org/WAI/WCAG21/quickref/</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 22, 2025</em><br/>
+<em>GZLint version: 0.03</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

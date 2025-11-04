@@ -1,0 +1,814 @@
+<h1>Markdown Structure Normaliser</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#conversion-rules">Conversion Rules</a>
+</li>
+<li>
+<a href="#key-design-goals">Key Design Goals</a>
+</li>
+<li>
+<a href="#workflow">Workflow:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-file-example">Log File Example</a>
+</li>
+<li>
+<a href="#viewing-logs">Viewing Logs</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#argument-details">Argument Details</a>
+</li>
+<li>
+<a href="#exit-codes">Exit Codes</a>
+</li>
+<li>
+<a href="#examples">Examples</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#architecture">Architecture</a>
+</li>
+<li>
+<a href="#direct-command-line-usage">1. Direct Command-Line Usage</a>
+</li>
+<li>
+<a href="#markdown-to-html-converter-md-to-htmlpy">2. Markdown-to-HTML Converter (md_to_html.py)</a>
+</li>
+<li>
+<a href="#generate-module-generatorpy">3. Generate Module (generator.py)</a>
+</li>
+<li>
+<a href="#key-integration-points">Key Integration Points</a>
+</li>
+<li>
+<a href="#design-decision">Design Decision</a>
+</li>
+<li>
+<a href="#when-to-run-normalise">When to Run Normalise</a>
+</li>
+<li>
+<a href="#manual-usage-tips">Manual Usage Tips</a>
+</li>
+<li>
+<a href="#version-control-best-practices">Version Control Best Practices</a>
+</li>
+<li>
+<a href="#integration-with-other-tools">Integration with Other Tools</a>
+</li>
+<li>
+<a href="#file-not-found-error">File Not Found Error</a>
+</li>
+<li>
+<a href="#no-modifications-made">No Modifications Made</a>
+</li>
+<li>
+<a href="#unexpected-conversions">Unexpected Conversions</a>
+</li>
+<li>
+<a href="#permission-denied-error">Permission Denied Error</a>
+</li>
+<li>
+<a href="#unicodeencoding-issues">Unicode/Encoding Issues</a>
+</li>
+<li>
+<a href="#dry-run-shows-changes-but-nothing-written">Dry-Run Shows Changes But Nothing Written</a>
+</li>
+<li>
+<a href="#log-file-not-created">Log File Not Created</a>
+</li>
+<li>
+<a href="#file-locations">File Locations</a>
+</li>
+<li>
+<a href="#completed">Completed ✅</a>
+</li>
+<li>
+<a href="#short-term-v12">Short Term (v1.2)</a>
+</li>
+<li>
+<a href="#medium-term-v13">Medium Term (v1.3)</a>
+</li>
+<li>
+<a href="#long-term-v20">Long Term (v2.0)</a>
+</li>
+<li>
+<a href="#under-consideration">Under Consideration</a>
+<ul>
+<li>
+<a href="#logged-to-file-clean-operational-log">Logged to file (clean operational log):</a>
+</li>
+<li>
+<a href="#console-output-emoji-enhanced-not-in-log">Console output (emoji-enhanced, not in log):</a>
+</li>
+<li>
+<a href="#launcher-scripts">Launcher Scripts:</a>
+</li>
+<li>
+<a href="#workflow-1">Workflow:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#possible-causes">Possible Causes:</a>
+</li>
+<li>
+<a href="#verification">Verification:</a>
+</li>
+<li>
+<a href="#diagnosis">Diagnosis:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Converts standalone bold text to proper markdown headings while preserving bold text used for emphasis within sentences and lists. Supports force and dry-run modes for flexible processing.</p>
+<p><strong>Version:</strong> 1.1<br/>
+<strong>Last Updated:</strong> October 22, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>This tool automates the process of converting markdown documents to use proper semantic heading structure instead of bold text for section labels.</p>
+<p>The normaliser is integrated into the GAZTank build pipeline and can be used standalone or programmatically by other modules.</p>
+<h3 id="conversion-rules">Conversion Rules</h3>
+<ul>
+<li><strong>Standalone bold text</strong> (e.g., <code>**Windows:**</code>, <code>**Example:**</code>) → Converted to headings</li>
+<li><strong>Inline bold text</strong> (e.g., text with <strong>emphasis</strong> in sentences) → Preserved</li>
+<li><strong>Bold in lists</strong> (e.g., <code>- **Pre-flight validation**</code>) → Preserved</li>
+<li><strong>Code blocks</strong> → All content inside ``` or ~~~ blocks is skipped</li>
+</ul>
+<h3 id="key-design-goals">Key Design Goals</h3>
+<ul>
+<li><strong>State-Based Processing</strong>: Tracks heading levels and code block context throughout document</li>
+<li><strong>Context-Aware</strong>: Applies appropriate heading depth based on document structure</li>
+<li><strong>Non-Destructive</strong>: Preserves intentional bold text usage (inline emphasis, list items)</li>
+<li><strong>Build Pipeline Integration</strong>: Seamlessly integrates with generate module</li>
+<li><strong>Flexible Modes</strong>: Supports force and dry-run modes for different workflows</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The normaliser is integrated into the GAZTank build pipeline:</p>
+<pre><code>Content Generation Pipeline:
+  1. Read generate.toml configuration
+  2. For each markdown file group:
+     a. Normalise markdown structure ← This module
+     b. Convert markdown to HTML
+     c. Write output files
+  3. Continue with packaging...
+</code></pre>
+<p><strong>Purpose:</strong> Part of the content generation pipeline</p>
+<p><strong>Location:</strong> Called indirectly via <code>utils/generate/md_to_html.py</code></p>
+<h3 id="workflow">Workflow:</h3>
+<pre><code>generate.py → reads generate.toml → delegates to md_to_html.py → calls normalise
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Ensures consistent markdown structure across all documentation</li>
+<li>Automated normalization before HTML generation</li>
+<li>No manual intervention needed</li>
+<li>Clean, semantic markdown in source files</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<p>The normaliser uses the <strong>gzlogging</strong> infrastructure for comprehensive operational logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> <code>dev</code> (hardcoded, no parameter needed)</li>
+<li><strong>Tool Name:</strong> <code>normalise</code></li>
+<li><strong>Log Location:</strong> <code>logs/dev/normalise_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> File-only (console has separate emoji-enhanced formatting)</li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<h4 id="logged-to-file-clean-operational-log">Logged to file (clean operational log):</h4>
+<ul>
+<li>Markdown Structure Normaliser started</li>
+<li>Mode settings (DRY RUN MODE enabled, FORCE MODE enabled if applicable)</li>
+<li>Project root path</li>
+<li>Starting processing with file path</li>
+<li>Line-by-line debug info for each conversion (line number, heading level, before/after)</li>
+<li>Processing complete with modification count</li>
+<li>File update status (written or dry-run prepared)</li>
+<li>Completion message</li>
+</ul>
+<h4 id="console-output-emoji-enhanced-not-in-log">Console output (emoji-enhanced, not in log):</h4>
+<ul>
+<li>📝 Banner with module title</li>
+<li>⚠️ Mode indicators (DRY RUN, FORCE)</li>
+<li>📁 Project root display</li>
+<li>📄 File processing status</li>
+<li>✅ Success messages</li>
+<li>❌ Error messages</li>
+<li>📊 Statistics and summaries</li>
+</ul>
+<h3 id="log-file-example">Log File Example</h3>
+<pre><code class="language-log">[2025-10-22 17:38:45] [dev] [INF] Markdown Structure Normaliser started
+[2025-10-22 17:38:45] [dev] [INF] FORCE MODE enabled
+[2025-10-22 17:38:45] [dev] [INF] Project root: D:\Projects\www\GAZTank
+[2025-10-22 17:38:45] [dev] [INF] Starting processing: test_normalise.md
+[2025-10-22 17:38:45] [dev] [DBG] Read 10 lines from test_normalise.md
+[2025-10-22 17:38:45] [dev] [DBG] Processing 10 lines
+[2025-10-22 17:38:45] [dev] [DBG] Line 3, H2: **This is standalone bold text** -&gt; ## This is standalone bold text
+[2025-10-22 17:38:45] [dev] [DBG] Line 7, H2: **Another standalone bold** -&gt; ## Another standalone bold
+[2025-10-22 17:38:45] [dev] [INF] Processing complete: 2 modifications made
+[2025-10-22 17:38:45] [dev] [INF] File updated: test_normalise.md (10 lines written)
+[2025-10-22 17:38:45] [dev] [INF] File processing complete: 2 modifications made
+[2025-10-22 17:38:45] [dev] [INF] Markdown Structure Normaliser completed successfully
+</code></pre>
+<p>Note: No separator lines (no <code>====</code> banners) in log files, keeping them clean for parsing.</p>
+<h3 id="viewing-logs">Viewing Logs</h3>
+<pre><code class="language-bash"># View today's log (PowerShell)
+Get-Content "logs\dev\normalise_$(Get-Date -Format 'yyyyMMdd').log"
+
+# View today's log (Linux/Mac)
+cat logs/dev/normalise_$(date +%Y%m%d).log
+
+# View most recent log entries
+Get-Content "logs\dev\normalise_$(Get-Date -Format 'yyyyMMdd').log" -Tail 20  # PowerShell
+tail -20 logs/dev/normalise_$(date +%Y%m%d).log  # Linux/Mac
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<pre><code class="language-bash"># Using the launcher script (recommended)
+scripts\normalise.cmd docs/SETUP_SITE.md                        # Windows
+scripts\normalise.cmd docs/SETUP_SITE.md --force                # Windows with force
+scripts\normalise.cmd docs/SETUP_SITE.md --dry-run              # Windows dry-run
+scripts\normalise.cmd docs/SETUP_SITE.md --force --dry-run      # Windows force + dry-run
+
+./scripts/normalise.sh docs/SETUP_SITE.md                       # Linux/Mac
+./scripts/normalise.sh docs/SETUP_SITE.md --force               # Linux/Mac with force
+./scripts/normalise.sh docs/SETUP_SITE.md --dry-run             # Linux/Mac dry-run
+
+# Or directly as a Python module
+python -m normalise docs/SETUP_SITE.md
+python -m normalise docs/SETUP_SITE.md --force
+python -m normalise docs/SETUP_SITE.md --dry-run
+python -m normalise --help
+</code></pre>
+<h4 id="launcher-scripts">Launcher Scripts:</h4>
+<ul>
+<li><code>scripts/normalise.cmd</code> - Windows launcher (uses <code>setlocal</code>/<code>endlocal</code>, sets PYTHONPATH and PYTHONIOENCODING)</li>
+<li><code>scripts/normalise.sh</code> - Linux/Mac launcher (exports PYTHONPATH and PYTHONIOENCODING)</li>
+</ul>
+<p>Both scripts:</p>
+<ul>
+<li>Set <code>PYTHONPATH</code> to include <code>utils/</code> directory</li>
+<li>Set <code>PYTHONIOENCODING=utf-8</code> for proper emoji support</li>
+<li>Pass all arguments to the Python module with proper quoting</li>
+<li>Return the module's exit code</li>
+</ul>
+<h3 id="as-a-module">As a Module</h3>
+<p>You can import and use the <code>process_file()</code> function in your own Python scripts:</p>
+<pre><code class="language-python">from normalise import process_file
+
+# Process a single file
+modifications = process_file("docs/SETUP_SITE.md")
+print(f"Made {modifications} modifications")
+
+# Process with force mode (always process)
+modifications = process_file("docs/SETUP_SITE.md", force=True)
+
+# Process with dry-run (show what would be done)
+modifications = process_file("docs/SETUP_SITE.md", dry_run=True)
+print(f"Would make {modifications} modifications")
+
+# Process multiple files
+files = ["docs/SETUP_SITE.md", "docs/RULES.md", "README.md"]
+for file in files:
+    try:
+        count = process_file(file)
+        print(f"{file}: {count} modifications")
+    except FileNotFoundError as e:
+        print(f"Skipping: {e}")
+</code></pre>
+<p>For more fine-grained control, you can use the lower-level functions:</p>
+<pre><code class="language-python">from normalise import process_lines, read_file, write_file
+from pathlib import Path
+
+filepath = Path("docs/SETUP_SITE.md")
+lines = read_file(filepath)
+processed_lines, modification_count = process_lines(lines)
+
+if modification_count &gt; 0:
+    write_file(filepath, processed_lines, dry_run=False)
+    print(f"Made {modification_count} modifications")
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<pre><code>usage: normalise [-h] [--force] [--dry-run] filename
+
+Markdown Structure Normaliser - Converts standalone bold text to proper markdown headings
+
+positional arguments:
+  filename              Path to the markdown file to process
+
+options:
+  -h, --help            show this help message and exit
+  --force               Process file even if it appears up-to-date (always applies for normalise)
+  --dry-run             Show what would be done without actually modifying files
+
+Example: python -m normalise docs/SETUP_SITE.md --force --dry-run
+</code></pre>
+<h3 id="argument-details">Argument Details</h3>
+<ul>
+<li><p><strong><code>filename</code></strong> (required): Path to the markdown file to normalize. Can be absolute or relative.</p>
+</li>
+<li><p><strong><code>--help</code>, <code>-h</code></strong>: Display help message with usage examples and exit.</p>
+</li>
+<li><p><strong><code>--force</code></strong>: Process file regardless of state. For normalise, this always applies since the tool needs to analyze the file content to determine if changes are needed. Included for consistency with other GAZTank modules.</p>
+</li>
+<li><p><strong><code>--dry-run</code></strong>: Preview mode - analyze the file and show what would be changed without actually writing any modifications. Useful for:</p>
+<ul>
+<li>Checking if a file needs normalization</li>
+<li>Previewing changes before applying them</li>
+<li>Testing in CI/CD pipelines</li>
+<li>Validating behavior without side effects</li>
+</ul>
+</li>
+</ul>
+<h3 id="exit-codes">Exit Codes</h3>
+<ul>
+<li><strong>0</strong>: Success (file processed or no modifications needed)</li>
+<li><strong>1</strong>: Error (file not found, permission denied, processing failed)</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<pre><code class="language-bash"># Get help
+python -m normalise --help
+
+# Process a file
+python -m normalise docs/SETUP_SITE.md
+
+# Preview changes without modifying
+python -m normalise docs/SETUP_SITE.md --dry-run
+
+# Force processing (always applies for normalise)
+python -m normalise docs/SETUP_SITE.md --force
+
+# Combine force and dry-run
+python -m normalise docs/SETUP_SITE.md --force --dry-run
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>normalise/
+├── __init__.py      # Package initialization and exports
+├── __main__.py      # Entry point for python -m normalise
+├── normaliser.py    # Core processing logic
+└── README.md        # This file
+</code></pre>
+<h3 id="key-functions">Key Functions</h3>
+<ul>
+<li><strong><code>main()</code></strong> - Command-line entry point with argparse argument handling</li>
+<li><strong><code>process_file(filename, force=False, dry_run=False)</code></strong> - High-level function to process a markdown file (recommended for external scripts)</li>
+<li><strong><code>process_lines(lines)</code></strong> - Process a list of lines and return modified lines + count</li>
+<li><strong><code>read_file(filepath)</code></strong> - Read a markdown file into a list of lines (UTF-8)</li>
+<li><strong><code>write_file(filepath, lines, dry_run=False)</code></strong> - Write lines back to a file (or skip in dry-run mode)</li>
+<li><strong><code>process_line(line, state)</code></strong> - Process a single line and return modified line + boolean flag</li>
+<li><strong><code>needs_processing(filepath, force=False)</code></strong> - Determine if file needs processing (always True for normalise)</li>
+<li><strong><code>ProcessingState</code></strong> - Class for tracking processing state (heading level, code blocks, line number)</li>
+</ul>
+<h3 id="architecture">Architecture</h3>
+<p>The module uses a <strong>state machine</strong> approach:</p>
+<ol>
+<li><p><strong>State Tracking</strong>: <code>ProcessingState</code> tracks:</p>
+<ul>
+<li>Current heading level (for contextual heading depth)</li>
+<li>Code block context (to skip content inside ```)</li>
+<li>Current line number (for logging)</li>
+</ul>
+</li>
+<li><p><strong>Line-by-Line Processing</strong>: Each line is processed sequentially:</p>
+<ul>
+<li>Update code block state</li>
+<li>Check if line should be skipped</li>
+<li>Detect standalone bold text</li>
+<li>Apply appropriate heading level</li>
+<li>Track modifications</li>
+</ul>
+</li>
+<li><p><strong>Conditional Writing</strong>: Files are only modified if changes are detected, unless dry-run mode is active.</p>
+</li>
+</ol>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>State-Based Processing</strong>: Tracks heading levels and code block context throughout document</li>
+<li><strong>Code Block Awareness</strong>: Automatically skips content inside fenced code blocks (``` or ~~~)</li>
+<li><strong>Contextual Heading Levels</strong>: Applies appropriate heading depth based on document structure</li>
+<li><strong>Conditional Writes</strong>: Only modifies files when changes are detected</li>
+<li><strong>Force Mode</strong>: Process files regardless of state (consistent with other GAZTank modules)</li>
+<li><strong>Dry-Run Mode</strong>: Preview changes without modifying files</li>
+<li><strong>Cross-Platform</strong>: Works on Windows, Linux, and Mac with proper UTF-8 support</li>
+<li><strong>Detailed Logging</strong>: Shows all conversions made with line numbers in log files</li>
+<li><strong>Emoji Console Output</strong>: User-friendly console messages with emoji indicators</li>
+<li><strong>Integrated Logging</strong>: Uses gzlogging for standardized audit trails</li>
+<li><strong>UTF-8 Support</strong>: Handles Unicode and emoji characters correctly throughout</li>
+<li><strong>Argparse Integration</strong>: Professional command-line interface with --help support</li>
+<li><strong>Module API</strong>: Can be imported and used programmatically by other tools</li>
+<li><strong>Build Pipeline Integration</strong>: Seamlessly integrates with generate module</li>
+</ul>
+<h2 id="invocation-points">Invocation Points</h2>
+<p>The normaliser is invoked from multiple places in the GAZTank project:</p>
+<h3 id="direct-command-line-usage">1. Direct Command-Line Usage</h3>
+<p>Users can run normalise directly via launcher scripts:</p>
+<pre><code class="language-bash"># Windows
+scripts\normalise.cmd docs/SETUP_SITE.md
+
+# Linux/Mac
+./scripts/normalise.sh docs/SETUP_SITE.md
+</code></pre>
+<p><strong>Purpose:</strong> Manual normalization of individual markdown files</p>
+<p><strong>Location:</strong> <code>scripts/normalise.cmd</code> and <code>scripts/normalise.sh</code></p>
+<h3 id="markdown-to-html-converter-md-to-htmlpy">2. Markdown-to-HTML Converter (md_to_html.py)</h3>
+<p>The generate system automatically normalizes markdown files before converting to HTML:</p>
+<pre><code class="language-python"># utils/generate/md_to_html.py (line 33)
+from utils.normalise import process_file as normalize_markdown
+
+# utils/generate/md_to_html.py (line 205)
+if self.normalize:
+    modifications = normalize_markdown(input_path)
+</code></pre>
+<p><strong>Purpose:</strong> Ensure consistent markdown structure before HTML conversion</p>
+<p><strong>Location:</strong> <code>utils/generate/md_to_html.py</code></p>
+<p><strong>Invocation:</strong> Automatic (when <code>--normalize</code> flag is used or by default)</p>
+<h4 id="workflow-1">Workflow:</h4>
+<pre><code>Markdown File → Normalise Structure → Convert to HTML → Output HTML File
+</code></pre>
+<h3 id="generate-module-generatorpy">3. Generate Module (generator.py)</h3>
+<p>The general generate system uses md_to_html converter, which in turn calls normalise:</p>
+<pre><code class="language-bash"># Windows
+scripts\generate.cmd
+
+# Linux/Mac
+./scripts/generate.sh
+</code></pre>
+<h3 id="key-integration-points">Key Integration Points</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Launcher Scripts</strong></td>
+<td><code>scripts/normalise.*</code></td>
+<td>Direct command-line access</td>
+</tr>
+<tr>
+<td><strong>MD to HTML</strong></td>
+<td><code>utils/generate/md_to_html.py</code></td>
+<td>Automatic pre-conversion normalization</td>
+</tr>
+<tr>
+<td><strong>Generate System</strong></td>
+<td><code>utils/generate/generator.py</code></td>
+<td>Indirect via md_to_html converter</td>
+</tr>
+<tr>
+<td><strong>Logging</strong></td>
+<td><code>utils/gzlogging/</code></td>
+<td>Centralized logging infrastructure</td>
+</tr>
+</tbody>
+</table>
+<h3 id="design-decision">Design Decision</h3>
+<p>The normaliser is <strong>allowed to modify source <code>.md</code> files in place</strong>, unlike other build tools that only generate output files. This is intentional because:</p>
+<ul>
+<li>Markdown files are source files meant to be edited</li>
+<li>Normalization improves source file quality</li>
+<li>Changes are typically minimal (formatting only)</li>
+<li>Version control tracks all modifications</li>
+<li>Developers benefit from cleaner markdown structure</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="when-to-run-normalise">When to Run Normalise</h3>
+<ol>
+<li><p><strong>Before committing markdown changes</strong></p>
+<ul>
+<li>Run normalise on any <code>.md</code> files you've edited</li>
+<li>Ensures consistent structure across the codebase</li>
+<li>Makes diffs cleaner and more meaningful</li>
+</ul>
+</li>
+<li><p><strong>After converting documentation from other formats</strong></p>
+<ul>
+<li>Many converters create bold headings instead of proper markdown</li>
+<li>Run normalise to fix the structure automatically</li>
+</ul>
+</li>
+<li><p><strong>As part of the build process</strong></p>
+<ul>
+<li>The generate pipeline runs normalise automatically</li>
+<li>No manual intervention needed for HTML generation</li>
+</ul>
+</li>
+</ol>
+<h3 id="manual-usage-tips">Manual Usage Tips</h3>
+<pre><code class="language-bash"># Process a single file
+scripts\normalise.cmd docs/SETUP_SITE.md
+
+# Preview changes before applying
+scripts\normalise.cmd docs/SETUP_SITE.md --dry-run
+
+# Process multiple files (PowerShell)
+Get-ChildItem docs/*.md | ForEach-Object { scripts\normalise.cmd $_.FullName }
+
+# Process multiple files (Bash)
+for file in docs/*.md; do ./scripts/normalise.sh "$file"; done
+
+# Process all markdown files recursively (PowerShell)
+Get-ChildItem -Recurse -Filter *.md | ForEach-Object { scripts\normalise.cmd $_.FullName }
+
+# Check which files need normalization (dry-run all)
+Get-ChildItem docs/*.md | ForEach-Object { 
+    scripts\normalise.cmd $_.FullName --dry-run 
+} | Select-String "modifications prepared"
+</code></pre>
+<h3 id="version-control-best-practices">Version Control Best Practices</h3>
+<ul>
+<li><strong>Review changes before committing</strong>: Normalise modifies files in place, so use <code>git diff</code> to verify changes</li>
+<li><strong>Commit normalisation separately</strong>: Consider committing normalisation changes separately from content changes for cleaner history</li>
+<li><strong>Document in commit messages</strong>: Note when normalisation was applied (e.g., "Apply markdown normalisation to docs/")</li>
+</ul>
+<h3 id="integration-with-other-tools">Integration with Other Tools</h3>
+<ul>
+<li><strong>Pre-commit hooks</strong>: Add normalise to your pre-commit hooks for automatic formatting</li>
+<li><strong>CI/CD validation</strong>: Run normalise with <code>--dry-run</code> to check for unnormalized files in CI pipelines</li>
+<li><strong>Editor integration</strong>: Some markdown editors can be configured to run normalise on save</li>
+<li><strong>Build automation</strong>: Integrate with generate module for automatic pre-processing</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="file-not-found-error">File Not Found Error</h3>
+<p><strong>Problem:</strong> <code>FileNotFoundError: [Errno 2] No such file or directory: 'docs/FILE.md'</code></p>
+<h4 id="solution">Solution:</h4>
+<ul>
+<li>Verify the file path is correct (use absolute or relative path from project root)</li>
+<li>Check file exists: <code>ls docs/FILE.md</code> (Linux/Mac) or <code>dir docs\FILE.md</code> (Windows)</li>
+<li>Ensure you're running from the project root directory</li>
+</ul>
+<h3 id="no-modifications-made">No Modifications Made</h3>
+<p><strong>Problem:</strong> Normalise reports "0 modifications" but you expected changes</p>
+<h4 id="possible-causes">Possible Causes:</h4>
+<ol>
+<li><strong>File already normalized</strong> - Bold text is already in proper heading format</li>
+<li><strong>Bold text in lists</strong> - Intentionally preserved (not converted)</li>
+<li><strong>Inline bold</strong> - Bold text within sentences is intentionally preserved</li>
+<li><strong>Inside code blocks</strong> - Content inside ``` blocks is skipped</li>
+</ol>
+<h4 id="verification">Verification:</h4>
+<pre><code class="language-bash"># Check what the file contains
+cat docs/FILE.md | grep "^\*\*"  # Lines starting with bold (candidates for conversion)
+</code></pre>
+<h3 id="unexpected-conversions">Unexpected Conversions</h3>
+<p><strong>Problem:</strong> Some bold text was converted when it shouldn't have been</p>
+<h4 id="diagnosis">Diagnosis:</h4>
+<ul>
+<li>The normaliser converts bold text that appears at the start of a line</li>
+<li>If bold text is meant as emphasis (not a heading), it should be inline with other text</li>
+</ul>
+<h4 id="solution-1">Solution:</h4>
+<ul>
+<li>Move the bold text inline: <code>This is **important** information.</code></li>
+<li>Or convert it to a proper heading manually if it's actually a section heading</li>
+</ul>
+<h3 id="permission-denied-error">Permission Denied Error</h3>
+<p><strong>Problem:</strong> <code>PermissionError: [Errno 13] Permission denied</code></p>
+<h4 id="solution-2">Solution:</h4>
+<ul>
+<li>Check file permissions</li>
+<li>Ensure the file is not open in another program (especially on Windows)</li>
+<li>Verify write permissions on the file and directory</li>
+<li>Close any editors or programs with the file open</li>
+<li>On Windows, check if file is marked as read-only</li>
+</ul>
+<h3 id="unicodeencoding-issues">Unicode/Encoding Issues</h3>
+<p><strong>Problem:</strong> Strange characters appear after normalization</p>
+<h4 id="solution-3">Solution:</h4>
+<ul>
+<li>Ensure the markdown file is UTF-8 encoded</li>
+<li>The shell scripts automatically set <code>PYTHONIOENCODING=utf-8</code></li>
+<li>Re-save the file as UTF-8 in your editor before normalizing</li>
+<li>Use a UTF-8 capable editor (VS Code, Notepad++, etc.)</li>
+</ul>
+<h3 id="dry-run-shows-changes-but-nothing-written">Dry-Run Shows Changes But Nothing Written</h3>
+<p><strong>Problem:</strong> Dry-run mode shows modifications but file wasn't changed</p>
+<p><strong>Expected Behavior:</strong> This is correct! Dry-run mode (<code>--dry-run</code>) shows what <em>would</em> be done without actually modifying files. To apply the changes, run without <code>--dry-run</code>:</p>
+<pre><code class="language-bash"># Preview changes
+scripts\normalise.cmd docs/FILE.md --dry-run
+
+# Actually apply changes
+scripts\normalise.cmd docs/FILE.md
+</code></pre>
+<h3 id="log-file-not-created">Log File Not Created</h3>
+<p><strong>Problem:</strong> No log file appears in <code>logs/dev/</code></p>
+<h4 id="solution-4">Solution:</h4>
+<ul>
+<li>Verify <code>logs/dev/</code> directory exists (should be auto-created)</li>
+<li>Check write permissions on the logs directory</li>
+<li>Ensure <code>utils/gzlogging/</code> module is present and accessible</li>
+<li>Check console output for logging initialization errors</li>
+</ul>
+<h2 id="development">Development</h2>
+<p>The module follows standard Python packaging conventions:</p>
+<ul>
+<li><code>__init__.py</code> - Exports public API (<code>process_file</code>, <code>process_lines</code>, <code>read_file</code>, <code>write_file</code>)</li>
+<li><code>__main__.py</code> - Command-line entry point (enables <code>python -m normalise</code>)</li>
+<li><code>normaliser.py</code> - Core implementation (processing logic and state management)</li>
+<li>Launcher scripts in <code>scripts/</code> for cross-platform convenience</li>
+</ul>
+<h3 id="file-locations">File Locations</h3>
+<pre><code>GAZTank/
+├── logs/
+│   └── dev/
+│       └── normalise_YYYYMMDD.log   # Daily log files (audit trail)
+│
+├── scripts/
+│   ├── normalise.cmd                # Windows launcher
+│   └── normalise.sh                 # Linux/Mac launcher
+│
+└── utils/
+    ├── gzlogging/                   # Centralized logging system
+    │   └── gzlogging.py             # Used by normalise
+    │
+    ├── generate/                    # Calls normalise
+    │   ├── md_to_html.py            # Imports and uses normalise
+    │   └── generator.py             # Orchestrator (indirect usage)
+    │
+    └── normalise/                   # This module
+        ├── __init__.py              # Package initialization
+        ├── __main__.py              # Entry point
+        ├── normaliser.py            # Core logic
+        └── README.md                # This file
+</code></pre>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Planned improvements for future versions:</p>
+<h3 id="completed">Completed ✅</h3>
+<ul>
+<li>[x] <strong>Force Mode Support</strong> - Process files regardless of state (v1.1)</li>
+<li>[x] <strong>Dry-Run Mode</strong> - Preview changes without modifying files (v1.1)</li>
+<li>[x] <strong>Argparse Integration</strong> - Professional CLI with --help support (v1.1)</li>
+<li>[x] <strong>Clean Log Format</strong> - Removed separator lines from logs (v1.1)</li>
+<li>[x] <strong>Emoji Console Output</strong> - Enhanced user experience with visual indicators (v1.1)</li>
+<li>[x] <strong>UTF-8 Shell Scripts</strong> - Proper PYTHONIOENCODING setup in launcher scripts (v1.1)</li>
+</ul>
+<h3 id="short-term-v12">Short Term (v1.2)</h3>
+<ul>
+<li><strong>Batch Processing Mode</strong>: Process multiple files in a single command<pre><code class="language-bash">python -m normalise docs/*.md --batch
+</code></pre>
+</li>
+<li><strong>Configuration File</strong>: Support for <code>.normaliserc</code> to customize heading levels and patterns</li>
+<li><strong>Statistics Summary</strong>: Detailed report of changes across multiple files</li>
+<li><strong>Backup Option</strong>: Create <code>.bak</code> files before modifying originals</li>
+</ul>
+<h3 id="medium-term-v13">Medium Term (v1.3)</h3>
+<ul>
+<li><strong>Custom Bold Patterns</strong>: Configure additional patterns to recognize as headings</li>
+<li><strong>Heading Level Constraints</strong>: Enforce maximum heading depth</li>
+<li><strong>Interactive Mode</strong>: Prompt for confirmation on each change</li>
+<li><strong>Undo Support</strong>: Ability to revert recent normalizations</li>
+</ul>
+<h3 id="long-term-v20">Long Term (v2.0)</h3>
+<ul>
+<li><strong>Smart Heading Detection</strong>: ML-based detection of semantic heading structure</li>
+<li><strong>Format Preservation</strong>: Maintain custom spacing and line break patterns</li>
+<li><strong>Integration with Other Formats</strong>: Support for ReStructuredText, AsciiDoc</li>
+<li><strong>VS Code Extension</strong>: Direct integration with VS Code editor</li>
+</ul>
+<h3 id="under-consideration">Under Consideration</h3>
+<ul>
+<li><strong>Watch Mode</strong>: Automatically normalize files on save</li>
+<li><strong>Git Integration</strong>: Pre-commit hook generation</li>
+<li><strong>Diff Output</strong>: Show before/after diffs in unified format</li>
+<li><strong>Configuration Profiles</strong>: Different normalization rules for different document types</li>
+</ul>
+<p>See <a href="https://github.com/gazorper/GAZTank/issues">GitHub Issues</a> for tracking and discussion.</p>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../generate/README.md">Generate Module</a></strong> - Content generation pipeline that uses normalise</li>
+<li><strong><a href="../generate/md_to_html.py">MD to HTML Converter</a></strong> - Markdown converter (imports normalise)</li>
+<li><strong><a href="../gzlogging/README.md">GZLogging Module</a></strong> - Logging infrastructure</li>
+<li><strong><a href="../../docs/DESIGN_RULES.md">Design Rules</a></strong> - Project design principles and UTF-8 handling</li>
+<li><strong><a href="../../dev/MODULE_README_STRUCTURE.md">Module README Structure</a></strong> - Template for module documentation</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 22, 2025</em><br/>
+<em>Normaliser version: 1.1</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

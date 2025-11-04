@@ -1,0 +1,1279 @@
+<h1>Static Content Generator</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#environment-aware-output">Environment-Aware Output</a>
+</li>
+<li>
+<a href="#supported-input-types">Supported Input Types</a>
+</li>
+<li>
+<a href="#workflow">Workflow:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-file-example">Log File Example</a>
+</li>
+<li>
+<a href="#viewing-logs">Viewing Logs</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#required-arguments">Required Arguments</a>
+</li>
+<li>
+<a href="#optional-arguments">Optional Arguments</a>
+</li>
+<li>
+<a href="#argument-combinations">Argument Combinations</a>
+</li>
+<li>
+<a href="#console-output-modes">Console Output Modes</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#core-features">Core Features</a>
+</li>
+<li>
+<a href="#intelligent-regeneration">Intelligent Regeneration</a>
+</li>
+<li>
+<a href="#dry-run-mode">Dry-Run Mode</a>
+</li>
+<li>
+<a href="#extensible-architecture">Extensible Architecture</a>
+</li>
+<li>
+<a href="#configuration-structure">Configuration Structure</a>
+</li>
+<li>
+<a href="#configuration-attributes">Configuration Attributes</a>
+</li>
+<li>
+<a href="#example-configuration">Example Configuration</a>
+</li>
+<li>
+<a href="#configuration-rules">Configuration Rules</a>
+</li>
+<li>
+<a href="#direct-command-line-usage">1. Direct Command-Line Usage</a>
+</li>
+<li>
+<a href="#build-system-integration">2. Build System Integration</a>
+</li>
+<li>
+<a href="#cicd-pipeline">3. CI/CD Pipeline</a>
+</li>
+<li>
+<a href="#integration-points">Integration Points</a>
+</li>
+<li>
+<a href="#file-locations">File Locations</a>
+</li>
+<li>
+<a href="#adding-new-input-types">Adding New Input Types</a>
+</li>
+<li>
+<a href="#design-principles">Design Principles</a>
+</li>
+<li>
+<a href="#code-style">Code Style</a>
+</li>
+<li>
+<a href="#when-to-run-generate">When to Run Generate</a>
+</li>
+<li>
+<a href="#working-with-configuration">Working with Configuration</a>
+</li>
+<li>
+<a href="#version-control-best-practices">Version Control Best Practices</a>
+</li>
+<li>
+<a href="#performance-tips">Performance Tips</a>
+</li>
+<li>
+<a href="#workflow-recommendations">Workflow Recommendations</a>
+</li>
+<li>
+<a href="#configuration-file-not-found">Configuration File Not Found</a>
+</li>
+<li>
+<a href="#no-groups-found">No Groups Found</a>
+</li>
+<li>
+<a href="#missing-input-type-attribute">Missing input_type Attribute</a>
+</li>
+<li>
+<a href="#unsupported-input-type">Unsupported input_type</a>
+</li>
+<li>
+<a href="#input-file-not-found">Input File Not Found</a>
+</li>
+<li>
+<a href="#all-files-skipped">All Files Skipped</a>
+</li>
+<li>
+<a href="#dry-run-shows-different-results">Dry-Run Shows Different Results</a>
+</li>
+<li>
+<a href="#conversion-failures">Conversion Failures</a>
+</li>
+<li>
+<a href="#permission-denied">Permission Denied</a>
+</li>
+<li>
+<a href="#toml-import-error">TOML Import Error</a>
+</li>
+<li>
+<a href="#emojis-not-displaying">Emojis Not Displaying</a>
+</li>
+<li>
+<a href="#completed-features">Completed Features</a>
+</li>
+<li>
+<a href="#planned-features">Planned Features</a>
+</li>
+<li>
+<a href="#additional-input-types">Additional Input Types</a>
+</li>
+<li>
+<a href="#configuration-enhancements">Configuration Enhancements</a>
+</li>
+<li>
+<a href="#performance-improvements">Performance Improvements</a>
+</li>
+<li>
+<a href="#internal-documentation">Internal Documentation</a>
+</li>
+<li>
+<a href="#external-resources">External Resources</a>
+<ul>
+<li>
+<a href="#logged-to-file-clean-operational-log">Logged to file (clean operational log):</a>
+</li>
+<li>
+<a href="#console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</a>
+</li>
+<li>
+<a href="#not-logged-kept-clean">Not logged (kept clean):</a>
+</li>
+<li>
+<a href="#launcher-scripts">Launcher Scripts:</a>
+</li>
+<li>
+<a href="#default-mode">Default mode:</a>
+</li>
+<li>
+<a href="#with-disabled-groups-in-summary">With disabled groups in summary:</a>
+</li>
+<li>
+<a href="#dry-run-mode-1">Dry-run mode:</a>
+</li>
+<li>
+<a href="#force-mode">Force mode:</a>
+</li>
+<li>
+<a href="#force-dry-run-mode">Force + Dry-run mode:</a>
+</li>
+<li>
+<a href="#generatorpy">generator.py</a>
+</li>
+<li>
+<a href="#md-to-htmlpy">md_to_html.py</a>
+</li>
+<li>
+<a href="#what-it-does">What it does:</a>
+</li>
+<li>
+<a href="#what-it-doesnt-do">What it doesn't do:</a>
+</li>
+<li>
+<a href="#use-cases">Use cases:</a>
+</li>
+<li>
+<a href="#required">Required:</a>
+</li>
+<li>
+<a href="#optional">Optional:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+<li>
+<a href="#solution-5">Solution:</a>
+</li>
+<li>
+<a href="#diagnosis">Diagnosis:</a>
+</li>
+<li>
+<a href="#solution-6">Solution:</a>
+</li>
+<li>
+<a href="#diagnosis-1">Diagnosis:</a>
+</li>
+<li>
+<a href="#solution-7">Solution:</a>
+</li>
+<li>
+<a href="#solution-8">Solution:</a>
+</li>
+<li>
+<a href="#solution-for-python-311">Solution for Python 3.11+:</a>
+</li>
+<li>
+<a href="#solution-for-python-311-1">Solution for Python &lt; 3.11:</a>
+</li>
+<li>
+<a href="#solution-9">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Environment-aware static content generation system that converts source files to HTML based on file type and outputs to specified environment directory. Reads <code>generate.toml</code> configuration and delegates to appropriate converters.</p>
+<p><strong>Version:</strong> 2.0<br/>
+<strong>Last Updated:</strong> October 23, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The Static Content Generator provides a flexible, environment-aware approach to converting source content into HTML for the GAZTank static site. It acts as an orchestrator that:</p>
+<ul>
+<li>Reads file groups from <code>config/generate.toml</code></li>
+<li>Routes files to appropriate converters based on <code>input_type</code></li>
+<li>Outputs to environment-specific directories (<code>publish/{environment}/content/</code>)</li>
+<li>Uses <code>gzconfig</code> to read pipeline configuration for environment directories</li>
+<li>Manages the conversion workflow for multiple file groups</li>
+<li>Provides intelligent timestamp-based regeneration (only converts when needed)</li>
+<li>Integrates with the build pipeline for automated content generation</li>
+</ul>
+<h3 id="environment-aware-output">Environment-Aware Output</h3>
+<p>The generator requires a mandatory <code>-e</code> argument to specify the target environment:</p>
+<ul>
+<li><strong>dev</strong> - Outputs to <code>publish/dev/content/</code></li>
+<li><strong>staging</strong> - Outputs to <code>publish/staging/content/</code></li>
+<li><strong>prod</strong> - Outputs to <code>publish/prod/content/</code></li>
+</ul>
+<p>Environment directories are configured in <code>config/pipeline.toml</code> and accessed via <code>gzconfig</code>.</p>
+<h3 id="supported-input-types">Supported Input Types</h3>
+<p>Currently supported:</p>
+<ul>
+<li><strong>markdown</strong> - Converts <code>.md</code> files to HTML using the <code>md_to_html</code> module</li>
+</ul>
+<p>Future extensibility for other types (e.g., ReStructuredText, AsciiDoc, etc.)</p>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The generator is a key component of the GAZTank content generation pipeline:</p>
+<pre><code>Content Generation Pipeline:
+  1. Receive environment parameter (-e dev/staging/prod)
+  2. Read generate.toml configuration
+  3. Use gzconfig to get environment directory from pipeline.toml
+  4. For each [[group]] in configuration:
+     a. Validate input_type attribute
+     b. Route to appropriate converter (e.g., md_to_html)
+     c. Process each file in group:
+        - Check if regeneration needed (timestamp comparison)
+        - Normalise source structure (markdown only)
+        - Convert to HTML
+        - Write to publish/{environment}/content/{output_dir}/
+  5. Report statistics (converted, skipped, failed)
+  6. Return exit code for build automation
+</code></pre>
+<p><strong>Purpose:</strong> Orchestrates environment-aware multi-format content generation</p>
+<p><strong>Location:</strong> Called directly via <code>scripts/generate.cmd -e &lt;env&gt;</code> or as part of larger build workflows</p>
+<h3 id="workflow">Workflow:</h3>
+<pre><code>-e environment → pipeline.toml → generate.toml → generate.py → delegates to converters → outputs to publish/{env}/content/
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Environment-specific output directories</li>
+<li>Single command to regenerate all site content for an environment</li>
+<li>Intelligent timestamp checking (skip up-to-date files)</li>
+<li>Configuration-driven (add new groups without code changes)</li>
+<li>Extensible architecture for future input types</li>
+<li>Comprehensive logging and error handling</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<p>The generator uses the <strong>gzlogging</strong> infrastructure for environment-aware operational logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> Specified via <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>generate</code></li>
+<li><strong>Log Location:</strong> <code>logs/{environment}/generate_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> File-only (console has its own formatting)</li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<h4 id="logged-to-file-clean-operational-log">Logged to file (clean operational log):</h4>
+<ul>
+<li>Static Content Generator started</li>
+<li>Environment specified</li>
+<li>Mode settings (DRY RUN MODE enabled, FORCE MODE enabled if applicable)</li>
+<li>Project root path</li>
+<li>Configuration file loaded</li>
+<li>Groups found and processed count</li>
+<li>Each file conversion or skip status with paths</li>
+<li>Group completion with statistics (converted, skipped counts)</li>
+<li>Overall generation summary</li>
+<li>Static Content Generator completed successfully</li>
+<li>Errors and warnings</li>
+</ul>
+<h4 id="console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</h4>
+<ul>
+<li>Section headers with separators (============)</li>
+<li>Mode indicators: ⚠️ DRY RUN MODE, 🔄 FORCE MODE</li>
+<li>Progress indicators: 📁 📄 📋 📝 for different stages</li>
+<li>Success/failure indicators: ✅ ℹ️ ❌ ⚠️</li>
+<li>Statistics summary in formatted box</li>
+<li>Blank lines for visual spacing</li>
+<li>User-facing progress messages</li>
+</ul>
+<h4 id="not-logged-kept-clean">Not logged (kept clean):</h4>
+<ul>
+<li>No blank lines in log files</li>
+<li>No separator lines (===) in logs</li>
+<li>No emoji or formatting characters in log files</li>
+</ul>
+<h3 id="log-file-example">Log File Example</h3>
+<pre><code class="language-log">[2025-10-22 13:54:57] [dev] [INF] Static Content Generator started
+[2025-10-22 13:54:57] [dev] [INF] FORCE MODE enabled
+[2025-10-22 13:54:57] [dev] [INF] Project root: D:\Projects\www\GAZTank
+[2025-10-22 13:54:57] [dev] [INF] Loaded configuration from D:\Projects\www\GAZTank\config\generate.toml
+[2025-10-22 13:54:57] [dev] [INF] Found 1 groups in configuration
+[2025-10-22 13:54:57] [dev] [INF] Processing markdown group 'website_setup_docs' with 7 files to src/content/setup
+[2025-10-22 13:54:57] [dev] [INF] Converted SETUP_SITE.md to src\content\setup\SETUP_SITE.html
+[2025-10-22 13:54:57] [dev] [INF] Converted DESIGN_RULES.md to src\content\setup\DESIGN_RULES.html
+[2025-10-22 13:54:57] [dev] [INF] Converted DEVELOPER_SETUP.md to src\content\setup\DEVELOPER_SETUP.html
+[2025-10-22 13:54:57] [dev] [INF] Converted SEO_IMPLEMENTATION.md to src\content\setup\SEO_IMPLEMENTATION.html
+[2025-10-22 13:54:57] [dev] [INF] Converted RESPONSIVE_IMAGES.md to src\content\setup\RESPONSIVE_IMAGES.html
+[2025-10-22 13:54:57] [dev] [INF] Converted README.md to src\content\setup\README.html
+[2025-10-22 13:54:57] [dev] [INF] Converted PROJECT_STRUCTURE.md to src\content\setup\PROJECT_STRUCTURE.html
+[2025-10-22 13:54:57] [dev] [INF] Group 'website_setup_docs' completed: 7 converted, 0 skipped
+[2025-10-22 13:54:57] [dev] [INF] Generation summary: 1/1 groups processed successfully, 0 skipped
+[2025-10-22 13:54:57] [dev] [INF] Static Content Generator completed successfully
+</code></pre>
+<p>In dry-run mode, logs show what would be done:</p>
+<pre><code class="language-log">[2025-10-22 13:54:14] [dev] [INF] Static Content Generator started
+[2025-10-22 13:54:14] [dev] [INF] DRY RUN MODE enabled
+[2025-10-22 13:54:14] [dev] [INF] FORCE MODE enabled
+[2025-10-22 13:54:14] [dev] [INF] Project root: D:\Projects\www\GAZTank
+[2025-10-22 13:54:14] [dev] [INF] Loaded configuration from D:\Projects\www\GAZTank\config\generate.toml
+[2025-10-22 13:54:14] [dev] [INF] Found 1 groups in configuration
+[2025-10-22 13:54:14] [dev] [INF] Processing markdown group 'website_setup_docs' with 7 files to src/content/setup
+[2025-10-22 13:54:14] [dev] [INF] [DRY RUN] Would convert SETUP_SITE.md to src\content\setup\SETUP_SITE.html
+[2025-10-22 13:54:14] [dev] [INF] [DRY RUN] Would convert DESIGN_RULES.md to src\content\setup\DESIGN_RULES.html
+[2025-10-22 13:54:14] [dev] [INF] [DRY RUN] Group 'website_setup_docs': 7 would be converted, 0 skipped
+[2025-10-22 13:54:14] [dev] [INF] [DRY RUN] Summary: 1/1 groups would be processed, 0 skipped
+[2025-10-22 13:54:14] [dev] [INF] Static Content Generator completed successfully
+</code></pre>
+<h3 id="viewing-logs">Viewing Logs</h3>
+<pre><code class="language-bash"># View today's log (Linux/Mac)
+cat logs/dev/generate_$(date +%Y%m%d).log
+
+# View today's log (PowerShell)
+Get-Content "logs\dev\generate_$(Get-Date -Format 'yyyyMMdd').log"
+
+# Tail recent entries
+Get-Content -Tail 20 "logs\dev\generate_$(Get-Date -Format 'yyyyMMdd').log"
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<pre><code class="language-bash"># Using the launcher script (recommended)
+scripts\generate.cmd -e dev                    # Windows - dev environment
+scripts\generate.cmd -e staging                # Windows - staging environment
+scripts\generate.cmd -e prod                   # Windows - production environment
+./scripts/generate.sh -e dev                   # Linux/Mac - dev environment
+
+# With command-line options
+scripts\generate.cmd -e dev --force            # Force regeneration of all files
+scripts\generate.cmd -e dev --dry-run          # Preview without making changes
+scripts\generate.cmd -e dev --force --dry-run  # Preview force regeneration
+
+# Direct invocation
+python -m generate -e dev
+python -m generate -e staging --force
+python -m generate -e prod --dry-run
+python -m generate --help
+</code></pre>
+<h4 id="launcher-scripts">Launcher Scripts:</h4>
+<ul>
+<li><code>scripts/generate.cmd</code> - Windows launcher with UTF-8 encoding</li>
+<li><code>scripts/generate.sh</code> - Linux/Mac launcher with UTF-8 encoding</li>
+</ul>
+<p>Both scripts:</p>
+<ul>
+<li>Set <code>PYTHONIOENCODING=utf-8</code> for emoji support in console</li>
+<li>Call <code>python -m generate</code> module pattern</li>
+<li>Pass all arguments (including <code>-e environment</code>) through to the Python module</li>
+<li>Return the module's exit code for build automation</li>
+</ul>
+<h3 id="as-a-module">As a Module</h3>
+<p>You can import and use the generator functions in your own Python scripts:</p>
+<pre><code class="language-python">from utils.generate.generate import process_groups
+from utils.gzconfig import get_generate_config
+
+# Get configuration for specific environment
+config = get_generate_config('dev')
+
+# Process all groups with options
+exit_code = process_groups(environment='dev', force=False, dry_run=False)
+
+if exit_code == 0:
+    print("All content generated successfully")
+else:
+    print("Some content generation failed")
+</code></pre>
+<p>For processing individual markdown groups:</p>
+<pre><code class="language-python">from pathlib import Path
+from utils.generate.generate import process_markdown_group
+from utils.gzconfig import get_generate_config
+
+# Get configuration
+config = get_generate_config('dev')
+project_root = Path(__file__).parent.parent.parent
+
+# Process a specific group
+for group in config.groups:
+    if group.name == 'my_docs':
+        success = process_markdown_group(
+            group, 
+            project_root, 
+            environment='dev',
+            force=True, 
+            dry_run=False
+        )
+        
+        if success:
+            print(f"Group {group.name} processed successfully")
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required-arguments">Required Arguments</h3>
+<ul>
+<li><strong><code>-e</code>, <code>--environment</code></strong> - Target environment for content generation (REQUIRED)<ul>
+<li><strong>Choices:</strong> <code>dev</code>, <code>staging</code>, <code>prod</code></li>
+<li><strong>Purpose:</strong> Specifies which environment directory to output content to</li>
+<li><strong>Output:</strong> Content is written to <code>publish/{environment}/content/</code></li>
+<li><strong>Examples:</strong><ul>
+<li><code>-e dev</code> → outputs to <code>publish/dev/content/</code></li>
+<li><code>-e staging</code> → outputs to <code>publish/staging/content/</code></li>
+<li><code>-e prod</code> → outputs to <code>publish/prod/content/</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<ul>
+<li><p><strong><code>--force</code></strong> - Force regeneration of all files, ignoring timestamps</p>
+<ul>
+<li>Regenerates all files even if output is newer than input</li>
+<li>Useful for full rebuilds or when templates change</li>
+<li>Example: <code>scripts\generate.cmd --force</code></li>
+</ul>
+</li>
+<li><p><strong><code>--dry-run</code></strong> - Show what would be done without making changes</p>
+<ul>
+<li>Performs all analysis and decision-making</li>
+<li>Displays detailed preview of conversions/skips</li>
+<li>Does not write any output files</li>
+<li>Does not modify any files</li>
+<li>Useful for testing configuration changes</li>
+<li>Example: <code>scripts\generate.cmd --dry-run</code></li>
+</ul>
+</li>
+<li><p><strong><code>--help</code></strong> - Display usage information and examples</p>
+<ul>
+<li>Shows all available command-line options</li>
+<li>Provides usage examples</li>
+<li>Example: <code>python -m generate --help</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="argument-combinations">Argument Combinations</h3>
+<pre><code class="language-bash"># Default mode: Smart regeneration based on timestamps
+scripts\generate.cmd
+
+# Force regenerate all files
+scripts\generate.cmd --force
+
+# Preview what would be regenerated
+scripts\generate.cmd --dry-run
+
+# Preview force regeneration
+scripts\generate.cmd --force --dry-run
+</code></pre>
+<h3 id="console-output-modes">Console Output Modes</h3>
+<h4 id="default-mode">Default mode:</h4>
+<pre><code>============================================================
+Static Content Generator
+============================================================
+📁 Project root: D:\Projects\www\GAZTank
+📄 Loading configuration from: D:\Projects\www\GAZTank\config\generate.toml
+📋 Found 2 group(s) in configuration
+
+⏸️  Group 'developer_guides' is disabled - skipping
+
+📝 Processing markdown group: website_setup_docs
+   Output directory: publish\dev\content\setup
+   Files to process: 3
+   ...
+</code></pre>
+<h4 id="with-disabled-groups-in-summary">With disabled groups in summary:</h4>
+<pre><code>============================================================
+GENERATION SUMMARY
+============================================================
+Total groups: 2
+⏸️  Disabled: 1
+✅ Processed successfully: 1
+</code></pre>
+<h4 id="dry-run-mode-1">Dry-run mode:</h4>
+<pre><code>============================================================
+Static Content Generator
+============================================================
+⚠️  DRY RUN MODE enabled - No files will be modified
+📁 Project root: D:\Projects\www\GAZTank
+...
+⚠️  DRY RUN MODE - No files were modified
+</code></pre>
+<h4 id="force-mode">Force mode:</h4>
+<pre><code>============================================================
+Static Content Generator
+============================================================
+🔄 FORCE MODE enabled - Regenerating all files
+📁 Project root: D:\Projects\www\GAZTank
+...
+</code></pre>
+<h4 id="force-dry-run-mode">Force + Dry-run mode:</h4>
+<pre><code>============================================================
+Static Content Generator
+============================================================
+⚠️  DRY RUN MODE enabled - No files will be modified
+🔄 FORCE MODE enabled - Regenerating all files
+📁 Project root: D:\Projects\www\GAZTank
+...
+⚠️  DRY RUN MODE - No files were modified
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>generate/
+├── __init__.py      # Package initialization
+├── generator.py     # Main orchestrator (this module)
+├── md_to_html.py    # Markdown-to-HTML converter
+└── README.md        # This file
+</code></pre>
+<h3 id="key-functions">Key Functions</h3>
+<h4 id="generatorpy">generator.py</h4>
+<ul>
+<li><strong><code>main()</code></strong> - Entry point for command-line usage with argument parsing</li>
+<li><strong><code>get_project_root()</code></strong> - Returns project root directory Path</li>
+<li><strong><code>load_config(config_path)</code></strong> - Loads and parses generate.toml configuration</li>
+<li><strong><code>process_groups(config, project_root, force, dry_run)</code></strong> - Processes all groups, returns exit code</li>
+<li><strong><code>process_markdown_group(group, project_root, force, dry_run)</code></strong> - Handles markdown file group conversion</li>
+</ul>
+<h4 id="md-to-htmlpy">md_to_html.py</h4>
+<ul>
+<li><strong><code>MarkdownConverter(dry_run, normalize, force)</code></strong> - Class for converting markdown files with options<ul>
+<li><code>convert(input_path, output_path)</code> - Convert a single markdown file to HTML</li>
+<li><code>fix_image_paths(html_content)</code> - Adjusts image references for content directory</li>
+</ul>
+</li>
+</ul>
+<h2 id="features">Features</h2>
+<h3 id="core-features">Core Features</h3>
+<ul>
+<li><strong>Configuration-driven</strong>: All file groups defined in <code>generate.toml</code></li>
+<li><strong>Enable/disable groups</strong>: Optional <code>enabled</code> flag to selectively process groups</li>
+<li><strong>Path transformation</strong>: Flexible output path control with <code>path_transform</code> directive<ul>
+<li><code>flatten</code> - Use only filenames (default)</li>
+<li><code>preserve_parent</code> - Keep immediate parent directory</li>
+<li><code>preserve_all</code> - Keep full directory structure</li>
+<li><code>strip_prefix</code> - Remove common prefix then use remaining path</li>
+</ul>
+</li>
+<li><strong>Timestamp-aware</strong>: Only regenerates files when source is newer than output</li>
+<li><strong>Force mode</strong>: <code>--force</code> flag to regenerate all files regardless of timestamps</li>
+<li><strong>Dry-run mode</strong>: <code>--dry-run</code> flag to preview changes without modifying files</li>
+<li><strong>Multi-group support</strong>: Process multiple file groups with different output directories</li>
+<li><strong>Type routing</strong>: Routes to appropriate converter based on <code>input_type</code></li>
+<li><strong>Error handling</strong>: Continues processing other files if one fails</li>
+<li><strong>Detailed statistics</strong>: Reports converted, skipped, disabled, and failed counts</li>
+<li><strong>Exit codes</strong>: Returns proper exit codes for build automation (0 success, 1 failure)</li>
+<li><strong>Integrated logging</strong>: Uses gzlogging for clean audit trails</li>
+<li><strong>Command-line help</strong>: <code>--help</code> displays usage information and examples</li>
+<li><strong>UTF-8 support</strong>: Full Unicode and emoji support in console output</li>
+<li><strong>Rich console output</strong>: Visual indicators with emojis for better UX</li>
+<li><strong>Clean log files</strong>: Operational logs without formatting or blank lines</li>
+</ul>
+<h3 id="intelligent-regeneration">Intelligent Regeneration</h3>
+<p>The generator compares input file modification time with output file modification time:</p>
+<ul>
+<li><strong>Regenerate</strong>: When input is newer than output, or output doesn't exist</li>
+<li><strong>Skip</strong>: When output exists and is newer than or same age as input</li>
+<li><strong>Force regeneration</strong>: Use <code>--force</code> flag to regenerate all files regardless of timestamps</li>
+<li><strong>Preview mode</strong>: Use <code>--dry-run</code> flag to see what would be done without making changes</li>
+</ul>
+<p>This dramatically improves performance for large documentation sets.</p>
+<h3 id="dry-run-mode">Dry-Run Mode</h3>
+<p>The <code>--dry-run</code> flag provides accurate preview without modifications:</p>
+<h4 id="what-it-does">What it does:</h4>
+<ul>
+<li>Scans all configured file groups</li>
+<li>Checks timestamps (unless <code>--force</code> is used)</li>
+<li>Decides which files would be converted vs. skipped</li>
+<li>Displays detailed messages: "[DRY RUN] Would normalize and convert: ..."</li>
+<li>Shows accurate statistics: "would be converted", "already up-to-date"</li>
+<li>Logs all decisions with <code>[DRY RUN]</code> prefix</li>
+</ul>
+<h4 id="what-it-doesnt-do">What it doesn't do:</h4>
+<ul>
+<li>Write any output files</li>
+<li>Modify any source files</li>
+<li>Create any directories</li>
+<li>Change file timestamps</li>
+<li>Perform actual conversions</li>
+</ul>
+<h4 id="use-cases">Use cases:</h4>
+<ul>
+<li>Test configuration changes before committing</li>
+<li>Verify file selection and routing</li>
+<li>Understand which files are outdated</li>
+<li>Preview impact of <code>--force</code> flag</li>
+<li>Debug generation issues safely</li>
+</ul>
+<h3 id="extensible-architecture">Extensible Architecture</h3>
+<p>The module is designed for future expansion:</p>
+<pre><code class="language-python"># Current: markdown routing
+if input_type == 'markdown':
+    success = process_markdown_group(group, project_root, force, dry_run)
+
+# Future: Add more input types
+elif input_type == 'restructuredtext':
+    success = process_rst_group(group, project_root, force, dry_run)
+elif input_type == 'asciidoc':
+    success = process_asciidoc_group(group, project_root, force, dry_run)
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>The generator reads <code>config/generate.toml</code> which defines file groups.</p>
+<h3 id="configuration-structure">Configuration Structure</h3>
+<pre><code class="language-toml">[[group]]
+name = "group_identifier"           # Required: Unique name for this group
+enabled = true                       # Optional: Enable/disable group (default: false)
+input_type = "markdown"              # Required: Type of input files
+output_dir = "destination/path"      # Required: Relative to content/
+files = [                            # Required: List of input files
+    "path/to/file1.md",
+    "path/to/file2.md",
+]
+</code></pre>
+<h3 id="configuration-attributes">Configuration Attributes</h3>
+<h4 id="required">Required:</h4>
+<ul>
+<li><code>name</code> - Descriptive name for the group (used in logs and output)</li>
+<li><code>input_type</code> - Type of input files (currently only <code>"markdown"</code> is supported)</li>
+<li><code>output_dir</code> - Directory path relative to <code>content/</code> where HTML files will be saved</li>
+<li><code>files</code> - List of input files relative to project root</li>
+</ul>
+<h4 id="optional">Optional:</h4>
+<ul>
+<li><code>enabled</code> - Boolean flag to enable/disable the group (default: <code>false</code> if not specified)<ul>
+<li>Set to <code>true</code> to process this group</li>
+<li>Set to <code>false</code> or omit entirely to skip the group</li>
+<li>Useful for temporarily disabling groups without deleting configuration</li>
+</ul>
+</li>
+<li><code>path_transform</code> - How to transform input file paths to output paths (default: <code>"flatten"</code>)<ul>
+<li><code>"flatten"</code> - Use only the filename, ignore directory structure<ul>
+<li>Example: <code>utils/clean/README.md</code> → <code>{output_dir}/README.html</code></li>
+</ul>
+</li>
+<li><code>"preserve_parent"</code> - Keep immediate parent directory from input path<ul>
+<li>Example: <code>utils/clean/README.md</code> → <code>{output_dir}/clean/README.html</code></li>
+<li>Example: <code>utils/README.md</code> → <code>{output_dir}/README.html</code> (no parent)</li>
+</ul>
+</li>
+<li><code>"preserve_all"</code> - Keep full relative directory structure from input<ul>
+<li>Example: <code>utils/clean/README.md</code> → <code>{output_dir}/utils/clean/README.html</code></li>
+</ul>
+</li>
+<li><code>"strip_prefix"</code> - Remove <code>strip_path_prefix</code> then use remaining path<ul>
+<li>Example: <code>utils/README.md</code> → <code>{output_dir}/README.html</code> (with <code>strip_path_prefix = "utils/"</code>)</li>
+<li>Example: <code>utils/clean/README.md</code> → <code>{output_dir}/clean/README.html</code> (with <code>strip_path_prefix = "utils/"</code>)</li>
+</ul>
+</li>
+<li>Useful for organizing output files when multiple input files share the same filename</li>
+</ul>
+</li>
+<li><code>strip_path_prefix</code> - Path prefix to remove when <code>path_transform = "strip_prefix"</code> (default: <code>""</code>)<ul>
+<li>Removes the specified prefix from all file paths before applying directory structure</li>
+<li>Example: <code>strip_path_prefix = "utils/"</code> removes "utils/" from paths</li>
+<li>Only used when <code>path_transform</code> is set to <code>"strip_prefix"</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="example-configuration">Example Configuration</h3>
+<pre><code class="language-toml"># Active documentation group (default flatten behavior)
+[[group]]
+name = "website_setup_docs"
+enabled = true
+input_type = "markdown"
+output_dir = "setup"
+files = [
+    "docs/SETUP_SITE.md",      # → setup/SETUP_SITE.html
+    "docs/DESIGN_RULES.md",    # → setup/DESIGN_RULES.html
+    "README.md",               # → setup/README.html
+]
+
+# Pipeline docs with prefix stripping
+[[group]]
+name = "pipeline_docs"
+enabled = true
+input_type = "markdown"
+output_dir = "pipeline-docs"
+path_transform = "strip_prefix"
+strip_path_prefix = "utils/"
+files = [
+    "utils/README.md",         # → pipeline-docs/README.html
+    "utils/clean/README.md",   # → pipeline-docs/clean/README.html
+    "utils/deploy/README.md",  # → pipeline-docs/deploy/README.html
+]
+
+# Temporarily disabled developer guides
+[[group]]
+name = "developer_guides"
+enabled = false
+input_type = "markdown"
+output_dir = "dev"
+files = [
+    "dev/MODULE_README_STRUCTURE.md",
+]
+
+# Nested API docs with full path preservation
+[[group]]
+name = "api_docs"
+enabled = false
+input_type = "markdown"
+output_dir = "api"
+path_transform = "preserve_all"
+files = [
+    "api/v1/endpoints.md",     # → api/api/v1/endpoints.html
+    "api/v2/endpoints.md",     # → api/api/v2/endpoints.html
+]
+</code></pre>
+<h3 id="configuration-rules">Configuration Rules</h3>
+<ul>
+<li><strong>Paths</strong>: File paths relative to project root</li>
+<li><strong>Path separators</strong>: Use forward slashes <code>/</code> (recommended) or backslashes <code>\\</code> (both work)</li>
+<li><strong>Output directory</strong>: Relative to <code>src/content/</code> (no leading slash)</li>
+<li><strong>Multiple groups</strong>: Add multiple <code>[[group]]</code> sections for organization</li>
+<li><strong>Comments</strong>: Prefix with <code>#</code> (standard TOML syntax)</li>
+</ul>
+<h2 id="invocation-points">Invocation Points</h2>
+<p>The generator is invoked from multiple places in the GAZTank project:</p>
+<h3 id="direct-command-line-usage">1. Direct Command-Line Usage</h3>
+<p>Users can run generate directly via launcher scripts:</p>
+<pre><code class="language-bash"># Windows
+scripts\generate.cmd
+
+# Linux/Mac
+./scripts/generate.sh
+</code></pre>
+<p><strong>Purpose:</strong> Manual regeneration of all configured content</p>
+<p><strong>Location:</strong> <code>scripts/generate.cmd</code> and <code>scripts/generate.sh</code></p>
+<h3 id="build-system-integration">2. Build System Integration</h3>
+<p>The generator is integrated into larger build workflows:</p>
+<pre><code class="language-bash"># Full pipeline build
+scripts\gzbuild.cmd -e dev   # Windows
+./scripts/gzbuild.sh -e dev  # Linux/Mac
+</code></pre>
+<p><strong>Purpose:</strong> Automated content generation during full site builds</p>
+<p><strong>Location:</strong> Called by <code>scripts/gzbuild.*</code></p>
+<h3 id="cicd-pipeline">3. CI/CD Pipeline</h3>
+<p>Continuous integration systems call generate as part of deployment:</p>
+<pre><code class="language-yaml"># Example CI/CD step
+- name: Generate Content
+  run: scripts/generate.cmd
+</code></pre>
+<p><strong>Purpose:</strong> Automated content generation during deployments</p>
+<h3 id="integration-points">Integration Points</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Launcher Scripts</strong></td>
+<td><code>scripts/generate.*</code></td>
+<td>Direct command-line access</td>
+</tr>
+<tr>
+<td><strong>Configuration</strong></td>
+<td><code>config/generate.toml</code></td>
+<td>Defines what gets generated</td>
+</tr>
+<tr>
+<td><strong>MD Converter</strong></td>
+<td><code>utils/generate/md_to_html.py</code></td>
+<td>Handles markdown conversion</td>
+</tr>
+<tr>
+<td><strong>Normaliser</strong></td>
+<td><code>utils/normalise/</code></td>
+<td>Pre-processes markdown structure</td>
+</tr>
+<tr>
+<td><strong>Logging</strong></td>
+<td><code>utils/gzlogging/</code></td>
+<td>Centralized logging infrastructure</td>
+</tr>
+<tr>
+<td><strong>Output Directory</strong></td>
+<td><code>src/content/</code></td>
+<td>Generated HTML destination</td>
+</tr>
+</tbody>
+</table>
+<h2 id="development">Development</h2>
+<p>The module follows standard Python packaging conventions with a modular architecture for extensibility.</p>
+<h3 id="file-locations">File Locations</h3>
+<pre><code>GAZTank/
+├── config/
+│   └── generate.toml                # Configuration file
+│
+├── logs/
+│   └── dev/
+│       └── generate_YYYYMMDD.log    # Daily log files
+│
+├── scripts/
+│   ├── generate.cmd                 # Windows launcher
+│   └── generate.sh                  # Linux/Mac launcher
+│
+├── src/
+│   └── content/                     # Output directory for generated HTML
+│       ├── setup/                   # Example output_dir
+│       └── dev/                     # Another example output_dir
+│
+└── utils/
+    ├── gzlogging/                   # Centralized logging system
+    │
+    ├── normalise/                   # Markdown normaliser (used by md_to_html)
+    │
+    └── generate/                    # This module
+        ├── __init__.py              # Package initialization
+        ├── generator.py             # Main orchestrator
+        ├── md_to_html.py            # Markdown converter
+        └── README.md                # This file
+</code></pre>
+<h3 id="adding-new-input-types">Adding New Input Types</h3>
+<p>To add support for a new input type:</p>
+<ol>
+<li>Create a converter function (e.g., <code>process_rst_group()</code>)</li>
+<li>Add routing logic in <code>process_groups()</code>:<pre><code class="language-python">elif input_type == 'restructuredtext':
+    success = process_rst_group(group, project_root, force, dry_run)
+</code></pre>
+</li>
+<li>Follow the same signature pattern: <code>(group: Dict, project_root: Path, force: bool, dry_run: bool) -&gt; bool</code></li>
+<li>Use the logging context for audit trails</li>
+<li>Return <code>True</code> for success, <code>False</code> for failures</li>
+<li>Support dry_run mode by checking flag before file writes</li>
+</ol>
+<h3 id="design-principles">Design Principles</h3>
+<ul>
+<li><strong>Separation of concerns</strong>: generator.py orchestrates, converters do the work</li>
+<li><strong>Configuration over code</strong>: Add content groups via TOML, not Python code</li>
+<li><strong>Fail gracefully</strong>: Continue processing other files/groups on error</li>
+<li><strong>Log everything</strong>: Comprehensive audit trail for troubleshooting</li>
+<li><strong>Exit codes matter</strong>: Return proper codes for build automation</li>
+<li><strong>Timestamp awareness</strong>: Don't regenerate unless necessary</li>
+<li><strong>Dry-run support</strong>: Preview changes without modifications</li>
+<li><strong>Clean logs</strong>: Operational info only, no formatting in log files</li>
+<li><strong>Rich console</strong>: User-friendly output with emojis and formatting</li>
+</ul>
+<h3 id="code-style">Code Style</h3>
+<p>The module follows GAZTank Python coding standards:</p>
+<ul>
+<li><strong>UTF-8 encoding</strong> with BOM markers in Python files</li>
+<li><strong>Type hints</strong> where applicable (Path objects)</li>
+<li><strong>Docstrings</strong> for all public functions</li>
+<li><strong>Clean logging</strong> - no separators or blank lines in log files</li>
+<li><strong>Rich console</strong> - emojis and formatting for user experience</li>
+<li><strong>Error handling</strong> - try/except with proper logging</li>
+<li><strong>Exit codes</strong> - 0 for success, 1 for failure</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="when-to-run-generate">When to Run Generate</h3>
+<ol>
+<li><p><strong>After updating markdown documentation</strong></p>
+<ul>
+<li>Run generate to update the HTML versions</li>
+<li>Check console output for conversion statistics</li>
+</ul>
+</li>
+<li><p><strong>Before deploying site updates</strong></p>
+<ul>
+<li>Ensure all content is regenerated</li>
+<li>Part of the standard deployment workflow</li>
+</ul>
+</li>
+<li><p><strong>During development</strong></p>
+<ul>
+<li>Run generate to test documentation changes</li>
+<li>Use timestamp checking to speed up iterations</li>
+<li>Use <code>--dry-run</code> to preview changes</li>
+</ul>
+</li>
+</ol>
+<h3 id="working-with-configuration">Working with Configuration</h3>
+<pre><code class="language-toml"># Organize groups logically
+[[group]]
+name = "public_documentation"
+input_type = "markdown"
+output_dir = "docs"
+files = ["docs/PUBLIC_*.md"]  # Note: Wildcards not supported yet
+
+# Keep development docs separate
+[[group]]
+name = "developer_documentation"
+input_type = "markdown"
+output_dir = "dev"
+files = ["dev/*.md"]  # Note: Must list files explicitly
+
+# Use forward slashes (recommended) - works cross-platform
+files = [
+    "docs/SETUP.md",
+    "dev/README.md",
+]
+
+# Backslashes also work (must be escaped in TOML)
+files = [
+    "docs\\SETUP.md",
+    "dev\\README.md",
+]
+</code></pre>
+<h3 id="version-control-best-practices">Version Control Best Practices</h3>
+<ul>
+<li><strong>Commit configuration changes</strong>: Track <code>generate.toml</code> in version control</li>
+<li><strong>Don't commit generated HTML</strong>: Generated files in <code>src/content/</code> can be rebuilt</li>
+<li><strong>.gitignore patterns</strong>: Consider adding <code>src/content/**/*.html</code> if desired</li>
+<li><strong>Review logs</strong>: Check log files when troubleshooting generation issues</li>
+</ul>
+<h3 id="performance-tips">Performance Tips</h3>
+<ul>
+<li><strong>Leverage timestamp checking</strong>: The generator automatically skips up-to-date files</li>
+<li><strong>Use --dry-run first</strong>: Preview changes before committing to regeneration</li>
+<li><strong>Force only when needed</strong>: Use <code>--force</code> sparingly for full rebuilds</li>
+<li><strong>Group logically</strong>: Organize file groups by update frequency</li>
+<li><strong>Monitor statistics</strong>: Watch "converted vs skipped" counts</li>
+<li><strong>Touch source files</strong>: Force regeneration of specific files: <code>(Get-Item README.md).LastWriteTime = Get-Date</code></li>
+</ul>
+<h3 id="workflow-recommendations">Workflow Recommendations</h3>
+<pre><code class="language-bash"># 1. Preview what needs updating
+scripts\generate.cmd --dry-run
+
+# 2. If satisfied, generate for real
+scripts\generate.cmd
+
+# 3. Force regenerate if templates changed
+scripts\generate.cmd --force
+
+# 4. Preview force regeneration first
+scripts\generate.cmd --force --dry-run
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="configuration-file-not-found">Configuration File Not Found</h3>
+<p><strong>Problem:</strong> <code>Configuration file not found: config/generate.toml</code></p>
+<h4 id="solution">Solution:</h4>
+<ul>
+<li>Verify you're running from project root directory</li>
+<li>Check that <code>config/generate.toml</code> exists</li>
+<li>Use absolute path if needed: <code>D:\Projects\www\GAZTank\config\generate.toml</code></li>
+</ul>
+<h3 id="no-groups-found">No Groups Found</h3>
+<p><strong>Problem:</strong> <code>No groups found in configuration</code></p>
+<h4 id="solution-1">Solution:</h4>
+<ul>
+<li>Open <code>config/generate.toml</code> and verify <code>[[group]]</code> sections exist</li>
+<li>Check TOML syntax (use TOML validator if needed)</li>
+<li>Ensure at least one group is uncommented</li>
+</ul>
+<h3 id="missing-input-type-attribute">Missing input_type Attribute</h3>
+<p><strong>Problem:</strong> <code>Group 'name' is missing required 'input_type' attribute</code></p>
+<h4 id="solution-2">Solution:</h4>
+<ul>
+<li>Add <code>input_type = "markdown"</code> to the group definition</li>
+<li>Check for typos: <code>input_type</code> not <code>inputtype</code> or <code>input-type</code></li>
+</ul>
+<h3 id="unsupported-input-type">Unsupported input_type</h3>
+<p><strong>Problem:</strong> <code>Group 'name' has unsupported input_type 'xyz'</code></p>
+<h4 id="solution-3">Solution:</h4>
+<ul>
+<li>Currently only <code>markdown</code> is supported</li>
+<li>Check for typos in <code>input_type</code> value</li>
+<li>For other formats, wait for future enhancements or contribute a converter</li>
+</ul>
+<h3 id="input-file-not-found">Input File Not Found</h3>
+<p><strong>Problem:</strong> <code>Input file not found: path/to/file.md</code></p>
+<h4 id="solution-4">Solution:</h4>
+<ul>
+<li>Verify file path is correct relative to project root</li>
+<li>Check for typos in filename or path</li>
+<li>Use correct path separators: <code>\\</code> for Windows in TOML</li>
+<li>Verify file actually exists: <code>ls path/to/file.md</code> or <code>dir path\to\file.md</code></li>
+</ul>
+<h3 id="all-files-skipped">All Files Skipped</h3>
+<p><strong>Problem:</strong> All files report "Skipped (up-to-date)" but you expected conversions</p>
+<p><strong>Cause:</strong> Output HTML files are newer than source markdown files</p>
+<h4 id="solution-5">Solution:</h4>
+<ul>
+<li>Use <code>--force</code> flag to regenerate all files: <code>scripts\generate.cmd --force</code></li>
+<li>Preview with dry-run first: <code>scripts\generate.cmd --force --dry-run</code></li>
+<li>Touch source files to make them newer: <code>(Get-Item README.md).LastWriteTime = Get-Date</code></li>
+<li>Delete output HTML files to force regeneration</li>
+</ul>
+<h3 id="dry-run-shows-different-results">Dry-Run Shows Different Results</h3>
+<p><strong>Problem:</strong> Dry-run shows files would be converted, but normal run skips them</p>
+<h4 id="diagnosis">Diagnosis:</h4>
+<ul>
+<li>This shouldn't happen - dry-run uses same logic as normal mode</li>
+<li>Check if files were modified between dry-run and normal run</li>
+<li>Review log file for timestamp details</li>
+</ul>
+<h4 id="solution-6">Solution:</h4>
+<ul>
+<li>Run dry-run immediately before normal run</li>
+<li>Use <code>--force</code> if timestamp issues persist</li>
+<li>Check system clock accuracy</li>
+</ul>
+<h3 id="conversion-failures">Conversion Failures</h3>
+<p><strong>Problem:</strong> Some files fail to convert</p>
+<h4 id="diagnosis-1">Diagnosis:</h4>
+<ul>
+<li>Check console output for specific error messages</li>
+<li>Review log file: <code>logs/dev/generate_YYYYMMDD.log</code></li>
+<li>Look for markdown syntax issues in source files</li>
+</ul>
+<h4 id="solution-7">Solution:</h4>
+<ul>
+<li>Fix markdown syntax errors</li>
+<li>Ensure required dependencies installed (mistune, beautifulsoup4)</li>
+<li>Check file permissions (read source, write destination)</li>
+</ul>
+<h3 id="permission-denied">Permission Denied</h3>
+<p><strong>Problem:</strong> <code>PermissionError: [Errno 13] Permission denied</code></p>
+<h4 id="solution-8">Solution:</h4>
+<ul>
+<li>Check write permissions on <code>src/content/</code> directory</li>
+<li>Ensure output files aren't open in another program</li>
+<li>Close any editors viewing generated HTML files</li>
+<li>Run with appropriate permissions (avoid running as admin unless necessary)</li>
+</ul>
+<h3 id="toml-import-error">TOML Import Error</h3>
+<p><strong>Problem:</strong> <code>TOML library not available</code></p>
+<h4 id="solution-for-python-311">Solution for Python 3.11+:</h4>
+<ul>
+<li>Built-in <code>tomllib</code> should work</li>
+<li>Upgrade Python: <code>python --version</code></li>
+</ul>
+<h4 id="solution-for-python-311-1">Solution for Python &lt; 3.11:</h4>
+<ul>
+<li>Install tomli: <code>pip install tomli</code></li>
+<li>Verify installation: <code>python -c "import tomli"</code></li>
+</ul>
+<h3 id="emojis-not-displaying">Emojis Not Displaying</h3>
+<p><strong>Problem:</strong> Console shows squares or question marks instead of emojis</p>
+<h4 id="solution-9">Solution:</h4>
+<ul>
+<li>Launcher scripts set <code>PYTHONIOENCODING=utf-8</code> automatically</li>
+<li>Ensure terminal supports UTF-8 encoding</li>
+<li>On Windows: Use Windows Terminal or PowerShell 7+</li>
+<li>Check terminal font supports emoji glyphs</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<h3 id="completed-features">Completed Features</h3>
+<ul>
+<li>✅ <strong>Force mode</strong>: <code>--force</code> flag to regenerate all files regardless of timestamps (v1.1)</li>
+<li>✅ <strong>Dry-run mode</strong>: <code>--dry-run</code> flag to preview changes without making modifications (v1.1)</li>
+<li>✅ <strong>Command-line help</strong>: <code>--help</code> displays usage information and examples (v1.1)</li>
+<li>✅ <strong>UTF-8 support</strong>: Proper encoding handling in launcher scripts and module (v1.1)</li>
+<li>✅ <strong>Module invocation</strong>: Support for <code>python -m generate</code> pattern (v1.1)</li>
+<li>✅ <strong>Path flexibility</strong>: Support for both forward slashes and backslashes in config (v1.2)</li>
+<li>✅ <strong>Rich console output</strong>: Emojis and visual indicators for better UX (v1.2)</li>
+<li>✅ <strong>Clean logging</strong>: Operational logs without formatting or separators (v1.2)</li>
+<li>✅ <strong>Accurate dry-run</strong>: Correct preview with "[DRY RUN] Would convert" messaging (v1.2)</li>
+</ul>
+<h3 id="planned-features">Planned Features</h3>
+<ul>
+<li><strong>Group selection</strong>: Ability to generate specific groups from command line (e.g., <code>--group=website_setup_docs</code>)</li>
+<li><strong>Wildcard support</strong>: Glob patterns in file lists (e.g., <code>docs/*.md</code>)</li>
+<li><strong>Parallel processing</strong>: Process multiple files concurrently for improved performance</li>
+<li><strong>Custom converters</strong>: Plugin system for user-defined converters</li>
+<li><strong>Watch mode</strong>: Auto-regenerate on file changes during development</li>
+<li><strong>Incremental statistics</strong>: Track generation metrics over time</li>
+<li><strong>Configuration validation</strong>: Pre-flight check of generate.toml structure</li>
+<li><strong>Verbose mode</strong>: <code>--verbose</code> flag for detailed operation logging</li>
+<li><strong>Environment support</strong>: Generate for different environments (dev/staging/prod)</li>
+</ul>
+<h3 id="additional-input-types">Additional Input Types</h3>
+<ul>
+<li><strong>ReStructuredText</strong>: <code>.rst</code> file support</li>
+<li><strong>AsciiDoc</strong>: <code>.adoc</code> file support</li>
+<li><strong>Org-mode</strong>: <code>.org</code> file support</li>
+<li><strong>Jupyter Notebooks</strong>: <code>.ipynb</code> conversion</li>
+<li><strong>Plain text</strong>: <code>.txt</code> with minimal HTML wrapping</li>
+</ul>
+<h3 id="configuration-enhancements">Configuration Enhancements</h3>
+<ul>
+<li><strong>Group-level options</strong>: Override normalization, force regeneration per group</li>
+<li><strong>Template selection</strong>: Choose different HTML templates per group</li>
+<li><strong>Output filename patterns</strong>: Customize output naming convention</li>
+<li><strong>Exclusion patterns</strong>: Skip specific files matching patterns</li>
+<li><strong>Conditional groups</strong>: Enable/disable groups based on environment</li>
+</ul>
+<h3 id="performance-improvements">Performance Improvements</h3>
+<ul>
+<li><strong>Caching</strong>: Cache conversion results with content hashing</li>
+<li><strong>Dependency tracking</strong>: Regenerate when templates/styles change</li>
+<li><strong>Parallel conversion</strong>: Multi-threaded file processing</li>
+<li><strong>Progress indicators</strong>: Real-time progress bars for large batches</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<h3 id="internal-documentation">Internal Documentation</h3>
+<ul>
+<li><strong><a href="md_to_html.py">MD to HTML Converter</a></strong> - Markdown converter implementation</li>
+<li><strong><a href="../normalise/README.md">Markdown Normaliser</a></strong> - Structure normalization (called by md_to_html)</li>
+<li><strong><a href="../gzlogging/README.md">GZLogging</a></strong> - Logging infrastructure</li>
+<li><strong><a href="../../config/generate.toml">Configuration Guide</a></strong> - Example configuration file</li>
+<li><strong><a href="../../docs/DESIGN_RULES.md">Design Rules</a></strong> - Project design principles</li>
+<li><strong><a href="../../dev/MODULE_README_STRUCTURE.md">Module README Structure</a></strong> - README template</li>
+</ul>
+<h3 id="external-resources">External Resources</h3>
+<ul>
+<li><strong>mistune</strong>: <a href="https://github.com/lepture/mistune">https://github.com/lepture/mistune</a> - Markdown parser</li>
+<li><strong>BeautifulSoup</strong>: <a href="https://www.crummy.com/software/BeautifulSoup/">https://www.crummy.com/software/BeautifulSoup/</a> - HTML parser</li>
+<li><strong>TOML Specification</strong>: <a href="https://toml.io/">https://toml.io/</a> - Configuration file format</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 22, 2025</em><br/>
+<em>Generate module version: 1.2</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

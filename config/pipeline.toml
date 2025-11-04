@@ -1,0 +1,33 @@
+# Build Pipeline Configuration
+# ============================
+# Defines environments for development, staging, and production builds.
+#
+# Each environment has:
+# - dir: Directory name under publish/ where build artifacts are stored
+# - httpd_port: Default port for the development server
+# - ftpd_port: Default port for the FTP simulation server
+# - description: Human-readable description of the environment
+#
+# Usage:
+#   scripts\server.cmd -e dev           # Uses httpd_port 7190, serves from publish/dev/
+#   scripts\server.cmd -e staging       # Uses httpd_port 7191, serves from publish/staging/
+#   scripts\server.cmd -e prod -p 7190  # Override httpd_port to 7190, serves from publish/prod/
+#   scripts\gzhost.cmd -e dev           # Uses ftpd_port 2190, FTP server on publish/dev/
+
+[environments.dev]
+dir = "dev"
+httpd_port = 7190
+ftpd_port = 2190
+description = "Development environment with verbose logging and live reload"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+ftpd_port = 2191
+description = "Staging environment for pre-production testing and validation"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+ftpd_port = 2192
+description = "Production-ready build for deployment"

@@ -1,0 +1,45 @@
+# FTP Users Configuration
+# ========================
+# Defines FTP user credentials and permissions for each environment.
+# Used by gzhost module to simulate remote FTP deployment targets.
+#
+# Each environment has:
+# - username: FTP login username
+# - password: FTP login password (plain text, local development only)
+# - permissions: Permission string for pyftpdlib authorizer (e.g., "elradfmwMT")
+#
+# Permission Characters (pyftpdlib):
+#   e = change directory (CWD, CDUP)
+#   l = list files (LIST, NLST, STAT, MLSD, MLST, SIZE)
+#   r = retrieve file from server (RETR)
+#   a = append data to existing file (APPE)
+#   d = delete file or directory (DELE, RMD)
+#   f = rename file or directory (RNFR, RNTO)
+#   m = create directory (MKD)
+#   w = store file to server (STOR, STOU)
+#   M = change file mode/permissions (SITE CHMOD)
+#   T = change file modification time (SITE MFMT)
+#
+# Common Permission Sets:
+#   "elr"        = Read-only access
+#   "elradfmwMT" = Full access (read, write, delete, create)
+#   "elrw"       = Read and write, no delete
+#
+# Usage:
+#   scripts\gzhost.cmd -e dev      # FTP server with dev user credentials
+#   scripts\gzhost.cmd -e staging  # FTP server with staging user credentials
+
+[environments.dev]
+username = "devup"
+password = "devup"
+permissions = "elradfmwMT"
+
+[environments.staging]
+username = "staging_user"
+password = "staging_pass"
+permissions = "elradfmwMT"
+
+[environments.prod]
+username = "prod_user"
+password = "prod_pass"
+permissions = "elr"

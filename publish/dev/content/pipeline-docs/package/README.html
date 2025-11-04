@@ -1,0 +1,355 @@
+<h1>Website Packager</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#package-metadata">Package Metadata</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#exit-codes">Exit Codes</a>
+</li>
+<li>
+<a href="#performance">Performance</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#important-packaging-vs-generation">Important: Packaging vs Generation</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#required">Required</a>
+</li>
+<li>
+<a href="#optional">Optional</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#purpose-1">Purpose</a>
+</li>
+<li>
+<a href="#example">Example</a>
+</li>
+<li>
+<a href="#configuration-error">"Configuration Error"</a>
+</li>
+<li>
+<a href="#minification-libraries-not-installed">"Minification libraries not installed"</a>
+</li>
+<li>
+<a href="#source-directory-not-found">"Source directory not found"</a>
+</li>
+<li>
+<a href="#no-files-copied">No files copied</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Environment-aware packaging system that prepares website files for deployment by synchronizing, minifying, and archiving the specified environment directory.</p>
+<p><strong>Version:</strong> 1.3<br/>
+<strong>Last Updated:</strong> October 23, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#exit-codes">Exit Codes</a></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The Website Packager is a focused packaging tool that prepares environment directories for deployment. It operates on <strong>already-generated content in <code>src/</code></strong> and performs:</p>
+<ul>
+<li><strong>File synchronization</strong> - Copies new/modified files from <code>src/</code> to <code>publish/{env}/</code></li>
+<li><strong>Asset minification</strong> - Optimizes CSS and JavaScript file sizes</li>
+<li><strong>Archive creation</strong> - Creates timestamped backup packages</li>
+<li><strong>Backup management</strong> - Maintains rolling archive retention</li>
+</ul>
+<p><strong>Important:</strong> All generated content (HTML from markdown, sitemaps, etc.) must be in the <code>src/</code> directory tree <strong>before</strong> running the packager. The packager treats <code>src/</code> as the source of truth.</p>
+<p><strong>Note:</strong> For removing orphaned files (files that exist in <code>publish/{env}/</code> but not in <code>src/</code>), use the <code>clean</code> module <strong>before</strong> running the packager.</p>
+<h3 id="important-packaging-vs-generation">Important: Packaging vs Generation</h3>
+<p>The package module <strong>does NOT</strong> perform:</p>
+<ul>
+<li>Content validation (use <code>gzlint</code> module)</li>
+<li>Markdown to HTML conversion (use <code>generate</code> module)</li>
+<li>Sitemap generation (use <code>sitemap</code> module)</li>
+</ul>
+<p>These are separate pipeline steps that must run <strong>before</strong> packaging. The correct build order is:</p>
+<pre><code>setup -&gt; generate -&gt; toc -&gt; sitemap -&gt; clean -&gt; package -&gt; deploy
+</code></pre>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The packager fits into the GAZTank deployment pipeline as the final preparation step before deployment.</p>
+<p>Package Module Workflow:</p>
+<pre><code>Stage 1: COPY &amp; MINIFY
+  - Copy modified/new files from src/ to publish/{env}/
+  - Skip unchanged files (compare modification times)
+  - Minify CSS files in-place (using rcssmin)
+  - Minify JavaScript files in-place (using rjsmin)
+  - Create/update .metainfo/&lt;env&gt;.txt with environment name
+  - Note: Generated content must be in src/ tree before packaging
+
+Stage 2: ARCHIVE
+  - Create timestamped zip file in publish/packages/
+  - Format: package_{environment}_YYYYMMDD_HHMMSS.zip
+  - Keep only 4 most recent packages (cleanup old archives)
+</code></pre>
+<p><strong>Note:</strong> Use the <code>clean</code> module before packaging to remove orphaned files (files in <code>publish/{env}/</code> that don't exist in <code>src/</code>).</p>
+<h2 id="logging">Logging</h2>
+<p>The packager uses the <strong>gzlogging</strong> infrastructure for environment-aware logging.</p>
+<ul>
+<li><strong>Environment:</strong> User-specified via <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>package</code></li>
+<li><strong>Log Location:</strong> <code>logs/{environment}/package_YYYYMMDD.log</code></li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<pre><code class="language-bash"># Using the launcher script (recommended)
+scripts\package.cmd -e dev              # Windows
+./scripts/package.sh -e staging         # Linux/Mac
+
+# With options
+scripts\package.cmd -e dev --force      # Force packaging all files
+scripts\package.cmd -e dev --dry-run    # Preview without changes
+python -m package --help                # Show help
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<pre><code class="language-python">from utils.package.packager import package_site
+
+# Package an environment
+success = package_site(environment='dev', force=False, dry_run=False)
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required">Required</h3>
+<ul>
+<li><strong><code>-e, --environment {dev,staging,prod}</code></strong> - Target environment to package</li>
+</ul>
+<h3 id="optional">Optional</h3>
+<ul>
+<li><strong><code>--force</code></strong> - Force packaging of all files, ignoring timestamps</li>
+<li><strong><code>--dry-run</code></strong> - Preview changes without modifying files</li>
+<li><strong><code>--help</code></strong> - Display usage information</li>
+</ul>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>package/
+├── __init__.py      # Package initialization
+├── __main__.py      # Entry point for python -m package
+├── packager.py      # Core packaging logic
+└── README.md        # This file
+</code></pre>
+<h3 id="key-functions">Key Functions</h3>
+<ul>
+<li><code>package_site()</code> - Main packaging orchestrator</li>
+<li><code>minify_assets()</code> - Minifies CSS and JS files</li>
+<li><code>backup_previous_package()</code> - Creates timestamped backup</li>
+<li><code>cleanup_old_backups()</code> - Removes old packages</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Environment-aware</strong>: Supports dev, staging, and prod environments</li>
+<li><strong>Timestamp-aware</strong>: Only copies files when source is newer</li>
+<li><strong>Force mode</strong>: <code>--force</code> flag to package all files</li>
+<li><strong>Dry-run mode</strong>: <code>--dry-run</code> flag to preview changes</li>
+<li><strong>Asset minification</strong>: Optimizes CSS and JavaScript (rcssmin, rjsmin)</li>
+<li><strong>Package metadata</strong>: Creates <code>.metainfo/&lt;env&gt;.txt</code> with environment name and timestamp</li>
+<li><strong>Backup creation</strong>: Timestamped zip archives</li>
+<li><strong>Backup retention</strong>: Keeps 4 most recent packages</li>
+<li><strong>Exit codes</strong>: 0 for success, 1 for failure</li>
+<li><strong>Integrated logging</strong>: Uses gzlogging infrastructure</li>
+</ul>
+<p><strong>Note:</strong> For orphaned file removal, use the <code>clean</code> module before running <code>package</code>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Environment settings from <code>config/pipeline.toml</code>:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+httpd_port = 7190
+description = "Development environment"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+description = "Staging environment"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+description = "Production environment"
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Always run after content generation</strong> - Packaging requires generated content</li>
+<li><strong>Use dry-run for testing</strong> - Preview changes before committing</li>
+<li><strong>Monitor package sizes</strong> - Large packages may indicate issues</li>
+<li><strong>Leverage timestamp checking</strong> - Automatic skipping of up-to-date files</li>
+<li><strong>Force mode sparingly</strong> - Only when necessary (branch switches, refactoring)</li>
+</ol>
+<h2 id="package-metadata">Package Metadata</h2>
+<p>Every time the package module runs (except in dry-run mode), it creates/updates a metadata file to track when the environment was last packaged:</p>
+<p><strong>Location:</strong> <code>publish/{environment}/.metainfo/{environment}.txt</code></p>
+<p><strong>Content:</strong> The environment name (e.g., <code>dev</code>, <code>staging</code>, <code>prod</code>)</p>
+<p><strong>File Timestamp:</strong> Updated every package run, even when no files are copied</p>
+<h3 id="purpose-1">Purpose</h3>
+<p>The metadata file serves multiple purposes:</p>
+<ol>
+<li><strong>Deployment Verification</strong>: Check if an environment has been packaged</li>
+<li><strong>Last Package Time</strong>: File modification timestamp shows when packaging occurred</li>
+<li><strong>Environment Identification</strong>: File content confirms which environment was packaged</li>
+</ol>
+<h3 id="example">Example</h3>
+<p>After running <code>python -m package -e dev</code>:</p>
+<pre><code>publish/dev/.metainfo/dev.txt
+  Content: dev
+  Modified: 2025-10-23 20:37:12
+</code></pre>
+<p>This metadata is useful for:</p>
+<ul>
+<li>Deployment scripts to verify packaging completion</li>
+<li>Monitoring systems to track deployment pipelines</li>
+<li>Troubleshooting to identify when environments were last updated</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="configuration-error">"Configuration Error"</h3>
+<p>Check that <code>config/pipeline.toml</code> exists and is valid TOML.</p>
+<h3 id="minification-libraries-not-installed">"Minification libraries not installed"</h3>
+<pre><code class="language-bash">pip install rcssmin rjsmin
+</code></pre>
+<p>Note: Optional - files copied without minification if unavailable.</p>
+<h3 id="source-directory-not-found">"Source directory not found"</h3>
+<p>Ensure running from project root and <code>src/</code> directory exists.</p>
+<h3 id="no-files-copied">No files copied</h3>
+<p>Normal if all files up-to-date. Use <code>--force</code> to copy regardless.</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<ul>
+<li><strong>0</strong> - Success</li>
+<li><strong>1</strong> - Failure (configuration error, file errors)</li>
+</ul>
+<h2 id="performance">Performance</h2>
+<table>
+<thead>
+<tr>
+<th>Site Size</th>
+<th>Files</th>
+<th>Build Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small</td>
+<td>~50</td>
+<td>1-2 sec</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>~200</td>
+<td>3-5 sec</td>
+</tr>
+<tr>
+<td>Large</td>
+<td>~500</td>
+<td>8-12 sec</td>
+</tr>
+</tbody>
+</table>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ul>
+<li>[ ] Parallel minification for faster processing</li>
+<li>[ ] Configurable backup retention</li>
+<li>[ ] Additional minification options (source maps)</li>
+<li>[ ] Support for additional asset types (images)</li>
+<li>[ ] Checksum verification</li>
+<li>[ ] Package manifest generation</li>
+<li>[ ] CDN invalidation integration</li>
+<li>[ ] Pre-compression (gzip, brotli)</li>
+<li>[ ] Package comparison tool</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><a href="../generate/README.md">Generate Module</a> - Content generation</li>
+<li><a href="../gzlogging/README.md">GZLogging Module</a> - Logging infrastructure</li>
+<li><a href="../gzconfig/README.md">GZConfig Module</a> - Configuration management</li>
+<li><a href="../../config/pipeline.toml">Pipeline Configuration</a> - Environment definitions</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL v3.0 or later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 23, 2025</em><br/>
+<em>Package module version: 1.2</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

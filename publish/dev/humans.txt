@@ -1,0 +1,12 @@
+/* TEAM */
+Authors: superguru, gazorper
+Site: https://mygaztank.com
+Location: Online
+
+/* SITE */
+Standards: HTML5, CSS3, JavaScript ES6+
+Components: Vanilla JS, CSS Grid, Flexbox
+Software: VS Code, Python
+
+/* THANKS */
+Thanks for visiting GAZ Tank!

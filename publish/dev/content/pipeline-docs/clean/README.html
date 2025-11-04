@@ -1,0 +1,905 @@
+<h1>Environment Cleaner Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#build-pipeline-integration">Build Pipeline Integration</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#output-examples">Output Examples</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#error-handling">Error Handling</a>
+</li>
+<li>
+<a href="#dependencies">Dependencies</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#module-maturity-checklist">Module Maturity Checklist</a>
+</li>
+<li>
+<a href="#changelog">Changelog</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#usage-in-pipeline">Usage in Pipeline:</a>
+</li>
+<li>
+<a href="#core-functionality">Core Functionality</a>
+</li>
+<li>
+<a href="#orphaned-file-detection-logic">Orphaned File Detection Logic</a>
+</li>
+<li>
+<a href="#operating-modes">Operating Modes</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#arguments">Arguments</a>
+</li>
+<li>
+<a href="#python-api">Python API</a>
+</li>
+<li>
+<a href="#identify-only-mode-default">Identify-Only Mode (Default)</a>
+</li>
+<li>
+<a href="#clean-orphaned-mode-with-confirmation">Clean-Orphaned Mode (With Confirmation)</a>
+</li>
+<li>
+<a href="#clean-orphaned-mode-cancelled">Clean-Orphaned Mode (Cancelled)</a>
+</li>
+<li>
+<a href="#clean-orphaned-mode-force-no-confirmation">Clean-Orphaned Mode (Force, No Confirmation)</a>
+</li>
+<li>
+<a href="#dry-run-mode-identify-only">Dry-Run Mode (Identify Only)</a>
+</li>
+<li>
+<a href="#dry-run-mode-clean-orphaned">Dry-Run Mode (Clean-Orphaned)</a>
+</li>
+<li>
+<a href="#no-orphaned-files">No Orphaned Files</a>
+</li>
+<li>
+<a href="#clean-all-mode-dry-run">Clean-All Mode (Dry-Run)</a>
+</li>
+<li>
+<a href="#clean-all-mode-with-confirmation">Clean-All Mode (With Confirmation)</a>
+</li>
+<li>
+<a href="#clean-all-mode-cancelled">Clean-All Mode (Cancelled)</a>
+</li>
+<li>
+<a href="#log-file-location">Log File Location</a>
+</li>
+<li>
+<a href="#log-format">Log Format</a>
+</li>
+<li>
+<a href="#log-rotation">Log Rotation</a>
+</li>
+<li>
+<a href="#common-errors">Common Errors</a>
+</li>
+<li>
+<a href="#warnings">Warnings</a>
+</li>
+<li>
+<a href="#python-modules-standard-library">Python Modules (Standard Library)</a>
+</li>
+<li>
+<a href="#internal-modules">Internal Modules</a>
+</li>
+<li>
+<a href="#configuration-files">Configuration Files</a>
+</li>
+<li>
+<a href="#running-tests">Running Tests</a>
+</li>
+<li>
+<a href="#code-structure">Code Structure</a>
+</li>
+<li>
+<a href="#when-to-use-clean-module">When to Use Clean Module</a>
+</li>
+<li>
+<a href="#when-not-to-use">When NOT to Use</a>
+</li>
+<li>
+<a href="#must-have-all-present">Must Have (✅ All Present)</a>
+</li>
+<li>
+<a href="#should-have-all-present">Should Have (✅ All Present)</a>
+</li>
+<li>
+<a href="#nice-to-have-all-present">Nice to Have (✅ All Present)</a>
+</li>
+<li>
+<a href="#version-12-november-4-2025">Version 1.2 (November 4, 2025)</a>
+</li>
+<li>
+<a href="#version-11-october-24-2025">Version 1.1 (October 24, 2025)</a>
+</li>
+<li>
+<a href="#version-10-october-23-2025">Version 1.0 (October 23, 2025)</a>
+<ul>
+<li>
+<a href="#example">Example:</a>
+</li>
+<li>
+<a href="#identify-only-mode-default-1">1. Identify-Only Mode (Default)</a>
+</li>
+<li>
+<a href="#clean-orphaned-mode">2. Clean-Orphaned Mode</a>
+</li>
+<li>
+<a href="#clean-all-mode">3. Clean-All Mode</a>
+</li>
+<li>
+<a href="#basic-usage-identify-only">Basic Usage (Identify Only):</a>
+</li>
+<li>
+<a href="#clean-orphaned-files">Clean Orphaned Files:</a>
+</li>
+<li>
+<a href="#clean-all-files">Clean All Files:</a>
+</li>
+<li>
+<a href="#direct-python-module">Direct Python Module:</a>
+</li>
+<li>
+<a href="#missing-environment-argument">Missing Environment Argument:</a>
+</li>
+<li>
+<a href="#invalid-environment">Invalid Environment:</a>
+</li>
+<li>
+<a href="#source-directory-missing">Source Directory Missing:</a>
+</li>
+<li>
+<a href="#configuration-file-missing">Configuration File Missing:</a>
+</li>
+<li>
+<a href="#file-removal-failed">File Removal Failed:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p><strong>Version</strong>: 1.2<br/>
+<strong>Last Updated</strong>: November 4, 2025<br/>
+<strong>Maturity Level</strong>: Stable (✅ All criteria met)</p>
+<h2 id="purpose">Purpose</h2>
+<p>The <strong>clean module</strong> identifies and optionally removes orphaned files from environment directories (<code>publish/dev/</code>, <code>publish/staging/</code>, <code>publish/prod/</code>) to keep them synchronized with the source directory (<code>src/</code>).</p>
+<p><strong>Orphaned files</strong> are files that exist in the environment directory but no longer exist in the source directory. These can accumulate when:</p>
+<ul>
+<li>Files are deleted or renamed in <code>src/</code></li>
+<li>Content structure is reorganized</li>
+<li>Files are moved between directories</li>
+</ul>
+<p>The cleaner ensures <code>src/</code> remains the single source of truth by identifying files in environment directories that no longer have corresponding source files, and optionally removing them when requested.</p>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>utils/clean/
+├── __init__.py         # Module exports
+├── __main__.py         # Module entry point
+└── cleaner.py          # Main cleaning logic
+</code></pre>
+<h2 id="build-pipeline-integration">Build Pipeline Integration</h2>
+<p>The clean module is used <strong>before</strong> the package module runs to ensure the environment is clean before syncing and packaging:</p>
+<pre><code>┌────────────────────────────────────────────────────────┐
+│ Generate → Normalize → Clean → Package → Deploy        │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="usage-in-pipeline">Usage in Pipeline:</h3>
+<ol>
+<li><strong>Clean</strong>: Remove orphaned files from environment</li>
+<li><strong>Package</strong>: Sync modified files, minify assets, create archive</li>
+</ol>
+<p>This separation ensures:</p>
+<ul>
+<li>Clean module focuses solely on orphaned file removal</li>
+<li>Package module focuses on file synchronization, minification, and archiving</li>
+<li>No circular dependencies between modules</li>
+</ul>
+<h2 id="features">Features</h2>
+<h3 id="core-functionality">Core Functionality</h3>
+<ul>
+<li><strong>Orphaned File Detection</strong>: Compares environment directory against source directory</li>
+<li><strong>Identify-Only Mode</strong> (default): Lists orphaned files without removing them</li>
+<li><strong>Clean-Orphaned Mode</strong>: Removes orphaned files with confirmation prompt (<code>--clean-orphaned</code>)</li>
+<li><strong>Clean-All Mode</strong>: Remove ALL files from environment directory (<code>--clean-all</code>)</li>
+<li><strong>Safe Removal</strong>: Removes files and their empty parent directories</li>
+<li><strong>Confirmation Prompts</strong>: Asks for confirmation before deletion (unless <code>--force</code> is used)</li>
+<li><strong>Dry-Run Mode</strong>: Preview changes without modifying files (<code>--dry-run</code>)</li>
+<li><strong>Force Mode</strong>: Skip confirmation prompts (<code>--force</code>)</li>
+<li><strong>Environment-Aware</strong>: Works with dev/staging/prod environments</li>
+<li><strong>Structured Logging</strong>: Logs to <code>logs/{environment}/clean_YYYYMMDD.log</code></li>
+<li><strong>Console Output</strong>: Emoji-decorated progress indicators and summaries</li>
+</ul>
+<h3 id="orphaned-file-detection-logic">Orphaned File Detection Logic</h3>
+<p>The cleaner determines orphaned files by:</p>
+<ol>
+<li><strong>Scanning source directory</strong> (<code>src/</code>): Build a set of all file paths relative to src/</li>
+<li><strong>Scanning environment directory</strong> (<code>publish/{environment}/</code>): Check each file's relative path</li>
+<li><strong>Comparing paths</strong>: If a file exists in environment but not in source → orphaned</li>
+<li><strong>Removing orphaned files</strong>: Delete files and clean up empty directories</li>
+</ol>
+<h4 id="example">Example:</h4>
+<pre><code>src/
+├── index.html          ✓ Keep in environment
+├── about.html          ✓ Keep in environment
+└── css/
+    └── style.css       ✓ Keep in environment
+
+publish/dev/
+├── index.html          → Keep (exists in src/)
+├── about.html          → Keep (exists in src/)
+├── old-page.html       → Remove (orphaned)
+└── css/
+    ├── style.css       → Keep (exists in src/)
+    └── old-style.css   → Remove (orphaned)
+</code></pre>
+<p>Result: <code>old-page.html</code> and <code>css/old-style.css</code> are removed from <code>publish/dev/</code></p>
+<h3 id="operating-modes">Operating Modes</h3>
+<p>The clean module has three distinct operating modes:</p>
+<h4 id="identify-only-mode-default-1">1. Identify-Only Mode (Default)</h4>
+<p><strong>Usage</strong>: Run without <code>--clean-orphaned</code> or <code>--clean-all</code> flags</p>
+<p>By default, the module only <strong>identifies</strong> orphaned files without removing them. This is the safest mode for inspection.</p>
+<pre><code class="language-bash">scripts\gzclean.cmd -e dev
+</code></pre>
+<p><strong>Output</strong>:</p>
+<ul>
+<li>Lists orphaned files found</li>
+<li>Shows message: "Use --clean-orphaned to remove these files"</li>
+<li>Does not modify any files</li>
+</ul>
+<p><strong>Use when</strong>:</p>
+<ul>
+<li>You want to see what files are orphaned</li>
+<li>You're inspecting the environment state</li>
+<li>You need to verify before deletion</li>
+</ul>
+<h4 id="clean-orphaned-mode">2. Clean-Orphaned Mode</h4>
+<p><strong>Usage</strong>: Use <code>--clean-orphaned</code> flag</p>
+<p>Removes <strong>only orphaned files</strong> (files that don't exist in <code>src/</code>). Prompts for confirmation before deletion unless <code>--force</code> is used.</p>
+<pre><code class="language-bash"># Preview orphaned file removal
+scripts\gzclean.cmd -e dev --clean-orphaned --dry-run
+
+# Remove with confirmation prompt
+scripts\gzclean.cmd -e dev --clean-orphaned
+# Prompts: "Type 'yes' to confirm deletion:"
+
+# Remove without confirmation (use in automated scripts)
+scripts\gzclean.cmd -e dev --clean-orphaned --force
+</code></pre>
+<p><strong>Safety Features</strong>:</p>
+<ul>
+<li>Shows list of files to be deleted in confirmation prompt</li>
+<li>Requires typing "yes" to proceed (unless <code>--force</code> is used)</li>
+<li>Use <code>--dry-run</code> to preview without modifications</li>
+</ul>
+<p><strong>Use when</strong>:</p>
+<ul>
+<li>You want to remove files that are no longer in <code>src/</code></li>
+<li>You need to clean up after reorganizing content</li>
+<li>Running in automated pipeline with <code>--force</code></li>
+</ul>
+<h4 id="clean-all-mode">3. Clean-All Mode</h4>
+<p><strong>Usage</strong>: Use <code>--clean-all</code> flag</p>
+<p>The "nuclear option" that removes <strong>ALL files</strong> from the environment directory, not just orphaned ones. Prompts for confirmation before deletion unless <code>--force</code> is used.</p>
+<pre><code class="language-bash"># Preview complete removal
+scripts\gzclean.cmd -e dev --clean-all --dry-run
+
+# Remove all with confirmation prompt
+scripts\gzclean.cmd -e dev --clean-all
+# Prompts: "Type 'yes' to confirm deletion:"
+
+# Remove all without confirmation (use with extreme caution!)
+scripts\gzclean.cmd -e dev --clean-all --force
+</code></pre>
+<p><strong>Use when</strong>:</p>
+<ul>
+<li>You want to completely rebuild an environment from scratch</li>
+<li>You need to ensure a clean slate before regenerating content</li>
+<li>You're troubleshooting issues and want to eliminate all cached/stale files</li>
+</ul>
+<p><strong>⚠️ WARNING</strong>: <code>--clean-all --force</code> is destructive and cannot be undone! Always use <code>--dry-run</code> first to preview changes.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The clean module reads environment configuration from <code>config/pipeline.toml</code>:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "publish/dev"
+description = "Development environment"
+port = 3000
+
+[environments.staging]
+dir = "publish/staging"
+description = "Staging environment"
+port = 3001
+
+[environments.prod]
+dir = "publish/prod"
+description = "Production environment"
+port = 3002
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<h4 id="basic-usage-identify-only">Basic Usage (Identify Only):</h4>
+<pre><code class="language-bash"># Identify orphaned files without removing them (Windows)
+scripts\gzclean.cmd -e dev
+
+# Linux/Mac
+./scripts/gzclean.sh -e dev
+</code></pre>
+<h4 id="clean-orphaned-files">Clean Orphaned Files:</h4>
+<pre><code class="language-bash"># Remove orphaned files with confirmation prompt
+scripts\gzclean.cmd -e dev --clean-orphaned
+
+# Remove orphaned files without confirmation
+scripts\gzclean.cmd -e dev --clean-orphaned --force
+
+# Preview orphaned file removal
+scripts\gzclean.cmd -e dev --clean-orphaned --dry-run
+</code></pre>
+<h4 id="clean-all-files">Clean All Files:</h4>
+<pre><code class="language-bash"># Remove ALL files with confirmation prompt
+scripts\gzclean.cmd -e dev --clean-all
+
+# Remove ALL files without confirmation
+scripts\gzclean.cmd -e dev --clean-all --force
+
+# Preview complete removal
+scripts\gzclean.cmd -e dev --clean-all --dry-run
+</code></pre>
+<h4 id="direct-python-module">Direct Python Module:</h4>
+<pre><code class="language-bash"># Identify only (default)
+python -m clean -e dev
+
+# Remove orphaned files
+python -m clean -e dev --clean-orphaned
+
+# Remove orphaned files without confirmation
+python -m clean -e dev --clean-orphaned --force
+
+# Remove all files without confirmation
+python -m clean -e prod --clean-all --force
+</code></pre>
+<h3 id="arguments">Arguments</h3>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-e</code>, <code>--environment</code></td>
+<td>✅ Yes</td>
+<td>Environment to clean: <code>dev</code>, <code>staging</code>, or <code>prod</code></td>
+</tr>
+<tr>
+<td><code>--clean-orphaned</code></td>
+<td>❌ No</td>
+<td>Remove orphaned files from environment. Requires confirmation unless <code>--force</code> is also specified</td>
+</tr>
+<tr>
+<td><code>--clean-all</code></td>
+<td>❌ No</td>
+<td>Remove ALL files from environment (not just orphaned). Requires confirmation unless <code>--force</code> is also specified</td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td>❌ No</td>
+<td>Skip confirmation prompts when using <code>--clean-orphaned</code> or <code>--clean-all</code></td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>❌ No</td>
+<td>Preview changes without modifying files</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>❌ No</td>
+<td>Show help message and examples</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: If neither <code>--clean-orphaned</code> nor <code>--clean-all</code> is specified, the module runs in identify-only mode (lists orphaned files without removing them).</p>
+<h3 id="python-api">Python API</h3>
+<pre><code class="language-python">from utils.clean import clean_site, get_orphaned_files, remove_orphaned_files, remove_all_files
+
+# Identify orphaned files only (no deletion)
+success = clean_site('dev', force=False, dry_run=False, clean_orphaned=False, clean_all=False)
+
+# Remove orphaned files with confirmation
+success = clean_site('dev', force=False, dry_run=False, clean_orphaned=True, clean_all=False)
+
+# Remove orphaned files without confirmation
+success = clean_site('dev', force=True, dry_run=False, clean_orphaned=True, clean_all=False)
+
+# Remove ALL files from environment (with confirmation)
+success = clean_site('dev', force=False, dry_run=False, clean_orphaned=False, clean_all=True)
+
+# Remove ALL files without confirmation
+success = clean_site('dev', force=True, dry_run=False, clean_orphaned=False, clean_all=True)
+
+# Get list of orphaned files
+from pathlib import Path
+src_dir = Path('src')
+env_dir = Path('publish/dev')
+orphaned = get_orphaned_files(src_dir, env_dir)
+
+# Remove orphaned files (with confirmation)
+dirs_removed = remove_orphaned_files(env_dir, orphaned, dry_run=False, force=False)
+
+# Remove orphaned files (without confirmation)
+dirs_removed = remove_orphaned_files(env_dir, orphaned, dry_run=False, force=True)
+
+# Remove all files
+files_removed, dirs_removed = remove_all_files(env_dir, dry_run=False, force=False)
+</code></pre>
+<h2 id="output-examples">Output Examples</h2>
+<h3 id="identify-only-mode-default">Identify-Only Mode (Default)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+
+Identifying orphaned files...
+  ℹ️  Found 3 orphaned file(s)
+    • old-page.html
+    • css/old-style.css
+    • js/deprecated.js
+
+  ℹ️  Use --clean-orphaned to remove these files
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Found: 3 orphaned file(s)
+</code></pre>
+<h3 id="clean-orphaned-mode-with-confirmation">Clean-Orphaned Mode (With Confirmation)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+ℹ️  CLEAN ORPHANED MODE - Will remove orphaned files
+
+Identifying orphaned files...
+
+⚠️  WARNING: This will DELETE 3 orphaned file(s)
+  from: D:\Projects\www\GAZTank\publish\dev
+    • old-page.html
+    • css/old-style.css
+    • js/deprecated.js
+
+  Type 'yes' to confirm deletion: yes
+
+  🗑️  Removing 3 orphaned file(s)...
+  ✓ Removed 3 file(s) and 1 empty directory(ies)
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Removed: 3 orphaned file(s)
+  Removed: 1 directory(ies)
+</code></pre>
+<h3 id="clean-orphaned-mode-cancelled">Clean-Orphaned Mode (Cancelled)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+ℹ️  CLEAN ORPHANED MODE - Will remove orphaned files
+
+Identifying orphaned files...
+
+⚠️  WARNING: This will DELETE 3 orphaned file(s)
+  from: D:\Projects\www\GAZTank\publish\dev
+    • old-page.html
+    • css/old-style.css
+    • js/deprecated.js
+
+  Type 'yes' to confirm deletion: no
+
+  ❌ Operation cancelled
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Removed: 3 orphaned file(s)
+</code></pre>
+<h3 id="clean-orphaned-mode-force-no-confirmation">Clean-Orphaned Mode (Force, No Confirmation)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+ℹ️  CLEAN ORPHANED MODE - Will remove orphaned files
+🔄 FORCE MODE enabled
+
+Identifying orphaned files...
+  🗑️  Removing 3 orphaned file(s)...
+  ✓ Removed 3 file(s) and 1 empty directory(ies)
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Removed: 3 orphaned file(s)
+  Removed: 1 directory(ies)
+</code></pre>
+<h3 id="dry-run-mode-identify-only">Dry-Run Mode (Identify Only)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+⚠️  DRY RUN MODE enabled - No files will be modified
+
+Identifying orphaned files...
+  ℹ️  Found 3 orphaned file(s)
+    • old-page.html
+    • css/old-style.css
+    • js/deprecated.js
+
+  ℹ️  Use --clean-orphaned to remove these files
+
+============================================================
+ℹ️  DRY RUN COMPLETED
+============================================================
+  No files were modified
+  Found: 3 orphaned file(s)
+</code></pre>
+<h3 id="dry-run-mode-clean-orphaned">Dry-Run Mode (Clean-Orphaned)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+ℹ️  CLEAN ORPHANED MODE - Will remove orphaned files
+⚠️  DRY RUN MODE enabled - No files will be modified
+
+Identifying orphaned files...
+  🗑️  [DRY RUN] Would remove 3 orphaned file(s)
+    • old-page.html
+    • css/old-style.css
+    • js/deprecated.js
+
+============================================================
+ℹ️  DRY RUN COMPLETED
+============================================================
+  No files were modified
+  Would remove: 3 orphaned file(s)
+</code></pre>
+<h3 id="no-orphaned-files">No Orphaned Files</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+
+Identifying orphaned files...
+  ✓ No orphaned files found
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Removed: 0 file(s)
+</code></pre>
+<h3 id="clean-all-mode-dry-run">Clean-All Mode (Dry-Run)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+⚠️  CLEAN ALL MODE - Will remove ALL files in environment
+⚠️  DRY RUN MODE enabled - No files will be modified
+
+Removing ALL files from environment directory...
+  🗑️  [DRY RUN] Would remove ALL 42 file(s) and 8 directory(ies)
+    • index.html
+    • about.html
+    • css/style.css
+    • js/main.js
+    • images/logo.png
+    ... and 37 more
+
+============================================================
+ℹ️  DRY RUN COMPLETED
+============================================================
+  No files were modified
+  Would remove: ALL 42 file(s)
+</code></pre>
+<h3 id="clean-all-mode-with-confirmation">Clean-All Mode (With Confirmation)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+⚠️  CLEAN ALL MODE - Will remove ALL files in environment
+
+Removing ALL files from environment directory...
+
+⚠️  WARNING: This will DELETE ALL 42 file(s) and 8 directory(ies)
+  from: D:\Projects\www\GAZTank\publish\dev
+
+  Type 'yes' to confirm deletion: yes
+
+  🗑️  Removing ALL 42 file(s) and 8 directory(ies)...
+  ✓ Removed 42 file(s) and 8 directory(ies)
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Removed: ALL 42 file(s)
+  Removed: 8 directory(ies)
+</code></pre>
+<h3 id="clean-all-mode-cancelled">Clean-All Mode (Cancelled)</h3>
+<pre><code>============================================================
+  GAZ Tank - Environment Cleaner
+============================================================
+⚠️  CLEAN ALL MODE - Will remove ALL files in environment
+
+Removing ALL files from environment directory...
+
+⚠️  WARNING: This will DELETE ALL 42 file(s) and 8 directory(ies)
+  from: D:\Projects\www\GAZTank\publish\dev
+
+  Type 'yes' to confirm deletion: no
+
+  ❌ Operation cancelled
+
+============================================================
+✅ CLEANING COMPLETED
+============================================================
+  Environment directory: D:\Projects\www\GAZTank\publish\dev
+  Removed: ALL 0 file(s)
+  Removed: 0 directory(ies)
+</code></pre>
+<h2 id="logging">Logging</h2>
+<h3 id="log-file-location">Log File Location</h3>
+<p>Logs are written to: <code>logs/{environment}/clean_YYYYMMDD.log</code></p>
+<p>Examples:</p>
+<ul>
+<li><code>logs/dev/clean_20250123.log</code></li>
+<li><code>logs/staging/clean_20250123.log</code></li>
+<li><code>logs/prod/clean_20250123.log</code></li>
+</ul>
+<h3 id="log-format">Log Format</h3>
+<pre><code>2025-01-23 14:30:15 - clean - INF - Environment Cleaner started
+2025-01-23 14:30:15 - clean - INF - Environment: dev
+2025-01-23 14:30:15 - clean - DBG - Pipeline configuration loaded successfully
+2025-01-23 14:30:15 - clean - INF - Target directory: D:\Projects\www\GAZTank\publish\dev
+2025-01-23 14:30:15 - clean - INF - Identifying orphaned files
+2025-01-23 14:30:15 - clean - INF - Removing 3 orphaned files
+2025-01-23 14:30:15 - clean - DBG - Removed: old-page.html
+2025-01-23 14:30:15 - clean - DBG - Removed: css/old-style.css
+2025-01-23 14:30:15 - clean - DBG - Removed: js/deprecated.js
+2025-01-23 14:30:15 - clean - DBG - Removed empty directory: js
+2025-01-23 14:30:15 - clean - INF - Removed 3 files and 1 empty directories
+2025-01-23 14:30:15 - clean - INF - Environment Cleaner completed successfully
+</code></pre>
+<p><strong>Note</strong>: Console output includes emojis (✓, 🗑️, ❌), but log files contain plain text without formatting for better parsing.</p>
+<h3 id="log-rotation">Log Rotation</h3>
+<p>Log files are automatically rotated by the <code>gzlogging</code> module based on <code>config/gzlogrotate.toml</code>. Old logs are moved to <code>logs/00rotated/</code> with timestamps.</p>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="common-errors">Common Errors</h3>
+<h4 id="missing-environment-argument">Missing Environment Argument:</h4>
+<pre><code>usage: __main__.py [-h] -e {dev,staging,prod} [--force] [--dry-run]
+__main__.py: error: the following arguments are required: -e/--environment
+</code></pre>
+<h4 id="invalid-environment">Invalid Environment:</h4>
+<pre><code>❌ Configuration Error: Environment 'invalid' not found in pipeline.toml
+</code></pre>
+<h4 id="source-directory-missing">Source Directory Missing:</h4>
+<pre><code>❌ ERROR: Source directory not found: D:\Projects\www\GAZTank\src
+</code></pre>
+<h4 id="configuration-file-missing">Configuration File Missing:</h4>
+<pre><code>❌ Configuration Error: config/pipeline.toml not found
+</code></pre>
+<h3 id="warnings">Warnings</h3>
+<h4 id="file-removal-failed">File Removal Failed:</h4>
+<pre><code>⚠️  Warning: Could not remove old-page.html: Permission denied
+</code></pre>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="python-modules-standard-library">Python Modules (Standard Library)</h3>
+<ul>
+<li><code>pathlib</code> - File system path handling</li>
+<li><code>argparse</code> - Command-line argument parsing</li>
+<li><code>sys</code> - System operations</li>
+</ul>
+<h3 id="internal-modules">Internal Modules</h3>
+<ul>
+<li><code>utils.gzlogging</code> - Structured logging infrastructure</li>
+<li><code>utils.gzconfig</code> - Configuration management (reads <code>pipeline.toml</code>)</li>
+</ul>
+<h3 id="configuration-files">Configuration Files</h3>
+<ul>
+<li><code>config/pipeline.toml</code> - Environment definitions</li>
+</ul>
+<h2 id="development">Development</h2>
+<h3 id="running-tests">Running Tests</h3>
+<pre><code class="language-bash"># Run with dry-run to test without modifications
+python -m clean -e dev --dry-run
+
+# Test all environments
+python -m clean -e dev --dry-run
+python -m clean -e staging --dry-run
+python -m clean -e prod --dry-run
+</code></pre>
+<h3 id="code-structure">Code Structure</h3>
+<p><strong><code>cleaner.py</code></strong> - Main module containing:</p>
+<ul>
+<li><code>get_orphaned_files(src_dir, env_dir)</code> - Identifies orphaned files</li>
+<li><code>remove_orphaned_files(env_dir, orphaned_files, dry_run)</code> - Removes orphaned files and empty directories</li>
+<li><code>clean_site(environment, force, dry_run)</code> - Main orchestrator function</li>
+<li><code>main()</code> - Command-line entry point with argparse</li>
+</ul>
+<p><strong><code>__init__.py</code></strong> - Module exports:</p>
+<ul>
+<li><code>clean_site</code> - Main public API</li>
+<li><code>get_orphaned_files</code> - Low-level file detection</li>
+<li><code>remove_orphaned_files</code> - Low-level file removal</li>
+</ul>
+<p><strong><code>__main__.py</code></strong> - Module execution entry point</p>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="when-to-use-clean-module">When to Use Clean Module</h3>
+<p>✅ <strong>Check for orphaned files (identify only)</strong>:</p>
+<pre><code class="language-bash">scripts\gzclean.cmd -e dev
+# Lists orphaned files without removing them
+</code></pre>
+<p>✅ <strong>Clean orphaned files before package</strong>:</p>
+<pre><code class="language-bash">scripts\gzclean.cmd -e dev --clean-orphaned
+scripts\package.cmd -e dev
+</code></pre>
+<p>✅ <strong>Use dry-run to preview removal</strong>:</p>
+<pre><code class="language-bash">scripts\gzclean.cmd -e prod --clean-orphaned --dry-run
+# Review output
+scripts\gzclean.cmd -e prod --clean-orphaned
+</code></pre>
+<p>✅ <strong>Clean after major src/ restructuring</strong>:</p>
+<pre><code class="language-bash"># After deleting/moving many files in src/
+scripts\gzclean.cmd -e dev --clean-orphaned
+scripts\gzclean.cmd -e staging --clean-orphaned
+</code></pre>
+<p>✅ <strong>Automated pipeline with force mode</strong>:</p>
+<pre><code class="language-bash"># In automated scripts, skip confirmation
+scripts\gzclean.cmd -e dev --clean-orphaned --force
+</code></pre>
+<h3 id="when-not-to-use">When NOT to Use</h3>
+<p>❌ <strong>Don't run clean on fresh environment</strong>:</p>
+<ul>
+<li>If environment directory doesn't exist, cleaner skips and reports success</li>
+<li>Run package module first to populate environment</li>
+</ul>
+<p>❌ <strong>Don't use --clean-all --force without dry-run preview</strong>:</p>
+<ul>
+<li>Always preview with <code>--dry-run</code> first</li>
+<li><code>--clean-all --force</code> is destructive and cannot be undone</li>
+</ul>
+<p>❌ <strong>Don't use --clean-all in production without backup</strong>:</p>
+<ul>
+<li>Clean-all deletes everything in the environment</li>
+<li>Ensure you can regenerate content or have backups</li>
+</ul>
+<h2 id="module-maturity-checklist">Module Maturity Checklist</h2>
+<p>This module meets all maturity criteria from <code>dev/01PROMPTS_MODULE_MATURITY.md</code>:</p>
+<h3 id="must-have-all-present">Must Have (✅ All Present)</h3>
+<ul>
+<li>✅ Mandatory <code>-e</code> environment argument (dev/staging/prod)</li>
+<li>✅ Uses <code>gzconfig</code> to read <code>config/pipeline.toml</code></li>
+<li>✅ Uses <code>gzlogging</code> for environment-aware logging</li>
+<li>✅ Supports <code>--force</code> flag (for consistency with other modules)</li>
+<li>✅ Supports <code>--dry-run</code> flag for safe preview</li>
+<li>✅ Shell script launchers (<code>gzclean.cmd</code>, <code>gzclean.sh</code>)</li>
+<li>✅ UTF-8 handling in scripts (PYTHONIOENCODING=utf-8)</li>
+<li>✅ PYTHONPATH setup in shell scripts</li>
+</ul>
+<h3 id="should-have-all-present">Should Have (✅ All Present)</h3>
+<ul>
+<li>✅ Structured console output with emojis</li>
+<li>✅ Plain text log output (no emojis in log files)</li>
+<li>✅ Error handling with descriptive messages</li>
+<li>✅ Help text with examples (<code>--help</code>)</li>
+<li>✅ Type hints for all functions</li>
+<li>✅ Docstrings for all functions</li>
+<li>✅ Module-level docstring</li>
+</ul>
+<h3 id="nice-to-have-all-present">Nice to Have (✅ All Present)</h3>
+<ul>
+<li>✅ Comprehensive README.md</li>
+<li>✅ Usage examples in documentation</li>
+<li>✅ Clear separation of concerns</li>
+<li>✅ No circular dependencies</li>
+<li>✅ Follows project conventions</li>
+</ul>
+<h2 id="changelog">Changelog</h2>
+<h3 id="version-12-november-4-2025">Version 1.2 (November 4, 2025)</h3>
+<ul>
+<li><strong>Breaking Change</strong>: Default behavior now only identifies orphaned files without removing them</li>
+<li>Added <code>--clean-orphaned</code> flag to explicitly remove orphaned files</li>
+<li>Added confirmation prompt for clean-orphaned mode (skipped with <code>--force</code>)</li>
+<li>Updated <code>--force</code> to work with both <code>--clean-orphaned</code> and <code>--clean-all</code> confirmations</li>
+<li>Enhanced safety by requiring explicit flag for file removal</li>
+<li>Updated documentation with new operating modes and examples</li>
+</ul>
+<h3 id="version-11-october-24-2025">Version 1.1 (October 24, 2025)</h3>
+<ul>
+<li>Added <code>--clean-all</code> flag to remove ALL files from environment</li>
+<li>Added confirmation prompt for clean-all mode (skipped with <code>--force</code>)</li>
+<li>Updated <code>--force</code> to work with clean-all confirmation</li>
+<li>Added <code>remove_all_files()</code> function to API</li>
+<li>Enhanced documentation with clean-all examples</li>
+</ul>
+<h3 id="version-10-october-23-2025">Version 1.0 (October 23, 2025)</h3>
+<ul>
+<li>Initial release</li>
+<li>Extracted orphaned file cleanup from package module</li>
+<li>Added environment-aware logging</li>
+<li>Implemented dry-run mode</li>
+<li>Created shell launcher scripts</li>
+<li>Added comprehensive documentation</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Potential improvements for future versions:</p>
+<ol>
+<li><strong>Selective Cleaning</strong>: Option to clean specific directories only</li>
+<li><strong>Backup Before Clean</strong>: Optional backup of orphaned files before removal</li>
+<li><strong>Interactive Mode</strong>: Prompt for confirmation before removing each file</li>
+<li><strong>Report Generation</strong>: Create detailed report of removed files</li>
+<li><strong>Whitelist Support</strong>: Configuration to preserve specific patterns from removal</li>
+</ol>
+<h2 id="license">License</h2>
+<p>GPL v3.0</p>
+<h2 id="authors">Authors</h2>
+<ul>
+<li>superguru</li>
+<li>gazorper</li>
+</ul>
+<hr/>
+<p><strong>Note</strong>: This module is part of the GAZ Tank static site generator pipeline. For complete pipeline documentation, see <code>docs/</code> directory.</p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

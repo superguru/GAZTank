@@ -1,0 +1,862 @@
+<h1>Development Web Server</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#customisation">Customisation</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#key-capabilities">Key Capabilities</a>
+</li>
+<li>
+<a href="#design-goals">Design Goals</a>
+</li>
+<li>
+<a href="#pipeline-integration">Pipeline Integration</a>
+</li>
+<li>
+<a href="#typical-workflow">Typical Workflow</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#log-output-format">Log Output Format</a>
+</li>
+<li>
+<a href="#request-logging">Request Logging</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#interactive-control">Interactive Control</a>
+</li>
+<li>
+<a href="#required-arguments">Required Arguments</a>
+</li>
+<li>
+<a href="#optional-arguments">Optional Arguments</a>
+</li>
+<li>
+<a href="#examples">Examples</a>
+</li>
+<li>
+<a href="#argument-behavior">Argument Behavior</a>
+</li>
+<li>
+<a href="#core-components">Core Components</a>
+</li>
+<li>
+<a href="#exports">Exports</a>
+</li>
+<li>
+<a href="#environment-based-configuration">1. Environment-Based Configuration</a>
+</li>
+<li>
+<a href="#no-cache-headers">2. No-Cache Headers</a>
+</li>
+<li>
+<a href="#multi-threaded-request-handling">3. Multi-Threaded Request Handling</a>
+</li>
+<li>
+<a href="#interactive-admin-console">4. Interactive Admin Console</a>
+</li>
+<li>
+<a href="#signal-handling">5. Signal Handling</a>
+</li>
+<li>
+<a href="#address-reuse">6. Address Reuse</a>
+</li>
+<li>
+<a href="#environment-tagged-request-logging">7. Environment-Tagged Request Logging</a>
+</li>
+<li>
+<a href="#pipeline-configuration">Pipeline Configuration</a>
+</li>
+<li>
+<a href="#directory-structure">Directory Structure</a>
+</li>
+<li>
+<a href="#port-configuration">Port Configuration</a>
+</li>
+<li>
+<a href="#shell-scripts-recommended">1. Shell Scripts (Recommended)</a>
+</li>
+<li>
+<a href="#python-module">2. Python Module</a>
+</li>
+<li>
+<a href="#programmatic">3. Programmatic</a>
+</li>
+<li>
+<a href="#direct-script">4. Direct Script</a>
+</li>
+<li>
+<a href="#server-workflow">Server Workflow</a>
+</li>
+<li>
+<a href="#request-flow">Request Flow</a>
+</li>
+<li>
+<a href="#shutdown-flow">Shutdown Flow</a>
+</li>
+<li>
+<a href="#threading-model">Threading Model</a>
+</li>
+<li>
+<a href="#graceful-shutdown-sequence">Graceful Shutdown Sequence</a>
+</li>
+<li>
+<a href="#custom-request-handler">Custom Request Handler</a>
+</li>
+<li>
+<a href="#custom-port-and-directory">Custom Port and Directory</a>
+</li>
+<li>
+<a href="#environment-specific-behavior">Environment-Specific Behavior</a>
+</li>
+<li>
+<a href="#server-wont-start">Server Won't Start</a>
+</li>
+<li>
+<a href="#cant-access-server-from-browser">Can't Access Server from Browser</a>
+</li>
+<li>
+<a href="#changes-not-reflecting">Changes Not Reflecting</a>
+</li>
+<li>
+<a href="#admin-prompt-not-responding">Admin Prompt Not Responding</a>
+</li>
+<li>
+<a href="#environment-directory-not-found">Environment Directory Not Found</a>
+</li>
+<li>
+<a href="#multiple-environments-conflict">Multiple Environments Conflict</a>
+</li>
+<li>
+<a href="#use-environment-specific-ports">1. Use Environment-Specific Ports</a>
+</li>
+<li>
+<a href="#generate-before-serving">2. Generate Before Serving</a>
+</li>
+<li>
+<a href="#use-shell-scripts">3. Use Shell Scripts</a>
+</li>
+<li>
+<a href="#test-on-staging-before-production">4. Test on Staging Before Production</a>
+</li>
+<li>
+<a href="#use-graceful-shutdown">5. Use Graceful Shutdown</a>
+</li>
+<li>
+<a href="#monitor-logs">6. Monitor Logs</a>
+</li>
+<li>
+<a href="#pipeline-context">Pipeline Context</a>
+<ul>
+<li>
+<a href="#example-configuration">Example configuration:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+<li>
+<a href="#solution-5">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Environment-aware HTTP server for local development and testing with no-cache headers, multi-threading, and interactive admin console.</p>
+<p><strong>Version:</strong> 1.1<br/>
+<strong>Last Updated:</strong> October 22, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#customisation">Customisation</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The development server provides a lightweight HTTP server specifically designed for local testing of static websites. It enables rapid development iteration by serving files with no-cache headers, ensuring changes reflect immediately in the browser.</p>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<ol>
+<li><strong>Environment-Based Configuration</strong> - Serves from dev/staging/prod directories</li>
+<li><strong>No-Cache Headers</strong> - Changes reflect immediately (no browser cache issues)</li>
+<li><strong>Multi-Threaded Handling</strong> - Simultaneous connections supported</li>
+<li><strong>Interactive Admin Console</strong> - Type 'quit' to gracefully shutdown</li>
+<li><strong>Port Management</strong> - Configurable ports with command-line override</li>
+<li><strong>Signal Handling</strong> - Clean shutdown via Ctrl+C</li>
+<li><strong>Address Reuse</strong> - Quick restarts without "address already in use" errors</li>
+</ol>
+<h3 id="design-goals">Design Goals</h3>
+<ul>
+<li><strong>Developer-Friendly</strong>: Minimal setup, immediate feedback on changes</li>
+<li><strong>Environment-Aware</strong>: Test dev/staging/prod separately without conflicts</li>
+<li><strong>Robust</strong>: Handles signals, errors, and concurrent requests gracefully</li>
+<li><strong>Observable</strong>: Tagged request logging shows which environment served each request</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The server module operates as a <strong>support tool</strong> within the GAZTank pipeline, providing local testing capabilities between build stages.</p>
+<h3 id="pipeline-integration">Pipeline Integration</h3>
+<pre><code>┌─────────────┐     ┌──────────┐     ┌──────────┐     ┌─────────┐
+│  generate   │ --&gt; │ gzlint   │ --&gt; | gzserve  │ --&gt; │ package │
+│ (Build)     │     │ (Check)  │     │  (Test)  │     │ (Deploy)│
+└─────────────┘     └──────────┘     └──────────┘     └─────────┘
+</code></pre>
+<h3 id="typical-workflow">Typical Workflow</h3>
+<ol>
+<li><strong>Development</strong>: Run <code>gzserve.cmd -e dev</code> after generating content</li>
+<li><strong>Testing</strong>: Run <code>gzserve.cmd -e staging</code> to test pre-deployment content</li>
+<li><strong>Validation</strong>: Run <code>gzserve.cmd -e prod</code> to validate final production build locally</li>
+</ol>
+<p><strong>Note:</strong> The server does NOT modify any files - it only serves them for testing.</p>
+<h2 id="logging">Logging</h2>
+<p>The server uses <code>gzlogging</code> for environment-aware logging with daily rotation.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Log Directory</strong>: <code>logs/{environment}/</code> (e.g., <code>logs/dev/</code>, <code>logs/staging/</code>)</li>
+<li><strong>Log File Pattern</strong>: <code>server_YYYYMMDD.log</code> (daily rotation)</li>
+<li><strong>Log Level</strong>: <code>INFO</code> (configurable via gzlogging)</li>
+</ul>
+<h3 id="log-output-format">Log Output Format</h3>
+<p>Console (with emoji):</p>
+<pre><code>🌐 Starting server on 0.0.0.0:7190 in dev environment
+🌐 Server running at http://localhost:7190
+🌐 Type 'quit' to stop the server
+🌐 [dev] 127.0.0.1 - GET /index.html - 200
+🛑 Shutdown signal received
+🛑 Server stopped
+</code></pre>
+<p>Log file (clean):</p>
+<pre><code>2025-10-22 14:23:45 - INFO - Starting server on 0.0.0.0:7190 in dev environment
+2025-10-22 14:23:45 - INFO - Server running at http://localhost:7190
+2025-10-22 14:23:47 - INFO - [dev] 127.0.0.1 - GET /index.html - 200
+2025-10-22 14:24:15 - INFO - Shutdown signal received
+2025-10-22 14:24:15 - INFO - Server stopped
+</code></pre>
+<h3 id="request-logging">Request Logging</h3>
+<p>Each request is logged with:</p>
+<ul>
+<li>Environment tag (e.g., <code>[dev]</code>)</li>
+<li>Client IP address</li>
+<li>HTTP method and path</li>
+<li>Response status code</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<p>Windows (.cmd):</p>
+<pre><code class="language-powershell"># Development environment (default port from config)
+.\scripts\gzserve.cmd -e dev
+
+# Staging with custom port
+.\scripts\gzserve.cmd -e staging -p 8080
+
+# Production environment
+.\scripts\gzserve.cmd -e prod
+</code></pre>
+<p>Linux/Mac (.sh):</p>
+<pre><code class="language-bash"># Development environment (default port from config)
+./scripts/gzserve.sh -e dev
+
+# Staging with custom port
+./scripts/gzserve.sh -e staging -p 8080
+
+# Production environment
+./scripts/gzserve.sh -e prod
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<p>Python module invocation:</p>
+<pre><code class="language-bash"># Using python -m (recommended)
+python -m gzserve -e dev
+python -m gzserve -e staging -p 8080
+
+# Direct script execution
+python utils/gzserve/server.py -e dev
+</code></pre>
+<p>Programmatic usage:</p>
+<pre><code class="language-python">from gzserve.server import start_server
+
+# Start with defaults from config
+start_server(environment='dev')
+
+# Override port
+start_server(port=8080, environment='staging')
+
+# Production
+start_server(environment='prod')
+</code></pre>
+<h3 id="interactive-control">Interactive Control</h3>
+<p>Once started, the server accepts admin commands via console input:</p>
+<pre><code>Type 'quit' to stop the server
+&gt; quit
+🛑 Shutdown signal received
+🛑 Server stopped
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required-arguments">Required Arguments</h3>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Short</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--environment</code></td>
+<td><code>-e</code></td>
+<td>str</td>
+<td>Target environment: <code>dev</code>, <code>staging</code>, or <code>prod</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Short</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--port</code></td>
+<td><code>-p</code></td>
+<td>int</td>
+<td>(from config)</td>
+<td>Override port number for the server</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<p>Show help:</p>
+<pre><code class="language-bash">python -m gzserve --help
+</code></pre>
+<p>Development environment (port from config):</p>
+<pre><code class="language-bash">python -m gzserve -e dev
+</code></pre>
+<p>Custom port:</p>
+<pre><code class="language-bash">python -m gzserve -e staging -p 9000
+</code></pre>
+<p>Production environment:</p>
+<pre><code class="language-bash">python -m gzserve -e prod
+</code></pre>
+<h3 id="argument-behavior">Argument Behavior</h3>
+<ul>
+<li><strong>Environment Selection (<code>-e</code>)</strong>: <strong>REQUIRED</strong> - determines which directory under <code>publish/</code> to serve</li>
+<li><strong>Port Override (<code>-p</code>)</strong>: Optional - if omitted, port is loaded from <code>config/pipeline.toml</code></li>
+<li><strong>Help Display</strong>: Automatically available via argparse (<code>--help</code> or <code>-h</code>)</li>
+</ul>
+<p><strong>Note:</strong> Unlike other modules, the server does not have <code>--force</code> or <code>--dry-run</code> arguments as it does not modify files.</p>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>gzserve/
+├── __init__.py      # Module initialization and exports
+├── __main__.py      # Entry point for python -m gzserve
+├── server.py        # Core server implementation
+└── README.md        # This file
+</code></pre>
+<h3 id="core-components">Core Components</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Exports</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__init__.py</code></td>
+<td>Package initialization</td>
+<td><code>start_server</code>, <code>NoCacheHTTPRequestHandler</code>, <code>ReusableTCPServer</code>, <code>DEFAULT_PORT</code></td>
+</tr>
+<tr>
+<td><code>__main__.py</code></td>
+<td>Module entry point</td>
+<td>N/A (executable)</td>
+</tr>
+<tr>
+<td><code>server.py</code></td>
+<td>Server implementation</td>
+<td>All server classes and functions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exports">Exports</h3>
+<p>The module exports the following for programmatic use:</p>
+<pre><code class="language-python">from gzserve import (
+    start_server,                # Main function to start server
+    NoCacheHTTPRequestHandler,   # Custom HTTP request handler
+    ReusableTCPServer,           # TCP server with address reuse
+    DEFAULT_PORT                 # Default port constant (7190)
+)
+</code></pre>
+<h2 id="features">Features</h2>
+<h3 id="environment-based-configuration">1. Environment-Based Configuration</h3>
+<p>Each environment (dev/staging/prod) has its own:</p>
+<ul>
+<li>Serve directory under <code>publish/</code></li>
+<li>Default port number</li>
+<li>Log directory</li>
+<li>Configuration in <code>config/pipeline.toml</code></li>
+</ul>
+<h4 id="example-configuration">Example configuration:</h4>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+httpd_port = 7190
+description = "Development environment with verbose logging"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+description = "Staging environment for pre-production testing"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+description = "Production-ready build"
+</code></pre>
+<h3 id="no-cache-headers">2. No-Cache Headers</h3>
+<p>The server adds these headers to every response:</p>
+<pre><code class="language-http">Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+Pragma: no-cache
+Expires: 0
+</code></pre>
+<p><strong>Why?</strong> During development, you want to see changes immediately without browser caching issues.</p>
+<h3 id="multi-threaded-request-handling">3. Multi-Threaded Request Handling</h3>
+<p>Built on Python's <code>socketserver.TCPServer</code> with threading support, allowing multiple simultaneous connections.</p>
+<h3 id="interactive-admin-console">4. Interactive Admin Console</h3>
+<p>The admin console runs in a separate thread and provides:</p>
+<ul>
+<li>Command input while server runs</li>
+<li>Graceful shutdown capability (<code>quit</code> command)</li>
+<li>Help text for available commands</li>
+</ul>
+<h3 id="signal-handling">5. Signal Handling</h3>
+<p>Properly handles:</p>
+<ul>
+<li><code>SIGINT</code> (Ctrl+C)</li>
+<li><code>SIGTERM</code> (kill command)</li>
+<li>Clean shutdown sequence</li>
+<li>Resource cleanup</li>
+</ul>
+<h3 id="address-reuse">6. Address Reuse</h3>
+<p>The <code>ReusableTCPServer</code> class enables <code>SO_REUSEADDR</code>, allowing quick restarts without "address already in use" errors.</p>
+<h3 id="environment-tagged-request-logging">7. Environment-Tagged Request Logging</h3>
+<p>Every HTTP request is logged with the environment name as a prefix:</p>
+<pre><code>🌐 [dev] 127.0.0.1 - GET / - 200
+🌐 [dev] 127.0.0.1 - GET /css/styles.css - 200
+🌐 [staging] 127.0.0.1 - GET /index.html - 200
+</code></pre>
+<p><strong>Why?</strong> When running multiple environments simultaneously on different ports, the environment prefix makes it immediately clear which environment each request belongs to.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="pipeline-configuration">Pipeline Configuration</h3>
+<p>Environments are configured in <code>config/pipeline.toml</code>:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+httpd_port = 7190
+description = "Development environment with verbose logging"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+description = "Staging environment for pre-production testing"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+description = "Production-ready build"
+</code></pre>
+<h3 id="directory-structure">Directory Structure</h3>
+<p>Each environment serves from its own directory under <code>publish/</code>:</p>
+<pre><code>publish/
+├── dev/          # Development environment (port 7190)
+│   ├── index.html
+│   ├── css/
+│   ├── js/
+│   └── content/
+├── staging/      # Staging environment (port 7191)
+│   └── ...
+└── prod/         # Production environment (port 7192)
+    └── ...
+</code></pre>
+<h3 id="port-configuration">Port Configuration</h3>
+<p>The port can be specified in three ways (in order of precedence):</p>
+<ol>
+<li><strong>Command line argument</strong> (<code>-p PORT</code>)</li>
+<li><strong>Environment config</strong> (from <code>config/pipeline.toml</code>)</li>
+<li><strong>Default</strong> (7190 for dev, 7191 for staging, 7192 for prod)</li>
+</ol>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="shell-scripts-recommended">1. Shell Scripts (Recommended)</h3>
+<p>Windows:</p>
+<pre><code class="language-powershell">.\scripts\gzserve.cmd -e dev
+</code></pre>
+<p>Linux/Mac:</p>
+<pre><code class="language-bash">./scripts/gzserve.sh -e dev
+</code></pre>
+<h3 id="python-module">2. Python Module</h3>
+<pre><code class="language-bash">python -m gzserve -e dev
+</code></pre>
+<h3 id="programmatic">3. Programmatic</h3>
+<pre><code class="language-python">from gzserve.server import start_server
+start_server(environment='dev')
+</code></pre>
+<h3 id="direct-script">4. Direct Script</h3>
+<pre><code class="language-bash">python utils/gzserve/server.py -e dev
+</code></pre>
+<h2 id="development">Development</h2>
+<h3 id="server-workflow">Server Workflow</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    SERVER STARTUP                           │
+├─────────────────────────────────────────────────────────────┤
+│  [1/5] Parse Arguments (-e ENVIRONMENT, -p PORT)            │
+│     └─ Environment is REQUIRED                             │
+│     └─ Port is optional (overrides config)                 │
+│                                                             │
+│  [2/5] Load Pipeline Configuration                          │
+│     └─ Read config/pipeline.toml                           │
+│     └─ Validate environment exists in config               │
+│                                                             │
+│  [3/5] Determine Environment Directory                      │
+│     └─ Get 'dir' from environment config                   │
+│     └─ Resolve to publish/{dir}/ path                      │
+│     └─ Verify directory exists                             │
+│                                                             │
+│  [4/5] Determine Port (config or override)                  │
+│     └─ Use -p PORT if specified                            │
+│     └─ Otherwise use port from environment config          │
+│                                                             │
+│  [5/5] Start HTTP Server                                    │
+│     └─ Change to environment directory                     │
+│     └─ Create ReusableTCPServer with NoCacheHandler        │
+│     └─ Register signal handlers (SIGINT, SIGTERM)          │
+│     └─ Start admin command listener thread                 │
+│     └─ Process HTTP requests with no-cache headers         │
+│     └─ Wait for shutdown command or signal                 │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="request-flow">Request Flow</h3>
+<pre><code>Browser Request
+    ↓
+[NoCacheHTTPRequestHandler]
+    ├─ Add Cache-Control: no-store
+    ├─ Add Pragma: no-cache
+    ├─ Add Expires: 0
+    └─ Serve file from publish/{environment}/ directory
+    ↓
+Browser Response (no caching)
+</code></pre>
+<h3 id="shutdown-flow">Shutdown Flow</h3>
+<pre><code>Admin Command ('quit') OR Ctrl+C
+    ↓
+[Signal Handler]
+    ├─ Set shutdown_requested flag
+    ├─ Call httpd.shutdown()
+    └─ Wait for threads to clean up
+    ↓
+Server Stopped
+</code></pre>
+<h3 id="threading-model">Threading Model</h3>
+<ul>
+<li><strong>Main thread:</strong> HTTP server request handling</li>
+<li><strong>Admin thread:</strong> Command input processing</li>
+<li><strong>Request threads:</strong> Individual request processing (via TCPServer)</li>
+</ul>
+<h3 id="graceful-shutdown-sequence">Graceful Shutdown Sequence</h3>
+<ol>
+<li>Admin command or signal received</li>
+<li><code>shutdown_requested</code> flag set to <code>True</code></li>
+<li><code>httpd.shutdown()</code> called</li>
+<li>Server stops accepting new connections</li>
+<li>Existing connections complete</li>
+<li>Admin thread joins (2-second timeout)</li>
+<li>Server resources released</li>
+<li>Exit code returned</li>
+</ol>
+<h2 id="customisation">Customisation</h2>
+<h3 id="custom-request-handler">Custom Request Handler</h3>
+<pre><code class="language-python">from gzserve import NoCacheHTTPRequestHandler, ReusableTCPServer
+
+class MyCustomHandler(NoCacheHTTPRequestHandler):
+    def do_GET(self):
+        # Custom GET handling
+        print(f"Custom handling: {self.path}")
+        super().do_GET()
+
+# Use custom handler
+httpd = ReusableTCPServer(('', 8080), MyCustomHandler)
+httpd.serve_forever()
+</code></pre>
+<h3 id="custom-port-and-directory">Custom Port and Directory</h3>
+<pre><code class="language-python">from gzserve.server import start_server
+from pathlib import Path
+
+# Custom settings
+custom_dir = Path('/path/to/gzserve')
+start_server(port=9000, environment='dev')
+</code></pre>
+<h3 id="environment-specific-behavior">Environment-Specific Behavior</h3>
+<pre><code class="language-python">from gzserve.server import start_server
+
+def custom_startup(environment):
+    if environment == 'dev':
+        print("🧪 Developer mode activated")
+    elif environment == 'staging':
+        print("📦 Staging mode - testing deployment")
+    elif environment == 'prod':
+        print("🚀 Production mode - final validation")
+    
+    start_server(environment=environment)
+
+custom_startup('dev')
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="server-wont-start">Server Won't Start</h3>
+<p><strong>Problem:</strong> Port already in use</p>
+<h4 id="solution">Solution:</h4>
+<pre><code class="language-bash"># Find what's using the port (Windows)
+netstat -ano | findstr :7190
+
+# Find what's using the port (Linux/Mac)
+lsof -i :7190
+
+# Use a different port
+.\scripts\gzserve.cmd -e dev -p 8080
+</code></pre>
+<h3 id="cant-access-server-from-browser">Can't Access Server from Browser</h3>
+<p><strong>Problem:</strong> Firewall blocking connection</p>
+<h4 id="solution-1">Solution:</h4>
+<ul>
+<li>Check Windows Defender Firewall</li>
+<li>Allow Python through firewall</li>
+<li>Try <code>http://127.0.0.1:7190</code> instead of <code>localhost</code></li>
+</ul>
+<h3 id="changes-not-reflecting">Changes Not Reflecting</h3>
+<p><strong>Problem:</strong> Browser still caching despite no-cache headers</p>
+<h4 id="solution-2">Solution:</h4>
+<ul>
+<li>Hard refresh: <code>Ctrl+F5</code> (Windows) or <code>Cmd+Shift+R</code> (Mac)</li>
+<li>Clear browser cache</li>
+<li>Use incognito/private browsing mode</li>
+</ul>
+<h3 id="admin-prompt-not-responding">Admin Prompt Not Responding</h3>
+<p><strong>Problem:</strong> Terminal input blocked</p>
+<h4 id="solution-3">Solution:</h4>
+<ul>
+<li>Press <code>Enter</code> to ensure prompt is active</li>
+<li>Use <code>Ctrl+C</code> for force shutdown</li>
+<li>Close terminal window as last resort</li>
+</ul>
+<h3 id="environment-directory-not-found">Environment Directory Not Found</h3>
+<p><strong>Problem:</strong> <code>publish/{environment}/</code> doesn't exist</p>
+<h4 id="solution-4">Solution:</h4>
+<pre><code class="language-bash"># Generate content first
+.\scripts\generate.cmd -e dev
+
+# Then start server
+.\scripts\server.cmd -e dev
+</code></pre>
+<h3 id="multiple-environments-conflict">Multiple Environments Conflict</h3>
+<p><strong>Problem:</strong> Running same environment on different ports</p>
+<h4 id="solution-5">Solution:</h4>
+<ul>
+<li>Each environment should use a unique port</li>
+<li>Check <code>config/pipeline.toml</code> for port assignments</li>
+<li>Stop existing server before starting new one</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="use-environment-specific-ports">1. Use Environment-Specific Ports</h3>
+<p>Keep environments on different ports to test simultaneously:</p>
+<ul>
+<li>Dev: 7190</li>
+<li>Staging: 7191</li>
+<li>Prod: 7192</li>
+</ul>
+<h3 id="generate-before-serving">2. Generate Before Serving</h3>
+<p>Always generate content before starting the server:</p>
+<pre><code class="language-bash">.\scripts\generate.cmd -e dev
+.\scripts\gzserve.cmd -e dev
+</code></pre>
+<h3 id="use-shell-scripts">3. Use Shell Scripts</h3>
+<p>Prefer launcher scripts over direct Python invocation:</p>
+<pre><code class="language-bash"># Good
+.\scripts\gzserve.cmd -e dev
+
+# Also works, but less convenient
+python -m gzserve -e dev
+</code></pre>
+<h3 id="test-on-staging-before-production">4. Test on Staging Before Production</h3>
+<pre><code class="language-bash"># 1. Generate staging
+.\scripts\generate.cmd -e staging
+
+# 2. Test on staging
+.\scripts\gzserve.cmd -e staging
+
+# 3. If OK, generate production
+.\scripts\generate.cmd -e prod
+
+# 4. Validate production build
+.\scripts\gzserve.cmd -e prod
+</code></pre>
+<h3 id="use-graceful-shutdown">5. Use Graceful Shutdown</h3>
+<p>Type <code>quit</code> instead of Ctrl+C for clean shutdown:</p>
+<pre><code>admin&gt; quit
+🛑 Shutdown signal received
+🛑 Server stopped
+</code></pre>
+<h3 id="monitor-logs">6. Monitor Logs</h3>
+<p>Check environment-specific logs for issues:</p>
+<pre><code>logs/
+├── dev/server_20251022.log
+├── staging/server_20251022.log
+└── prod/server_20251022.log
+</code></pre>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ul>
+<li>[ ] Add <code>--verbose</code> / <code>-v</code> flag for detailed request logging</li>
+<li>[ ] Add <code>--quiet</code> / <code>-q</code> flag to suppress console output</li>
+<li>[ ] Add HTTPS support for testing SSL configurations</li>
+<li>[ ] Add WebSocket support for real-time testing</li>
+<li>[ ] Add auto-reload on file changes (watch mode)</li>
+<li>[ ] Add custom MIME type configuration</li>
+<li>[ ] Add request/response header inspection mode</li>
+<li>[ ] Add bandwidth throttling for performance testing</li>
+<li>[ ] Add authentication support for protected environments</li>
+<li>[ ] Add CORS header configuration</li>
+<li>[ ] Add request logging to separate file (separate from gzlogging)</li>
+<li>[ ] Add browser auto-launch option (<code>--open</code> flag)</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../gzlogging/README.md">gzlogging</a></strong> - Logging infrastructure used by this module</li>
+<li><strong><a href="../generate/README.md">generate</a></strong> - Content generation (runs before serving)</li>
+<li><strong><a href="../package/README.md">package</a></strong> - Build system with minification (uses server for testing)</li>
+<li><strong><a href="../deploy/README.md">deploy</a></strong> - Deployment to production (after local testing)</li>
+<li><strong><a href="../FLOW_PIPELINE.md">FLOW_PIPELINE.md</a></strong> - Complete pipeline documentation</li>
+<li><strong><a href="../00MODULE_MATURITY.md">00MODULE_MATURITY.md</a></strong> - Module maturity tracking</li>
+<li><strong><a href="../../dev/MODULE_README_STRUCTURE.md">MODULE_README_STRUCTURE.md</a></strong> - README template structure</li>
+</ul>
+<h3 id="pipeline-context">Pipeline Context</h3>
+<pre><code>develop → generate → gzlint → [gzserve] → package → deploy
+                                   ↑
+                             (testing tool)
+</code></pre>
+<h2 id="license">License</h2>
+<p>GPL v3.0 or later</p>
+<h2 id="authors">Authors</h2>
+<ul>
+<li>superguru</li>
+<li>gazorper</li>
+</ul>
+<hr/>
+<p><strong>Development Web Server v1.1</strong> | <strong>Last Updated:</strong> October 22, 2025</p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

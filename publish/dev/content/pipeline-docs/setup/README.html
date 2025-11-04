@@ -1,0 +1,1104 @@
+<h1>Site Setup Tool</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#customisation">Customisation</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#key-capabilities">Key Capabilities</a>
+</li>
+<li>
+<a href="#design-goals">Design Goals</a>
+</li>
+<li>
+<a href="#pipeline-integration">Pipeline Integration</a>
+</li>
+<li>
+<a href="#typical-workflow">Typical Workflow</a>
+</li>
+<li>
+<a href="#output-modes">Output Modes</a>
+</li>
+<li>
+<a href="#console-output-example">Console Output Example</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#required-arguments">Required Arguments</a>
+</li>
+<li>
+<a href="#optional-arguments">Optional Arguments</a>
+</li>
+<li>
+<a href="#argument-behavior">Argument Behavior</a>
+</li>
+<li>
+<a href="#examples">Examples</a>
+</li>
+<li>
+<a href="#parameter-combinations">Parameter Combinations</a>
+</li>
+<li>
+<a href="#core-components">Core Components</a>
+</li>
+<li>
+<a href="#exports">Exports</a>
+</li>
+<li>
+<a href="#configuration-application">1. Configuration Application</a>
+</li>
+<li>
+<a href="#configuration-management">2. Configuration Management</a>
+</li>
+<li>
+<a href="#file-tracking-and-copying">3. File Tracking and Copying</a>
+</li>
+<li>
+<a href="#site-configuration">Site Configuration</a>
+</li>
+<li>
+<a href="#environment-configuration">Environment Configuration</a>
+</li>
+<li>
+<a href="#directory-structure">Directory Structure</a>
+</li>
+<li>
+<a href="#shell-scripts-recommended">1. Shell Scripts (Recommended)</a>
+</li>
+<li>
+<a href="#python-module">2. Python Module</a>
+</li>
+<li>
+<a href="#programmatic">3. Programmatic</a>
+</li>
+<li>
+<a href="#build-automation">4. Build Automation</a>
+</li>
+<li>
+<a href="#setup-workflow">Setup Workflow</a>
+</li>
+<li>
+<a href="#configuration-application-flow">Configuration Application Flow</a>
+</li>
+<li>
+<a href="#module-architecture">Module Architecture</a>
+</li>
+<li>
+<a href="#custom-validators">Custom Validators</a>
+</li>
+<li>
+<a href="#custom-file-generators">Custom File Generators</a>
+</li>
+<li>
+<a href="#extend-backup-system">Extend Backup System</a>
+</li>
+<li>
+<a href="#config-file-not-found">Config File Not Found</a>
+</li>
+<li>
+<a href="#config-file-corrupted">Config File Corrupted</a>
+</li>
+<li>
+<a href="#files-not-copying-to-environment">Files Not Copying to Environment</a>
+</li>
+<li>
+<a href="#backups-not-created">Backups Not Created</a>
+</li>
+<li>
+<a href="#import-errors-after-update">Import Errors After Update</a>
+</li>
+<li>
+<a href="#edit-sitetoml-first">1. Edit site.toml First</a>
+</li>
+<li>
+<a href="#use-environments-appropriately">2. Use Environments Appropriately</a>
+</li>
+<li>
+<a href="#backup-before-manual-changes">3. Backup Before Manual Changes</a>
+</li>
+<li>
+<a href="#use-force-mode-after-manual-edits">4. Use Force Mode After Manual Edits</a>
+</li>
+<li>
+<a href="#verify-configuration-format">5. Verify Configuration Format</a>
+</li>
+<li>
+<a href="#test-after-configuration">6. Test After Configuration</a>
+</li>
+<li>
+<a href="#keep-backups-organized">7. Keep Backups Organized</a>
+</li>
+<li>
+<a href="#clean-environment-when-needed">8. Clean Environment When Needed</a>
+</li>
+<li>
+<a href="#document-configuration-changes">9. Document Configuration Changes</a>
+</li>
+<li>
+<a href="#use-version-control">10. Use Version Control</a>
+</li>
+<li>
+<a href="#pipeline-context">Pipeline Context</a>
+<ul>
+<li>
+<a href="#default-mode">Default Mode:</a>
+</li>
+<li>
+<a href="#force-mode-force">Force Mode (--force):</a>
+</li>
+<li>
+<a href="#using-launcher-scripts-recommended">Using Launcher Scripts (Recommended):</a>
+</li>
+<li>
+<a href="#python-module-invocation">Python module invocation:</a>
+</li>
+<li>
+<a href="#programmatic-usage">Programmatic usage:</a>
+</li>
+<li>
+<a href="#environment-e">Environment (-e):</a>
+</li>
+<li>
+<a href="#force-force">Force (--force):</a>
+</li>
+<li>
+<a href="#dry-run-dry-run">Dry-run (--dry-run):</a>
+</li>
+<li>
+<a href="#valid">Valid:</a>
+</li>
+<li>
+<a href="#css-generation-srccssvariablescss">CSS Generation (src/css/variables.css):</a>
+</li>
+<li>
+<a href="#domain-updates">Domain Updates:</a>
+</li>
+<li>
+<a href="#site-branding">Site Branding:</a>
+</li>
+<li>
+<a href="#image-references">Image References:</a>
+</li>
+<li>
+<a href="#syntax-highlighting">Syntax Highlighting:</a>
+</li>
+<li>
+<a href="#stylesheet-integration">Stylesheet Integration:</a>
+</li>
+<li>
+<a href="#toml-preservation">TOML Preservation:</a>
+</li>
+<li>
+<a href="#backup-system">Backup System:</a>
+</li>
+<li>
+<a href="#local-backups">Local Backups:</a>
+</li>
+<li>
+<a href="#modification-tracking">Modification Tracking:</a>
+</li>
+<li>
+<a href="#environment-copying">Environment Copying:</a>
+</li>
+<li>
+<a href="#manifest-generation">Manifest Generation:</a>
+</li>
+<li>
+<a href="#example">Example:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1-restore-from-local-backup">Solution 1 - Restore from local backup:</a>
+</li>
+<li>
+<a href="#solution-2-restore-from-zip-backup">Solution 2 - Restore from ZIP backup:</a>
+</li>
+<li>
+<a href="#solution-3-start-fresh">Solution 3 - Start fresh:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Configuration tool for applying site.toml settings to project files. Reads configuration from <code>config/site.toml</code> and applies it to CSS, HTML, and JavaScript files without modifying the TOML file itself.</p>
+<p><strong>Version:</strong> 1.2<br/>
+<strong>Last Updated:</strong> October 28, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a><ul>
+<li><a href="#setup-workflow">Setup Workflow</a></li>
+<li><a href="#interactive-wizard-flow">Interactive Wizard Flow</a></li>
+</ul>
+</li>
+<li><a href="#customisation">Customisation</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The Setup Module applies configuration from <code>config/site.toml</code> to your project files. It reads the TOML configuration and updates CSS, HTML, and JavaScript files accordingly. The module does not modify <code>site.toml</code> itself - you must edit that file manually or with a text editor.</p>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<ol>
+<li><strong>CSS Generation</strong> - Creates <code>src/css/variables.css</code> from theme colors</li>
+<li><strong>Site Branding</strong> - Updates site name, tagline, and description in HTML/JS files</li>
+<li><strong>Domain References</strong> - Updates domain URLs across project files</li>
+<li><strong>Image References</strong> - Updates logo and favicon paths in HTML</li>
+<li><strong>Feature Toggles</strong> - Enables/disables syntax highlighting based on config</li>
+<li><strong>File Tracking</strong> - Copies modified files to environment directory</li>
+<li><strong>Backup Management</strong> - Creates timestamped backups with manifests</li>
+</ol>
+<h3 id="design-goals">Design Goals</h3>
+<ul>
+<li><strong>Read-Only Config</strong>: Never modifies <code>config/site.toml</code></li>
+<li><strong>Timestamp-Aware</strong>: Only updates files when needed (unless <code>--force</code>)</li>
+<li><strong>Environment-Aware</strong>: Separate backups and file tracking per environment</li>
+<li><strong>Safe</strong>: Creates backups before making changes</li>
+<li><strong>Auditable</strong>: Detailed manifests of all file operations</li>
+<li><strong>Modular</strong>: 8 focused modules for maintainability</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The setup tool runs as a <strong>configuration application step</strong> in the GAZTank pipeline, applying site.toml settings to project files before content generation.</p>
+<h3 id="pipeline-integration">Pipeline Integration</h3>
+<pre><code>┌─────────┐     ┌──────────┐     ┌─────────┐     ┌─────────┐
+│  setup  │ --&gt; │ generate │ --&gt; │ gzlint  │ --&gt; │ package │
+│ (Apply) │     │ (Build)  │     │ (Check) │     │ (Deploy)│
+└─────────┘     └──────────┘     └─────────┘     └─────────┘
+</code></pre>
+<h3 id="typical-workflow">Typical Workflow</h3>
+<ol>
+<li><strong>Edit Config</strong>: Manually edit <code>config/site.toml</code> with desired settings</li>
+<li><strong>Apply Settings</strong>: Run <code>setup -e dev</code> to apply config to project files</li>
+<li><strong>Force Update</strong>: Use <code>--force</code> to update all files regardless of timestamps</li>
+<li><strong>Environment Deploy</strong>: Use the separate <code>clean</code> module to reset environment directory</li>
+</ol>
+<p><strong>Note:</strong> Setup reads from <code>site.toml</code> and applies settings to source files, then copies modified files to the environment directory (<code>publish/&lt;environment&gt;/</code>).</p>
+<h2 id="logging">Logging</h2>
+<p>The setup module uses <strong>console output with rich formatting</strong> for user feedback, not traditional file logging.</p>
+<h3 id="output-modes">Output Modes</h3>
+<h4 id="default-mode">Default Mode:</h4>
+<ul>
+<li>Color-coded sections and status messages</li>
+<li>Emojis for visual feedback (✓ ℹ ⚠ ✗)</li>
+<li>File operation progress</li>
+<li>Backup confirmations</li>
+<li>Copy statistics</li>
+</ul>
+<h4 id="force-mode-force">Force Mode (<code>--force</code>):</h4>
+<ul>
+<li>Streamlined output for automation</li>
+<li>Updates all files regardless of timestamps</li>
+<li>File operation summaries</li>
+<li>Manifest generation</li>
+</ul>
+<h3 id="console-output-example">Console Output Example</h3>
+<pre><code>============================================================
+SITE SETUP TOOL
+============================================================
+Environment: dev
+
+Reading configuration from config/site.toml...
+
+Applying Configuration to Project Files
+---------------------------------------
+ℹ Backed up config to: publish\backups\config_dev_202510281314.zip
+✓ CSS variables generated: src\css\variables.css
+ℹ Updating domain references in all files...
+✓ Updated branding: src\index.html
+✓ Setup completed successfully!
+</code></pre>
+<p><strong>Design Decision:</strong> Setup provides immediate console feedback for file operations. The generated manifest provides audit trails within backup archives.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<h4 id="using-launcher-scripts-recommended">Using Launcher Scripts (Recommended):</h4>
+<p>Windows:</p>
+<pre><code class="language-cmd">.\scripts\setup_site.cmd -e dev                # Apply config (skip up-to-date files)
+.\scripts\setup_site.cmd -e dev --force        # Update all files
+.\scripts\setup_site.cmd -e staging            # Staging environment
+</code></pre>
+<p>Linux/Mac:</p>
+<pre><code class="language-bash">./scripts/setup_site.sh -e dev                 # Apply config (skip up-to-date files)
+./scripts/setup_site.sh -e dev --force         # Update all files
+./scripts/setup_site.sh -e staging             # Staging environment
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<h4 id="python-module-invocation">Python module invocation:</h4>
+<pre><code class="language-bash"># Using python -m (from project root)
+python -m setup -e dev
+python -m setup -e production --force
+
+# Direct script (from project root)
+python utils/setup/setup.py -e dev
+</code></pre>
+<h4 id="programmatic-usage">Programmatic usage:</h4>
+<pre><code class="language-python"># Import for automation
+from setup import config_io, file_generators
+
+# Load existing config
+config = config_io.load_existing_config()
+
+# Modify config dictionary (not saved to file)
+config['site_name'] = 'New Site Name'
+config['header_text_color'] = '#FFFFFF'
+
+# Regenerate CSS variables from modified config
+file_generators.generate_css_variables(config)
+
+# Note: To persist changes, manually edit config/site.toml
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required-arguments">Required Arguments</h3>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Short</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--environment</code></td>
+<td><code>-e</code></td>
+<td>str</td>
+<td>Target environment: <code>dev</code>, <code>staging</code>, or <code>prod</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--force</code></td>
+<td>flag</td>
+<td>False</td>
+<td>Update all files regardless of timestamps</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>flag</td>
+<td>False</td>
+<td>Ignored (accepted for compatibility with other modules)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="argument-behavior">Argument Behavior</h3>
+<h4 id="environment-e">Environment (<code>-e</code>):</h4>
+<ul>
+<li><strong>REQUIRED</strong> for all operations</li>
+<li>Determines backup file naming: <code>config_&lt;environment&gt;_YYYYMMDDHHMM.zip</code></li>
+<li>Specifies target directory: <code>publish/&lt;environment&gt;/</code></li>
+<li>Maintains separate backup history per environment</li>
+</ul>
+<h4 id="force-force">Force (<code>--force</code>):</h4>
+<ul>
+<li>Updates all files regardless of timestamps</li>
+<li>Copies all files to environment directory</li>
+<li>Useful for ensuring consistency or after manual config changes</li>
+</ul>
+<h4 id="dry-run-dry-run">Dry-run (<code>--dry-run</code>):</h4>
+<ul>
+<li>Preview operations without making changes</li>
+<li>Not yet fully implemented</li>
+<li>Accepted for compatibility with build pipeline</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<p>Show help:</p>
+<pre><code class="language-bash">python -m setup --help
+</code></pre>
+<p>Apply configuration (skip up-to-date files):</p>
+<pre><code class="language-bash">python -m setup -e dev
+</code></pre>
+<p>Force update all files:</p>
+<pre><code class="language-bash">python -m setup -e dev --force
+</code></pre>
+<p>Preview without changes (not fully implemented):</p>
+<pre><code class="language-bash">python -m setup -e dev --dry-run
+</code></pre>
+<h3 id="parameter-combinations">Parameter Combinations</h3>
+<h4 id="valid">Valid:</h4>
+<ul>
+<li><code>-e dev</code> (apply config, skip up-to-date files)</li>
+<li><code>-e dev --force</code> (update all files)</li>
+<li><code>-e dev --dry-run</code> (preview mode - not fully implemented)</li>
+</ul>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>setup/
+├── __init__.py           # Package initialization and exports
+├── __main__.py           # Entry point for python -m setup
+├── setup.py              # Main entry point (orchestration)
+├── file_tracker.py       # Track and copy modified files to environment
+├── ui_helpers.py         # Terminal colors and printing utilities
+├── validators.py         # Input validation (colors, etc.)
+├── backup_manager.py     # File backup and cleanup
+├── config_io.py          # TOML config loading and saving
+├── user_interaction.py   # Interactive prompts and wizard
+├── file_generators.py    # CSS, HTML, and file updates
+└── README.md             # This file
+</code></pre>
+<h3 id="core-components">Core Components</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Lines</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setup.py</code></td>
+<td>~150</td>
+<td>Main orchestration and argument parsing</td>
+</tr>
+<tr>
+<td><code>user_interaction.py</code></td>
+<td>~400</td>
+<td>Validators and prompts (legacy - minimal use)</td>
+</tr>
+<tr>
+<td><code>config_io.py</code></td>
+<td>~440</td>
+<td>TOML I/O operations (preserves comments)</td>
+</tr>
+<tr>
+<td><code>file_generators.py</code></td>
+<td>~1,220</td>
+<td>File generation and updates (CSS, HTML)</td>
+</tr>
+<tr>
+<td><code>file_tracker.py</code></td>
+<td>~837</td>
+<td>File tracking, copying, manifest generation</td>
+</tr>
+<tr>
+<td><code>ui_helpers.py</code></td>
+<td>~120</td>
+<td>Terminal UI utilities (colors, formatting)</td>
+</tr>
+<tr>
+<td><code>backup_manager.py</code></td>
+<td>~125</td>
+<td>Backup creation and cleanup</td>
+</tr>
+<tr>
+<td><code>validators.py</code></td>
+<td>~65</td>
+<td>Input validation (hex colors, domains)</td>
+</tr>
+<tr>
+<td><code>__init__.py</code></td>
+<td>~75</td>
+<td>Package exports</td>
+</tr>
+<tr>
+<td><code>__main__.py</code></td>
+<td>~16</td>
+<td>Module entry point</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~3,498</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exports">Exports</h3>
+<p>The module exports the following for programmatic use:</p>
+<pre><code class="language-python">from setup import (
+    # UI Helpers
+    Colors, print_header, print_section, print_success,
+    print_error, print_warning, print_info,
+    
+    # Validators
+    get_color, hex_to_rgba,
+    
+    # Backup Manager
+    create_backup, cleanup_old_backups,
+    
+    # Config I/O
+    load_existing_config, is_first_time_setup,
+    update_config_file, backup_all_config_files,
+    
+    # User Interaction
+    get_input, get_yes_no, interactive_setup,
+    
+    # File Generators
+    generate_css_variables, update_domain_references,
+    update_image_references, update_stylesheet_integration,
+    update_site_branding,
+    
+    # File Tracker
+    track_modified_file, get_modified_files,
+    clear_tracked_files, copy_modified_files_to_environment,
+)
+</code></pre>
+<h2 id="features">Features</h2>
+<h3 id="configuration-application">1. Configuration Application</h3>
+<p>Reads <code>config/site.toml</code> and applies settings to project files:</p>
+<h4 id="css-generation-srccssvariablescss">CSS Generation (src/css/variables.css):</h4>
+<ul>
+<li>Auto-generated from theme colors</li>
+<li>Includes all color definitions</li>
+<li>RGB + Alpha variations calculated automatically</li>
+<li>Timestamp and regeneration instructions in header</li>
+</ul>
+<h4 id="domain-updates">Domain Updates:</h4>
+<ul>
+<li><code>src/index.html</code>: canonical, og:url, meta tags</li>
+<li><code>src/robots.txt</code>: domain references</li>
+<li><code>src/humans.txt</code>: domain references</li>
+<li>Documentation files: links and examples</li>
+</ul>
+<h4 id="site-branding">Site Branding:</h4>
+<ul>
+<li>Site name in <code>README.md</code>, <code>index.html</code>, <code>humans.txt</code></li>
+<li>Consistent branding across all files</li>
+<li>Automated updates prevent inconsistencies</li>
+</ul>
+<h4 id="image-references">Image References:</h4>
+<ul>
+<li>Logo and favicon paths in HTML</li>
+<li><code>srcset</code> attributes for responsive images</li>
+<li>Logo alt text for accessibility</li>
+</ul>
+<h4 id="syntax-highlighting">Syntax Highlighting:</h4>
+<ul>
+<li>Adds/removes Prism.js references based on config toggle</li>
+<li>Updates CSS and script tags in HTML</li>
+<li>Theme integration</li>
+</ul>
+<h4 id="stylesheet-integration">Stylesheet Integration:</h4>
+<ul>
+<li>Injects CSS variable imports into <code>styles.css</code></li>
+<li>Ensures proper import order</li>
+<li>Prevents duplicate imports</li>
+</ul>
+<h3 id="configuration-management">2. Configuration Management</h3>
+<h4 id="toml-preservation">TOML Preservation:</h4>
+<ul>
+<li>Uses <code>tomlkit</code> library to read TOML</li>
+<li>Never modifies <code>config/site.toml</code></li>
+<li>Manual editing required for config changes</li>
+</ul>
+<h4 id="backup-system">Backup System:</h4>
+<ul>
+<li>Timestamped backups: <code>config_&lt;environment&gt;_YYYYMMDDHHMM.zip</code></li>
+<li>Includes all config files from <code>config/</code> directory</li>
+<li>Separate backup history per environment</li>
+<li>Keeps 5 most recent backups per environment</li>
+<li>Automatic cleanup of old backups</li>
+<li>Manifest included in backup archive</li>
+</ul>
+<h4 id="local-backups">Local Backups:</h4>
+<ul>
+<li>Creates <code>.backup.TIMESTAMP</code> copies before modifications</li>
+<li>Located next to original files in <code>src/</code></li>
+<li>Provides immediate rollback capability</li>
+</ul>
+<h3 id="file-tracking-and-copying">3. File Tracking and Copying</h3>
+<h4 id="modification-tracking">Modification Tracking:</h4>
+<ul>
+<li>Tracks all files modified during setup</li>
+<li>Includes source files, images, and generated files</li>
+<li>Maintains file paths and timestamps</li>
+</ul>
+<h4 id="environment-copying">Environment Copying:</h4>
+<ul>
+<li>Copies modified files to <code>publish/&lt;environment&gt;/</code></li>
+<li>Preserves directory structure</li>
+<li>Timestamp comparison (skip up-to-date files unless <code>--force</code>)</li>
+<li>Handles favicon and logo files separately</li>
+</ul>
+<h4 id="manifest-generation">Manifest Generation:</h4>
+<ul>
+<li>Creates <code>setup_manifest.md</code> for each run</li>
+<li>Two tables: copied files and skipped files</li>
+<li>Columns: Source Path, Filename, Destination Path, Size, Modified</li>
+<li>Smart sorting: files before subdirectories</li>
+<li>Paths relative to common root with leading separator</li>
+<li>Timestamps with timezone offset</li>
+<li>Included in backup ZIP for audit trail</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<h3 id="site-configuration">Site Configuration</h3>
+<p>Primary configuration file: <code>config/site.toml</code></p>
+<p><strong>Important:</strong> Setup reads this file but never modifies it. You must edit <code>config/site.toml</code> manually with a text editor to change configuration values.</p>
+<p>Contains all site settings:</p>
+<ul>
+<li>Site information (name, domain, description)</li>
+<li>Theme colors (header, footer, sidebar)</li>
+<li>Image paths (logos, favicons)</li>
+<li>Feature toggles (breadcrumbs, TOC, lazy loading)</li>
+<li>SEO and analytics codes</li>
+</ul>
+<h4 id="example">Example:</h4>
+<pre><code class="language-toml"># Site Information
+site_name = "GAZTank"
+site_tagline = "Your Site Tagline"
+domain = "example.com"
+
+# Theme Colors
+header_text_color = "#212529"
+header_background_color = "#f8f9fa"
+footer_text_color = "#6c757d"
+
+# Features
+enable_breadcrumbs = true
+enable_toc = true
+enable_lazy_loading = true
+</code></pre>
+<h3 id="environment-configuration">Environment Configuration</h3>
+<p>Environment directories configured in <code>config/pipeline.toml</code>:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+description = "Development environment"
+
+[environments.staging]
+dir = "staging"
+description = "Staging environment for pre-production testing"
+
+[environments.prod]
+dir = "prod"
+description = "Production-ready build"
+</code></pre>
+<h3 id="directory-structure">Directory Structure</h3>
+<pre><code>GAZTank/
+├── config/
+│   ├── site.toml                    # Main site configuration
+│   ├── site.toml.backup.TIMESTAMP   # Local backups
+│   └── pipeline.toml                # Environment definitions
+├── publish/
+│   ├── backups/
+│   │   ├── config_dev_202510221430.zip
+│   │   ├── config_staging_202510221430.zip
+│   │   └── config_prod_202510221430.zip
+│   ├── dev/                         # Dev environment files
+│   ├── staging/                     # Staging environment files
+│   └── prod/                        # Prod environment files
+└── src/
+    ├── css/
+    │   ├── variables.css            # Generated CSS variables
+    │   └── styles.css               # Main stylesheet (updated)
+    ├── images/
+    │   ├── logos/                   # Logo files
+    │   └── favicons/                # Favicon files
+    └── index.html                   # Updated with branding
+</code></pre>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="shell-scripts-recommended">1. Shell Scripts (Recommended)</h3>
+<p>Windows:</p>
+<pre><code class="language-powershell">.\scripts\setup_site.cmd -e dev
+</code></pre>
+<p>Linux/Mac:</p>
+<pre><code class="language-bash">./scripts/setup_site.sh -e dev
+</code></pre>
+<h3 id="python-module">2. Python Module</h3>
+<pre><code class="language-bash">python -m setup -e dev
+</code></pre>
+<h3 id="programmatic">3. Programmatic</h3>
+<pre><code class="language-python">from setup import config_io, file_generators
+
+config = config_io.load_existing_config()
+config['site_name'] = 'New Name'
+config_io.update_config_file(config)
+file_generators.generate_css_variables(config)
+</code></pre>
+<h3 id="build-automation">4. Build Automation</h3>
+<pre><code class="language-bash"># In gzbuild.cmd or CI/CD pipeline
+.\scripts\setup_site.cmd -e staging --force
+.\scripts\generate.cmd -e staging
+.\scripts\package.cmd -e staging
+</code></pre>
+<h2 id="development">Development</h2>
+<h3 id="setup-workflow">Setup Workflow</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                  SETUP INITIALIZATION                       │
+├─────────────────────────────────────────────────────────────┤
+│  [1/3] Parse Arguments                                      │
+│     └─ Validate -e (required)                               │
+│     └─ Check --force flag                                   │
+│     └─ Validate parameter combinations                      │
+│                                                             │
+│  [2/3] Load Configuration                                   │
+│     └─ Read config/site.toml                                │
+│     └─ Validate configuration structure                     │
+│     └─ Display environment and mode                         │
+│                                                             │
+│  [3/3] File Operations                                      │
+│     └─ Backup config files                                  │
+│     └─ Generate files (CSS, HTML updates)                   │
+│     └─ Track modified files                                 │
+│     └─ Copy to environment directory                        │
+│     └─ Generate manifest                                    │
+│     └─ Cleanup old backups                                  │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="configuration-application-flow">Configuration Application Flow</h3>
+<pre><code>Read site.toml → Validate Config → Apply to Files
+     ↓
+1. Backup Config Files
+   └─ Create timestamped ZIP with all config files
+   └─ Skip .backup.* and .example.* files
+
+2. Generate CSS Variables
+   └─ Create src/css/variables.css
+   └─ Calculate RGB + alpha variations
+
+3. Update Domain References
+   └─ Search and replace in HTML, JS, TXT, MD files
+
+4. Update Site Branding
+   └─ Replace site name across multiple files
+
+5. Update Image References
+   └─ Update logo/favicon paths in HTML
+
+6. Update Syntax Highlighting
+   └─ Add/remove Prism.js references
+
+7. Update Stylesheet Integration
+   └─ Inject variable imports into styles.css
+
+8. Copy Modified Files
+   └─ Track all modified files
+   └─ Copy to publish/&lt;environment&gt;/
+   └─ Generate manifest
+
+9. Cleanup
+   └─ Remove old backups (keep 5 most recent)
+</code></pre>
+<h3 id="module-architecture">Module Architecture</h3>
+<p>The setup was refactored from a 1,575-line monolith into 9 focused modules:</p>
+<h4 id="benefits">Benefits:</h4>
+<ul>
+<li>✅ Single Responsibility Principle</li>
+<li>✅ Easy to locate functionality</li>
+<li>✅ Smaller, understandable files</li>
+<li>✅ Changes isolated to specific modules</li>
+<li>✅ Can test each module independently</li>
+<li>✅ Modules reusable in other scripts</li>
+<li>✅ Non-interactive, configuration-driven approach</li>
+</ul>
+<h2 id="customisation">Customisation</h2>
+<h3 id="custom-validators">Custom Validators</h3>
+<p>Add new validation functions in <code>validators.py</code>:</p>
+<pre><code class="language-python">from . import ui_helpers
+
+def get_email(prompt, default, get_input_fn):
+    """Get and validate email address"""
+    while True:
+        value = get_input_fn(prompt, default)
+        if '@' in value and '.' in value:
+            return value
+        ui_helpers.print_error("Invalid email format")
+</code></pre>
+<h3 id="custom-file-generators">Custom File Generators</h3>
+<p>Add new generators in <code>file_generators.py</code>:</p>
+<pre><code class="language-python">def update_email_template(config_data):
+    """Update email template with config values"""
+    template_path = Path('src/templates/email.html')
+    content = template_path.read_text(encoding='utf-8')
+    content = content.replace('{{SITE_NAME}}', config_data['site_name'])
+    template_path.write_text(content, encoding='utf-8')
+    track_modified_file(template_path)
+</code></pre>
+<h3 id="extend-backup-system">Extend Backup System</h3>
+<p>Customize backup behavior in <code>backup_manager.py</code>:</p>
+<pre><code class="language-python"># Change number of backups to keep
+cleanup_old_backups(keep_count=10, environment='dev')
+
+# Exclude additional file patterns
+def should_skip_file(file_path):
+    name = file_path.name
+    return (name.endswith('.backup') or 
+            name.endswith('.example') or
+            name.endswith('.secret'))
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="config-file-not-found">Config File Not Found</h3>
+<p><strong>Problem:</strong> <code>Failed to load config/site.toml</code></p>
+<h4 id="solution">Solution:</h4>
+<pre><code class="language-bash"># Create from example if available
+cp config/site.toml.example config/site.toml
+
+# Or verify path
+ls config/site.toml
+</code></pre>
+<h3 id="config-file-corrupted">Config File Corrupted</h3>
+<p><strong>Problem:</strong> TOML parsing errors</p>
+<h4 id="solution-1-restore-from-local-backup">Solution 1 - Restore from local backup:</h4>
+<pre><code class="language-bash">cd config
+cp site.toml.backup.YYYYMMDDHHMM site.toml
+</code></pre>
+<h4 id="solution-2-restore-from-zip-backup">Solution 2 - Restore from ZIP backup:</h4>
+<pre><code class="language-bash">cd publish/backups
+unzip config_dev_YYYYMMDDHHMM.zip -d restored
+cd restored
+cp site.toml ../../../config/
+</code></pre>
+<h4 id="solution-3-start-fresh">Solution 3 - Start fresh:</h4>
+<pre><code class="language-bash">cp config/site.toml.example config/site.toml
+.\scripts\setup_site.cmd -e dev
+</code></pre>
+<h3 id="files-not-copying-to-environment">Files Not Copying to Environment</h3>
+<p><strong>Problem:</strong> Modified files not appearing in <code>publish/&lt;environment&gt;/</code></p>
+<h4 id="solution-1">Solution:</h4>
+<ul>
+<li>Check that environment exists in <code>config/pipeline.toml</code></li>
+<li>Verify source files were actually modified</li>
+<li>Use <code>--force</code> to copy regardless of timestamps</li>
+<li>Check console output for error messages</li>
+</ul>
+<h3 id="backups-not-created">Backups Not Created</h3>
+<p><strong>Problem:</strong> No backup ZIP files in <code>publish/backups/</code></p>
+<h4 id="solution-2">Solution:</h4>
+<ul>
+<li>Check <code>publish/backups/</code> directory exists</li>
+<li>Verify write permissions</li>
+<li>Check disk space</li>
+<li>Look for error messages in console output</li>
+</ul>
+<h3 id="import-errors-after-update">Import Errors After Update</h3>
+<p><strong>Problem:</strong> <code>ImportError</code> or <code>AttributeError</code> after module changes</p>
+<h4 id="solution-3">Solution:</h4>
+<pre><code class="language-bash"># Clear Python cache
+cd utils/setup
+Remove-Item -Recurse -Force __pycache__
+
+# Re-run setup
+cd ../..
+.\scripts\setup_site.cmd -e dev
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="edit-sitetoml-first">1. Edit site.toml First</h3>
+<p>Always edit <code>config/site.toml</code> before running setup:</p>
+<pre><code class="language-bash"># Edit configuration manually
+notepad config\site.toml  # Windows
+nano config/site.toml      # Linux/Mac
+
+# Then apply changes
+.\scripts\setup_site.cmd -e dev
+</code></pre>
+<h3 id="use-environments-appropriately">2. Use Environments Appropriately</h3>
+<ul>
+<li><strong>dev</strong>: For active development and testing</li>
+<li><strong>staging</strong>: For pre-production validation</li>
+<li><strong>prod</strong>: For final production builds</li>
+</ul>
+<pre><code class="language-bash"># Development
+.\scripts\setup_site.cmd -e dev
+
+# Staging validation
+.\scripts\setup_site.cmd -e staging
+
+# Production deployment
+.\scripts\setup_site.cmd -e prod
+</code></pre>
+<h3 id="backup-before-manual-changes">3. Backup Before Manual Changes</h3>
+<p>While backups are automatic, consider manual backups before major changes:</p>
+<pre><code class="language-bash"># Manual backup of config
+cd config
+copy site.toml site.toml.manual.backup  # Windows
+cp site.toml site.toml.manual.backup    # Linux/Mac
+</code></pre>
+<h3 id="use-force-mode-after-manual-edits">4. Use Force Mode After Manual Edits</h3>
+<p>After editing source files manually, use <code>--force</code> to ensure consistency:</p>
+<pre><code class="language-bash"># Made manual changes to src/css/styles.css
+.\scripts\setup_site.cmd -e dev --force
+</code></pre>
+<h3 id="verify-configuration-format">5. Verify Configuration Format</h3>
+<p>Ensure your site.toml is valid TOML before running setup:</p>
+<pre><code class="language-bash"># Use a TOML validator or linter
+python -c "import tomlkit; tomlkit.load(open('config/site.toml'))"
+</code></pre>
+<h3 id="test-after-configuration">6. Test After Configuration</h3>
+<p>After running setup, test the changes:</p>
+<pre><code class="language-bash">.\scripts\setup_site.cmd -e dev
+.\scripts\generate.cmd -e dev
+.\scripts\server.cmd -e dev
+# Open browser to http://localhost:7190
+</code></pre>
+<h3 id="keep-backups-organized">7. Keep Backups Organized</h3>
+<p>Backup system automatically maintains 5 most recent per environment:</p>
+<ul>
+<li><code>config_dev_*.zip</code> - Development backups</li>
+<li><code>config_staging_*.zip</code> - Staging backups</li>
+<li><code>config_prod_*.zip</code> - Production backups</li>
+</ul>
+<h3 id="clean-environment-when-needed">8. Clean Environment When Needed</h3>
+<p>Use the separate <code>clean</code> module to reset environment:</p>
+<pre><code class="language-bash"># Clean orphaned files
+.\scripts\clean.cmd -e dev
+
+# Clean all files (full reset)
+.\scripts\clean.cmd -e dev --clean-all
+</code></pre>
+<h3 id="document-configuration-changes">9. Document Configuration Changes</h3>
+<p>When editing site.toml, add comments to document changes:</p>
+<pre><code class="language-toml"># config/site.toml
+# Custom modification: Changed header color for better contrast
+# Date: 2025-10-28
+# Reason: Accessibility improvement
+header_background_color = "#1a1a1a"
+</code></pre>
+<h3 id="use-version-control">10. Use Version Control</h3>
+<p>Commit site.toml changes to track configuration history:</p>
+<pre><code class="language-bash">git add config/site.toml
+git commit -m "Update header colors for better contrast"
+</code></pre>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ul>
+<li>[ ] Add <code>--dry-run</code> mode to preview changes without applying</li>
+<li>[ ] Support for dark mode theme configuration</li>
+<li>[ ] Configuration validation command</li>
+<li>[ ] Diff view showing what will be changed</li>
+<li>[ ] Rollback to specific backup by timestamp</li>
+<li>[ ] Custom CSS injection from config</li>
+<li>[ ] Font configuration from TOML</li>
+<li>[ ] Multi-site configuration management</li>
+<li>[ ] Configuration templates (blog, portfolio, documentation)</li>
+<li>[ ] Automated accessibility checks for color contrast</li>
+<li>[ ] Real-time preview during development</li>
+<li>[ ] Configuration API for external tools</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../clean/README.md">clean</a></strong> - Environment cleanup (orphaned files and full reset)</li>
+<li><strong><a href="../gzlogging/README.md">gzlogging</a></strong> - Logging infrastructure (not used in setup - see design decision)</li>
+<li><strong><a href="../generate/README.md">generate</a></strong> - Content generation (runs after setup)</li>
+<li><strong><a href="../package/README.md">package</a></strong> - Build system with minification</li>
+<li><strong><a href="../deploy/README.md">deploy</a></strong> - Deployment to production</li>
+<li><strong><a href="../gzserve/README.md">gzserve</a></strong> - Local development server for testing</li>
+<li><strong><a href="../FLOW_PIPELINE.md">FLOW_PIPELINE.md</a></strong> - Complete pipeline documentation</li>
+<li><strong><a href="../00MODULE_MATURITY.md">00MODULE_MATURITY.md</a></strong> - Module maturity tracking</li>
+<li><strong><a href="../../dev/MODULE_README_STRUCTURE.md">MODULE_README_STRUCTURE.md</a></strong> - README template structure</li>
+</ul>
+<h3 id="pipeline-context">Pipeline Context</h3>
+<pre><code>clean → [setup] → generate → gzlint → gzserve → package → deploy
+          ↑
+   (configuration application)
+</code></pre>
+<h2 id="license">License</h2>
+<p>GPL v3.0 or later</p>
+<h2 id="authors">Authors</h2>
+<ul>
+<li>superguru</li>
+<li>gazorper</li>
+</ul>
+<hr/>
+<p><strong>Site Setup Tool v1.2</strong> | <strong>Last Updated:</strong> October 28, 2025</p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

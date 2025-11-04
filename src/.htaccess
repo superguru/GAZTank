@@ -1,0 +1,105 @@
+# ============================================
+# GAZ Tank - Apache Configuration
+# ============================================
+# This file enables Gzip/Deflate compression for faster page loads
+# Estimated speed improvement: 30-50% faster
+# File size reduction: 70-85% for text-based files (CSS, JS, HTML)
+
+# ============================================
+# COMPRESSION
+# ============================================
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xml+rss
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE text/plain
+    
+    # Remove browser bugs (only needed for really old browsers)
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# Fallback to mod_gzip if mod_deflate is not available
+<IfModule !mod_deflate.c>
+    <IfModule mod_gzip.c>
+        mod_gzip_on Yes
+        mod_gzip_dechunk Yes
+        mod_gzip_item_include file \.(html?|txt|css|js|php|pl)$
+        mod_gzip_item_include mime ^application/x-javascript.*
+        mod_gzip_item_include mime ^text/.*
+        mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+        mod_gzip_item_exclude mime ^image/.*
+    </IfModule>
+</IfModule>
+
+# ============================================
+# BROWSER CACHE (for bfcache support)
+# ============================================
+# Minimal cache headers to enable browser back/forward cache (bfcache)
+# These are NOT aggressive server caching - just browser-friendly defaults
+# This fixes Lighthouse warning about Cache-Control: no-store
+<IfModule mod_headers.c>
+    # Allow browser to cache, but always revalidate
+    # This enables bfcache while keeping content fresh
+    Header set Cache-Control "private, must-revalidate"
+    
+    # HTML pages - always check for updates
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "private, no-cache, must-revalidate"
+    </FilesMatch>
+    
+    # Static assets - allow short browser cache (5 minutes)
+    # Still checks server on reload, but enables bfcache
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "private, max-age=300, must-revalidate"
+    </FilesMatch>
+    
+    # Images - allow slightly longer cache (1 hour)
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|svg|webp)$">
+        Header set Cache-Control "private, max-age=3600, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# ============================================
+# SECURITY HEADERS
+# ============================================
+<IfModule mod_headers.c>
+    # Content Security Policy (CSP)
+    # Prevents XSS attacks, data injection, and clickjacking
+    Header set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+    
+    # Prevent clickjacking attacks
+    # Only allow this site to frame itself (not recommended for embedding in iframes)
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevent MIME type sniffing
+    # Forces browser to respect declared content type
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # XSS Protection for older browsers
+    # Modern browsers use CSP, but this helps legacy browsers
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy
+    # Controls how much referrer information is sent with requests
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Permissions Policy
+    # Restricts browser features (camera, microphone, geolocation, etc.)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    
+    # HSTS - Force HTTPS (COMMENTED OUT - Enable after HTTPS is configured)
+    # Tells browsers to only connect via HTTPS for the next year
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>

@@ -1,0 +1,827 @@
+<h1>GZHost - FTP Host Server Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#configuration-files">Configuration Files</a>
+</li>
+<li>
+<a href="#ftp-permissions">FTP Permissions</a>
+</li>
+<li>
+<a href="#testing-ftp-connection">Testing FTP Connection</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#security-considerations">Security Considerations</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#use-cases">Use Cases</a>
+</li>
+<li>
+<a href="#key-features">Key Features</a>
+</li>
+<li>
+<a href="#purpose-in-pipeline">Purpose in Pipeline:</a>
+</li>
+<li>
+<a href="#how-gzhost-logs">How GZHost Logs</a>
+</li>
+<li>
+<a href="#log-file-locations">Log File Locations</a>
+</li>
+<li>
+<a href="#basic-usage">Basic Usage</a>
+</li>
+<li>
+<a href="#stopping-the-server">Stopping the Server</a>
+</li>
+<li>
+<a href="#custom-port">Custom Port</a>
+</li>
+<li>
+<a href="#different-environments">Different Environments</a>
+</li>
+<li>
+<a href="#architecture">Architecture</a>
+</li>
+<li>
+<a href="#pipelinetoml">pipeline.toml</a>
+</li>
+<li>
+<a href="#ftp-userstoml">ftp_users.toml</a>
+</li>
+<li>
+<a href="#common-permission-sets">Common Permission Sets</a>
+</li>
+<li>
+<a href="#example-use-cases">Example Use Cases</a>
+</li>
+<li>
+<a href="#using-command-line-ftp-client">Using Command-Line FTP Client</a>
+</li>
+<li>
+<a href="#using-filezilla">Using FileZilla</a>
+</li>
+<li>
+<a href="#using-python-ftplib">Using Python ftplib</a>
+</li>
+<li>
+<a href="#server-wont-stop-with-ctrlc">Server Won't Stop with Ctrl+C</a>
+</li>
+<li>
+<a href="#admin-prompt-not-responding">Admin Prompt Not Responding</a>
+</li>
+<li>
+<a href="#port-already-in-use">Port Already in Use</a>
+</li>
+<li>
+<a href="#environment-directory-not-found">Environment Directory Not Found</a>
+</li>
+<li>
+<a href="#cannot-connect-to-ftp-server">Cannot Connect to FTP Server</a>
+</li>
+<li>
+<a href="#authentication-failed">Authentication Failed</a>
+</li>
+<li>
+<a href="#permission-denied">Permission Denied</a>
+</li>
+<li>
+<a href="#pyftpdlib-not-installed">pyftpdlib Not Installed</a>
+</li>
+<li>
+<a href="#local-development-only">Local Development Only</a>
+</li>
+<li>
+<a href="#safe-usage">Safe Usage</a>
+</li>
+<li>
+<a href="#production-deployments">Production Deployments</a>
+<ul>
+<li>
+<a href="#what-gets-logged">What gets logged:</a>
+</li>
+<li>
+<a href="#what-goes-to-console">What goes to console:</a>
+</li>
+<li>
+<a href="#what-goes-to-log-file">What goes to log file:</a>
+</li>
+<li>
+<a href="#output">Output:</a>
+</li>
+<li>
+<a href="#interactive-admin-commands">Interactive Admin Commands:</a>
+</li>
+<li>
+<a href="#keyboard-shortcuts">Keyboard Shortcuts:</a>
+</li>
+<li>
+<a href="#example-session">Example Session:</a>
+</li>
+<li>
+<a href="#components">Components</a>
+</li>
+<li>
+<a href="#internal-design">Internal Design</a>
+</li>
+<li>
+<a href="#attributes">Attributes:</a>
+</li>
+<li>
+<a href="#attributes-1">Attributes:</a>
+</li>
+<li>
+<a href="#windows">Windows:</a>
+</li>
+<li>
+<a href="#linuxmac">Linux/Mac:</a>
+</li>
+<li>
+<a href="#symptoms">Symptoms:</a>
+</li>
+<li>
+<a href="#solutions">Solutions:</a>
+</li>
+<li>
+<a href="#symptoms-1">Symptoms:</a>
+</li>
+<li>
+<a href="#solutions-1">Solutions:</a>
+</li>
+<li>
+<a href="#error">Error:</a>
+</li>
+<li>
+<a href="#solutions-2">Solutions:</a>
+</li>
+<li>
+<a href="#error-1">Error:</a>
+</li>
+<li>
+<a href="#solutions-3">Solutions:</a>
+</li>
+<li>
+<a href="#symptoms-2">Symptoms:</a>
+</li>
+<li>
+<a href="#solutions-4">Solutions:</a>
+</li>
+<li>
+<a href="#symptoms-3">Symptoms:</a>
+</li>
+<li>
+<a href="#solutions-5">Solutions:</a>
+</li>
+<li>
+<a href="#symptoms-4">Symptoms:</a>
+</li>
+<li>
+<a href="#solutions-6">Solutions:</a>
+</li>
+<li>
+<a href="#error-2">Error:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#security-limitations">Security Limitations:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>FTP server for simulating remote deployment hosts during local development using pyftpdlib.</p>
+<p><strong>Version:</strong> 1.0.0<br/>
+<strong>Last Updated:</strong> October 23, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li><a href="#custom-port">Custom Port</a></li>
+<li><a href="#different-environments">Different Environments</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration-files">Configuration Files</a><ul>
+<li><a href="#pipelinetoml">pipeline.toml</a></li>
+<li><a href="#ftp_userstoml">ftp_users.toml</a></li>
+</ul>
+</li>
+<li><a href="#ftp-permissions">FTP Permissions</a></li>
+<li><a href="#testing-ftp-connection">Testing FTP Connection</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#security-considerations">Security Considerations</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>GZHost provides a local FTP server for testing deployment workflows without needing actual remote servers. It simulates the target environment where the <code>deploy</code> module would upload files via FTP.</p>
+<h3 id="use-cases">Use Cases</h3>
+<ul>
+<li><strong>Test FTP Deployments Locally</strong>: Verify deploy scripts work before using real servers</li>
+<li><strong>Simulate Remote Hosts</strong>: Test deployment workflows in isolated environments</li>
+<li><strong>Development Testing</strong>: Validate FTP upload logic without network dependencies</li>
+<li><strong>Pipeline Integration</strong>: Complete the local dev → staging → prod deployment cycle</li>
+</ul>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li>Environment-specific FTP servers (dev/staging/prod)</li>
+<li>Configurable user authentication per environment</li>
+<li>Per-environment permission management</li>
+<li>Serves files from <code>publish/{environment}/</code> directories</li>
+<li>Interactive admin command prompt for server control</li>
+<li>Graceful shutdown handling (Ctrl+C, admin commands)</li>
+<li>Integrates with gzconfig for configuration management</li>
+<li>Uses gzlogging for comprehensive logging</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>GZHost is a tools module that simulates remote deployment targets:</p>
+<pre><code>GAZTank Build Pipeline:
+  ├─ generate → generates content
+  ├─ package → packages for deployment
+  ├─ gzhost → simulates remote FTP host (THIS MODULE)
+  └─ deploy → deploys via FTP to remote host (or gzhost for testing)
+
+Integration:
+  1. gzhost -e dev          # Start FTP server
+  2. deploy -e dev          # Deploy to local FTP server
+  3. Verify deployment worked
+</code></pre>
+<h3 id="purpose-in-pipeline">Purpose in Pipeline:</h3>
+<ul>
+<li>Simulates remote FTP deployment targets</li>
+<li>Enables local testing of deploy module</li>
+<li>Provides isolated test environments</li>
+<li>No need for actual remote servers during development</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<h3 id="how-gzhost-logs">How GZHost Logs</h3>
+<p>GZHost uses gzlogging to output to both log file and console:</p>
+<p><strong>Tool name:</strong> <code>gzhost</code></p>
+<h4 id="what-gets-logged">What gets logged:</h4>
+<ul>
+<li>Server startup and configuration (INFO)</li>
+<li>FTP user authentication (DEBUG)</li>
+<li>Connection events (INFO)</li>
+<li>File operations (INFO)</li>
+<li>Server shutdown (INFO)</li>
+<li>Errors and warnings (ERROR/WARNING)</li>
+</ul>
+<h4 id="what-goes-to-console">What goes to console:</h4>
+<ul>
+<li>Server information banner</li>
+<li>Configuration summary</li>
+<li>FTP URL and connection details</li>
+<li>User instructions</li>
+<li>Shutdown messages</li>
+</ul>
+<h4 id="what-goes-to-log-file">What goes to log file:</h4>
+<ul>
+<li>All operational information</li>
+<li>Configuration loaded</li>
+<li>User authentication events</li>
+<li>Error messages without emojis</li>
+<li>Success/failure status</li>
+</ul>
+<h3 id="log-file-locations">Log File Locations</h3>
+<p>Based on <code>config/tools.toml</code>:</p>
+<ul>
+<li><strong>dev</strong>: <code>logs/dev/gzhost_YYYYMMDD_HHMMSS.log</code></li>
+<li><strong>staging</strong>: <code>logs/staging/gzhost_YYYYMMDD_HHMMSS.log</code></li>
+<li><strong>prod</strong>: <code>logs/prod/gzhost_YYYYMMDD_HHMMSS.log</code></li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-usage">Basic Usage</h3>
+<p>Start FTP server for dev environment:</p>
+<pre><code class="language-bash"># Windows
+.\scripts\gzhost.cmd -e dev
+
+# Linux/Mac
+./scripts/gzhost.sh -e dev
+
+# Direct Python
+python -m utils.gzhost -e dev
+</code></pre>
+<h4 id="output">Output:</h4>
+<pre><code>============================================================
+FTP HOST SERVER
+============================================================
+Environment: dev
+Description: Development environment with verbose logging and live reload
+Port: 2190
+FTP URL: ftp://localhost:2190
+Home Directory: D:\Projects\www\GAZTank\publish\dev
+FTP User: devup
+Permissions: elradfmwMT
+
+Available commands:
+  'stop' or 'quit' - Stop the server
+  'help' - Show this help
+============================================================
+
+Server is running...
+Press Ctrl+C to stop the server or type 'quit' in the admin prompt.
+
+[dev] admin&gt; 
+</code></pre>
+<h3 id="stopping-the-server">Stopping the Server</h3>
+<p>The server provides multiple ways to shut down gracefully:</p>
+<h4 id="interactive-admin-commands">Interactive Admin Commands:</h4>
+<ul>
+<li>Type <code>quit</code>, <code>stop</code>, <code>exit</code>, or <code>q</code> at the admin prompt</li>
+<li>Type <code>help</code> to see available commands</li>
+</ul>
+<h4 id="keyboard-shortcuts">Keyboard Shortcuts:</h4>
+<ul>
+<li>Press <code>Ctrl+C</code> for immediate shutdown</li>
+<li>Press <code>Ctrl+D</code> (Unix) for EOF shutdown</li>
+</ul>
+<h4 id="example-session">Example Session:</h4>
+<pre><code>[dev] admin&gt; help
+
+Available commands:
+  stop, quit, exit, q - Stop the server
+  help - Show this help
+
+[dev] admin&gt; quit
+
+Shutting down FTP server...
+Shutting down FTP server...
+
+============================================================
+FTP server stopped
+============================================================
+</code></pre>
+<h3 id="custom-port">Custom Port</h3>
+<p>Override the configured port:</p>
+<pre><code class="language-bash">.\scripts\gzhost.cmd -e dev -p 3000
+</code></pre>
+<h3 id="different-environments">Different Environments</h3>
+<p>Each environment has its own configuration:</p>
+<pre><code class="language-bash"># Development (port 2190)
+.\scripts\gzhost.cmd -e dev
+
+# Staging (port 2191)
+.\scripts\gzhost.cmd -e staging
+
+# Production (port 2192)
+.\scripts\gzhost.cmd -e prod
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<pre><code>python -m utils.gzhost [OPTIONS]
+
+Required Arguments:
+  -e, --environment ENV   Environment to host (dev/staging/prod)
+
+Optional Arguments:
+  -p, --port PORT        Port number (overrides config)
+  -h, --help             Show help message
+
+Examples:
+  python -m utils.gzhost -e dev                 # Host dev on configured port
+  python -m utils.gzhost -e staging -p 2190     # Host staging on port 2190
+  python -m utils.gzhost -e prod                # Host production environment
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>gzhost/
+├── __init__.py          # Module exports (start_ftp_server, main)
+├── __main__.py          # Module entry point
+├── host.py              # Core FTP server implementation
+└── README.md            # This file
+</code></pre>
+<h3 id="architecture">Architecture</h3>
+<h4 id="components">Components</h4>
+<ol>
+<li><p><strong>admin_command_listener()</strong>: Interactive admin prompt</p>
+<ul>
+<li>Runs in separate thread for non-blocking input</li>
+<li>Accepts commands: <code>quit</code>, <code>stop</code>, <code>exit</code>, <code>q</code>, <code>help</code></li>
+<li>Handles EOF (Ctrl+D) and KeyboardInterrupt (Ctrl+C)</li>
+<li>Gracefully shuts down server on exit commands</li>
+<li>Shows environment prefix in prompt (e.g., <code>[dev] admin&gt;</code>)</li>
+</ul>
+</li>
+<li><p><strong>start_ftp_server()</strong>: Core FTP server function</p>
+<ul>
+<li>Loads pipeline and FTP users configuration</li>
+<li>Creates pyftpdlib authorizer with user credentials</li>
+<li>Configures FTP handler and server</li>
+<li>Starts admin command listener thread</li>
+<li>Starts server and handles signals</li>
+<li>Parameters: <code>port</code> (optional), <code>environment</code> (required)</li>
+</ul>
+</li>
+<li><p><strong>main()</strong>: Command-line entry point</p>
+<ul>
+<li>Parses arguments</li>
+<li>Validates environment</li>
+<li>Calls <code>start_ftp_server()</code></li>
+<li>Returns exit code</li>
+</ul>
+</li>
+</ol>
+<h4 id="internal-design">Internal Design</h4>
+<ul>
+<li><strong>pyftpdlib Integration</strong>: Uses DummyAuthorizer and FTPHandler</li>
+<li><strong>Configuration Loading</strong>: Uses gzconfig for pipeline and FTP users</li>
+<li><strong>Logging Integration</strong>: Uses gzlogging with tool name 'gzhost'</li>
+<li><strong>Admin Thread</strong>: Non-daemon thread for interactive command prompt</li>
+<li><strong>Signal Handling</strong>: Graceful shutdown on Ctrl+C (SIGINT/SIGTERM)</li>
+<li><strong>Multiple Shutdown Methods</strong>: Admin commands, signals, or EOF</li>
+<li><strong>Thread Cleanup</strong>: Admin thread joins with timeout on shutdown</li>
+<li><strong>Home Directory</strong>: Serves files from <code>publish/{environment}/</code></li>
+<li><strong>User Authentication</strong>: Per-environment credentials from ftp_users.toml</li>
+</ul>
+<h2 id="configuration-files">Configuration Files</h2>
+<h3 id="pipelinetoml">pipeline.toml</h3>
+<p>Defines environment directories and FTP ports:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+httpd_port = 7190
+ftpd_port = 2190
+description = "Development environment with verbose logging and live reload"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+ftpd_port = 2191
+description = "Staging environment for pre-production testing and validation"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+ftpd_port = 2192
+description = "Production-ready build for deployment"
+</code></pre>
+<h4 id="attributes">Attributes:</h4>
+<ul>
+<li><code>dir</code>: Directory name under <code>publish/</code> for environment</li>
+<li><code>httpd_port</code>: Port for HTTP server (gzserve module)</li>
+<li><code>ftpd_port</code>: Port for FTP server (gzhost module)</li>
+<li><code>description</code>: Human-readable description</li>
+</ul>
+<h3 id="ftp-userstoml">ftp_users.toml</h3>
+<p>Defines FTP user credentials per environment:</p>
+<pre><code class="language-toml">[environments.dev]
+username = "dev_user"
+password = "dev_pass"
+permissions = "elradfmwMT"
+
+[environments.staging]
+username = "staging_user"
+password = "staging_pass"
+permissions = "elradfmwMT"
+
+[environments.prod]
+username = "prod_user"
+password = "prod_pass"
+permissions = "elr"
+</code></pre>
+<h4 id="attributes-1">Attributes:</h4>
+<ul>
+<li><code>username</code>: FTP login username</li>
+<li><code>password</code>: FTP login password (plain text, local development only)</li>
+<li><code>permissions</code>: Permission string for pyftpdlib (see below)</li>
+</ul>
+<h2 id="ftp-permissions">FTP Permissions</h2>
+<p>The <code>permissions</code> attribute uses pyftpdlib permission characters:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Permission</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>e</code></td>
+<td>change directory</td>
+<td>CWD, CDUP commands</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>list files</td>
+<td>LIST, NLST, STAT, MLSD, MLST, SIZE</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>retrieve file</td>
+<td>RETR command</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>append data</td>
+<td>APPE command</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>delete</td>
+<td>DELE, RMD commands</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>rename</td>
+<td>RNFR, RNTO commands</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>create directory</td>
+<td>MKD command</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>store file</td>
+<td>STOR, STOU commands</td>
+</tr>
+<tr>
+<td><code>M</code></td>
+<td>change permissions</td>
+<td>SITE CHMOD command</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>change modification time</td>
+<td>SITE MFMT command</td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-permission-sets">Common Permission Sets</h3>
+<ul>
+<li><strong>Read-only</strong>: <code>"elr"</code> - Can browse and download only</li>
+<li><strong>Full access</strong>: <code>"elradfmwMT"</code> - Can do everything</li>
+<li><strong>Read/Write</strong>: <code>"elrw"</code> - Can browse, download, and upload</li>
+<li><strong>Upload only</strong>: <code>"elw"</code> - Can only upload files</li>
+</ul>
+<h3 id="example-use-cases">Example Use Cases</h3>
+<pre><code class="language-toml"># Development: Full access for testing
+[environments.dev]
+permissions = "elradfmwMT"
+
+# Staging: Full access for deployment testing
+[environments.staging]
+permissions = "elradfmwMT"
+
+# Production: Read-only for verification
+[environments.prod]
+permissions = "elr"
+</code></pre>
+<h2 id="testing-ftp-connection">Testing FTP Connection</h2>
+<h3 id="using-command-line-ftp-client">Using Command-Line FTP Client</h3>
+<h4 id="windows">Windows:</h4>
+<pre><code class="language-bash">ftp localhost 2190
+# Enter username: dev_user
+# Enter password: dev_pass
+ls
+cd content
+get index.html
+put test.txt
+quit
+</code></pre>
+<h4 id="linuxmac">Linux/Mac:</h4>
+<pre><code class="language-bash">ftp localhost 2190
+# Enter username: dev_user
+# Enter password: dev_pass
+ls
+cd content
+get index.html
+put test.txt
+quit
+</code></pre>
+<h3 id="using-filezilla">Using FileZilla</h3>
+<ol>
+<li>Open FileZilla</li>
+<li>Host: <code>localhost</code></li>
+<li>Port: <code>2190</code> (or configured port)</li>
+<li>Protocol: <code>FTP</code></li>
+<li>Username: <code>dev_user</code> (from config)</li>
+<li>Password: <code>dev_pass</code> (from config)</li>
+<li>Click "Quickconnect"</li>
+</ol>
+<h3 id="using-python-ftplib">Using Python ftplib</h3>
+<pre><code class="language-python">from ftplib import FTP
+
+# Connect to local FTP server
+ftp = FTP()
+ftp.connect('localhost', 2190)
+ftp.login('dev_user', 'dev_pass')
+
+# List files
+print(ftp.nlst())
+
+# Download file
+with open('local_file.html', 'wb') as f:
+    ftp.retrbinary('RETR index.html', f.write)
+
+# Upload file
+with open('local_file.txt', 'rb') as f:
+    ftp.storbinary('STOR uploaded.txt', f)
+
+# Disconnect
+ftp.quit()
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="server-wont-stop-with-ctrlc">Server Won't Stop with Ctrl+C</h3>
+<h4 id="symptoms">Symptoms:</h4>
+<ul>
+<li>Pressing Ctrl+C doesn't stop the server</li>
+<li>Server hangs on shutdown</li>
+</ul>
+<h4 id="solutions">Solutions:</h4>
+<ol>
+<li>Use admin command: Type <code>quit</code> or <code>stop</code> at the <code>admin&gt;</code> prompt</li>
+<li>Press Ctrl+C multiple times</li>
+<li>Press Ctrl+D (Unix) or Ctrl+Z (Windows) for EOF signal</li>
+<li>As last resort, kill process: Find PID with <code>netstat -ano | findstr :&lt;port&gt;</code> and use <code>taskkill /PID &lt;pid&gt; /F</code></li>
+</ol>
+<p><strong>Note:</strong> The admin command prompt provides the most reliable shutdown method.</p>
+<h3 id="admin-prompt-not-responding">Admin Prompt Not Responding</h3>
+<h4 id="symptoms-1">Symptoms:</h4>
+<ul>
+<li>Cannot type commands at admin prompt</li>
+<li>Prompt appears frozen</li>
+</ul>
+<h4 id="solutions-1">Solutions:</h4>
+<ol>
+<li>Try pressing Enter to get a fresh prompt</li>
+<li>Use Ctrl+C to interrupt and trigger shutdown</li>
+<li>Check if server is processing FTP requests (may block briefly)</li>
+<li>Restart terminal if completely unresponsive</li>
+</ol>
+<h3 id="port-already-in-use">Port Already in Use</h3>
+<h4 id="error">Error:</h4>
+<pre><code>✗ Error: Port 2190 is already in use
+  Try a different port: python -m utils.gzhost -e dev -p &lt;port&gt;
+</code></pre>
+<h4 id="solutions-2">Solutions:</h4>
+<ol>
+<li>Check if another gzhost instance is running</li>
+<li>Use a different port: <code>.\scripts\gzhost.cmd -e dev -p 3000</code></li>
+<li>Change default port in <code>config/pipeline.toml</code></li>
+</ol>
+<h3 id="environment-directory-not-found">Environment Directory Not Found</h3>
+<h4 id="error-1">Error:</h4>
+<pre><code>✗ Error: Environment directory not found: D:\Projects\www\GAZTank\publish\dev
+Please create the directory or run a build for environment 'dev'
+</code></pre>
+<h4 id="solutions-3">Solutions:</h4>
+<ol>
+<li>Create the directory: <code>mkdir publish\dev</code></li>
+<li>Run package module: <code>.\scripts\package.cmd -e dev</code></li>
+<li>Verify <code>pipeline.toml</code> has correct <code>dir</code> attribute</li>
+</ol>
+<h3 id="cannot-connect-to-ftp-server">Cannot Connect to FTP Server</h3>
+<h4 id="symptoms-2">Symptoms:</h4>
+<ul>
+<li>FTP client times out</li>
+<li>Connection refused errors</li>
+</ul>
+<h4 id="solutions-4">Solutions:</h4>
+<ol>
+<li>Verify server is running (check console output)</li>
+<li>Check firewall allows connections to port</li>
+<li>Verify correct port number</li>
+<li>Try <code>localhost</code> instead of <code>127.0.0.1</code> or vice versa</li>
+</ol>
+<h3 id="authentication-failed">Authentication Failed</h3>
+<h4 id="symptoms-3">Symptoms:</h4>
+<ul>
+<li>"530 Authentication failed" error</li>
+<li>Login rejected</li>
+</ul>
+<h4 id="solutions-5">Solutions:</h4>
+<ol>
+<li>Verify username/password in <code>config/ftp_users.toml</code></li>
+<li>Check correct environment configuration loaded</li>
+<li>Ensure no typos in credentials</li>
+</ol>
+<h3 id="permission-denied">Permission Denied</h3>
+<h4 id="symptoms-4">Symptoms:</h4>
+<ul>
+<li>"550 Permission denied" errors</li>
+<li>Cannot upload/download files</li>
+</ul>
+<h4 id="solutions-6">Solutions:</h4>
+<ol>
+<li>Check <code>permissions</code> attribute in <code>ftp_users.toml</code></li>
+<li>For upload: ensure permissions include <code>w</code> (write)</li>
+<li>For download: ensure permissions include <code>r</code> (read)</li>
+<li>For delete: ensure permissions include <code>d</code> (delete)</li>
+</ol>
+<h3 id="pyftpdlib-not-installed">pyftpdlib Not Installed</h3>
+<h4 id="error-2">Error:</h4>
+<pre><code>✗ Error: pyftpdlib is not installed
+  Install it with: pip install pyftpdlib
+</code></pre>
+<h4 id="solution">Solution:</h4>
+<pre><code class="language-bash">pip install pyftpdlib
+</code></pre>
+<h2 id="security-considerations">Security Considerations</h2>
+<h3 id="local-development-only">Local Development Only</h3>
+<p><strong>⚠️ IMPORTANT</strong>: This module is designed for <strong>local development only</strong>.</p>
+<h4 id="security-limitations">Security Limitations:</h4>
+<ul>
+<li>Passwords stored in plain text</li>
+<li>No encryption (FTP, not FTPS/SFTP)</li>
+<li>No SSL/TLS support</li>
+<li>Binds to all interfaces (0.0.0.0)</li>
+<li>Minimal authentication</li>
+</ul>
+<h3 id="safe-usage">Safe Usage</h3>
+<p>✅ <strong>DO:</strong></p>
+<ul>
+<li>Use only on local development machines</li>
+<li>Use only for testing deployment workflows</li>
+<li>Keep <code>ftp_users.toml</code> out of version control if using sensitive data</li>
+<li>Use different credentials per environment</li>
+</ul>
+<p>❌ <strong>DO NOT:</strong></p>
+<ul>
+<li>Expose to internet</li>
+<li>Use in production environments</li>
+<li>Store real credentials in configuration</li>
+<li>Use for actual remote deployments</li>
+</ul>
+<h3 id="production-deployments">Production Deployments</h3>
+<p>For production deployments:</p>
+<ul>
+<li>Use proper SFTP/FTPS with encryption</li>
+<li>Use SSH keys instead of passwords</li>
+<li>Use proper authentication services</li>
+<li>Follow security best practices</li>
+<li>Use the <code>deploy</code> module with secure configuration</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><a href="../gzserve/README.md">gzserve module</a> - HTTP development server</li>
+<li><a href="../deploy/README.md">deploy module</a> - FTP deployment (future)</li>
+<li><a href="../package/README.md">package module</a> - Package site for deployment</li>
+<li><a href="../gzconfig/README.md">gzconfig</a> - Configuration management</li>
+<li><a href="../gzlogging/README.md">gzlogging</a> - Logging infrastructure</li>
+<li><a href="../../config/pipeline.toml">pipeline.toml</a> - Environment configuration</li>
+<li><a href="../../config/ftp_users.toml">ftp_users.toml</a> - FTP user credentials</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL v3.0 or later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

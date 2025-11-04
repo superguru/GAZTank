@@ -1,0 +1,67 @@
+<div data-hashtags="test, devcontent, lazy-loading"></div>
+<h1>Lazy Loading Test</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#image-test-page">Image Test Page</a>
+<ul>
+<li>
+<a href="#test-images">Test Images</a>
+</li>
+<li>
+<a href="#more-content">More Content</a>
+</li>
+<li>
+<a href="#even-more-images">Even More Images</a>
+</li>
+<li>
+<a href="#testing-instructions">Testing Instructions</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<!-- Test page demonstrating lazy loading -->
+<div data-hashtags="test, images, lazy-loading"></div>
+<h2 id="image-test-page">Image Test Page</h2>
+<p>This page demonstrates automatic lazy loading of images. All images below will have <code>loading="lazy"</code> added automatically by JavaScript.</p>
+<h3 id="test-images">Test Images</h3>
+<p>As you scroll down, you'll notice images load just before they come into view.</p>
+<!-- Example images - these will get loading="lazy" added automatically -->
+<img alt="Test image 1" src="https://yavuzceliker.github.io/sample-images/image-1.jpg"/>
+<p>First image loaded above.</p>
+<img alt="Test image 2" src="https://yavuzceliker.github.io/sample-images/image-2.jpg"/>
+<p>Second image loaded above.</p>
+<h3 id="more-content">More Content</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<img alt="Test image 3" src="https://yavuzceliker.github.io/sample-images/image-3.jpg"/>
+<p>Third image loaded above.</p>
+<h3 id="even-more-images">Even More Images</h3>
+<p>These images further down the page won't load until you scroll near them.</p>
+<img alt="Test image 4" src="https://yavuzceliker.github.io/sample-images/image-4.jpg"/>
+<p>Fourth image loaded above.</p>
+<img alt="Test image 5" src="https://yavuzceliker.github.io/sample-images/image-5.jpg"/>
+<p>Fifth image loaded above.</p>
+<h3 id="testing-instructions">Testing Instructions</h3>
+<ol>
+<li>Open Chrome DevTools (F12)</li>
+<li>Go to Network tab</li>
+<li>Filter by "Img"</li>
+<li>Reload this page</li>
+<li>Watch as images load only when you scroll near them</li>
+</ol>
+<p><strong>Result:</strong> Only the first 1-2 images load initially. Others load as you scroll down!</p>

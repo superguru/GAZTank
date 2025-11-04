@@ -1,0 +1,1077 @@
+<h1>GZLogging Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#log-rotation">Log Rotation</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#configuration-1">Configuration</a>
+</li>
+<li>
+<a href="#customisation">Customisation</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#key-design-goals">Key Design Goals</a>
+</li>
+<li>
+<a href="#purpose-in-pipeline">Purpose in Pipeline:</a>
+</li>
+<li>
+<a href="#how-gzlogging-logs-itself">How GZLogging Logs Itself</a>
+</li>
+<li>
+<a href="#log-format">Log Format</a>
+</li>
+<li>
+<a href="#log-levels">Log Levels</a>
+</li>
+<li>
+<a href="#how-rotation-works">How Rotation Works</a>
+</li>
+<li>
+<a href="#configuration-2">Configuration</a>
+</li>
+<li>
+<a href="#global-defaults">Global Defaults</a>
+</li>
+<li>
+<a href="#tool-specific-overrides">Tool-Specific Overrides</a>
+</li>
+<li>
+<a href="#directory-structure">Directory Structure</a>
+</li>
+<li>
+<a href="#rotation-behavior">Rotation Behavior</a>
+</li>
+<li>
+<a href="#examples">Examples</a>
+</li>
+<li>
+<a href="#installation">Installation</a>
+</li>
+<li>
+<a href="#basic-example">Basic Example</a>
+</li>
+<li>
+<a href="#log-output-format">Log Output Format</a>
+</li>
+<li>
+<a href="#available-log-methods">Available Log Methods</a>
+</li>
+<li>
+<a href="#read-only-properties">Read-Only Properties</a>
+</li>
+<li>
+<a href="#multiple-tools">Multiple Tools</a>
+</li>
+<li>
+<a href="#multiple-environments">Multiple Environments</a>
+</li>
+<li>
+<a href="#console-output">Console Output</a>
+</li>
+<li>
+<a href="#architecture">Architecture</a>
+</li>
+<li>
+<a href="#gzlint-htmljsconfig-linter">1. GZLint (HTML/JS/Config Linter)</a>
+</li>
+<li>
+<a href="#normalise-markdown-normalizer">2. Normalise (Markdown Normalizer)</a>
+</li>
+<li>
+<a href="#generate-content-generation">3. Generate (Content Generation)</a>
+</li>
+<li>
+<a href="#setup-site-site-configuration">4. Setup Site (Site Configuration)</a>
+</li>
+<li>
+<a href="#package-builddeployment">5. Package (Build/Deployment)</a>
+</li>
+<li>
+<a href="#log-file-structure">Log File Structure</a>
+</li>
+<li>
+<a href="#configuration-requirements">Configuration Requirements:</a>
+</li>
+<li>
+<a href="#log-file-locations">Log File Locations</a>
+</li>
+<li>
+<a href="#configuration-based-customisation">Configuration-Based Customisation</a>
+</li>
+<li>
+<a href="#code-based-customisation">Code-Based Customisation</a>
+</li>
+<li>
+<a href="#extending-loggingcontext">Extending LoggingContext</a>
+</li>
+<li>
+<a href="#importerror-no-module-named-tomllib-or-tomli">ImportError: No module named 'tomllib' or 'tomli'</a>
+</li>
+<li>
+<a href="#valueerror-environment-xyz-not-found-in-toolstoml">ValueError: Environment 'xyz' not found in tools.toml</a>
+</li>
+<li>
+<a href="#filenotfounderror-toolstoml-not-found">FileNotFoundError: tools.toml not found</a>
+</li>
+<li>
+<a href="#permissionerror-cannot-create-log-directory">PermissionError: Cannot create log directory</a>
+</li>
+<li>
+<a href="#log-files-not-created">Log files not created</a>
+</li>
+<li>
+<a href="#unicodeemoji-not-displaying-in-logs">Unicode/Emoji not displaying in logs</a>
+</li>
+<li>
+<a href="#testing">Testing</a>
+</li>
+<li>
+<a href="#integration-example">Integration Example</a>
+</li>
+<li>
+<a href="#error-handling">Error Handling</a>
+</li>
+<li>
+<a href="#file-locations">File Locations</a>
+</li>
+<li>
+<a href="#short-term-v12">Short Term (v1.2)</a>
+</li>
+<li>
+<a href="#medium-term-v13">Medium Term (v1.3)</a>
+</li>
+<li>
+<a href="#long-term-v20">Long Term (v2.0)</a>
+</li>
+<li>
+<a href="#under-consideration">Under Consideration</a>
+<ul>
+<li>
+<a href="#what-gets-logged">What gets logged:</a>
+</li>
+<li>
+<a href="#what-doesnt-get-logged">What doesn't get logged:</a>
+</li>
+<li>
+<a href="#what-gets-rotated">What gets rotated:</a>
+</li>
+<li>
+<a href="#what-doesnt-get-rotated">What doesn't get rotated:</a>
+</li>
+<li>
+<a href="#when-rotation-happens">When rotation happens:</a>
+</li>
+<li>
+<a href="#cleanup-rules">Cleanup rules:</a>
+</li>
+<li>
+<a href="#default-behavior-compresstrue-rotation-count30">Default behavior (compress=true, rotation_count=30):</a>
+</li>
+<li>
+<a href="#with-compression-disabled-compressfalse">With compression disabled (compress=false):</a>
+</li>
+<li>
+<a href="#mixed-compressed-and-uncompressed">Mixed compressed and uncompressed:</a>
+</li>
+<li>
+<a href="#requirements">Requirements:</a>
+</li>
+<li>
+<a href="#components">Components</a>
+</li>
+<li>
+<a href="#internal-state-management">Internal State Management</a>
+</li>
+<li>
+<a href="#custom-log-formatters">Custom Log Formatters</a>
+</li>
+<li>
+<a href="#additional-log-handlers">Additional Log Handlers</a>
+</li>
+<li>
+<a href="#custom-environment-detection">Custom Environment Detection</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+<li>
+<a href="#solution-5">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Environment-aware logging infrastructure for the GAZTank project with automatic configuration and daily log rotation.</p>
+<p><strong>Version:</strong> 1.2<br/>
+<strong>Last Updated:</strong> December 19, 2024</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a><ul>
+<li><a href="#how-gzlogging-logs-itself">How GZLogging Logs Itself</a></li>
+<li><a href="#log-format">Log Format</a></li>
+<li><a href="#log-levels">Log Levels</a></li>
+</ul>
+</li>
+<li><a href="#log-rotation">Log Rotation</a><ul>
+<li><a href="#how-rotation-works">How Rotation Works</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#directory-structure">Directory Structure</a></li>
+<li><a href="#rotation-behavior">Rotation Behavior</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#basic-example">Basic Example</a></li>
+<li><a href="#log-output-format">Log Output Format</a></li>
+<li><a href="#available-log-methods">Available Log Methods</a></li>
+<li><a href="#read-only-properties">Read-Only Properties</a></li>
+<li><a href="#multiple-tools">Multiple Tools</a></li>
+<li><a href="#multiple-environments">Multiple Environments</a></li>
+<li><a href="#console-output">Console Output</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a><ul>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#internal-state-management">Internal State Management</a></li>
+</ul>
+</li>
+<li><a href="#features">Features</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#configuration-1">Configuration</a><ul>
+<li><a href="#log-file-locations">Log File Locations</a></li>
+</ul>
+</li>
+<li><a href="#customisation">Customisation</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#development">Development</a><ul>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#integration-example">Integration Example</a></li>
+<li><a href="#error-handling">Error Handling</a></li>
+<li><a href="#file-locations">File Locations</a></li>
+</ul>
+</li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>GZLogging provides centralized logging infrastructure for all GAZTank modules and tools. It automatically routes logs to environment-specific directories, handles daily log file rotation, and provides a simple API for modules to use.</p>
+<h3 id="key-design-goals">Key Design Goals</h3>
+<ul>
+<li><strong>Environment-Aware</strong>: Automatically routes logs to environment-specific directories (dev, staging, prod)</li>
+<li><strong>Configuration-Driven</strong>: Reads log directories from <code>config/tools.toml</code></li>
+<li><strong>Automatic Log Rotation</strong>: Old log files are automatically rotated, compressed, and cleaned up</li>
+<li><strong>UTF-8 Support</strong>: All log files use UTF-8 encoding with emoji support</li>
+<li><strong>Read-Only Context</strong>: Environment settings are immutable once created</li>
+<li><strong>Daily Rotation</strong>: Logs are written to files named <code>{tool_name}_{YYYYMMDD}.log</code></li>
+<li><strong>Standard Logging</strong>: Built on Python's standard <code>logging</code> module</li>
+<li><strong>Singleton Pattern</strong>: Configuration loaded once, loggers reused efficiently</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>GZLogging is a foundational module used by all other GAZTank tools and modules:</p>
+<pre><code>GAZTank Build Pipeline:
+  ├─ gzlint → uses gzlogging
+  ├─ normalise → uses gzlogging
+  ├─ generate → uses gzlogging
+  ├─ setup → uses gzlogging
+  └─ package → uses gzlogging
+
+All tools log to:
+  logs/{environment}/{tool}_YYYYMMDD.log
+</code></pre>
+<h3 id="purpose-in-pipeline">Purpose in Pipeline:</h3>
+<ul>
+<li>Provides consistent logging across all tools</li>
+<li>Centralizes log file management</li>
+<li>Enables environment-specific log routing</li>
+<li>Facilitates debugging and audit trails</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<h3 id="how-gzlogging-logs-itself">How GZLogging Logs Itself</h3>
+<p>GZLogging is a meta-logging module - it provides logging for other modules but minimally logs its own operations:</p>
+<h4 id="what-gets-logged">What gets logged:</h4>
+<ul>
+<li>Configuration loading errors (stderr)</li>
+<li>Missing environment definitions (stderr)</li>
+<li>Log directory creation (stderr)</li>
+</ul>
+<h4 id="what-doesnt-get-logged">What doesn't get logged:</h4>
+<ul>
+<li>Successful initialization (silent)</li>
+<li>Logger creation (silent)</li>
+<li>Normal operations (silent)</li>
+</ul>
+<p>This design keeps log files focused on the actual tool's activities, not the logging infrastructure itself.</p>
+<h3 id="log-format">Log Format</h3>
+<p>Each log entry is formatted as:</p>
+<pre><code>[YYYY-MM-DD HH:MM:SS] [environment] [LEVEL] message
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-log">[2025-10-22 16:32:54] [dev] [INF] Application started
+[2025-10-22 16:32:54] [dev] [WRN] Configuration file is outdated
+[2025-10-22 16:32:54] [dev] [ERR] Failed to connect to database
+</code></pre>
+<h3 id="log-levels">Log Levels</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DBG</code></td>
+<td><code>.dbg()</code></td>
+<td>Detailed debugging information</td>
+</tr>
+<tr>
+<td><code>INF</code></td>
+<td><code>.inf()</code></td>
+<td>General informational messages</td>
+</tr>
+<tr>
+<td><code>WRN</code></td>
+<td><code>.wrn()</code></td>
+<td>Warning messages (unexpected but not critical)</td>
+</tr>
+<tr>
+<td><code>ERR</code></td>
+<td><code>.err()</code></td>
+<td>Error messages (operation failed)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="log-rotation">Log Rotation</h2>
+<p>GZLogging includes automatic log file management that runs transparently whenever a logging context is created.</p>
+<h3 id="how-rotation-works">How Rotation Works</h3>
+<ol>
+<li><strong>Automatic Rotation</strong>: When a logger is created, old log files (not today's active log) are automatically rotated</li>
+<li><strong>Rotated Directory</strong>: Old logs are moved to <code>logs/00rotated/</code></li>
+<li><strong>Compression</strong>: Old logs can be compressed to <code>.zip</code> format (configurable)</li>
+<li><strong>Cleanup</strong>: When rotated log count exceeds the limit, oldest files are deleted</li>
+</ol>
+<h3 id="configuration-2">Configuration</h3>
+<p>Log rotation is configured in <code>config/gzlogrotate.toml</code>:</p>
+<pre><code class="language-toml">[rotation]
+# Compress old log files when rotating (true/false)
+compress = true
+
+# Maximum number of rotated log files to keep per tool
+# Both .log and .zip files count toward this limit
+rotation_count = 30
+</code></pre>
+<h3 id="global-defaults">Global Defaults</h3>
+<ul>
+<li><strong>compress</strong>: <code>true</code> - Old logs are compressed to <code>.zip</code> format</li>
+<li><strong>rotation_count</strong>: <code>30</code> - Keep up to 30 rotated logs per tool</li>
+</ul>
+<h3 id="tool-specific-overrides">Tool-Specific Overrides</h3>
+<p>Individual tools can override global settings in <code>config/tools.toml</code>:</p>
+<pre><code class="language-toml">[tools.server]
+compress = false         # Don't compress server logs
+rotation_count = 60      # Keep 60 days of server logs
+
+[tools.deploy]
+compress = true          # Compress deploy logs
+rotation_count = 90      # Keep 90 days of deploy logs
+</code></pre>
+<h3 id="directory-structure">Directory Structure</h3>
+<pre><code>logs/
+├── dev/
+│   ├── myapp_20251022.log      # Today's active log
+│   └── (old logs are rotated)
+│
+├── staging/
+│   └── (same structure)
+│
+├── prod/
+│   └── (same structure)
+│
+└── 00rotated/                  # Rotated logs from all environments
+    ├── myapp_20251021.zip
+    ├── myapp_20251020.zip
+    ├── myapp_20251019.zip
+    └── ...
+</code></pre>
+<h3 id="rotation-behavior">Rotation Behavior</h3>
+<h4 id="what-gets-rotated">What gets rotated:</h4>
+<ul>
+<li>Log files older than today (not matching current date)</li>
+<li>Files matching pattern: <code>{tool_name}_YYYYMMDD.log</code></li>
+</ul>
+<h4 id="what-doesnt-get-rotated">What doesn't get rotated:</h4>
+<ul>
+<li>Today's active log file</li>
+<li>Files already in the <code>00rotated</code> directory</li>
+</ul>
+<h4 id="when-rotation-happens">When rotation happens:</h4>
+<ul>
+<li>Automatically when <code>get_logging_context()</code> is called</li>
+<li>First logger creation of the day triggers rotation</li>
+<li>Completely transparent to client code</li>
+</ul>
+<h4 id="cleanup-rules">Cleanup rules:</h4>
+<ul>
+<li>Counts both <code>.log</code> and <code>.zip</code> files in <code>00rotated/</code></li>
+<li>Active log NOT included in count</li>
+<li>Deletes oldest files when count exceeds <code>rotation_count</code></li>
+<li>Sorting by file modification time (oldest first)</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<h4 id="default-behavior-compresstrue-rotation-count30">Default behavior (compress=true, rotation_count=30):</h4>
+<pre><code>Day 1:  myapp_20251021.log created
+Day 2:  myapp_20251021.log → 00rotated/myapp_20251021.zip
+        myapp_20251022.log created (active)
+Day 31: Oldest rotated logs deleted to maintain count=30
+</code></pre>
+<h4 id="with-compression-disabled-compressfalse">With compression disabled (compress=false):</h4>
+<pre><code>Day 1:  myapp_20251021.log created
+Day 2:  myapp_20251021.log → 00rotated/myapp_20251021.log
+        myapp_20251022.log created (active)
+</code></pre>
+<h4 id="mixed-compressed-and-uncompressed">Mixed compressed and uncompressed:</h4>
+<ul>
+<li>If <code>compress</code> setting changes over time, both <code>.log</code> and <code>.zip</code> files can exist</li>
+<li>Rotation count includes both types</li>
+<li>Oldest files (by modification time) are deleted first, regardless of type</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="installation">Installation</h3>
+<p>No installation needed - <code>gzlogging</code> is part of the GAZTank utils.</p>
+<h4 id="requirements">Requirements:</h4>
+<ul>
+<li>Python 3.11+ (uses built-in <code>tomllib</code>)</li>
+<li>Python 3.7-3.10 (requires <code>tomli</code> package: <code>pip install tomli</code>)</li>
+</ul>
+<h3 id="basic-example">Basic Example</h3>
+<pre><code class="language-python">from gzlogging import get_logging_context
+
+# Create a logging context
+ctx = get_logging_context('dev', 'myapp')
+
+# Log messages
+ctx.inf("Application started")
+ctx.wrn("Configuration file is outdated")
+ctx.err("Failed to connect to database")
+</code></pre>
+<p>This creates a log file at <code>logs/dev/myapp_20251022.log</code> with the entries.</p>
+<h3 id="log-output-format">Log Output Format</h3>
+<pre><code class="language-log">[2025-10-22 16:32:54] [dev] [INF] Application started
+[2025-10-22 16:32:54] [dev] [WRN] Configuration file is outdated
+[2025-10-22 16:32:54] [dev] [ERR] Failed to connect to database
+</code></pre>
+<h3 id="available-log-methods">Available Log Methods</h3>
+<pre><code class="language-python">ctx.dbg("Detailed debugging information")    # DBG level
+ctx.inf("General informational message")     # INF level
+ctx.wrn("Warning message")                   # WRN level
+ctx.err("Error message")                     # ERR level
+</code></pre>
+<p><strong>Note:</strong> Only these four log levels are supported. The internal <code>_log()</code> method is private and should not be used by clients.</p>
+<h3 id="read-only-properties">Read-Only Properties</h3>
+<pre><code class="language-python">ctx = get_logging_context('dev', 'myapp')
+
+# You can read these properties
+print(ctx.environment)  # 'dev'
+print(ctx.tool_name)    # 'myapp'
+
+# But you cannot modify them
+ctx.environment = 'prod'  # Raises AttributeError
+</code></pre>
+<h3 id="multiple-tools">Multiple Tools</h3>
+<pre><code class="language-python"># Different tools can log to the same environment
+setup_ctx = get_logging_context('dev', 'setup')
+deploy_ctx = get_logging_context('dev', 'deploy')
+
+setup_ctx.inf("Setup started")
+deploy_ctx.inf("Deployment started")
+</code></pre>
+<h3 id="multiple-environments">Multiple Environments</h3>
+<pre><code class="language-python"># Same tool can log to different environments
+dev_ctx = get_logging_context('dev', 'myapp')
+prod_ctx = get_logging_context('prod', 'myapp')
+
+dev_ctx.inf("Testing new feature")
+prod_ctx.inf("Production deployment complete")
+</code></pre>
+<h3 id="console-output">Console Output</h3>
+<p>GZLogging supports optional dual output (file + console):</p>
+<pre><code class="language-python"># Console output disabled (default) - logs only to file
+ctx = get_logging_context('dev', 'myapp', console=False)
+
+# Console output enabled - logs to both file and console
+ctx = get_logging_context('dev', 'myapp', console=True)
+ctx.inf("This appears in both log file and console")
+</code></pre>
+<p>This is useful for interactive tools where users need immediate feedback.</p>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<p>gzlogging is a library module and does not provide command-line arguments. It is imported and used by other tools (gzlint, normalise, generate, etc.).</p>
+<p>For command-line usage, see the documentation for the tools that use gzlogging.</p>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>gzlogging/
+├── __init__.py          # Module exports (get_logging_context, LoggingContext)
+├── gzlogging.py         # Core implementation
+├── test_gzlogging.py    # Test/demonstration script
+└── README.md            # This file
+</code></pre>
+<h3 id="architecture">Architecture</h3>
+<h4 id="components">Components</h4>
+<ol>
+<li><p><strong>LoggingContext</strong>: Public API for client code</p>
+<ul>
+<li>Provides logging methods (<code>.dbg()</code>, <code>.inf()</code>, <code>.wrn()</code>, <code>.err()</code>)</li>
+<li>Maintains environment and tool name (read-only)</li>
+<li>Prevents accidental modification of settings</li>
+</ul>
+</li>
+<li><p><strong>_LoggingManager</strong>: Internal singleton (private, not exported)</p>
+<ul>
+<li>Loads and caches <code>tools.toml</code> configuration</li>
+<li>Manages log directories per environment</li>
+<li>Creates and caches logger instances</li>
+<li>Handles all internal state</li>
+</ul>
+</li>
+<li><p><strong>get_logging_context()</strong>: Factory function</p>
+<ul>
+<li>Main entry point for client code</li>
+<li>Creates/retrieves LoggingContext instances</li>
+<li>Parameters: <code>environment</code>, <code>tool_name</code>, <code>console=False</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="internal-state-management">Internal State Management</h4>
+<p>The <code>_LoggingManager</code> singleton maintains:</p>
+<ul>
+<li><strong>_config</strong>: Parsed tools.toml configuration</li>
+<li><strong>_log_dirs</strong>: Cache of resolved log directories per environment</li>
+<li><strong>_loggers</strong>: Cache of configured logger instances</li>
+<li><strong>_project_root</strong>: Resolved project root directory</li>
+</ul>
+<p>This design ensures:</p>
+<ul>
+<li>Configuration is loaded only once</li>
+<li>Log directories are created on-demand</li>
+<li>Logger instances are reused efficiently</li>
+<li>Client code doesn't need to know about internal paths</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Environment-Aware Routing</strong>: Automatically directs logs to environment-specific directories</li>
+<li><strong>Configuration-Driven</strong>: Reads <code>config/tools.toml</code> for environment definitions</li>
+<li><strong>Automatic Log Rotation</strong>: Old log files are rotated, compressed, and cleaned up automatically</li>
+<li><strong>Configurable Retention</strong>: Control how many old logs to keep and whether to compress them</li>
+<li><strong>Tool-Specific Overrides</strong>: Individual tools can override global rotation settings</li>
+<li><strong>UTF-8 Support</strong>: All log files use UTF-8 encoding with emoji support (✓ ❌ ⚠️ ℹ️)</li>
+<li><strong>Daily Log Rotation</strong>: New log file each day (<code>{tool}_{YYYYMMDD}.log</code>)</li>
+<li><strong>Multiple Log Levels</strong>: DBG, INF, WRN, ERR with distinct formatting</li>
+<li><strong>Dual Output</strong>: Optional console output alongside file logging</li>
+<li><strong>Read-Only Context</strong>: Immutable environment settings prevent accidental changes</li>
+<li><strong>Singleton Pattern</strong>: Efficient resource usage (config loaded once, loggers cached)</li>
+<li><strong>Error Handling</strong>: Clear exceptions for missing environments or configuration</li>
+<li><strong>Standard Logging</strong>: Built on Python's <code>logging</code> module</li>
+<li><strong>Minimal Dependencies</strong>: Uses stdlib (except <code>tomli</code> for Python &lt; 3.11)</li>
+</ul>
+<h2 id="invocation-points">Invocation Points</h2>
+<p>GZLogging is used by all major GAZTank tools:</p>
+<h3 id="gzlint-htmljsconfig-linter">1. GZLint (HTML/JS/Config Linter)</h3>
+<pre><code class="language-python"># utils/gzlint/gzlinter.py
+from utils.gzlogging import get_logging_context
+
+log = get_logging_context('dev', 'gzlint', console=True)
+log.inf("Linting HTML file: src/content/about.html")
+</code></pre>
+<p><strong>Location:</strong> <code>utils/gzlint/gzlinter.py</code><br/>
+<strong>Usage:</strong> Logs file validation activities with dual output</p>
+<h3 id="normalise-markdown-normalizer">2. Normalise (Markdown Normalizer)</h3>
+<pre><code class="language-python"># utils/normalise/normaliser.py
+from utils.gzlogging import get_logging_context
+
+log = get_logging_context('dev', 'normalise', console=True)
+log.inf("Processing file: docs/SETUP_SITE.md")
+</code></pre>
+<p><strong>Location:</strong> <code>utils/normalise/normaliser.py</code><br/>
+<strong>Usage:</strong> Logs markdown file processing with dual output</p>
+<h3 id="generate-content-generation">3. Generate (Content Generation)</h3>
+<pre><code class="language-python"># utils/generate/generator.py
+from utils.gzlogging import get_logging_context
+
+log = get_logging_context('dev', 'generate', console=True)
+log.inf("Converting markdown to HTML")
+</code></pre>
+<p><strong>Location:</strong> <code>utils/generate/generator.py</code><br/>
+<strong>Usage:</strong> Logs content generation pipeline activities</p>
+<h3 id="setup-site-site-configuration">4. Setup Site (Site Configuration)</h3>
+<pre><code class="language-python"># utils/setup/setup.py
+from utils.gzlogging import get_logging_context
+
+log = get_logging_context('dev', 'setup', console=True)
+log.inf("Initializing site configuration")
+</code></pre>
+<p><strong>Location:</strong> <code>utils/setup/setup.py</code><br/>
+<strong>Usage:</strong> Logs site setup and configuration activities</p>
+<h3 id="package-builddeployment">5. Package (Build/Deployment)</h3>
+<p><strong>Location:</strong> <code>utils/package/packager.py</code> (planned)<br/>
+<strong>Usage:</strong> Logs packaging and deployment activities</p>
+<h3 id="log-file-structure">Log File Structure</h3>
+<p>All tools log to:</p>
+<pre><code>logs/
+├── dev/
+│   ├── gzlint_20251022.log
+│   ├── normalise_20251022.log
+│   ├── generate_20251022.log
+│   └── setup_20251022.log
+├── staging/
+│   └── (same structure)
+├── prod/
+│   └── (same structure)
+└── 00rotated/
+    ├── gzlint_20251021.zip
+    ├── normalise_20251020.zip
+    └── (older rotated logs)
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<h2 id="configuration-1">Configuration</h2>
+<p>Log directories are configured in <code>config/tools.toml</code>:</p>
+<pre><code class="language-toml">[environments.dev]
+log_dir = "dev"
+description = "Development environment logs"
+
+[environments.staging]
+log_dir = "staging"
+description = "Staging environment logs"
+
+[environments.prod]
+log_dir = "prod"
+description = "Production environment logs"
+
+# Tool-specific rotation overrides (optional)
+[tools.server]
+compress = false
+rotation_count = 60
+</code></pre>
+<h3 id="configuration-requirements">Configuration Requirements:</h3>
+<ul>
+<li>Each environment must have a <code>log_dir</code> attribute</li>
+<li>The <code>log_dir</code> values are relative to the <code>logs/</code> directory</li>
+<li>The <code>description</code> attribute is optional</li>
+<li>Missing environments will raise <code>ValueError</code> when accessed</li>
+<li>Tool-specific rotation settings override global defaults from <code>gzlogrotate.toml</code></li>
+</ul>
+<h3 id="log-file-locations">Log File Locations</h3>
+<p>Logs are written to:</p>
+<pre><code>{project_root}/logs/{environment}/{tool_name}_{YYYYMMDD}.log
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>logs/dev/myapp_20251022.log</code></li>
+<li><code>logs/staging/deploy_20251022.log</code></li>
+<li><code>logs/prod/server_20251022.log</code></li>
+</ul>
+<p>Each day creates a new log file automatically.</p>
+<h2 id="customisation">Customisation</h2>
+<p>GZLogging supports customisation through the configuration file and code extensions:</p>
+<h3 id="configuration-based-customisation">Configuration-Based Customisation</h3>
+<p>Edit <code>config/tools.toml</code> to modify log directories:</p>
+<pre><code class="language-toml">[logging]
+dev_log_dir = "logs/dev"
+staging_log_dir = "logs/staging"
+prod_log_dir = "logs/prod"
+</code></pre>
+<h3 id="code-based-customisation">Code-Based Customisation</h3>
+<h4 id="custom-log-formatters">Custom Log Formatters</h4>
+<p>To use a custom log format, modify <code>gzlogging.py</code>:</p>
+<pre><code class="language-python"># In _LoggingManager._create_logger()
+formatter = logging.Formatter(
+    '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+</code></pre>
+<h4 id="additional-log-handlers">Additional Log Handlers</h4>
+<p>Add extra handlers (email, syslog, etc.):</p>
+<pre><code class="language-python">from utils.gzlogging import get_logging_context
+import logging
+import logging.handlers
+
+# Get standard logging context
+ctx = get_logging_context('dev', 'myapp')
+
+# Access the underlying logger (use with caution)
+logger = logging.getLogger(f"myapp_dev")
+
+# Add email handler for errors
+email_handler = logging.handlers.SMTPHandler(
+    mailhost='localhost',
+    fromaddr='logger@example.com',
+    toaddrs=['admin@example.com'],
+    subject='Application Error'
+)
+email_handler.setLevel(logging.ERROR)
+logger.addHandler(email_handler)
+</code></pre>
+<h4 id="custom-environment-detection">Custom Environment Detection</h4>
+<p>For environments beyond dev/staging/prod, modify the calling code:</p>
+<pre><code class="language-python"># Detect custom environment
+import os
+env = os.environ.get('APP_ENV', 'dev')  # Could be 'test', 'qa', etc.
+
+# Use appropriate log directory
+if env == 'test':
+    ctx = get_logging_context('dev', 'myapp')  # Map test → dev logs
+elif env == 'qa':
+    ctx = get_logging_context('staging', 'myapp')  # Map qa → staging logs
+else:
+    ctx = get_logging_context(env, 'myapp')
+</code></pre>
+<h3 id="extending-loggingcontext">Extending LoggingContext</h3>
+<p>For additional functionality, subclass <code>LoggingContext</code>:</p>
+<pre><code class="language-python">from utils.gzlogging import get_logging_context
+
+class AuditLoggingContext:
+    def __init__(self, env, tool_name, console=False):
+        self._ctx = get_logging_context(env, tool_name, console)
+        
+    def audit(self, action, user, details):
+        """Log audit events with structured format"""
+        msg = f"AUDIT | User: {user} | Action: {action} | Details: {details}"
+        self._ctx.inf(msg)
+        
+    # Delegate standard methods
+    def inf(self, msg): return self._ctx.inf(msg)
+    def wrn(self, msg): return self._ctx.wrn(msg)
+    def err(self, msg): return self._ctx.err(msg)
+    def dbg(self, msg): return self._ctx.dbg(msg)
+
+# Usage
+audit_log = AuditLoggingContext('prod', 'admin', console=False)
+audit_log.audit('login', 'admin@example.com', 'Successful authentication')
+audit_log.audit('config_change', 'admin@example.com', 'Updated timeout setting')
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><p><strong>Create context once</strong>: Create the logging context at the start of your application</p>
+<pre><code class="language-python">ctx = get_logging_context('dev', 'myapp')
+# Use ctx throughout your application
+</code></pre>
+</li>
+<li><p><strong>Use descriptive tool names</strong>: Keep them short but meaningful</p>
+<pre><code class="language-python"># Good
+ctx = get_logging_context('dev', 'setup')
+ctx = get_logging_context('dev', 'deploy')
+
+# Less good
+ctx = get_logging_context('dev', 'tool1')
+ctx = get_logging_context('dev', 'script')
+</code></pre>
+</li>
+<li><p><strong>Match environment to actual deployment</strong>: Use the same environment name as your deployment</p>
+<pre><code class="language-python"># In development
+ctx = get_logging_context('dev', 'myapp')
+
+# In staging
+ctx = get_logging_context('staging', 'myapp')
+
+# In production
+ctx = get_logging_context('prod', 'myapp')
+</code></pre>
+</li>
+<li><p><strong>Use appropriate log levels</strong>:</p>
+<ul>
+<li><code>DBG</code>: Detailed diagnostic information</li>
+<li><code>WRN</code>: Warning messages (something unexpected but not critical)</li>
+<li><code>INF</code>: General informational messages</li>
+<li><code>ERR</code>: Error messages (operation failed but application continues)</li>
+</ul>
+</li>
+<li><p><strong>Enable console output for interactive tools</strong>: Use <code>console=True</code> when users need immediate feedback</p>
+<pre><code class="language-python"># For batch/background processes
+log = get_logging_context('dev', 'myapp', console=False)
+
+# For interactive tools
+log = get_logging_context('dev', 'myapp', console=True)
+</code></pre>
+</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="importerror-no-module-named-tomllib-or-tomli">ImportError: No module named 'tomllib' or 'tomli'</h3>
+<p><strong>Problem:</strong> Python version doesn't have TOML support</p>
+<h4 id="solution">Solution:</h4>
+<pre><code class="language-bash"># For Python &lt; 3.11
+pip install tomli
+</code></pre>
+<h3 id="valueerror-environment-xyz-not-found-in-toolstoml">ValueError: Environment 'xyz' not found in tools.toml</h3>
+<p><strong>Problem:</strong> Trying to use an environment that isn't defined in <code>config/tools.toml</code></p>
+<h4 id="solution-1">Solution:</h4>
+<ol>
+<li>Check <code>config/tools.toml</code> for available environments</li>
+<li>Add the missing environment to <code>tools.toml</code>:<pre><code class="language-toml">[xyz]
+log_dir = "logs/xyz"
+description = "XYZ environment logs"
+</code></pre>
+</li>
+</ol>
+<h3 id="filenotfounderror-toolstoml-not-found">FileNotFoundError: tools.toml not found</h3>
+<p><strong>Problem:</strong> Cannot find <code>config/tools.toml</code></p>
+<h4 id="solution-2">Solution:</h4>
+<ol>
+<li>Ensure you're running from the project root</li>
+<li>Verify <code>config/tools.toml</code> exists</li>
+<li>Check file permissions</li>
+</ol>
+<h3 id="permissionerror-cannot-create-log-directory">PermissionError: Cannot create log directory</h3>
+<p><strong>Problem:</strong> No write permissions for log directory</p>
+<h4 id="solution-3">Solution:</h4>
+<ol>
+<li>Check permissions on <code>logs/</code> directory</li>
+<li>Verify disk space available</li>
+<li>On Linux/Mac: <code>chmod 755 logs/</code></li>
+</ol>
+<h3 id="log-files-not-created">Log files not created</h3>
+<p><strong>Problem:</strong> Logs not appearing in expected location</p>
+<h4 id="solution-4">Solution:</h4>
+<ol>
+<li>Check that <code>log_dir</code> in <code>tools.toml</code> is correct</li>
+<li>Verify the tool name is correct (check for typos)</li>
+<li>Confirm project root is detected correctly</li>
+<li>Check console for error messages</li>
+</ol>
+<h3 id="unicodeemoji-not-displaying-in-logs">Unicode/Emoji not displaying in logs</h3>
+<p><strong>Problem:</strong> Garbled characters in log files</p>
+<h4 id="solution-5">Solution:</h4>
+<ol>
+<li>Ensure log files are viewed with UTF-8 encoding</li>
+<li>Use a modern text editor or terminal</li>
+<li>On Windows: Use Windows Terminal or VS Code terminal</li>
+</ol>
+<h2 id="development">Development</h2>
+<h3 id="testing">Testing</h3>
+<p>Run the test script to experiment with the logging module:</p>
+<pre><code class="language-bash"># Test with default environment (dev) and tool name (test)
+python utils/gzlogging/test_gzlogging.py
+
+# Test with specific environment
+python utils/gzlogging/test_gzlogging.py staging
+
+# Test with specific environment and tool name
+python utils/gzlogging/test_gzlogging.py prod myapp
+</code></pre>
+<p>The test script demonstrates:</p>
+<ul>
+<li>Creating logging contexts</li>
+<li>All log levels (DBG, INF, WRN, ERR)</li>
+<li>Unicode and emoji support</li>
+<li>Multiple contexts (tools and environments)</li>
+<li>Error handling</li>
+<li>Read-only properties</li>
+<li>Console output toggling</li>
+</ul>
+<h3 id="integration-example">Integration Example</h3>
+<pre><code class="language-python">#!/usr/bin/env python3
+"""My Application"""
+
+from gzlogging import get_logging_context
+
+def main():
+    # Get environment from command line or config
+    environment = 'dev'  # or from args/env vars
+    
+    # Create logging context
+    log = get_logging_context(environment, 'myapp', console=True)
+    
+    log.inf("Application starting")
+    
+    try:
+        # Your application logic
+        log.dbg("Initializing components")
+        # ...
+        log.inf("Components initialized successfully")
+        
+    except Exception as e:
+        log.err(f"Fatal error: {e}")
+        return 1
+    
+    log.inf("Application finished successfully")
+    return 0
+
+if __name__ == '__main__':
+    exit(main())
+</code></pre>
+<h3 id="error-handling">Error Handling</h3>
+<pre><code class="language-python">try:
+    ctx = get_logging_context('invalid_env', 'myapp')
+except ValueError as e:
+    print(f"Invalid environment: {e}")
+except FileNotFoundError as e:
+    print(f"Configuration not found: {e}")
+except ImportError as e:
+    print(f"TOML library not available: {e}")
+</code></pre>
+<h3 id="file-locations">File Locations</h3>
+<pre><code>GAZTank/
+├── config/
+│   └── tools.toml              # Environment configuration
+│
+├── logs/
+│   ├── dev/
+│   │   ├── gzlint_YYYYMMDD.log
+│   │   ├── normalise_YYYYMMDD.log
+│   │   ├── generate_YYYYMMDD.log
+│   │   └── setup_YYYYMMDD.log
+│   ├── staging/
+│   │   └── (same structure)
+│   ├── prod/
+│   │   └── (same structure)
+│   └── 00rotated/
+│       ├── gzlint_YYYYMMDD.zip
+│       ├── normalise_YYYYMMDD.zip
+│       └── (older rotated logs)
+│
+└── utils/
+    ├── gzlogging/              # This module
+    │   ├── __init__.py
+    │   ├── gzlogging.py
+    │   ├── test_gzlogging.py
+    │   └── README.md
+    │
+    ├── gzlint/                 # Uses gzlogging
+    ├── normalise/              # Uses gzlogging
+    ├── generate/               # Uses gzlogging
+    └── setup/                  # Uses gzlogging
+</code></pre>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Planned improvements for future versions:</p>
+<h3 id="short-term-v12">Short Term (v1.2)</h3>
+<ul>
+<li><strong>Structured Logging</strong>: Add JSON output format for machine parsing</li>
+<li><strong>Log Level Configuration</strong>: Per-tool log level configuration in <code>tools.toml</code></li>
+<li><strong>Console Color Coding</strong>: Colored output for different log levels (DEBUG=gray, INFO=white, WARNING=yellow, ERROR=red)</li>
+</ul>
+<h3 id="medium-term-v13">Medium Term (v1.3)</h3>
+<ul>
+<li><strong>Custom Formatters</strong>: Support for custom log formatters via configuration</li>
+<li><strong>Log Compression</strong>: Automatic gzip compression of rotated log files</li>
+<li><strong>Performance Metrics</strong>: Built-in timing decorators for performance logging</li>
+</ul>
+<h3 id="long-term-v20">Long Term (v2.0)</h3>
+<ul>
+<li><strong>Remote Logging</strong>: Support for sending logs to remote logging services (syslog, cloud services)</li>
+<li><strong>Log Filtering</strong>: Configure filters to exclude certain messages or patterns</li>
+<li><strong>Contextual Logging</strong>: Thread-local context for request tracking (correlation IDs)</li>
+<li><strong>Async Logging</strong>: Non-blocking log writes for high-performance applications</li>
+</ul>
+<h3 id="under-consideration">Under Consideration</h3>
+<ul>
+<li><strong>Log Aggregation</strong>: Tools for searching across multiple log files</li>
+<li><strong>Alert Integration</strong>: Hooks for error alerting via email/Slack/webhooks</li>
+<li><strong>Log Retention Policies</strong>: Automatic cleanup of old logs based on age/size</li>
+<li><strong>Multi-Process Safety</strong>: Enhanced file locking for concurrent writers</li>
+</ul>
+<p>See <a href="https://github.com/gazorper/GAZTank/issues">GitHub Issues</a> for tracking and discussion.</p>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../gzlint/README.md">GZLint Module</a></strong> - HTML/JS/Config linter (uses gzlogging)</li>
+<li><strong><a href="../normalise/README.md">Normalise Module</a></strong> - Markdown normalizer (uses gzlogging)</li>
+<li><strong><a href="../generate/README.md">Generate Module</a></strong> - Content generation (uses gzlogging)</li>
+<li><strong><a href="../setup/README.md">Setup Module</a></strong> - Site setup (uses gzlogging)</li>
+<li><strong>Python logging:</strong> <a href="https://docs.python.org/3/library/logging.html">https://docs.python.org/3/library/logging.html</a></li>
+<li><strong>TOML specification:</strong> <a href="https://toml.io/">https://toml.io/</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: December 19, 2024</em><br/>
+<em>GZLogging version: 1.2</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

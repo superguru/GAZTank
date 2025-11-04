@@ -1,0 +1,1684 @@
+<h1>GZConfig - Configuration Management Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#api-reference">API Reference</a>
+</li>
+<li>
+<a href="#configuration-files">Configuration Files</a>
+</li>
+<li>
+<a href="#error-handling">Error Handling</a>
+</li>
+<li>
+<a href="#migration-guide">Migration Guide</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#customisation">Customisation</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#key-design-goals">Key Design Goals</a>
+</li>
+<li>
+<a href="#currently-supported">Currently Supported</a>
+</li>
+<li>
+<a href="#future-support-planned">Future Support Planned</a>
+</li>
+<li>
+<a href="#purpose-in-pipeline">Purpose in Pipeline:</a>
+</li>
+<li>
+<a href="#how-gzconfig-handles-logging">How GZConfig Handles Logging</a>
+</li>
+<li>
+<a href="#basic-usage">Basic Usage</a>
+</li>
+<li>
+<a href="#access-all-environments">Access All Environments</a>
+</li>
+<li>
+<a href="#real-world-example">Real-World Example</a>
+</li>
+<li>
+<a href="#deploy-configuration-example">Deploy Configuration Example</a>
+</li>
+<li>
+<a href="#architecture">Architecture</a>
+</li>
+<li>
+<a href="#functions">Functions</a>
+</li>
+<li>
+<a href="#classes">Classes</a>
+</li>
+<li>
+<a href="#pipeline-configuration-configpipelinetoml">Pipeline Configuration (config/pipeline.toml)</a>
+</li>
+<li>
+<a href="#structure">Structure</a>
+</li>
+<li>
+<a href="#adding-new-environments">Adding New Environments</a>
+</li>
+<li>
+<a href="#deploy-configuration-configdeploytoml">Deploy Configuration (config/deploy.toml)</a>
+</li>
+<li>
+<a href="#ftp-users-configuration-configftp-userstoml">FTP Users Configuration (config/ftp_users.toml)</a>
+</li>
+<li>
+<a href="#environment-not-found">Environment Not Found</a>
+</li>
+<li>
+<a href="#configuration-file-missing">Configuration File Missing</a>
+</li>
+<li>
+<a href="#toml-library-not-available">TOML Library Not Available</a>
+</li>
+<li>
+<a href="#invalid-configuration-structure">Invalid Configuration Structure</a>
+</li>
+<li>
+<a href="#validation-errors">Validation Errors</a>
+</li>
+<li>
+<a href="#before-direct-toml-access">Before (Direct TOML Access)</a>
+</li>
+<li>
+<a href="#after-using-gzconfig">After (Using gzconfig)</a>
+</li>
+<li>
+<a href="#benefits-of-migration">Benefits of Migration</a>
+</li>
+<li>
+<a href="#real-world-migration-examples">Real-World Migration Examples</a>
+</li>
+<li>
+<a href="#testing">Testing</a>
+</li>
+<li>
+<a href="#integration">Integration</a>
+</li>
+<li>
+<a href="#custom-configuration-paths">Custom Configuration Paths</a>
+</li>
+<li>
+<a href="#adding-new-configuration-properties">Adding New Configuration Properties</a>
+</li>
+<li>
+<a href="#custom-environment-classes">Custom Environment Classes</a>
+</li>
+<li>
+<a href="#importerror-no-toml-library">ImportError: No TOML library</a>
+</li>
+<li>
+<a href="#filenotfounderror-configuration-not-found">FileNotFoundError: Configuration not found</a>
+</li>
+<li>
+<a href="#valueerror-environment-not-defined">ValueError: Environment not defined</a>
+</li>
+<li>
+<a href="#valueerror-invalid-pipelinetoml">ValueError: Invalid pipeline.toml</a>
+</li>
+<li>
+<a href="#attributeerror-pipelineconfig-has-no-attribute">AttributeError: PipelineConfig has no attribute</a>
+</li>
+<li>
+<a href="#type-checker-warnings">Type Checker Warnings</a>
+</li>
+<li>
+<a href="#get-configuration-once">1. Get Configuration Once</a>
+</li>
+<li>
+<a href="#use-property-access">2. Use Property Access</a>
+</li>
+<li>
+<a href="#handle-errors-appropriately">3. Handle Errors Appropriately</a>
+</li>
+<li>
+<a href="#use-type-hints">4. Use Type Hints</a>
+</li>
+<li>
+<a href="#check-directory-existence">5. Check Directory Existence</a>
+</li>
+<li>
+<a href="#validate-environment-parameter-early">6. Validate Environment Parameter Early</a>
+</li>
+<li>
+<a href="#dont-cache-pipelineconfig-objects-manually">7. Don't Cache PipelineConfig Objects Manually</a>
+</li>
+<li>
+<a href="#use-reloadtrue-only-when-needed">8. Use reload=True Only When Needed</a>
+</li>
+<li>
+<a href="#short-term-v11">Short Term (v1.1)</a>
+</li>
+<li>
+<a href="#medium-term-v12">Medium Term (v1.2)</a>
+</li>
+<li>
+<a href="#long-term-v20">Long Term (v2.0)</a>
+</li>
+<li>
+<a href="#under-consideration">Under Consideration</a>
+<ul>
+<li>
+<a href="#what-gets-logged">What gets logged:</a>
+</li>
+<li>
+<a href="#what-doesnt-get-logged">What doesn't get logged:</a>
+</li>
+<li>
+<a href="#design-decision">Design Decision:</a>
+</li>
+<li>
+<a href="#result">Result:</a>
+</li>
+<li>
+<a href="#result-1">Result:</a>
+</li>
+<li>
+<a href="#result-2">Result:</a>
+</li>
+<li>
+<a href="#components">Components</a>
+</li>
+<li>
+<a href="#internal-design">Internal Design</a>
+</li>
+<li>
+<a href="#get-pipeline-configenvironmentnone-reloadfalse">get_pipeline_config(environment=None, reload=False)</a>
+</li>
+<li>
+<a href="#pipelineenvironment">PipelineEnvironment</a>
+</li>
+<li>
+<a href="#pipelineconfig">PipelineConfig</a>
+</li>
+<li>
+<a href="#get-deploy-config">get_deploy_config()</a>
+</li>
+<li>
+<a href="#deployconfig">DeployConfig</a>
+</li>
+<li>
+<a href="#get-ftp-users-config">get_ftp_users_config()</a>
+</li>
+<li>
+<a href="#ftpuserenvironment">FTPUserEnvironment</a>
+</li>
+<li>
+<a href="#ftpusersconfig">FTPUsersConfig</a>
+</li>
+<li>
+<a href="#example">Example:</a>
+</li>
+<li>
+<a href="#structure-1">Structure:</a>
+</li>
+<li>
+<a href="#setup">Setup:</a>
+</li>
+<li>
+<a href="#field-descriptions">Field Descriptions:</a>
+</li>
+<li>
+<a href="#example-subdirectory-names">Example Subdirectory Names:</a>
+</li>
+<li>
+<a href="#structure-2">Structure:</a>
+</li>
+<li>
+<a href="#setup-1">Setup:</a>
+</li>
+<li>
+<a href="#field-descriptions-1">Field Descriptions:</a>
+</li>
+<li>
+<a href="#automatic-file-change-detection">Automatic File Change Detection:</a>
+</li>
+<li>
+<a href="#example-1">Example:</a>
+</li>
+<li>
+<a href="#use-cases">Use Cases:</a>
+</li>
+<li>
+<a href="#gzserve-module-serverpy">GZServe Module (server.py):</a>
+</li>
+<li>
+<a href="#setup-module-file-trackerpy">Setup Module (file_tracker.py):</a>
+</li>
+<li>
+<a href="#sitemap-module-sitemapperpy">Sitemap Module (sitemapper.py):</a>
+</li>
+<li>
+<a href="#example-output">Example Output:</a>
+</li>
+<li>
+<a href="#using-in-your-module">Using in Your Module</a>
+</li>
+<li>
+<a href="#error-handling-patterns">Error Handling Patterns</a>
+</li>
+<li>
+<a href="#type-safety">Type Safety</a>
+</li>
+<li>
+<a href="#update-pipelinetoml">1. Update pipeline.toml:</a>
+</li>
+<li>
+<a href="#update-pipelineenvironment-class-in-pipelinepy">2. Update PipelineEnvironment class in pipeline.py:</a>
+</li>
+<li>
+<a href="#use-the-new-properties">3. Use the new properties:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solutions">Solutions:</a>
+</li>
+<li>
+<a href="#solutions-1">Solutions:</a>
+</li>
+<li>
+<a href="#solutions-2">Solutions:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Clean, abstracted access to project configuration files with no implementation details exposed to users. Provides a simple Python API to access pipeline configuration without needing to know about file locations, TOML formats, or internal structure.</p>
+<p><strong>Version:</strong> 1.0.0<br/>
+<strong>Last Updated:</strong> October 23, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li><a href="#access-all-environments">Access All Environments</a></li>
+<li><a href="#real-world-example">Real-World Example</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#api-reference">API Reference</a><ul>
+<li><a href="#functions">Functions</a></li>
+<li><a href="#classes">Classes</a></li>
+</ul>
+</li>
+<li><a href="#configuration-file">Configuration File</a></li>
+<li><a href="#error-handling">Error Handling</a></li>
+<li><a href="#migration-guide">Migration Guide</a></li>
+<li><a href="#development">Development</a><ul>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#integration">Integration</a></li>
+</ul>
+</li>
+<li><a href="#customisation">Customisation</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>GZConfig provides centralized configuration management for all GAZTank modules and tools. It abstracts away the complexity of reading TOML configuration files, finding project roots, and navigating configuration structures.</p>
+<h3 id="key-design-goals">Key Design Goals</h3>
+<ul>
+<li><strong>Clean Abstraction</strong>: Hide all implementation details (file paths, TOML format, project structure)</li>
+<li><strong>Simple API</strong>: Single function to access configuration</li>
+<li><strong>Type Safety</strong>: Full type hints with dataclasses for IDE support</li>
+<li><strong>Automatic Caching</strong>: Configuration loaded once, reused efficiently</li>
+<li><strong>Property-Based Access</strong>: Clean, pythonic attribute access (<code>.port</code>, <code>.dir</code>, <code>.directory_path</code>)</li>
+<li><strong>Helpful Errors</strong>: Clear messages when environments are missing or config is invalid</li>
+<li><strong>No Dependencies</strong>: Uses standard library (tomllib for Python 3.11+, tomli fallback for older versions)</li>
+<li><strong>Library Pattern</strong>: Similar design philosophy to gzlogging - import and use, no CLI interface</li>
+</ul>
+<h3 id="currently-supported">Currently Supported</h3>
+<ul>
+<li><strong>Pipeline Configuration</strong> (<code>pipeline.toml</code>) - Environment definitions and build configuration<ul>
+<li>Environment names (dev, staging, prod)</li>
+<li>Directory paths for build artifacts</li>
+<li>HTTP server ports (httpd_port) for development servers</li>
+<li>FTP server ports (ftpd_port) for FTP simulation servers</li>
+<li>Human-readable descriptions</li>
+</ul>
+</li>
+<li><strong>Deploy Configuration</strong> (<code>deploy.toml</code>) - FTP/FTPS deployment settings<ul>
+<li>Server connection details (host, port, credentials)</li>
+<li>FTPS security settings</li>
+<li>Upload subdirectory formatting with timestamps</li>
+<li>Target directory paths</li>
+</ul>
+</li>
+<li><strong>Generate Configuration</strong> (<code>generate.toml</code>) - Content generation rules</li>
+<li><strong>Tools Configuration</strong> (<code>tools.toml</code>) - Tool-specific settings (logging, etc.)</li>
+<li><strong>FTP Users Configuration</strong> (<code>ftp_users.toml</code>) - FTP server user accounts<ul>
+<li>Automatic file change detection and hot-reload</li>
+<li>Timestamp tracking for zero-overhead caching</li>
+</ul>
+</li>
+</ul>
+<h3 id="future-support-planned">Future Support Planned</h3>
+<ul>
+<li>Site configuration (<code>site.toml</code>) - Site metadata, URLs, SEO settings</li>
+<li>Unified configuration API across all config files</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>GZConfig is a foundational library module used by all GAZTank tools that need configuration:</p>
+<pre><code>GAZTank Build Pipeline:
+  ├─ gzserve → uses gzconfig (environment directories, ports)
+  ├─ setup → uses gzconfig (environment directories)
+  ├─ sitemap → uses gzconfig (environment directories)
+  ├─ generate → will use gzconfig (environment directories)
+  ├─ package → will use gzconfig (environment directories)
+  └─ deploy → will use gzconfig (environment directories)
+
+All tools read from:
+  config/pipeline.toml
+</code></pre>
+<h3 id="purpose-in-pipeline">Purpose in Pipeline:</h3>
+<ul>
+<li>Provides consistent configuration access across all tools</li>
+<li>Eliminates duplicate TOML-reading code (~150+ lines removed from existing modules)</li>
+<li>Centralizes configuration logic for easier maintenance</li>
+<li>Enables tools to focus on their core functionality</li>
+<li>Abstracts away project structure details</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<h3 id="how-gzconfig-handles-logging">How GZConfig Handles Logging</h3>
+<p>GZConfig is a low-level library module that intentionally does <strong>not</strong> use gzlogging to avoid circular dependencies and keep the module simple:</p>
+<h4 id="what-gets-logged">What gets logged:</h4>
+<ul>
+<li>Configuration errors → <code>FileNotFoundError</code>, <code>ValueError</code>, <code>ImportError</code> exceptions</li>
+<li>Missing environments → <code>ValueError</code> with helpful error messages</li>
+<li>Invalid TOML → <code>ValueError</code> with parse error details</li>
+</ul>
+<h4 id="what-doesnt-get-logged">What doesn't get logged:</h4>
+<ul>
+<li>Successful configuration loading (silent)</li>
+<li>Cache hits (silent)</li>
+<li>Normal operations (silent)</li>
+</ul>
+<h4 id="design-decision">Design Decision:</h4>
+<ul>
+<li>GZConfig raises exceptions for errors rather than logging them</li>
+<li>Calling code decides how to handle/log errors</li>
+<li>Keeps gzconfig independent and reusable</li>
+<li>Avoids logging infrastructure in a configuration library</li>
+</ul>
+<p>This design keeps gzconfig focused, lightweight, and usable by any module (including gzlogging itself if needed in the future).</p>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre><code class="language-python">from gzconfig import get_pipeline_config
+
+# Get configuration for a specific environment
+dev_env = get_pipeline_config('dev')
+print(dev_env.port)           # 7190
+print(dev_env.dir)            # 'dev'
+print(dev_env.name)           # 'dev'
+print(dev_env.directory_path) # Path('D:/Projects/www/GAZTank/publish/dev')
+print(dev_env.description)    # 'Development environment with verbose logging...'
+</code></pre>
+<h4 id="result">Result:</h4>
+<pre><code>7190
+dev
+dev
+D:\Projects\www\GAZTank\publish\dev
+Development environment with verbose logging and live reload
+</code></pre>
+<h3 id="access-all-environments">Access All Environments</h3>
+<pre><code class="language-python">from gzconfig import get_pipeline_config
+
+# Get full configuration object
+config = get_pipeline_config()
+
+# List all environment names
+print(config.environment_names)  # ['dev', 'staging', 'prod']
+
+# Access specific environment
+staging = config.get_environment('staging')
+print(staging.port)  # 7191
+
+# Iterate through all environments
+for env_name, env in config.environments.items():
+    print(f"{env_name}: port {env.port}, path {env.directory_path}")
+</code></pre>
+<h4 id="result-1">Result:</h4>
+<pre><code>['dev', 'staging', 'prod']
+7191
+dev: port 7190, path D:\Projects\www\GAZTank\publish\dev
+staging: port 7191, path D:\Projects\www\GAZTank\publish\staging
+prod: port 7192, path D:\Projects\www\GAZTank\publish\prod
+</code></pre>
+<h3 id="real-world-example">Real-World Example</h3>
+<pre><code class="language-python">from gzconfig import get_pipeline_config
+from http.server import HTTPServer
+import os
+
+def start_server(environment: str):
+    """Start development server for specified environment."""
+    
+    # Get environment configuration - simple, clean, one line
+    env = get_pipeline_config(environment)
+    
+    # Use configuration properties
+    print(f"Starting {env.description}")
+    print(f"Serving from: {env.directory_path}")
+    print(f"Port: {env.port}")
+    
+    # Start server using the configuration
+    os.chdir(env.directory_path)
+    server = HTTPServer(('localhost', env.port), Handler)
+    server.serve_forever()
+</code></pre>
+<h3 id="deploy-configuration-example">Deploy Configuration Example</h3>
+<pre><code class="language-python">from gzconfig import get_deploy_config
+
+# Get FTP deployment configuration
+deploy = get_deploy_config()
+
+print(f"FTP Server: {deploy.server}:{deploy.port}")
+print(f"Use FTPS: {deploy.use_ftps}")
+print(f"Target Directory: {deploy.target_dir}")
+print(f"Subdir Format: {deploy.upload_subdir_fmt}")
+print(f"Username: {deploy.username}")
+# Password is masked in repr for security
+print(deploy)  # DeployConfig(server='ftp.example.com', ..., password='***', ...)
+</code></pre>
+<h4 id="result-2">Result:</h4>
+<pre><code>FTP Server: ftp.example.com:21
+Use FTPS: True
+Target Directory: /public_html
+Subdir Format: %Y%m%d_%H%M%S_%j
+Username: your-username
+DeployConfig(server='ftp.example.com', port=21, use_ftps=True, username='your-username', password='***', ...)
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<p>GZConfig is a library module and does not provide command-line arguments. It is imported and used by other tools (gzserve, setup, sitemap, etc.).</p>
+<p>For command-line usage, see the documentation for the tools that use gzconfig:</p>
+<ul>
+<li><a href="../gzserve/README.md">gzserve</a> - Development server</li>
+<li><a href="../setup/README.md">setup</a> - Site setup wizard</li>
+<li><a href="../sitemap/README.md">sitemap</a> - Sitemap generator</li>
+</ul>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>gzconfig/
+├── __init__.py          # Module exports
+├── pipeline.py          # Pipeline configuration (environments, ports, directories)
+├── deploy.py            # Deploy configuration (FTP/FTPS settings)
+├── generate.py          # Generate configuration (content generation rules)
+├── tools.py             # Tools configuration (tool-specific settings)
+├── ftp_users.py         # FTP users configuration (FTP server accounts)
+├── example.py           # Usage examples
+└── README.md            # This file
+</code></pre>
+<h3 id="architecture">Architecture</h3>
+<h4 id="components">Components</h4>
+<ol>
+<li><p><strong>PipelineEnvironment</strong> (dataclass): Represents a single environment</p>
+<ul>
+<li>Properties: <code>name</code>, <code>dir</code>, <code>httpd_port</code>, <code>ftpd_port</code>, <code>description</code>, <code>directory_path</code></li>
+<li>Immutable once created</li>
+<li>Provides computed property <code>directory_path</code> (full path to publish/{dir}/)</li>
+</ul>
+</li>
+<li><p><strong>PipelineConfig</strong> (class): Full configuration manager</p>
+<ul>
+<li>Properties: <code>environments</code>, <code>environment_names</code></li>
+<li>Method: <code>get_environment(name)</code> - retrieve specific environment</li>
+<li>Validates environment existence</li>
+<li>Manages collection of PipelineEnvironment instances</li>
+</ul>
+</li>
+<li><p><strong>get_pipeline_config()</strong>: Main entry point</p>
+<ul>
+<li>Parameters: <code>environment</code> (optional str), <code>reload</code> (optional bool)</li>
+<li>Returns: <code>PipelineConfig</code> or <code>PipelineEnvironment</code> depending on parameters</li>
+<li>Implements caching for performance</li>
+<li>Raises helpful exceptions for errors</li>
+</ul>
+</li>
+</ol>
+<h4 id="internal-design">Internal Design</h4>
+<ul>
+<li><strong>Automatic project root detection</strong>: Searches upward for <code>config/</code> directory</li>
+<li><strong>Configuration caching</strong>: Loads <code>pipeline.toml</code> once, reuses for subsequent calls</li>
+<li><strong>TOML library abstraction</strong>: Handles both tomllib (Python 3.11+) and tomli (older versions)</li>
+<li><strong>Lazy loading</strong>: Only loads configuration when first accessed</li>
+<li><strong>Thread-safe</strong>: Uses module-level cache (singleton pattern)</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Clean API</strong>: One function to access all configuration</li>
+<li><strong>Type Safety</strong>: Full type hints with dataclasses (PipelineEnvironment, PipelineConfig)</li>
+<li><strong>Property-Based Access</strong>: <code>env.httpd_port</code>, <code>env.ftpd_port</code>, <code>env.dir</code>, <code>env.directory_path</code>, <code>env.description</code></li>
+<li><strong>Automatic Caching</strong>: Configuration loaded once, reused efficiently</li>
+<li><strong>No File Paths Exposed</strong>: Users don't need to know where <code>pipeline.toml</code> is located</li>
+<li><strong>No Format Details Exposed</strong>: Users don't need to know about TOML</li>
+<li><strong>Helpful Error Messages</strong>: Clear exceptions for missing environments or configuration</li>
+<li><strong>Automatic Project Root Detection</strong>: Finds project root by searching for <code>config/</code> directory</li>
+<li><strong>Computed Paths</strong>: <code>directory_path</code> property returns full path to environment directory</li>
+<li><strong>Environment Validation</strong>: Raises <code>ValueError</code> if environment doesn't exist</li>
+<li><strong>Configuration Validation</strong>: Checks for required structure and provides clear errors</li>
+<li><strong>Optional Reload</strong>: Force reload configuration with <code>reload=True</code> parameter</li>
+<li><strong>Multiple Access Patterns</strong>: Get all environments or specific environment</li>
+<li><strong>Standard Library</strong>: Minimal dependencies (only TOML library)</li>
+<li><strong>Cross-Platform</strong>: Works on Windows, Linux, macOS</li>
+<li><strong>Automatic Hot-Reload</strong>: FTP users configuration automatically reloads when file changes (timestamp tracking)</li>
+<li><strong>Zero-Overhead Caching</strong>: File change detection using <code>st_mtime</code> with no performance impact</li>
+</ul>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="functions">Functions</h3>
+<h4 id="get-pipeline-configenvironmentnone-reloadfalse"><code>get_pipeline_config(environment=None, reload=False)</code></h4>
+<p>Main entry point for accessing pipeline configuration.</p>
+<h5>Parameters:</h5>
+<ul>
+<li><code>environment</code> (str, optional): Environment name. If provided, returns <code>PipelineEnvironment</code> for that environment. If None, returns full <code>PipelineConfig</code> object.</li>
+<li><code>reload</code> (bool): If True, force reload configuration from file. Default: False (use cached).</li>
+</ul>
+<h5>Returns:</h5>
+<ul>
+<li><code>PipelineConfig</code> if <code>environment</code> is None</li>
+<li><code>PipelineEnvironment</code> if <code>environment</code> is specified</li>
+</ul>
+<h5>Raises:</h5>
+<ul>
+<li><code>ValueError</code>: If environment is specified but not defined in pipeline.toml</li>
+<li><code>FileNotFoundError</code>: If <code>pipeline.toml</code> is not found in project</li>
+<li><code>ImportError</code>: If TOML library is not available (Python &lt; 3.11 without tomli)</li>
+</ul>
+<h5>Examples:</h5>
+<pre><code class="language-python"># Get full configuration
+config = get_pipeline_config()
+print(config.environment_names)  # ['dev', 'staging', 'prod']
+
+# Get specific environment
+dev = get_pipeline_config('dev')
+print(dev.httpd_port)  # 7190
+print(dev.ftpd_port)   # 2190
+
+# Force reload from file (useful if config changed)
+config = get_pipeline_config(reload=True)
+</code></pre>
+<h3 id="classes">Classes</h3>
+<h4 id="pipelineenvironment"><code>PipelineEnvironment</code></h4>
+<p>Represents a single environment configuration. Immutable dataclass.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>name</code> (str): Environment name (e.g., 'dev', 'staging', 'prod')</li>
+<li><code>dir</code> (str): Directory name under <code>publish/</code> for build artifacts</li>
+<li><code>httpd_port</code> (int): Default port for HTTP development server</li>
+<li><code>ftpd_port</code> (int): Default port for FTP simulation server</li>
+<li><code>description</code> (str): Human-readable description of environment</li>
+<li><code>directory_path</code> (Path): Full path to environment directory (<code>{project_root}/publish/{dir}/</code>)</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">env = get_pipeline_config('dev')
+print(env.name)           # 'dev'
+print(env.dir)            # 'dev'
+print(env.httpd_port)     # 7190
+print(env.ftpd_port)      # 2190
+print(env.description)    # 'Development environment...'
+print(env.directory_path) # Path('D:/Projects/www/GAZTank/publish/dev')
+
+# Check if directory exists
+if not env.directory_path.exists():
+    print(f"Environment directory not found: {env.directory_path}")
+</code></pre>
+<h4 id="pipelineconfig"><code>PipelineConfig</code></h4>
+<p>Full pipeline configuration manager. Contains all environments.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>environments</code> (dict[str, PipelineEnvironment]): Dictionary mapping environment names to PipelineEnvironment objects</li>
+<li><code>environment_names</code> (list[str]): List of available environment names</li>
+</ul>
+<h5>Methods:</h5>
+<ul>
+<li><code>get_environment(name: str) -&gt; PipelineEnvironment</code>: Get specific environment configuration. Raises <code>ValueError</code> if environment not found.</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">config = get_pipeline_config()
+
+# List all environments
+print(config.environment_names)  # ['dev', 'staging', 'prod']
+
+# Get specific environment
+dev = config.get_environment('dev')
+print(dev.httpd_port)  # 7190
+
+# Iterate through all environments
+for env_name, env in config.environments.items():
+    print(f"{env_name}: httpd_port {env.httpd_port}, ftpd_port {env.ftpd_port}")
+</code></pre>
+<h4 id="get-deploy-config"><code>get_deploy_config()</code></h4>
+<p>Load and access FTP/FTPS deployment configuration.</p>
+<h5>Parameters:</h5>
+<ul>
+<li>None</li>
+</ul>
+<h5>Returns:</h5>
+<ul>
+<li><code>DeployConfig</code> object with deployment settings</li>
+</ul>
+<h5>Raises:</h5>
+<ul>
+<li><code>FileNotFoundError</code>: If <code>deploy.toml</code> doesn't exist (provides helpful message to copy from example)</li>
+<li><code>ValueError</code>: If required fields are missing or validation fails</li>
+</ul>
+<h5>Examples:</h5>
+<pre><code class="language-python"># Get deployment configuration
+deploy = get_deploy_config()
+
+# Access FTP settings
+print(f"Server: {deploy.server}:{deploy.port}")
+print(f"FTPS Enabled: {deploy.use_ftps}")
+print(f"Username: {deploy.username}")
+print(f"Target: {deploy.target_dir}")
+
+# Subdirectory settings
+print(f"Format: {deploy.upload_subdir_fmt}")
+print(f"Postfix Length: {deploy.upload_subdir_postfix_len}")
+
+# Password is masked in repr
+print(deploy)  # password='***'
+</code></pre>
+<h4 id="deployconfig"><code>DeployConfig</code></h4>
+<p>Deployment configuration from deploy.toml. Immutable dataclass.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>server</code> (str): FTP server hostname or IP address</li>
+<li><code>port</code> (int): FTP server port (default: 21)</li>
+<li><code>username</code> (str): FTP username for authentication</li>
+<li><code>password</code> (str): FTP password for authentication</li>
+<li><code>target_dir</code> (str): Target directory on FTP server (e.g., '/public_html')</li>
+<li><code>use_ftps</code> (bool): Use FTPS (FTP over TLS) for secure connection (default: True)</li>
+<li><code>upload_subdir_fmt</code> (str): Python strftime format for upload subdirectory (default: '%Y%m%d_%H%M%S_%j')</li>
+<li><code>upload_subdir_postfix_len</code> (int): Length of random alphanumeric postfix (1-10, default: 5)</li>
+</ul>
+<h5>Validation:</h5>
+<ul>
+<li>All required fields must be non-empty (server, username, password, target_dir)</li>
+<li>Port must be between 1 and 65535</li>
+<li>upload_subdir_postfix_len must be between 1 and 10</li>
+<li>Password is masked in <code>__repr__</code> for security</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">deploy = get_deploy_config()
+
+# Connection details
+print(f"Connecting to {deploy.server}:{deploy.port}")
+print(f"Using {'FTPS (secure)' if deploy.use_ftps else 'FTP (insecure)'}")
+
+# Upload settings
+from datetime import datetime
+subdir = datetime.now().strftime(deploy.upload_subdir_fmt)
+print(f"Upload subdirectory: {subdir}")  # e.g., 20251023_143052_296
+
+# Security note: password is available but masked in repr
+ftp_password = deploy.password  # Actual password value
+print(deploy)  # DeployConfig(..., password='***', ...)
+</code></pre>
+<h4 id="get-ftp-users-config"><code>get_ftp_users_config()</code></h4>
+<p>Load and access FTP server user configuration.</p>
+<h5>Parameters:</h5>
+<ul>
+<li><code>environment</code> (str, optional): Environment name ('dev', 'staging', 'prod'). If provided, returns user config for that environment. If None, returns all users.</li>
+<li><code>reload</code> (bool): If True, force reload configuration from file. Default: False (use cached).</li>
+</ul>
+<h5>Returns:</h5>
+<ul>
+<li><code>FTPUsersConfig</code> if <code>environment</code> is None</li>
+<li><code>FTPUserEnvironment</code> if <code>environment</code> is specified</li>
+</ul>
+<h5>Raises:</h5>
+<ul>
+<li><code>FileNotFoundError</code>: If <code>ftp_users.toml</code> doesn't exist</li>
+<li><code>ValueError</code>: If environment is specified but not defined or required fields are missing</li>
+</ul>
+<h5>Automatic Reload on File Changes:</h5>
+<ul>
+<li>Tracks file modification timestamp (<code>st_mtime</code>)</li>
+<li>Automatically reloads configuration when <code>ftp_users.toml</code> changes</li>
+<li>Zero performance impact when file hasn't changed</li>
+<li>Useful for hot-reloading during development</li>
+</ul>
+<h5>Examples:</h5>
+<pre><code class="language-python"># Get FTP user config for specific environment
+dev_user = get_ftp_users_config('dev')
+print(f"Username: {dev_user.username}")
+print(f"Password: {dev_user.password}")
+print(f"Home Directory: {dev_user.home_directory}")
+print(f"Permissions: {dev_user.permissions}")
+
+# Get all FTP users
+config = get_ftp_users_config()
+for env_name in config.environment_names:
+    user = config.get_environment(env_name)
+    print(f"{env_name}: {user.username}")
+
+# Configuration automatically reloads when ftp_users.toml changes
+user1 = get_ftp_users_config('dev')
+# ... edit ftp_users.toml ...
+user2 = get_ftp_users_config('dev')  # Automatically reloaded if file changed
+</code></pre>
+<h4 id="ftpuserenvironment"><code>FTPUserEnvironment</code></h4>
+<p>FTP user configuration for a specific environment. Immutable dataclass.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>username</code> (str): FTP username</li>
+<li><code>password</code> (str): FTP password (masked in <code>__repr__</code> for security)</li>
+<li><code>home_directory</code> (Path): FTP user's home directory path</li>
+<li><code>permissions</code> (str): FTP permissions string (e.g., 'elradfmwMT')</li>
+</ul>
+<h5>Validation:</h5>
+<ul>
+<li>All fields must be non-empty</li>
+<li>Password is masked in <code>__repr__</code> for security</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">user = get_ftp_users_config('dev')
+print(f"Username: {user.username}")        # devup
+print(f"Home: {user.home_directory}")      # Path('D:/Projects/www/GAZTank/publish/dev')
+print(f"Permissions: {user.permissions}")  # elradfmwMT
+# Password is masked in repr for security
+print(user)  # FTPUserEnvironment(username='devup', password='***', ...)
+</code></pre>
+<h4 id="ftpusersconfig"><code>FTPUsersConfig</code></h4>
+<p>Full FTP users configuration manager. Contains all environment users.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>environments</code> (dict[str, FTPUserEnvironment]): Dictionary mapping environment names to user configs</li>
+<li><code>environment_names</code> (list[str]): List of available environment names</li>
+</ul>
+<h5>Methods:</h5>
+<ul>
+<li><code>get_environment(name: str) -&gt; FTPUserEnvironment</code>: Get specific user configuration. Raises <code>ValueError</code> if environment not found.</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">config = get_ftp_users_config()
+
+# List all users
+print(config.environment_names)  # ['dev', 'staging', 'prod']
+
+# Get specific user
+dev_user = config.get_environment('dev')
+print(dev_user.username)  # devup
+
+# Iterate through all users
+for env_name, user in config.environments.items():
+    print(f"{env_name}: {user.username} -&gt; {user.home_directory}")
+</code></pre>
+<h2 id="configuration-files">Configuration Files</h2>
+<h3 id="pipeline-configuration-configpipelinetoml">Pipeline Configuration (<code>config/pipeline.toml</code>)</h3>
+<p>GZConfig finds this file by:</p>
+<ol>
+<li>Starting from the module file location</li>
+<li>Searching upward through parent directories</li>
+<li>Looking for a directory containing <code>config/pipeline.toml</code></li>
+<li>Using that directory as the project root</li>
+</ol>
+<h3 id="structure">Structure</h3>
+<pre><code class="language-toml"># Build Pipeline Configuration
+# Each environment has:
+# - dir: Directory name under publish/ where build artifacts are stored
+# - httpd_port: Default port for the HTTP development server
+# - ftpd_port: Default port for the FTP simulation server
+# - description: Human-readable description of the environment
+
+[environments.dev]
+dir = "dev"
+httpd_port = 7190
+ftpd_port = 2190
+description = "Development environment with verbose logging and live reload"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+ftpd_port = 2191
+description = "Staging environment for pre-production testing and validation"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+ftpd_port = 2192
+description = "Production-ready build for deployment"
+</code></pre>
+<h3 id="adding-new-environments">Adding New Environments</h3>
+<ol>
+<li>Add a new <code>[environments.NAME]</code> section to <code>pipeline.toml</code></li>
+<li>Specify required fields: <code>dir</code>, <code>httpd_port</code>, <code>ftpd_port</code>, <code>description</code></li>
+<li>Configuration is automatically reloaded on next use (or use <code>reload=True</code>)</li>
+</ol>
+<h4 id="example">Example:</h4>
+<pre><code class="language-toml">[environments.test]
+dir = "test"
+httpd_port = 7193
+ftpd_port = 2193
+description = "Automated testing environment"
+</code></pre>
+<p>Then use it:</p>
+<pre><code class="language-python">test_env = get_pipeline_config('test')
+print(test_env.httpd_port)  # 7193
+print(test_env.ftpd_port)   # 2193
+</code></pre>
+<p><strong>Note:</strong> Users of gzconfig don't need to know this structure - it's all abstracted away through the API.</p>
+<h3 id="deploy-configuration-configdeploytoml">Deploy Configuration (<code>config/deploy.toml</code>)</h3>
+<p><strong>Location:</strong> <code>config/deploy.toml</code> (automatically located from project root)</p>
+<p><strong>Note:</strong> <code>deploy.toml</code> is in <code>.gitignore</code> and should not be committed (contains credentials).</p>
+<h4 id="structure-1">Structure:</h4>
+<pre><code class="language-toml"># Deploy Configuration
+# Copy from config/deploy.example.toml and fill in your FTP details
+
+[ftp]
+server = "ftp.example.com"
+port = 21
+use_ftps = true
+username = "your-username"
+password = "your-password"
+target_dir = "/public_html"
+
+# Upload subdirectory configuration
+# Creates timestamped subdirectories for each upload
+upload_subdir_fmt = "%Y%m%d_%H%M%S_%j"  # Python strftime format
+upload_subdir_postfix_len = 5           # Random alphanumeric postfix (1-10)
+</code></pre>
+<h4 id="setup">Setup:</h4>
+<ol>
+<li>Copy <code>config/deploy.example.toml</code> to <code>config/deploy.toml</code></li>
+<li>Fill in your FTP server details</li>
+<li>Never commit <code>deploy.toml</code> (it's in <code>.gitignore</code>)</li>
+</ol>
+<h4 id="field-descriptions">Field Descriptions:</h4>
+<ul>
+<li><code>server</code>: FTP server hostname or IP address</li>
+<li><code>port</code>: FTP server port (default: 21, common: 21 for FTP/FTPS, 990 for implicit FTPS)</li>
+<li><code>use_ftps</code>: Enable FTPS (FTP over TLS) for secure connections (default: true, recommended)</li>
+<li><code>username</code>: FTP username for authentication</li>
+<li><code>password</code>: FTP password (masked in logs and repr)</li>
+<li><code>target_dir</code>: Target directory on FTP server (e.g., '/public_html', '/htdocs')</li>
+<li><code>upload_subdir_fmt</code>: strftime format for timestamped subdirectories (empty "" to disable)</li>
+<li><code>upload_subdir_postfix_len</code>: Length of random alphanumeric suffix (1-10)</li>
+</ul>
+<h4 id="example-subdirectory-names">Example Subdirectory Names:</h4>
+<pre><code class="language-python"># With upload_subdir_fmt = "%Y%m%d_%H%M%S_%j" and postfix_len = 5:
+# .20251023_143052_296_a3f9k
+# .20251023_150315_296_x7b2m
+
+# With upload_subdir_fmt = "%Y-%m-%d":
+# .2025-10-23_k3p9a
+</code></pre>
+<p><strong>Note:</strong> Subdirectory names are prefixed with a dot (.) to distinguish deployment uploads from other content.</p>
+<h3 id="ftp-users-configuration-configftp-userstoml">FTP Users Configuration (<code>config/ftp_users.toml</code>)</h3>
+<p><strong>Location:</strong> <code>config/ftp_users.toml</code> (automatically located from project root)</p>
+<p><strong>Note:</strong> <code>ftp_users.toml</code> is in <code>.gitignore</code> and should not be committed (contains passwords).</p>
+<p><strong>Purpose:</strong> Defines FTP user accounts for the local FTP server (gzhost) used for testing deployment workflows.</p>
+<h4 id="structure-2">Structure:</h4>
+<pre><code class="language-toml"># FTP Users Configuration
+# User accounts for local FTP server (gzhost)
+# Copy from config/ftp_users.example.toml and customize
+
+[users.dev]
+username = "devup"
+password = "devup"
+home_directory = "publish/dev"
+permissions = "elradfmwMT"
+
+[users.staging]
+username = "stagingup"
+password = "stagingup"
+home_directory = "publish/staging"
+permissions = "elradfmwMT"
+
+[users.prod]
+username = "produp"
+password = "produp"
+home_directory = "publish/prod"
+permissions = "elradfmwMT"
+</code></pre>
+<h4 id="setup-1">Setup:</h4>
+<ol>
+<li>Copy <code>config/ftp_users.example.toml</code> to <code>config/ftp_users.toml</code></li>
+<li>Customize usernames and passwords as needed</li>
+<li>Never commit <code>ftp_users.toml</code> (it's in <code>.gitignore</code>)</li>
+</ol>
+<h4 id="field-descriptions-1">Field Descriptions:</h4>
+<ul>
+<li><code>username</code>: FTP username for this environment</li>
+<li><code>password</code>: FTP password (masked in logs and repr)</li>
+<li><code>home_directory</code>: FTP user's home directory (relative to project root)</li>
+<li><code>permissions</code>: FTP permission string (see pyftpdlib documentation)<ul>
+<li><code>e</code>: Change directory (CWD, CDUP)</li>
+<li><code>l</code>: List files (LIST, NLST, STAT, MLSD, MLST, SIZE)</li>
+<li><code>r</code>: Retrieve files from server (RETR)</li>
+<li><code>a</code>: Append data to existing files (APPE)</li>
+<li><code>d</code>: Delete files and directories (DELE, RMD)</li>
+<li><code>f</code>: Rename files and directories (RNFR, RNTO)</li>
+<li><code>m</code>: Create directories (MKD)</li>
+<li><code>w</code>: Store files (STOR, STOU)</li>
+<li><code>M</code>: Change file mode/permissions (SITE CHMOD)</li>
+<li><code>T</code>: Change file modification time (SITE MFMT)</li>
+</ul>
+</li>
+</ul>
+<h4 id="automatic-file-change-detection">Automatic File Change Detection:</h4>
+<p>The <code>get_ftp_users_config()</code> function automatically detects when <code>ftp_users.toml</code> has been modified and reloads the configuration without requiring application restart. This is useful during development when testing different user configurations.</p>
+<h4 id="example-1">Example:</h4>
+<pre><code class="language-python"># First load - reads from file
+user1 = get_ftp_users_config('dev')
+print(f"Username: {user1.username}")  # devup
+
+# Edit ftp_users.toml and save...
+
+# Next call automatically detects file change and reloads
+user2 = get_ftp_users_config('dev')
+print(f"Username: {user2.username}")  # Updated value if changed
+</code></pre>
+<h4 id="use-cases">Use Cases:</h4>
+<ul>
+<li><strong>Local FTP Testing</strong>: Test deployment workflows without touching production servers</li>
+<li><strong>CI/CD Pipelines</strong>: Automated testing of FTP upload functionality</li>
+<li><strong>Development</strong>: Quick iteration on deployment scripts with local FTP server</li>
+<li><strong>Integration Tests</strong>: Verify FTP client code works correctly before production deployment</li>
+</ul>
+<h2 id="error-handling">Error Handling</h2>
+<p>GZConfig provides clear, actionable error messages for common problems:</p>
+<h3 id="environment-not-found">Environment Not Found</h3>
+<pre><code class="language-python">try:
+    env = get_pipeline_config('production')  # Typo: should be 'prod'
+except ValueError as e:
+    print(e)
+    # "Environment 'production' is not defined in pipeline.toml. 
+    #  Available environments: dev, staging, prod"
+</code></pre>
+<h3 id="configuration-file-missing">Configuration File Missing</h3>
+<pre><code class="language-python"># Pipeline config missing
+try:
+    config = get_pipeline_config()
+except FileNotFoundError as e:
+    print(e)
+    # "Pipeline configuration not found: D:/Projects/www/GAZTank/config/pipeline.toml
+    #  Expected location: config/pipeline.toml in project root"
+
+# Deploy config missing
+try:
+    deploy = get_deploy_config()
+except FileNotFoundError as e:
+    print(e)
+    # "Deploy configuration not found: D:/Projects/www/GAZTank/config/deploy.toml
+    #  Copy config/deploy.example.toml to config/deploy.toml and fill in your FTP details"
+</code></pre>
+<h3 id="toml-library-not-available">TOML Library Not Available</h3>
+<pre><code class="language-python">try:
+    config = get_pipeline_config()
+except ImportError as e:
+    print(e)
+    # "No TOML library available. Please install Python 3.11+ or install tomli: 
+    #  pip install tomli"
+</code></pre>
+<h3 id="invalid-configuration-structure">Invalid Configuration Structure</h3>
+<pre><code class="language-python"># If pipeline.toml is missing [environments] section or is empty
+try:
+    config = get_pipeline_config()
+except ValueError as e:
+    print(e)
+    # "Invalid pipeline.toml: missing 'environments' section"
+    # or
+    # "Invalid pipeline.toml: 'environments' section is empty"
+
+# If deploy.toml is missing required fields
+try:
+    deploy = get_deploy_config()
+except ValueError as e:
+    print(e)
+    # "deploy.toml must contain [ftp] section"
+    # or
+    # "Missing required fields in [ftp] section: server, username"
+</code></pre>
+<h3 id="validation-errors">Validation Errors</h3>
+<pre><code class="language-python"># Invalid port number
+try:
+    # If deploy.toml has port = 99999
+    deploy = get_deploy_config()
+except ValueError as e:
+    print(e)
+    # "Invalid port number: 99999"
+
+# Invalid postfix length
+try:
+    # If deploy.toml has upload_subdir_postfix_len = 20
+    deploy = get_deploy_config()
+except ValueError as e:
+    print(e)
+    # "upload_subdir_postfix_len must be between 1 and 10, got 20"
+</code></pre>
+<h2 id="migration-guide">Migration Guide</h2>
+<p>GZConfig eliminates the need for duplicate TOML-reading code. Here's how to migrate existing code:</p>
+<h3 id="before-direct-toml-access">Before (Direct TOML Access)</h3>
+<pre><code class="language-python"># Old way - lots of boilerplate (40+ lines)
+import tomllib
+from pathlib import Path
+
+def get_environment_directory(environment: str) -&gt; Path:
+    # Find project root
+    current_file = Path(__file__).resolve()
+    if current_file.parent.name == 'gzserve':
+        project_root = current_file.parent.parent.parent
+    else:
+        project_root = current_file.parent.parent
+    
+    # Load TOML file
+    config_path = project_root / 'config' / 'pipeline.toml'
+    
+    if not config_path.exists():
+        raise FileNotFoundError(f"Pipeline configuration not found: {config_path}")
+    
+    try:
+        with open(config_path, 'rb') as f:
+            config = tomllib.load(f)
+    except Exception as e:
+        raise ValueError(f"Failed to parse pipeline.toml: {e}")
+    
+    # Validate structure
+    if 'environments' not in config:
+        raise ValueError("pipeline.toml must contain [environments] section")
+    
+    # Extract environment config
+    if environment not in config['environments']:
+        available = ', '.join(config['environments'].keys())
+        raise ValueError(
+            f"Environment '{environment}' not defined. "
+            f"Available environments: {available}"
+        )
+    
+    env_config = config['environments'][environment]
+    env_dir_name = env_config.get('dir')
+    
+    if not env_dir_name:
+        raise ValueError(f"Environment '{environment}' missing 'dir' configuration")
+    
+    # Build path
+    return project_root / 'publish' / env_dir_name
+</code></pre>
+<h3 id="after-using-gzconfig">After (Using gzconfig)</h3>
+<pre><code class="language-python"># New way - clean and simple (2 lines)
+from gzconfig import get_pipeline_config
+
+def get_environment_directory(environment: str) -&gt; Path:
+    env = get_pipeline_config(environment)
+    return env.directory_path
+</code></pre>
+<h3 id="benefits-of-migration">Benefits of Migration</h3>
+<ul>
+<li><strong>95% less code</strong>: From 40+ lines to 2 lines</li>
+<li><strong>No path manipulation</strong>: Project root detection handled automatically</li>
+<li><strong>No TOML knowledge required</strong>: Abstracted away completely</li>
+<li><strong>Automatic error handling</strong>: Clear exceptions with helpful messages</li>
+<li><strong>Cached for performance</strong>: Configuration loaded once, reused efficiently</li>
+<li><strong>Type hints</strong>: Full IDE support with autocomplete</li>
+<li><strong>No imports</strong>: Don't need to import <code>tomllib</code>, <code>Path</code>, handle exceptions manually</li>
+<li><strong>Maintainable</strong>: Configuration logic centralized in one place</li>
+</ul>
+<h3 id="real-world-migration-examples">Real-World Migration Examples</h3>
+<h4 id="gzserve-module-serverpy">GZServe Module (server.py):</h4>
+<pre><code class="language-python"># Before: ~70 lines of config code
+# After: 1 line
+env_config = get_pipeline_config(environment)
+serve_dir = env_config.directory_path
+port = env_config.port
+</code></pre>
+<h4 id="setup-module-file-trackerpy">Setup Module (file_tracker.py):</h4>
+<pre><code class="language-python"># Before: ~60 lines of config code
+# After: 2 lines
+env = get_pipeline_config(environment)
+env_dir = env.directory_path
+</code></pre>
+<h4 id="sitemap-module-sitemapperpy">Sitemap Module (sitemapper.py):</h4>
+<pre><code class="language-python"># Before: ~55 lines of config code
+# After: 2 lines
+env = get_pipeline_config(args.environment)
+env_dir = env.directory_path
+</code></pre>
+<p><strong>Total savings:</strong> ~185 lines of duplicate code eliminated across three modules.</p>
+<h2 id="development">Development</h2>
+<h3 id="testing">Testing</h3>
+<p>Run the example script to experiment with gzconfig:</p>
+<pre><code class="language-bash"># Run the example demonstrating all usage patterns
+python utils/gzconfig/example.py
+</code></pre>
+<p>The example script demonstrates:</p>
+<ul>
+<li>Getting full configuration</li>
+<li>Accessing all environments</li>
+<li>Getting specific environment</li>
+<li>Property access (name, dir, port, description, directory_path)</li>
+<li>Typical application usage patterns</li>
+<li>Type safety with type hints</li>
+</ul>
+<h4 id="example-output">Example Output:</h4>
+<pre><code>============================================================
+GZConfig Pipeline Configuration Example
+============================================================
+
+Example 1: Get full pipeline configuration
+------------------------------------------------------------
+Available environments: ['dev', 'staging', 'prod']
+
+Example 2: Iterate through all environments
+------------------------------------------------------------
+  dev:
+    Directory: dev
+    Port: 7190
+    Path: D:\Projects\www\GAZTank\publish\dev
+    Description: Development environment with verbose logging and live reload
+  ...
+
+Example 3: Get specific environment
+------------------------------------------------------------
+Environment: dev
+Directory: dev
+Port: 7190
+Full path: D:\Projects\www\GAZTank\publish\dev
+Description: Development environment with verbose logging and live reload
+
+Example 4: Typical application usage
+------------------------------------------------------------
+Starting server for staging environment
+Serving from: D:\Projects\www\GAZTank\publish\staging
+Server will listen on port: 7191
+
+============================================================
+✓ All examples completed successfully!
+============================================================
+</code></pre>
+<h3 id="integration">Integration</h3>
+<h4 id="using-in-your-module">Using in Your Module</h4>
+<pre><code class="language-python">#!/usr/bin/env python3
+"""My Application using gzconfig"""
+
+import sys
+from gzconfig import get_pipeline_config
+
+def main():
+    # Get environment from command line
+    if len(sys.argv) &lt; 2:
+        print("Usage: myapp &lt;environment&gt;")
+        return 1
+    
+    environment = sys.argv[1]
+    
+    try:
+        # Get environment configuration
+        env = get_pipeline_config(environment)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return 1
+    except FileNotFoundError as e:
+        print(f"Configuration error: {e}")
+        return 1
+    
+    # Use the configuration
+    print(f"Environment: {env.name}")
+    print(f"Directory: {env.directory_path}")
+    print(f"Port: {env.port}")
+    
+    # Your application logic here
+    # ...
+    
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
+</code></pre>
+<h4 id="error-handling-patterns">Error Handling Patterns</h4>
+<pre><code class="language-python">from gzconfig import get_pipeline_config
+
+# Pattern 1: Let it raise (for fatal errors)
+def initialize():
+    env = get_pipeline_config('dev')  # Will raise if config broken
+    return env
+
+# Pattern 2: Catch and handle specific errors
+def safe_initialize(environment):
+    try:
+        env = get_pipeline_config(environment)
+        return env
+    except ValueError as e:
+        print(f"Invalid environment: {e}")
+        return None
+    except FileNotFoundError as e:
+        print(f"Configuration missing: {e}")
+        return None
+    except ImportError as e:
+        print(f"TOML library error: {e}")
+        return None
+
+# Pattern 3: Provide defaults
+def initialize_with_default(environment):
+    try:
+        return get_pipeline_config(environment)
+    except Exception:
+        print("Using default development environment")
+        return get_pipeline_config('dev')
+</code></pre>
+<h4 id="type-safety">Type Safety</h4>
+<pre><code class="language-python">from gzconfig import get_pipeline_config, PipelineEnvironment, PipelineConfig
+from typing import Optional
+
+def process_environment(env: PipelineEnvironment) -&gt; None:
+    """Process a single environment with full type safety."""
+    print(f"Processing {env.name}")
+    print(f"  Port: {env.port}")
+    print(f"  Directory: {env.directory_path}")
+
+def get_env_by_name(name: str) -&gt; Optional[PipelineEnvironment]:
+    """Get environment with error handling."""
+    try:
+        return get_pipeline_config(name)
+    except ValueError:
+        return None
+
+# Usage with type checking
+config: PipelineConfig = get_pipeline_config()
+for env_name in config.environment_names:
+    env: PipelineEnvironment = config.get_environment(env_name)
+    process_environment(env)
+</code></pre>
+<h2 id="customisation">Customisation</h2>
+<h3 id="custom-configuration-paths">Custom Configuration Paths</h3>
+<p>While gzconfig automatically finds <code>config/pipeline.toml</code>, you can modify the search logic if needed:</p>
+<pre><code class="language-python"># In pipeline.py, modify _find_project_root() for custom search logic
+def _find_project_root() -&gt; Path:
+    # Add custom search locations
+    custom_locations = [
+        Path('/path/to/custom/config'),
+        Path.home() / '.gaztank',
+    ]
+    
+    for location in custom_locations:
+        if (location / 'pipeline.toml').exists():
+            return location
+    
+    # Fall back to default search
+    # ... existing code
+</code></pre>
+<h3 id="adding-new-configuration-properties">Adding New Configuration Properties</h3>
+<p>To add new properties to environments, update <code>pipeline.toml</code> and the <code>PipelineEnvironment</code> class:</p>
+<h4 id="update-pipelinetoml">1. Update pipeline.toml:</h4>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+httpd_port = 7190
+ftpd_port = 2190
+description = "Development environment"
+base_url = "http://localhost:7190"  # New property
+debug = true                          # New property
+</code></pre>
+<h4 id="update-pipelineenvironment-class-in-pipelinepy">2. Update PipelineEnvironment class in pipeline.py:</h4>
+<pre><code class="language-python">class PipelineEnvironment:
+    def __init__(self, name: str, config: dict):
+        self._name = name
+        self._config = config
+    
+    # Existing properties...
+    
+    @property
+    def base_url(self) -&gt; str:
+        """Base URL for the environment."""
+        return self._config.get('base_url', f'http://localhost:{self.httpd_port}')
+    
+    @property
+    def debug(self) -&gt; bool:
+        """Debug mode flag."""
+        return self._config.get('debug', False)
+</code></pre>
+<h4 id="use-the-new-properties">3. Use the new properties:</h4>
+<pre><code class="language-python">env = get_pipeline_config('dev')
+print(env.base_url)  # http://localhost:7190
+print(env.debug)     # True
+</code></pre>
+<h3 id="custom-environment-classes">Custom Environment Classes</h3>
+<p>For advanced use cases, create specialized environment classes:</p>
+<pre><code class="language-python">from gzconfig import get_pipeline_config, PipelineEnvironment
+
+class DeploymentEnvironment:
+    """Extended environment with deployment-specific properties."""
+    
+    def __init__(self, env: PipelineEnvironment):
+        self._env = env
+        self._remote_host = None  # Load from deployment config
+    
+    @property
+    def name(self) -&gt; str:
+        return self._env.name
+    
+    @property
+    def directory_path(self) -&gt; Path:
+        return self._env.directory_path
+    
+    @property
+    def remote_host(self) -&gt; str:
+        """Get deployment host for this environment."""
+        if self._remote_host is None:
+            # Load from deployment config
+            self._remote_host = self._load_remote_host()
+        return self._remote_host
+    
+    def _load_remote_host(self) -&gt; str:
+        # Custom logic to load deployment host
+        hosts = {'dev': 'dev.example.com', 'prod': 'example.com'}
+        return hosts.get(self.name, 'localhost')
+
+# Usage
+base_env = get_pipeline_config('prod')
+deploy_env = DeploymentEnvironment(base_env)
+print(deploy_env.remote_host)  # example.com
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="importerror-no-toml-library">ImportError: No TOML library</h3>
+<p><strong>Problem:</strong> <code>No TOML library available. Please install Python 3.11+ or install tomli</code></p>
+<h4 id="solution">Solution:</h4>
+<pre><code class="language-bash"># Option 1: Upgrade to Python 3.11+ (includes tomllib)
+python --version  # Check current version
+
+# Option 2: Install tomli for Python &lt; 3.11
+pip install tomli
+</code></pre>
+<h3 id="filenotfounderror-configuration-not-found">FileNotFoundError: Configuration not found</h3>
+<p><strong>Problem:</strong> <code>Pipeline configuration not found: D:/Projects/.../config/pipeline.toml</code></p>
+<h4 id="solutions">Solutions:</h4>
+<ol>
+<li>Ensure <code>config/pipeline.toml</code> exists in project root</li>
+<li>Verify you're running from correct directory</li>
+<li>Check file permissions (must be readable)</li>
+<li>Verify project structure:<pre><code>GAZTank/
+├── config/
+│   └── pipeline.toml  ← Must exist here
+└── utils/
+    └── gzconfig/
+</code></pre>
+</li>
+</ol>
+<h3 id="valueerror-environment-not-defined">ValueError: Environment not defined</h3>
+<p><strong>Problem:</strong> <code>Environment 'xyz' is not defined in pipeline.toml</code></p>
+<h4 id="solutions-1">Solutions:</h4>
+<ol>
+<li>Check spelling of environment name (case-sensitive)</li>
+<li>List available environments:<pre><code class="language-python">config = get_pipeline_config()
+print(config.environment_names)  # ['dev', 'staging', 'prod']
+</code></pre>
+</li>
+<li>Add environment to <code>pipeline.toml</code>:<pre><code class="language-toml">[environments.xyz]
+dir = "xyz"
+port = 7193
+description = "XYZ environment"
+</code></pre>
+</li>
+</ol>
+<h3 id="valueerror-invalid-pipelinetoml">ValueError: Invalid pipeline.toml</h3>
+<p><strong>Problem:</strong> <code>Invalid pipeline.toml: missing 'environments' section</code></p>
+<h4 id="solutions-2">Solutions:</h4>
+<ol>
+<li>Verify TOML file has <code>[environments]</code> sections:<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+httpd_port = 7190
+ftpd_port = 2190
+description = "Development"
+</code></pre>
+</li>
+<li>Check TOML syntax is valid (use TOML validator)</li>
+<li>Ensure file is not empty</li>
+<li>Check file encoding is UTF-8</li>
+</ol>
+<h3 id="attributeerror-pipelineconfig-has-no-attribute">AttributeError: PipelineConfig has no attribute</h3>
+<p><strong>Problem:</strong> <code>Cannot access attribute "directory_path" for class "PipelineConfig"</code></p>
+<p><strong>Solution:</strong> You're calling <code>get_pipeline_config()</code> without an environment parameter, which returns <code>PipelineConfig</code> (all environments), not <code>PipelineEnvironment</code> (single environment).</p>
+<pre><code class="language-python"># Wrong - returns PipelineConfig
+config = get_pipeline_config()
+print(config.httpd_port)  # Error! PipelineConfig doesn't have this property
+
+# Right - returns PipelineEnvironment
+env = get_pipeline_config('dev')
+print(env.httpd_port)  # Works! Returns 7190
+print(env.ftpd_port)   # Works! Returns 2190
+
+# Or access via config object
+config = get_pipeline_config()
+env = config.get_environment('dev')
+print(env.port)  # Works!
+</code></pre>
+<h3 id="type-checker-warnings">Type Checker Warnings</h3>
+<p><strong>Problem:</strong> Type checker complains about union types (<code>PipelineConfig | PipelineEnvironment</code>)</p>
+<p><strong>Solution:</strong> Add type annotations:</p>
+<pre><code class="language-python">from gzconfig import get_pipeline_config, PipelineEnvironment, PipelineConfig
+
+# Annotate the return type
+env: PipelineEnvironment = get_pipeline_config('dev')  # type: ignore
+
+# Or use explicit typing
+config: PipelineConfig = get_pipeline_config()
+env: PipelineEnvironment = config.get_environment('dev')
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="get-configuration-once">1. Get Configuration Once</h3>
+<pre><code class="language-python"># Good - get once, reuse
+env = get_pipeline_config('dev')
+for item in range(100):
+    process_item(item, env.directory_path, env.port)
+
+# Bad - unnecessary repeated lookups
+for item in range(100):
+    env = get_pipeline_config('dev')  # Cached, but wasteful
+    process_item(item, env.directory_path, env.port)
+</code></pre>
+<h3 id="use-property-access">2. Use Property Access</h3>
+<pre><code class="language-python"># Good - clean property access
+env = get_pipeline_config('dev')
+port = env.port
+directory = env.directory_path
+
+# Bad - don't access internal attributes
+env = get_pipeline_config('dev')
+port = env._config['port']  # Don't do this!
+directory = env._project_root / 'publish' / env._config['dir']  # Don't do this!
+</code></pre>
+<h3 id="handle-errors-appropriately">3. Handle Errors Appropriately</h3>
+<pre><code class="language-python"># Good - specific error handling for user input
+def start_server(user_environment: str):
+    try:
+        env = get_pipeline_config(user_environment)
+    except ValueError as e:
+        print(f"Invalid environment: {e}")
+        sys.exit(1)
+    
+    # ... start server
+
+# Also good - let it raise for developer errors
+def initialize():
+    env = get_pipeline_config('dev')  # If this fails, it's a bug
+    return env
+</code></pre>
+<h3 id="use-type-hints">4. Use Type Hints</h3>
+<pre><code class="language-python"># Good - full type safety
+from gzconfig import get_pipeline_config, PipelineEnvironment
+
+def serve_directory(env: PipelineEnvironment) -&gt; None:
+    """Host files from environment directory."""
+    print(f"Serving on port {env.port}")
+    print(f"Directory: {env.directory_path}")
+
+# Usage
+dev_env = get_pipeline_config('dev')
+serve_directory(dev_env)  # IDE provides autocomplete and type checking
+</code></pre>
+<h3 id="check-directory-existence">5. Check Directory Existence</h3>
+<pre><code class="language-python"># Good - verify directory exists before using
+env = get_pipeline_config('dev')
+if not env.directory_path.exists():
+    print(f"Environment directory not found: {env.directory_path}")
+    print(f"Please run: python -m generate -e {env.name}")
+    sys.exit(1)
+
+os.chdir(env.directory_path)
+# ... continue
+</code></pre>
+<h3 id="validate-environment-parameter-early">6. Validate Environment Parameter Early</h3>
+<pre><code class="language-python"># Good - validate environment early in your main()
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-e', '--environment', required=True,
+                       choices=['dev', 'staging', 'prod'])
+    args = parser.parse_args()
+    
+    # This will work because we validated choices
+    env = get_pipeline_config(args.environment)
+    # ... rest of code
+</code></pre>
+<h3 id="dont-cache-pipelineconfig-objects-manually">7. Don't Cache PipelineConfig Objects Manually</h3>
+<pre><code class="language-python"># Good - let gzconfig handle caching
+def get_env_port(environment: str) -&gt; int:
+    env = get_pipeline_config(environment)
+    return env.port
+
+# Bad - unnecessary manual caching
+_config_cache = None
+def get_env_port(environment: str) -&gt; int:
+    global _config_cache
+    if _config_cache is None:
+        _config_cache = get_pipeline_config()
+    return _config_cache.get_environment(environment).port
+</code></pre>
+<h3 id="use-reloadtrue-only-when-needed">8. Use reload=True Only When Needed</h3>
+<pre><code class="language-python"># Good - reload only when config actually changed
+def reload_config_if_changed():
+    config_path = Path('config/pipeline.toml')
+    last_modified = config_path.stat().st_mtime
+    
+    if last_modified &gt; last_check_time:
+        config = get_pipeline_config(reload=True)
+        return config
+    
+    return get_pipeline_config()  # Use cached
+
+# Bad - always reloading
+def get_config():
+    return get_pipeline_config(reload=True)  # Wastes time parsing TOML
+</code></pre>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Planned improvements for future versions:</p>
+<h3 id="short-term-v11">Short Term (v1.1)</h3>
+<ul>
+<li>[ ] <strong>Site Configuration</strong>: Add support for <code>site.toml</code> (site metadata, base URLs, SEO settings)</li>
+<li>[ ] <strong>Generator Configuration</strong>: Add support for <code>generate.toml</code> (content generation rules, markdown settings)</li>
+<li>[ ] <strong>Tool Configuration</strong>: Add support for <code>tools.toml</code> (tool-specific settings beyond logging)</li>
+</ul>
+<h3 id="medium-term-v12">Medium Term (v1.2)</h3>
+<ul>
+<li>[ ] <strong>Unified Configuration API</strong>: Single interface to access all config files (<code>get_config('site')</code>, <code>get_config('pipeline')</code>)</li>
+<li>[ ] <strong>Environment Variables</strong>: Support environment variable overrides (e.g., <code>GAZTANK_ENV=prod</code>)</li>
+<li>[ ] <strong>Configuration Validation</strong>: JSON Schema or similar for validating configuration files</li>
+<li>[ ] <strong>Configuration Merging</strong>: Support for local overrides (e.g., <code>pipeline.local.toml</code>)</li>
+</ul>
+<h3 id="long-term-v20">Long Term (v2.0)</h3>
+<ul>
+<li>[ ] <strong>Watch Mode</strong>: Automatically reload configuration when files change</li>
+<li>[ ] <strong>Configuration Migrations</strong>: Tools for migrating config between versions</li>
+<li>[ ] <strong>Multi-Project Support</strong>: Support for multiple project configurations</li>
+<li>[ ] <strong>Configuration Export</strong>: Export configuration to JSON/YAML for tools</li>
+</ul>
+<h3 id="under-consideration">Under Consideration</h3>
+<ul>
+<li>[ ] <strong>Remote Configuration</strong>: Load configuration from URLs or remote servers</li>
+<li>[ ] <strong>Encrypted Secrets</strong>: Support for encrypted configuration values</li>
+<li>[ ] <strong>Configuration Diff</strong>: Tools for comparing configurations across environments</li>
+<li>[ ] <strong>Configuration Templates</strong>: Template system for generating configurations</li>
+</ul>
+<p>See <a href="https://github.com/gazorper/GAZTank/issues">GitHub Issues</a> for tracking and discussion.</p>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../gzlogging/README.md">gzlogging</a></strong> - Logging infrastructure (similar library module design)</li>
+<li><strong><a href="../gzserve/README.md">gzserve</a></strong> - Development server (uses gzconfig)</li>
+<li><strong><a href="../setup/README.md">setup</a></strong> - Site setup wizard (uses gzconfig)</li>
+<li><strong><a href="../sitemap/README.md">sitemap</a></strong> - Sitemap generator (uses gzconfig)</li>
+<li><strong><a href="../generate/README.md">generate</a></strong> - Content generator (will use gzconfig)</li>
+<li><strong>Python tomllib:</strong> <a href="https://docs.python.org/3/library/tomllib.html">https://docs.python.org/3/library/tomllib.html</a></li>
+<li><strong>TOML specification:</strong> <a href="https://toml.io/">https://toml.io/</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 23, 2025</em><br/>
+<em>GZConfig version: 1.0.0</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

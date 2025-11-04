@@ -1,0 +1,32 @@
+# Tools Configuration
+# ===================
+# Configuration for development and deployment tools.
+#
+# Each environment has:
+# - log_dir: Directory path relative to logs/ where tool logs are stored
+# - description: Human-readable description of the environment
+#
+# Note: Environment sections must match those in pipeline.toml
+#
+# Tool-Specific Log Rotation Overrides:
+# Individual tools can override global rotation settings from gzlogrotate.toml
+# by adding a [tools.toolname] section with these optional attributes:
+# - compress: true/false (override global compress setting)
+# - rotation_count: number (override global rotation_count setting)
+#
+# Example:
+# [tools.server]
+# compress = false
+# rotation_count = 60
+
+[environments.dev]
+log_dir = "dev"
+description = "Development environment logs"
+
+[environments.staging]
+log_dir = "staging"
+description = "Staging environment logs"
+
+[environments.prod]
+log_dir = "prod"
+description = "Production environment logs"

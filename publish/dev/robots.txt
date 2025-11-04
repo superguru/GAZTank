@@ -1,0 +1,10 @@
+# robots.txt for GAZ Tank
+User-agent: *
+Allow: /
+
+# Disallow admin/utility directories
+Disallow: /utils/
+Disallow: /publish/
+
+# Sitemap location
+Sitemap: https://mygaztank.com/sitemap.xml

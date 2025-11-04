@@ -1,0 +1,1380 @@
+<h1>Design Rules - GAZ Tank Project</h1>
+<p><strong>Version:</strong> 1.0<br/>
+<strong>Last Updated:</strong> October 19, 2025</p>
+<p>This document defines the high-level structural and design rules that must be followed when creating files, code, and actions in this project.</p>
+<hr/>
+<h2>📋 Table of Contents</h2>
+<ul>
+<li><a href="#core-principles">Core Principles</a></li>
+<li><a href="#file-organization">File Organization</a></li>
+<li><a href="#code-standards">Code Standards</a></li>
+<li><a href="#python-conventions">Python Conventions</a></li>
+<li><a href="#htmlcssjavascript-conventions">HTML/CSS/JavaScript Conventions</a></li>
+<li><a href="#configuration-management">Configuration Management</a></li>
+<li><a href="#documentation-requirements">Documentation Requirements</a></li>
+<li><a href="#build-and-deployment">Build and Deployment</a></li>
+<li><a href="#version-control">Version Control</a></li>
+<li><a href="#testing-and-validation">Testing and Validation</a></li>
+</ul>
+<hr/>
+<h2>🎯 Core Principles</h2>
+<h3>1. Single Source of Truth</h3>
+<ul>
+<li><strong>Configuration</strong>: All site configuration lives in <code>config/site.toml</code></li>
+<li><strong>No Hardcoded Values</strong>: Never hardcode site-specific values in code</li>
+<li><strong>Generated Files</strong>: CSS variables, sitemaps, and configuration-driven files are generated, not manually edited</li>
+</ul>
+<h3>2. Idempotency</h3>
+<ul>
+<li><strong>Setup Scripts</strong>: Must be safely re-runnable without side effects</li>
+<li><strong>Build Scripts</strong>: Running multiple times produces same result</li>
+<li><strong>Force-Apply Mode</strong>: Configuration can be re-applied without user prompts</li>
+</ul>
+<h3>3. Modularity</h3>
+<ul>
+<li><strong>Separation of Concerns</strong>: Each module/file has a single, clear responsibility</li>
+<li><strong>No God Objects</strong>: Break large files (&gt;600 lines) into focused modules</li>
+<li><strong>Reusable Components</strong>: Shared functionality lives in separate modules</li>
+</ul>
+<h3>4. Cross-Platform Compatibility</h3>
+<ul>
+<li><strong>Windows &amp; Unix</strong>: All scripts must work on both platforms</li>
+<li><strong>Paired Launchers</strong>: Every <code>.cmd</code> file MUST have a matching <code>.sh</code> file (and vice versa)</li>
+<li><strong>Scripts Directory</strong>: All <code>.cmd</code> and <code>.sh</code> launcher scripts MUST be created in the <code>scripts/</code> directory (exception: dev-specific tools in <code>dev/</code>)</li>
+<li><strong>Identical Functionality</strong>: Both launchers must perform the same operations</li>
+<li><strong>Path Handling</strong>: Use <code>pathlib.Path</code> for cross-platform paths</li>
+<li><strong>No Platform-Specific Code</strong>: Isolate platform differences in launcher scripts only</li>
+</ul>
+<h3>5. Fail-Fast Philosophy</h3>
+<ul>
+<li><strong>Validation First</strong>: Always validate before processing</li>
+<li><strong>Proper Exit Codes</strong>: Return 0 (success) or 1 (failure)</li>
+<li><strong>Clear Error Messages</strong>: Tell user what failed and how to fix it</li>
+</ul>
+<hr/>
+<h2>📁 File Organization</h2>
+<h3>Directory Structure</h3>
+<p>For a comprehensive directory structure with detailed descriptions, see <a href="#setup/PROJECT_STRUCTURE">PROJECT_STRUCTURE.md</a>.</p>
+<h4>Quick Reference:</h4>
+<ul>
+<li><strong><code>config/</code></strong> - TOML configuration files</li>
+<li><strong><code>dev/</code></strong> - Development tools (linter, TODO)</li>
+<li><strong><code>docs/</code></strong> - Markdown documentation</li>
+<li><strong><code>src/</code></strong> - Source files (HTML, CSS, JS, images, content)</li>
+<li><strong><code>utils/</code></strong> - Python utility modules</li>
+<li><strong><code>publish/</code></strong> - Build outputs (gitignored)</li>
+<li><strong><code>scripts/</code></strong> - Cross-platform launcher scripts</li>
+</ul>
+<h3>File Naming Conventions</h3>
+<h4>Python Scripts:</h4>
+<ul>
+<li>Use snake_case: <code>setup_site.py</code>, <code>sitemap module</code></li>
+<li>Descriptive names: <code>backup_manager.py</code> not <code>bm.py</code></li>
+<li>Module names match functionality</li>
+</ul>
+<h4>HTML Content:</h4>
+<ul>
+<li>Use snake_case: <code>home.html</code>, <code>mods_7_days_to_die.html</code></li>
+<li>Hierarchical: Parent pages before child pages alphabetically</li>
+<li>No version prefixes: Use descriptive names, not <code>page_01.html</code></li>
+</ul>
+<h4>Documentation:</h4>
+<ul>
+<li>UPPERCASE for root: <code>README.md</code>, <code>LICENSE</code></li>
+<li>UPPERCASE for important docs in subdirs: <code>RULES.md</code>, <code>SETUP.md</code></li>
+<li>Use underscores for multi-word: <code>DESIGN_RULES.md</code></li>
+</ul>
+<h4>Configuration:</h4>
+<ul>
+<li>Lowercase extensions: <code>.toml</code>, <code>.ini</code>, <code>.config</code></li>
+<li>Template files: <code>file.template</code> or <code>file.config.template</code></li>
+</ul>
+<h4>Shell Script Launchers:</h4>
+<ul>
+<li><strong>Always provide both platforms</strong>: Every <code>.cmd</code> file must have a corresponding <code>.sh</code> file</li>
+<li><strong>Identical functionality</strong>: Both scripts must perform the same operations</li>
+<li><strong>Same base name</strong>: <code>script.cmd</code> and <code>script.sh</code></li>
+<li>Examples:<ul>
+<li>✅ <code>scripts\setup_site.cmd</code> + <code>setup_site.sh</code></li>
+<li>✅ <code>scripts\deploy.cmd</code> + <code>deploy.sh</code></li>
+<li>✅ <code>scripts\gzserve.cmd</code> + <code>gzserve.sh</code></li>
+<li>❌ Having only <code>scripts\package.cmd</code> without <code>package.sh</code></li>
+</ul>
+</li>
+</ul>
+<h3>Windows Batch Script Standards</h3>
+<h4>Variable Scope Isolation with <code>setlocal</code>/<code>endlocal</code></h4>
+<h5>All Windows batch script launchers (<code>.cmd</code> files) MUST use <code>setlocal</code> and <code>endlocal</code> for environment variable isolation.</h5>
+<h4>Required Pattern:</h4>
+<pre><code class="language-batch">@echo off
+setlocal
+REM Script commands here
+REM Set environment variables (PYTHONPATH, etc.)
+REM Run Python modules
+endlocal
+exit /b %errorlevel%
+</code></pre>
+<h4>Why This Matters:</h4>
+<ol>
+<li><strong>Environment Isolation</strong>: Prevents <code>PYTHONPATH</code> and other variable changes from persisting after script exits</li>
+<li><strong>Clean Testing</strong>: Each script run starts fresh without accumulated changes from previous runs</li>
+<li><strong>No Side Effects</strong>: User's command prompt environment remains unchanged</li>
+<li><strong>Parallel Execution</strong>: Multiple scripts can run safely without interfering with each other</li>
+<li><strong>Professional Practice</strong>: Standard pattern in well-written production batch scripts</li>
+</ol>
+<h4>Rules:</h4>
+<ul>
+<li>✅ Place <code>setlocal</code> immediately after <code>@echo off</code> (before any variable setting)</li>
+<li>✅ Place <code>endlocal</code> before <code>exit /b %errorlevel%</code> (after all script operations)</li>
+<li>✅ All environment variable changes (<code>set PYTHONPATH=...</code>) happen between <code>setlocal</code> and <code>endlocal</code></li>
+<li>❌ Never modify environment variables without <code>setlocal</code>/<code>endlocal</code> protection</li>
+<li>❌ Don't use <code>goto</code> to bypass <code>endlocal</code> - it must always execute</li>
+</ul>
+<h4>Example - Server Launcher:</h4>
+<pre><code class="language-batch">@echo off
+setlocal
+REM Development Web Server Launcher (Windows)
+REM Usage: gzserve.cmd [port]
+
+REM Set PYTHONPATH to project root for module imports
+set "SCRIPT_DIR=%~dp0"
+set "PROJECT_ROOT=%SCRIPT_DIR%.."
+set "PYTHONPATH=%PROJECT_ROOT%;%PYTHONPATH%"
+
+REM Run the server module
+python -m utils.gzserve %*
+
+endlocal
+exit /b %errorlevel%
+</code></pre>
+<h4>What Happens:</h4>
+<h5>WITHOUT <code>setlocal</code>/<code>endlocal</code>:</h5>
+<pre><code class="language-batch">C:\&gt; echo %PYTHONPATH%
+(empty or existing value)
+
+C:\&gt; gzserve.cmd
+(Server runs)
+
+C:\&gt; echo %PYTHONPATH%
+D:\Projects\www\GAZTank;(previous value)  &lt;-- POLLUTION!
+</code></pre>
+<h5>WITH <code>setlocal</code>/<code>endlocal</code>:</h5>
+<pre><code class="language-batch">C:\&gt; echo %PYTHONPATH%
+(empty or existing value)
+
+C:\&gt; gzserve.cmd
+(Server runs)
+
+C:\&gt; echo %PYTHONPATH%
+(empty or existing value)  &lt;-- CLEAN!
+</code></pre>
+<h4>Historical Context:</h4>
+<p>This project previously had inconsistent usage:</p>
+<ul>
+<li>4 scripts used <code>setlocal</code>/<code>endlocal</code>: <code>generate_toc.cmd</code>, <code>package.cmd</code>, <code>normalise.cmd</code>, <code>gzlint.cmd</code></li>
+<li>5 scripts didn't: <code>gzserve.cmd</code>, <code>deploy.cmd</code>, <code>generate_sitemap.cmd</code>, <code>md_to_html.cmd</code>, <code>setup_site.cmd</code></li>
+</ul>
+<p><strong>As of October 21, 2025</strong>: All launcher scripts now use <code>setlocal</code>/<code>endlocal</code> for consistency and reliability.</p>
+<hr/>
+<h3>Python Subprocess Unicode Handling</h3>
+<h4>All Python scripts that run subprocesses with captured output MUST set <code>PYTHONIOENCODING='utf-8'</code> in the environment.</h4>
+<h4>The Problem:</h4>
+<p>On Windows, when Python runs a subprocess with <code>capture_output=True</code>, stdout/stderr are captured through <strong>pipes</strong>. Python defaults pipe encoding to the <strong>system encoding</strong> (cp1252 on Windows), NOT UTF-8. This causes <code>UnicodeEncodeError</code> when the subprocess tries to output Unicode characters (emojis, special symbols).</p>
+<p><strong>Direct execution works</strong>:</p>
+<pre><code class="language-bash">.\scripts\gzlint.cmd  # Python inherits console encoding (UTF-8 capable) ✅
+</code></pre>
+<p><strong>Subprocess with captured output fails</strong>:</p>
+<pre><code class="language-python">result = subprocess.run([sys.executable, '-m', 'gzlint'], 
+                       capture_output=True)  # Pipe defaults to cp1252 ❌
+# UnicodeEncodeError: 'charmap' codec can't encode character '\u2705'
+</code></pre>
+<h4>Required Pattern:</h4>
+<pre><code class="language-python">import subprocess
+import os
+
+def run_subprocess_with_unicode():
+    """Run a subprocess that may output Unicode characters"""
+    
+    # Set up environment with UTF-8 encoding
+    env = os.environ.copy()
+    env['PYTHONIOENCODING'] = 'utf-8'  # ← CRITICAL for Windows pipes
+    
+    result = subprocess.run(
+        [sys.executable, '-m', 'some_module'],
+        capture_output=True,
+        text=True,
+        encoding='utf-8',      # Decode captured output as UTF-8
+        errors='replace',      # Replace unencodable characters gracefully
+        env=env                # Pass environment with PYTHONIOENCODING
+    )
+    
+    # Safe printing with fallback
+    if result.stdout:
+        try:
+            print(result.stdout)
+        except UnicodeEncodeError:
+            # Fallback for edge cases
+            safe = result.stdout.encode('ascii', errors='replace').decode('ascii')
+            print(safe)
+    
+    return result.returncode
+</code></pre>
+<h4>Why This Matters:</h4>
+<ol>
+<li><strong>Cross-Platform Consistency</strong>: Windows pipe encoding differs from Unix</li>
+<li><strong>Unicode Support</strong>: Enables emoji, symbols, and international characters in output</li>
+<li><strong>Build Pipeline Reliability</strong>: Prevents crashes in automated packaging/validation</li>
+<li><strong>Professional UX</strong>: Users expect Unicode characters to work correctly</li>
+</ol>
+<h4>Rules:</h4>
+<ul>
+<li>✅ Set <code>env['PYTHONIOENCODING'] = 'utf-8'</code> before any subprocess that captures output</li>
+<li>✅ Use <code>encoding='utf-8'</code> and <code>errors='replace'</code> in <code>subprocess.run()</code></li>
+<li>✅ Add try/except around <code>print()</code> of captured output for extra safety</li>
+<li>❌ Never run subprocess with <code>capture_output=True</code> without setting <code>PYTHONIOENCODING</code></li>
+<li>❌ Don't assume console encoding will propagate to subprocess pipes</li>
+</ul>
+<h4>Examples in This Project:</h4>
+<p><strong>utils/package/packager.py</strong> - Runs validation, conversion, and sitemap generation:</p>
+<pre><code class="language-python">def run_validation():
+    env = os.environ.copy()
+    env['PYTHONPATH'] = str(utils_dir)
+    env['PYTHONIOENCODING'] = 'utf-8'  # ← Essential for gzlint Unicode output
+    
+    result = subprocess.run(
+        [sys.executable, '-m', 'gzlint'],
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='replace',
+        env=env
+    )
+</code></pre>
+<h4>Historical Issue:</h4>
+<p>Before October 21, 2025:</p>
+<ul>
+<li><code>.\scripts\gzlint.cmd</code> worked fine (direct console execution)</li>
+<li><code>.\scripts\package.cmd</code> crashed with <code>UnicodeEncodeError</code> (subprocess with pipes)</li>
+<li>Same <code>gzlint</code> code, different execution context = different behavior</li>
+</ul>
+<p>After fix: Both execution methods work reliably by setting <code>PYTHONIOENCODING</code>.</p>
+<hr/>
+<h2>💻 Code Standards</h2>
+<h3>General Rules</h3>
+<ol>
+<li><strong>UTF-8 Encoding</strong>: All text files must be UTF-8 without BOM</li>
+<li><strong>Line Endings</strong>: LF (Unix) preferred, but Git handles CRLF conversion</li>
+<li><strong>No Trailing Whitespace</strong>: Clean up trailing spaces</li>
+<li><strong>Consistent Indentation</strong>: 4 spaces for Python, 4 spaces for HTML/JS</li>
+<li><strong>Maximum Line Length</strong>:<ul>
+<li>Python: 100 characters (soft limit, 120 hard limit)</li>
+<li>HTML: No limit (but use readable formatting)</li>
+<li>JavaScript: 100 characters</li>
+</ul>
+</li>
+</ol>
+<h3>Comments and Documentation</h3>
+<ol>
+<li><strong>Docstrings</strong>: All Python functions/classes must have docstrings</li>
+<li><strong>Inline Comments</strong>: Use sparingly, code should be self-documenting</li>
+<li><strong>TODOs</strong>: Use standard format: <code># TODO: Description</code></li>
+<li><strong>License Headers</strong>: All Python files must include standard header</li>
+</ol>
+<hr/>
+<h2>🐍 Python Conventions</h2>
+<h3>File Headers</h3>
+<h4>Standard header format for all Python files:</h4>
+<p>All Python scripts must include the following header structure:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+"""
+Module Title
+============
+Brief description of the module's purpose and functionality.
+
+Authors: superguru, gazorper
+License: GPL v3.0
+"""
+</code></pre>
+<h4>Header Components:</h4>
+<ol>
+<li><p><strong>Shebang Line</strong> (<code>#!/usr/bin/env python3</code>)</p>
+<ul>
+<li>Enables direct script execution on Unix-like systems</li>
+<li>Must be the very first line (no blank lines before)</li>
+<li>Exactly one shebang line per file</li>
+</ul>
+</li>
+<li><p><strong>Encoding Declaration</strong> (<code># -*- coding: utf-8 -*-</code>)</p>
+<ul>
+<li>Specifies UTF-8 encoding for the file</li>
+<li>Required for files containing non-ASCII characters</li>
+<li>Standard practice for consistency across all files</li>
+</ul>
+</li>
+<li><p><strong>SPDX License Identifier</strong> (<code># SPDX-License-Identifier: GPL-3.0-or-later</code>)</p>
+<ul>
+<li>Machine-readable license identifier</li>
+<li>Follows <a href="https://spdx.org/">SPDX specification</a></li>
+<li>Indicates GPL v3.0 or later licensing</li>
+</ul>
+</li>
+<li><p><strong>Module Docstring</strong></p>
+<ul>
+<li>Triple-quoted string with module title and description</li>
+<li>Title underlined with <code>=</code> characters (matching title length)</li>
+<li>Clear description of module purpose</li>
+<li>Must include <code>Authors:</code> and <code>License:</code> lines</li>
+<li>Optional: <code>Usage:</code> section for command-line scripts</li>
+</ul>
+</li>
+</ol>
+<h4>Rules:</h4>
+<ul>
+<li>✅ All four components must be present in this exact order</li>
+<li>✅ One blank line between shebang section and docstring</li>
+<li>✅ No duplicate shebang or encoding declarations</li>
+<li>✅ Docstring must include Authors and License information</li>
+<li>❌ No content before the shebang line</li>
+<li>❌ No duplicate headers or sections</li>
+</ul>
+<h4>Example for Command-Line Scripts:</h4>
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+"""
+Site Setup Wizard
+=================
+Interactive configuration tool for customizing the site.
+
+This script guides you through the setup process and generates
+configuration files, updates branding, and customizes the site
+for your specific use case.
+
+Usage:
+    python utils/setup/setup_site.py
+    python utils/setup/setup_site.py --force-apply
+
+Options:
+    --force-apply    Skip all prompts and apply current site.toml configuration
+
+Authors: superguru, gazorper
+License: GPL v3.0
+"""
+</code></pre>
+<h4>Example for Package <code>__init__.py</code>:</h4>
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+"""
+Setup Package
+=============
+Site setup wizard modular package.
+
+Authors: superguru, gazorper
+License: GPL v3.0
+"""
+</code></pre>
+<h3>Import Organization</h3>
+<pre><code class="language-python"># 1. Standard library imports
+import os
+import sys
+from pathlib import Path
+
+# 2. Third-party imports
+import tomlkit
+from InquirerPy import inquirer
+
+# 3. Local application imports
+import ui_helpers
+from config_io import load_config
+</code></pre>
+<h3>Module Structure</h3>
+<pre><code class="language-python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+"""
+Module Title
+============
+Brief description of module purpose.
+"""
+
+# Imports
+
+# Constants
+DEFAULT_PORT = 7190
+
+# Functions/Classes
+
+def main():
+    """Main entry point"""
+    pass
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
+</code></pre>
+<h3>Python Best Practices</h3>
+<ol>
+<li><strong>Use pathlib.Path</strong>: Not <code>os.path</code> for file operations</li>
+<li><strong>Use f-strings</strong>: For string formatting (Python 3.6+)</li>
+<li><strong>Type Hints</strong>: Optional but encouraged for clarity</li>
+<li><strong>Error Handling</strong>: Use try/except with specific exceptions</li>
+<li><strong>Context Managers</strong>: Use <code>with</code> for file operations</li>
+<li><strong>List Comprehensions</strong>: For simple iterations, not complex logic</li>
+</ol>
+<h3>Parsing and Data Processing</h3>
+<h4>Use proper parsers, not regex, for structured data:</h4>
+<ol>
+<li><p><strong>HTML/XML Processing</strong></p>
+<ul>
+<li>✅ Use: <code>BeautifulSoup</code> from <code>bs4</code> package</li>
+<li>❌ Avoid: <code>re.findall()</code>, <code>re.sub()</code> on HTML</li>
+<li>Example: <code>soup.find('title')</code> not <code>re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;')</code></li>
+</ul>
+</li>
+<li><p><strong>JavaScript/Code Processing</strong></p>
+<ul>
+<li>✅ Use: Node.js with Babel AST parser (<code>@babel/parser</code>, <code>@babel/traverse</code>)</li>
+<li>✅ Fallback: Simple string methods for configuration blocks</li>
+<li>❌ Avoid: Regex on JavaScript code (fragile and dangerous)</li>
+<li>Project: See <code>utils/setup/js_updater.mjs</code> for AST implementation</li>
+</ul>
+</li>
+<li><p><strong>URL Processing</strong></p>
+<ul>
+<li>✅ Use: <code>urllib.parse.urlparse()</code> and <code>urllib.parse.urlunparse()</code></li>
+<li>❌ Avoid: Regex patterns like <code>r'https://[^/]+'</code></li>
+<li>Example: <code>parsed.netloc</code> not <code>re.match(r'https://([^/]+)', url)</code></li>
+</ul>
+</li>
+<li><p><strong>Text File Processing</strong></p>
+<ul>
+<li>✅ Use: Line-by-line processing with string methods</li>
+<li>✅ Methods: <code>.startswith()</code>, <code>.contains()</code>, <code>.replace()</code>, <code>.split()</code></li>
+<li>❌ Avoid: <code>re.sub()</code> with <code>re.MULTILINE</code> for simple replacements</li>
+<li>Example: <code>if line.startswith('#'):</code> not <code>re.sub(r'^#.*', ...)</code></li>
+</ul>
+</li>
+<li><p><strong>JSON Processing</strong></p>
+<ul>
+<li>✅ Use: <code>json</code> module</li>
+<li>❌ Avoid: Regex on JSON strings</li>
+</ul>
+</li>
+<li><p><strong>CSV Processing</strong></p>
+<ul>
+<li>✅ Use: <code>csv</code> module</li>
+<li>❌ Avoid: <code>re.split()</code> on CSV data</li>
+</ul>
+</li>
+</ol>
+<h4>When regex IS appropriate:</h4>
+<ul>
+<li>Simple validation (email format, phone numbers)</li>
+<li>Pattern matching in unstructured text (logs, prose)</li>
+<li>When used in a <strong>documented fallback</strong> for unavailable parsers</li>
+</ul>
+<h4>Project Example:</h4>
+<pre><code class="language-python"># ❌ BAD - Fragile regex on HTML
+content = re.sub(r'&lt;meta name="description" content=".*?"', 
+                 f'&lt;meta name="description" content="{desc}"', 
+                 html_content)
+
+# ✅ GOOD - BeautifulSoup for HTML
+soup = BeautifulSoup(html_content, 'html.parser')
+meta_desc = soup.find('meta', {'name': 'description'})
+if meta_desc:
+    meta_desc['content'] = desc
+</code></pre>
+<h3>Absolute Imports</h3>
+<ul>
+<li>Use absolute imports: <code>import module_name</code></li>
+<li>Not relative imports: <code>from . import module</code></li>
+<li>Enables direct script execution without package complications</li>
+</ul>
+<hr/>
+<h2>🌐 HTML/CSS/JavaScript Conventions</h2>
+<h3>HTML Structure</h3>
+<ol>
+<li><strong>Semantic HTML5</strong>: Use appropriate tags (<code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>)</li>
+<li><strong>Single H1</strong>: Exactly one <code>&lt;h1&gt;</code> per page (SEO requirement)</li>
+<li><strong>Heading Hierarchy</strong>: No skipping levels (h2 → h3, not h2 → h4)</li>
+<li><strong>Accessibility</strong>: Include <code>aria-label</code>, <code>alt</code> text, and ARIA attributes</li>
+<li><strong>Data Attributes</strong>: Use for dynamic content: <code>data-content="page_name"</code></li>
+</ol>
+<h3>CSS Organization</h3>
+<ol>
+<li><strong>CSS Variables</strong>: Use variables from <code>variables.css</code> (generated)</li>
+<li><strong>No Hardcoded Colors</strong>: Always use CSS custom properties</li>
+<li><strong>Mobile-First</strong>: Design for mobile, enhance for desktop</li>
+<li><strong>BEM Naming</strong>: Use Block-Element-Modifier when appropriate</li>
+</ol>
+<h3>JavaScript Rules</h3>
+<ol>
+<li><strong>Vanilla JS</strong>: No frameworks (project requirement)</li>
+<li><strong>ES6+</strong>: Use modern JavaScript features</li>
+<li><strong>No console.log()</strong>: Remove before production (GZLint enforces)</li>
+<li><strong>Error Handling</strong>: Use console.error() for intentional logging</li>
+<li><strong>Async/Await</strong>: Prefer over promise chains for readability</li>
+</ol>
+<hr/>
+<h2>🏗️ Module Architecture Standards</h2>
+<h3>Module Categories</h3>
+<p>The project has <strong>12 Python modules</strong> in <code>utils/</code> organized into two categories:</p>
+<h4>Foundational Modules (2)</h4>
+<ol>
+<li><strong>gzconfig</strong> - Configuration management library</li>
+<li><strong>gzlogging</strong> - Centralized logging infrastructure</li>
+</ol>
+<h4>Pipeline Modules (10)</h4>
+<ol start="3">
+<li><strong>clean</strong> - Orphaned file cleanup</li>
+<li><strong>deploy</strong> - FTP/FTPS deployment</li>
+<li><strong>generate</strong> - Environment-aware content generation</li>
+<li><strong>gzlint</strong> - HTML/JS/Config validation</li>
+<li><strong>normalise</strong> - Markdown structure normalization</li>
+<li><strong>package</strong> - Build packaging and archiving</li>
+<li><strong>gzserve</strong> - Development web server</li>
+<li><strong>setup</strong> - Interactive site configuration wizard</li>
+<li><strong>sitemap</strong> - XML sitemap generation</li>
+<li><strong>toc</strong> - Table of contents generation</li>
+</ol>
+<p><strong>Status:</strong> 10/12 complete (83%), 1 WIP (package), 1 incomplete (deploy)</p>
+<h3>Module Maturity Checklist</h3>
+<p>All modules must meet these 12 criteria (see <code>utils/00MODULE_MATURITY.md</code>):</p>
+<ol>
+<li>✅ Is a proper module that can run with <code>python -m &lt;modulename&gt;</code></li>
+<li>✅ Has <code>-e &lt;env&gt;</code> command line param, or has a specific design decision to default to dev environment</li>
+<li>✅ Has <code>--help</code> command line param</li>
+<li>✅ Uses gzconfig for all config operations</li>
+<li>✅ Uses gzlogging</li>
+<li>✅ Uses an appropriate <code>.\config\*.toml</code> file</li>
+<li>✅ Has shell invocation scripts for cmd and sh</li>
+<li>✅ Has <code>--force</code> command line param, or a specific design choice not to have it</li>
+<li>✅ Has <code>--dry-run</code> command line param, or a specific design choice not to have it</li>
+<li>✅ Consistently and correctly log appropriate items to log and to console</li>
+<li>✅ Is verified to be UTF-8 compliant</li>
+<li>✅ Is generic in design so it can be easily extended in future</li>
+<li>✅ Has updated README.md that conforms to <code>.\dev\MODULE_README_STRUCTURE.md</code></li>
+</ol>
+<h3>Environment-Aware Design (v2.0)</h3>
+<p><strong>Breaking Change:</strong> As of October 23, 2025, all pipeline modules are environment-aware.</p>
+<h4>Required: <code>-e</code> Environment Argument</h4>
+<p>All pipeline modules MUST accept a mandatory <code>-e</code> or <code>--environment</code> argument:</p>
+<pre><code class="language-bash"># Required pattern for all pipeline modules
+python -m utils.generate -e dev
+python -m utils.clean -e staging
+python -m utils.package -e prod
+</code></pre>
+<p><strong>Valid environments:</strong> <code>dev</code>, <code>staging</code>, <code>prod</code> (defined in <code>config/pipeline.toml</code>)</p>
+<h4>Exception: Foundational Modules</h4>
+<p><strong>gzconfig</strong> and <strong>gzlogging</strong> are library modules and do NOT have command-line interfaces:</p>
+<ul>
+<li>No <code>-e</code> argument (imported, not executed)</li>
+<li>No shell scripts (used via <code>from gzconfig import ...</code>)</li>
+<li>No <code>--help</code>, <code>--force</code>, or <code>--dry-run</code> (not CLI tools)</li>
+</ul>
+<h3>Configuration Management with gzconfig</h3>
+<h4>All modules MUST use gzconfig for configuration access:</h4>
+<pre><code class="language-python"># ✅ CORRECT - Use gzconfig
+from gzconfig import get_pipeline_config, get_generate_config
+
+def my_function(environment: str):
+    # Get environment-specific configuration
+    env = get_pipeline_config(environment)
+    print(f"Output directory: {env.directory_path}")
+    print(f"Server port: {env.port}")
+</code></pre>
+<pre><code class="language-python"># ❌ INCORRECT - Direct TOML reading
+import tomlkit
+from pathlib import Path
+
+def my_function(environment: str):
+    # Don't do this!
+    config_file = Path("config/pipeline.toml")
+    with open(config_file) as f:
+        config = tomlkit.load(f)
+    dir_path = Path(config['environments'][environment]['dir'])
+</code></pre>
+<h4>Benefits of gzconfig:</h4>
+<ol>
+<li><strong>Centralized logic</strong>: Configuration reading in one place</li>
+<li><strong>Type safety</strong>: Returns typed objects, not raw dicts</li>
+<li><strong>Clean properties</strong>: <code>env.directory_path</code> instead of <code>config['environments'][env]['dir']</code></li>
+<li><strong>Caching</strong>: Configuration loaded once, reused across modules</li>
+<li><strong>Validation</strong>: Ensures environment exists before returning</li>
+<li><strong>No circular dependencies</strong>: Low-level library, no imports from other modules</li>
+</ol>
+<h3>Logging with gzlogging</h3>
+<h4>All modules MUST use gzlogging for output:</h4>
+<pre><code class="language-python">from gzlogging import Logger
+
+# Initialize logger with tool name and environment
+log = Logger(tool_name="generate", environment="dev")
+
+# Use log methods for file logging
+log.inf("Processing file: example.md")
+log.wrn("File timestamp unchanged, skipping")
+log.err("Failed to parse HTML file")
+
+# Use print() for console-only output
+print("=" * 60)
+print("✅ Generation Complete!")
+print(f"📁 Output: {output_path}")
+</code></pre>
+<h4>What goes where:</h4>
+<h5>Log file only (<code>log.inf()</code>, <code>log.wrn()</code>, <code>log.err()</code>):</h5>
+<ul>
+<li>Operational information (files processed, configuration loaded)</li>
+<li>Error messages (without emojis)</li>
+<li>Success/failure status</li>
+<li>Concise summaries</li>
+<li>No blank lines</li>
+</ul>
+<h5>Console only (<code>print()</code>):</h5>
+<ul>
+<li>Headers and decorative lines</li>
+<li>Emojis and visual formatting</li>
+<li>Blank lines for spacing</li>
+<li>Summary boxes</li>
+<li>User-facing messages</li>
+</ul>
+<h4>Log format standard:</h4>
+<pre><code>[YYYY-MM-DD HH:MM:SS] [environment] [LEVEL] Message
+</code></pre>
+<p>Example:</p>
+<pre><code>[2025-10-23 13:20:27] [dev] [INF] Loaded configuration from config/generate.toml
+[2025-10-23 13:20:28] [dev] [INF] Processing group: setup_docs
+[2025-10-23 13:20:29] [dev] [INF] Converted: DEVELOPER_SETUP.md → DEVELOPER_SETUP.html
+[2025-10-23 13:20:30] [dev] [INF] Static Content Generator completed successfully
+</code></pre>
+<h3>Command Line Argument Standards</h3>
+<h4>Required Arguments (Pipeline Modules):</h4>
+<pre><code class="language-python">parser.add_argument(
+    '-e', '--environment',
+    required=True,
+    choices=['dev', 'staging', 'prod'],
+    help='Target environment'
+)
+</code></pre>
+<h4>Standard Optional Arguments:</h4>
+<pre><code class="language-python"># Force mode - regenerate regardless of timestamps
+parser.add_argument(
+    '--force',
+    action='store_true',
+    help='Force regeneration regardless of file timestamps'
+)
+
+# Dry-run mode - show what would happen without making changes
+parser.add_argument(
+    '--dry-run',
+    action='store_true',
+    help='Show what would be done without making changes'
+)
+</code></pre>
+<h4>Design Decision: When to Omit Arguments</h4>
+<p>Some modules may intentionally omit <code>--force</code> or <code>--dry-run</code>:</p>
+<ul>
+<li>Document the design decision in <code>utils/00MODULE_MATURITY.md</code></li>
+<li>Provide clear reasoning (e.g., "gzserve module runs continuously, force mode not applicable")</li>
+</ul>
+<h3>Module Directory Structure</h3>
+<pre><code>utils/{module}/
+├── __init__.py          # Module exports and version
+├── __main__.py          # Entry point for python -m execution
+├── {module}.py          # Core implementation logic
+├── README.md            # Comprehensive documentation
+└── example.py           # Usage examples (optional, for libraries)
+</code></pre>
+<h4>Example - generate module:</h4>
+<pre><code>utils/generate/
+├── __init__.py          # Exports generate() function
+├── __main__.py          # Argument parsing, calls generate()
+├── generator.py         # Core generation logic
+└── README.md            # Full documentation
+</code></pre>
+<h3>Shell Script Standards</h3>
+<h4>Every module MUST have both Windows and Unix launchers in <code>scripts/</code>:</h4>
+<pre><code class="language-bash">scripts/
+├── generate.cmd         # Windows launcher
+├── generate.sh          # Unix launcher
+├── gzclean.cmd          # Windows launcher
+├── gzclean.sh           # Unix launcher
+└── ...
+</code></pre>
+<h4>Shell script template (Windows):</h4>
+<pre><code class="language-batch">@echo off
+setlocal
+REM
+REM Module Name - Brief Description
+REM
+
+REM Set PYTHONPATH to project root
+set "SCRIPT_DIR=%~dp0"
+set "PROJECT_ROOT=%SCRIPT_DIR%.."
+set "PYTHONPATH=%PROJECT_ROOT%;%PYTHONPATH%"
+
+REM Run the module, passing all arguments
+python -m utils.modulename %*
+
+endlocal
+exit /b %errorlevel%
+</code></pre>
+<h4>Shell script template (Unix):</h4>
+<pre><code class="language-bash">#!/bin/bash
+#
+# Module Name - Brief Description
+#
+
+# Get script directory and project root
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &amp;&amp; pwd )"
+PROJECT_ROOT="$SCRIPT_DIR/.."
+
+# Set PYTHONPATH
+export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
+
+# Run the module, passing all arguments
+python3 -m utils.modulename "$@"
+
+exit $?
+</code></pre>
+<h3>Dry-Run Mode Implementation</h3>
+<p>When implementing <code>--dry-run</code>, ensure:</p>
+<ol>
+<li><strong>No file modifications</strong>: Check flag before any write operations</li>
+<li><strong>Accurate reporting</strong>: Log messages reflect dry-run state</li>
+<li><strong>Consistent language</strong>: Use "would" verbs</li>
+<li><strong>Statistics accuracy</strong>: Show what would happen</li>
+</ol>
+<pre><code class="language-python"># ✅ CORRECT - Clear dry-run messaging
+if args.dry_run:
+    log.inf(f"Dry-run: Would convert {file_path} to {output_path}")
+    print(f"  [DRY-RUN] Would write: {output_path}")
+else:
+    log.inf(f"Converting {file_path} to {output_path}")
+    output_path.write_text(content)
+    print(f"  ✅ Wrote: {output_path}")
+
+# Final summary
+if args.dry_run:
+    log.inf(f"Dry-run complete: {count} files prepared (not written)")
+else:
+    log.inf(f"Conversion complete: {count} files written")
+</code></pre>
+<pre><code class="language-python"># ❌ INCORRECT - Misleading dry-run messaging
+if args.dry_run:
+    log.inf(f"Wrote {output_path}")  # FALSE - nothing was written!
+</code></pre>
+<h3>Pipeline Execution Order</h3>
+<p>The complete build pipeline (<code>scripts/gzbuild.cmd|sh</code>) runs modules in this order:</p>
+<pre><code>1. clean -e {env}           # Remove orphaned files
+2. setup -e {env} --force   # Apply site configuration  
+3. gzlint -e {env}          # Validate code quality
+4. generate -e {env}        # Generate content files
+5. sitemap -e {env}         # Generate sitemap.xml
+6. toc -e {env}             # Add table of contents
+7. package -e {env}         # Sync, minify, archive
+8. deploy -e {env}          # Deploy to environment
+</code></pre>
+<p>See <code>utils/FLOW_PIPELINE.md</code> for detailed execution flow documentation.</p>
+<h3>Module Dependencies</h3>
+<pre><code>gzconfig (configuration library)
+    ↓
+gzlogging (logging foundation)
+    ↓
+    ├─→ All pipeline modules use both gzconfig and gzlogging
+    ├─→ normalise (called internally by generate)
+    └─→ No circular dependencies allowed
+</code></pre>
+<h4>Rules:</h4>
+<ul>
+<li>✅ gzconfig and gzlogging are foundational - all modules can import them</li>
+<li>✅ Pipeline modules can call each other if documented</li>
+<li>❌ Never create circular dependencies</li>
+<li>❌ gzconfig and gzlogging must not import from other project modules</li>
+</ul>
+<hr/>
+<h2>⚙️ Configuration Management</h2>
+<h3>Configuration Principles</h3>
+<ol>
+<li><strong>TOML Format</strong>: Use TOML for configuration files</li>
+<li><strong>Comment Preservation</strong>: Setup scripts must preserve user comments</li>
+<li><strong>Default Values</strong>: Provide sensible defaults for all settings</li>
+<li><strong>Validation</strong>: Validate all configuration values before use</li>
+<li><strong>Backward Compatibility</strong>: Old configs should still work after updates</li>
+</ol>
+<h3>Configuration Hierarchy</h3>
+<pre><code>config/site.toml          # Main configuration (source of truth)
+    ↓
+src/css/variables.css     # Generated CSS variables
+    ↓
+src/index.html            # Generated meta tags, titles
+    ↓
+src/sitemap.xml           # Generated sitemap
+</code></pre>
+<h3>Generated Files</h3>
+<h4>Never manually edit these files:</h4>
+<ul>
+<li><code>src/css/variables.css</code> - Generated by setup wizard</li>
+<li><code>src/sitemap.xml</code> - Generated by sitemap generator</li>
+<li>Files in <code>publish/</code> - Generated by build system</li>
+</ul>
+<hr/>
+<h2>📚 Documentation Requirements</h2>
+<h3>When to Create Documentation</h3>
+<ol>
+<li><strong>New Features</strong>: Document usage, configuration, and examples</li>
+<li><strong>Breaking Changes</strong>: Update all affected documentation</li>
+<li><strong>Complex Logic</strong>: Add inline comments or separate design docs</li>
+<li><strong>User-Facing Tools</strong>: Comprehensive guides with examples</li>
+</ol>
+<h3>Documentation Structure</h3>
+<p><strong>README.md</strong> - Project overview and quick start<br/>
+<strong>docs/SETUP_SITE.md</strong> - Comprehensive setup guide<br/>
+<strong>docs/RESPONSIVE_IMAGES.md</strong> - Image optimization guide<br/>
+<strong>utils/gzlint/GZ_LINT_RULES.md</strong> - Linter rules and usage<br/>
+<strong>DESIGN_RULES.md</strong> - This file (design principles)</p>
+<h3>Documentation Style</h3>
+<ol>
+<li><strong>Markdown Format</strong>: Use standard Markdown</li>
+<li><strong>Table of Contents</strong>: For docs &gt; 200 lines</li>
+<li><strong>Code Examples</strong>: Include both good and bad examples</li>
+<li><strong>Platform-Specific</strong>: Show commands for Windows and Unix</li>
+<li><strong>Visual Aids</strong>: Use icons (✅, ❌, ⚠️, 💡) for clarity</li>
+</ol>
+<hr/>
+<h2>🏗️ Build and Deployment</h2>
+<h3>Pipeline Architecture (Environment-Based)</h3>
+<p><strong>Version 2.0</strong> - Environment-aware build pipeline completed October 23, 2025.</p>
+<p><strong>Status:</strong> ✅ Complete - All 10 pipeline modules are environment-aware.</p>
+<p>For detailed execution flow, see <code>utils/FLOW_PIPELINE.md</code>.</p>
+<h4>Environment Structure</h4>
+<pre><code>src/                          # SOURCE ONLY (hand-written files)
+├── content/                  # Hand-written HTML/Markdown
+├── css/                      # Hand-written CSS
+├── js/                       # Hand-written JavaScript
+└── images/                   # Original images
+
+publish/
+├── dev/                      # Development environment (port 7190)
+│   ├── content/              # Generated + processed files
+│   ├── css/                  # Variables + source CSS
+│   ├── js/                   # Source JavaScript
+│   ├── images/               # Optimized images
+│   ├── index.html            # Updated with config
+│   ├── sitemap.xml           # Generated
+│   └── gzlint-issues.txt     # Validation report
+├── staging/                  # Staging environment (port 7191)
+│   └── ...                   # Same structure as dev
+└── prod/                     # Production environment (port 7192)
+    └── ...                   # Same structure as dev
+
+config/
+├── pipeline.toml             # Environment definitions (paths, ports)
+├── generate.toml             # Content generation configuration
+├── site.toml                 # Site settings (colors, branding, SEO)
+├── tools.toml                # Tools configuration (logging, etc.)
+└── deploy.toml               # Deployment credentials (gitignored)
+</code></pre>
+<h4>Key Architectural Changes (v2.0)</h4>
+<h5>Old Design (pre-October 23, 2025):</h5>
+<ul>
+<li>generate → <code>src/content/</code></li>
+<li>package → copies from <code>src/</code> to <code>publish/staging/</code></li>
+<li>package → includes orphaned file cleanup</li>
+</ul>
+<h5>New Design (current):</h5>
+<ul>
+<li>generate -e {env} → <code>publish/{env}/content/</code></li>
+<li>clean -e {env} → removes orphaned files from <code>publish/{env}/</code></li>
+<li>package -e {env} → syncs, minifies, and archives <code>publish/{env}/</code></li>
+<li><strong>Separation of concerns</strong>: Each module has single responsibility</li>
+<li><strong>Centralized configuration</strong>: All modules use gzconfig</li>
+<li><strong>Centralized logging</strong>: All modules use gzlogging</li>
+</ul>
+<h4>Environment Configuration</h4>
+<p>Environments are defined in <code>config/pipeline.toml</code>:</p>
+<pre><code class="language-toml">[environments.dev]
+dir = "dev"
+port = 7190
+description = "Development environment"
+
+[environments.staging]
+dir = "staging"
+port = 7191
+description = "Staging environment"
+
+[environments.prod]
+dir = "prod"
+port = 7192
+description = "Production build"
+</code></pre>
+<h4>Development Server</h4>
+<p>The development server requires an environment parameter:</p>
+<pre><code class="language-bash"># Required: specify environment
+.\scripts\gzserve.cmd -e dev
+
+# Different environments, different ports (from pipeline.toml)
+.\scripts\gzserve.cmd -e staging    # Uses port 7191
+
+# Error: no environment specified
+.\scripts\gzserve.cmd              # ❌ WILL FAIL - Missing -e argument
+</code></pre>
+<h3>Build Pipeline Order</h3>
+<p>Complete pipeline via <code>scripts/gzbuild.cmd|sh -e &lt;environment&gt;</code>:</p>
+<pre><code>PREPARATION
+  ├─ [1] clean -e {env}
+  │      └─ Remove orphaned files from publish/{env}/
+  └─ [2] setup -e {env} --force
+         ├─ Apply site configuration
+         └─ Regenerate config-driven files (CSS variables, etc.)
+
+VALIDATION &amp; GENERATION
+  ├─ [3] gzlint -e {env}
+  │      ├─ Validate HTML structure
+  │      ├─ Validate JavaScript code
+  │      └─ Validate configuration files
+  └─ [4] generate -e {env}
+         ├─ Convert markdown to HTML
+         ├─ Output to publish/{env}/content/
+         └─ Call normalise internally for heading structure
+
+POST-PROCESSING
+  ├─ [5] sitemap -e {env}
+  │      └─ Generate sitemap.xml with SEO metadata
+  └─ [6] toc -e {env}
+         └─ Add table of contents to HTML files with heading IDs
+
+PACKAGING &amp; DEPLOYMENT
+  ├─ [7] package -e {env}
+  │      ├─ Sync files within publish/{env}/
+  │      ├─ Minify CSS and JS files
+  │      └─ Create timestamped archive in publish/packages/
+  └─ [8] deploy -e {env}
+         ├─ Verify package freshness
+         ├─ Confirm with user (interactive)
+         └─ Upload to FTP/FTPS server
+
+</code></pre>
+<h4>Run complete pipeline:</h4>
+<pre><code class="language-bash"># Windows
+.\scripts\gzbuild.cmd -e dev
+
+# Linux/Mac
+./scripts/gzbuild.sh -e dev
+</code></pre>
+<p><strong>For detailed flow diagrams and module relationships, see:</strong> <code>utils/FLOW_PIPELINE.md</code></p>
+<h3>Deployment Principles</h3>
+<ol>
+<li><strong>Validate Before Deploy</strong>: Never deploy untested code</li>
+<li><strong>Backup Before Upload</strong>: Create backup of previous version</li>
+<li><strong>Atomic Operations</strong>: Deploy should succeed or fail completely</li>
+<li><strong>Rollback Capability</strong>: Keep recent backups for quick rollback</li>
+<li><strong>Verify After Deploy</strong>: Check deployed site works correctly</li>
+<li><strong>Deploy from Production Environment</strong>: Always deploy from <code>publish/prod/</code>, never from <code>src/</code></li>
+</ol>
+<h3>Script Responsibilities</h3>
+<h4>gzbuild.cmd|sh (Master Pipeline)</h4>
+<ul>
+<li>Runs complete build pipeline from start to finish</li>
+<li>Executes all 8 stages in correct order</li>
+<li>Requires <code>-e &lt;environment&gt;</code> argument</li>
+<li>Handles errors at each stage</li>
+<li>See: <code>scripts/gzbuild.cmd</code> and <code>scripts/gzbuild.sh</code></li>
+</ul>
+<h4>clean module</h4>
+<ul>
+<li>Removes orphaned files from environment directory</li>
+<li>Compares publish/{env}/ against source files</li>
+<li>Source files (src/) are source of truth</li>
+<li>Cleans up empty directories</li>
+<li>See: <code>utils/clean/README.md</code></li>
+</ul>
+<h4>generate module</h4>
+<ul>
+<li>Converts markdown to HTML</li>
+<li>Outputs to publish/{env}/content/</li>
+<li>Uses gzconfig for file groups and converters</li>
+<li>Calls normalise internally for heading structure</li>
+<li>See: <code>utils/generate/README.md</code></li>
+</ul>
+<h4>package module</h4>
+<ul>
+<li>Syncs files within environment directory</li>
+<li>Minifies CSS and JavaScript</li>
+<li>Creates timestamped ZIP archives</li>
+<li>Keeps last 5 packages for rollback</li>
+<li>See: <code>utils/package/README.md</code></li>
+</ul>
+<h4>deploy module</h4>
+<ul>
+<li>Reads deployment configuration</li>
+<li>Uploads to FTP/SFTP server</li>
+<li>Shows progress feedback</li>
+<li>Handles connection errors gracefully</li>
+</ul>
+<hr/>
+<h2>🔀 Version Control</h2>
+<h3>Git Workflow</h3>
+<ol>
+<li><strong>Commit Often</strong>: Small, focused commits</li>
+<li><strong>Descriptive Messages</strong>: Explain what and why, not how</li>
+<li><strong>Branch Strategy</strong>: Use feature branches for major changes</li>
+<li><strong>Ignore Generated Files</strong>: Never commit <code>publish/</code> directory</li>
+</ol>
+<h3>.gitignore Rules</h3>
+<pre><code># Build outputs
+publish/staging/
+publish/packages/
+publish/backups/
+
+# Configuration (sensitive)
+deploy.config
+*.secret
+*.key
+
+# Temporary files
+*.tmp
+*_temp.*
+__pycache__/
+*.pyc
+</code></pre>
+<h3>Commit Message Format</h3>
+<pre><code>feat: Add sitemap generation to package pipeline
+fix: Correct UTF-8 encoding in Python files
+docs: Update SETUP_SITE.md with new workflow
+refactor: Split setup_site.py into modules
+style: Fix trailing whitespace in HTML files
+test: Add validation tests for color input
+</code></pre>
+<hr/>
+<h2>✅ Testing and Validation</h2>
+<h3>Pre-Commit Checks</h3>
+<p>Before committing code, ensure:</p>
+<ol>
+<li>✅ <strong>GZLint Passes</strong>: Run <code>scripts\gzlint.cmd</code> or <code>./scripts/gzlint.sh</code></li>
+<li>✅ <strong>No console.log()</strong>: Remove debug statements from JavaScript</li>
+<li>✅ <strong>Proper Encoding</strong>: All Python files are UTF-8 without BOM</li>
+<li>✅ <strong>Headers Present</strong>: All Python files have required headers</li>
+<li>✅ <strong>Documentation Updated</strong>: README and relevant docs reflect changes</li>
+</ol>
+<h3>Manual Testing</h3>
+<ol>
+<li><strong>Setup Wizard</strong>: Test both interactive and force-apply modes</li>
+<li><strong>Local Server</strong>: Test site works at <a href="http://localhost:7190">http://localhost:7190</a></li>
+<li><strong>Build Pipeline</strong>: Ensure package.py completes without errors</li>
+<li><strong>Cross-Platform</strong>: Test scripts on both Windows and Unix if possible</li>
+</ol>
+<h3>Automated Checks</h3>
+<h4>GZLint Rules:</h4>
+<ul>
+<li>H1_MISSING: Pages must have exactly one h1</li>
+<li>H1_MULTIPLE: No multiple h1 tags</li>
+<li>H1_ORDER: h1 must come before h2/h3/etc</li>
+<li>CONSOLE_LOG: No console.log() in JavaScript</li>
+</ul>
+<h3>Exit Codes</h3>
+<h4>All scripts must return proper exit codes:</h4>
+<ul>
+<li><code>0</code> - Success (warnings are OK)</li>
+<li><code>1</code> - Failure (errors found)</li>
+</ul>
+<hr/>
+<h2>🚫 Anti-Patterns to Avoid</h2>
+<h3>Don't Do This</h3>
+<p>❌ <strong>Hardcode Configuration Values</strong></p>
+<pre><code class="language-python">site_name = "GAZ Tank"  # BAD
+</code></pre>
+<p>✅ <strong>Load from Configuration</strong></p>
+<pre><code class="language-python">site_name = config['site']['name']  # GOOD
+</code></pre>
+<hr/>
+<p>❌ <strong>Use Relative Imports in Scripts</strong></p>
+<pre><code class="language-python">from .ui_helpers import print_header  # BAD - breaks direct execution
+</code></pre>
+<p>✅ <strong>Use Absolute Imports</strong></p>
+<pre><code class="language-python">import ui_helpers  # GOOD - works when run directly
+</code></pre>
+<hr/>
+<p>❌ <strong>Modify Generated Files Manually</strong></p>
+<pre><code class="language-css">/* variables.css */
+:root {
+    --color-primary: #FF0000;  /* BAD - will be overwritten */
+}
+</code></pre>
+<p>✅ <strong>Update Configuration and Regenerate</strong></p>
+<pre><code class="language-toml"># config/site.toml
+[theme]
+primary_color = "#FF0000"  # GOOD - source of truth
+</code></pre>
+<hr/>
+<p>❌ <strong>Ignore Exit Codes</strong></p>
+<pre><code class="language-python">subprocess.run(['python', 'script.py'])  # BAD - ignores failures
+</code></pre>
+<p>✅ <strong>Check Exit Codes</strong></p>
+<pre><code class="language-python">result = subprocess.run(['python', 'script.py'])
+if result.returncode != 0:
+    print("Script failed!")
+    sys.exit(1)
+</code></pre>
+<hr/>
+<p>❌ <strong>Use console.log() in Production</strong></p>
+<pre><code class="language-javascript">console.log("Loading page...");  // BAD - GZLint will catch this
+loadContent(key);
+</code></pre>
+<p>✅ <strong>Remove Debug Logging</strong></p>
+<pre><code class="language-javascript">// Clean production code
+loadContent(key);
+
+// Or use console.error() for intentional logging
+fetch(url).catch(err =&gt; console.error("Failed:", err));
+</code></pre>
+<hr/>
+<p>❌ <strong>Use Regex for Structured Data Parsing</strong></p>
+<pre><code class="language-python">import re
+
+# BAD - Fragile, breaks on edge cases
+html_content = file.read()
+title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;', html_content)
+
+# BAD - Doesn't handle nested tags, attributes, etc.
+links = re.findall(r'&lt;a href="(.*?)"&gt;', html_content)
+
+# BAD - JavaScript is complex, regex can't parse it safely
+js_content = file.read()
+site_name = re.sub(r'siteName:\s*".*?"', f'siteName: "{new_name}"', js_content)
+</code></pre>
+<p>✅ <strong>Use Proper Parsers for Structured Data</strong></p>
+<pre><code class="language-python"># GOOD - For HTML: Use BeautifulSoup
+from bs4 import BeautifulSoup
+
+soup = BeautifulSoup(html_content, 'html.parser')
+title = soup.find('title').string
+links = [a['href'] for a in soup.find_all('a', href=True)]
+
+# GOOD - For JavaScript: Use Node.js with Babel AST parser
+subprocess.run(['node', 'js_updater.mjs'], input=json.dumps(config))
+
+# GOOD - For URLs: Use urllib.parse
+from urllib.parse import urlparse, urlunparse
+
+parsed = urlparse(url)
+new_url = urlunparse((parsed.scheme, new_domain, parsed.path, '', '', ''))
+
+# GOOD - For text files: Use line-by-line processing
+lines = file.read_text().splitlines()
+for i, line in enumerate(lines):
+    if line.startswith('# Title:'):
+        lines[i] = f'# Title: {new_title}'
+</code></pre>
+<h4>Why Avoid Regex for Structured Data?</h4>
+<ol>
+<li><strong>HTML/XML</strong>: Not regular languages - regex can't handle nesting, attributes, entities</li>
+<li><strong>JavaScript/Code</strong>: Complex syntax with strings, comments, nested structures</li>
+<li><strong>URLs</strong>: Have specific structure (scheme, netloc, path, query) - use urllib.parse</li>
+<li><strong>Maintainability</strong>: Regex patterns are cryptic; proper parsers are self-documenting</li>
+<li><strong>Edge Cases</strong>: Parsers handle all valid inputs; regex breaks on unexpected formats</li>
+</ol>
+<h4>Project Standards:</h4>
+<table>
+<thead>
+<tr>
+<th><strong>Data Type</strong></th>
+<th><strong>Use This</strong></th>
+<th><strong>Not Regex</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML/XML</td>
+<td>BeautifulSoup (<code>bs4</code>)</td>
+<td><code>re.sub()</code> on HTML</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>Node.js + Babel AST</td>
+<td><code>re.sub()</code> on JS code</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td><code>json</code> module</td>
+<td><code>re.findall()</code> on JSON</td>
+</tr>
+<tr>
+<td>URLs</td>
+<td><code>urllib.parse</code></td>
+<td><code>re.match()</code> URL patterns</td>
+</tr>
+<tr>
+<td>Simple text</td>
+<td>Line-by-line + <code>str</code> methods</td>
+<td><code>re.sub()</code> when simple works</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td><code>csv</code> module</td>
+<td><code>re.split()</code></td>
+</tr>
+</tbody>
+</table>
+<h4>When Regex IS Appropriate:</h4>
+<ul>
+<li>✅ Simple validation: Email format, phone numbers</li>
+<li>✅ Simple string patterns: Finding dates in plain text</li>
+<li>✅ Search/replace in unstructured text: Log files, prose</li>
+<li>✅ Fallback method: When proper parser unavailable (document this!)</li>
+</ul>
+<h4>Example from This Project:</h4>
+<p>The setup wizard previously used 18+ regex patterns. These were refactored:</p>
+<ul>
+<li><strong>Phase 1</strong>: HTML → BeautifulSoup (6 patterns eliminated)</li>
+<li><strong>Phase 2</strong>: JavaScript → Node.js/Babel AST (4 patterns eliminated)</li>
+<li><strong>Phase 3</strong>: Text files → Line-by-line processing (3 patterns eliminated)</li>
+<li><strong>Phase 4</strong>: URLs → urllib.parse (2 patterns eliminated)</li>
+</ul>
+<p>Only 4 regex patterns remain as a fallback when Node.js is unavailable.</p>
+<p><strong>See Also:</strong> <code>dev/00TODO/REMOVE_RE_MODULE_FROM_FILE_GENERATORS.md</code> for detailed refactoring plan</p>
+<hr/>
+<p>❌ <strong>Create Launcher for Only One Platform</strong></p>
+<pre><code># Project structure - BAD
+scripts\setup_site.cmd     # Windows only
+scripts\deploy.cmd         # Windows only
+scripts\package.cmd        # Windows only
+</code></pre>
+<p>✅ <strong>Provide Both Platform Launchers</strong></p>
+<pre><code># Project structure - GOOD
+scripts\setup_site.cmd + setup_site.sh
+scripts\deploy.cmd + deploy.sh
+scripts\package.cmd + package.sh
+scripts\gzserve.cmd + gzserve.sh
+</code></pre>
+<hr/>
+<h2>🔄 Change Management</h2>
+<h3>Adding New Features</h3>
+<ol>
+<li><strong>Update Configuration</strong>: Add new settings to <code>config/site.toml</code> if needed</li>
+<li><strong>Update Setup Wizard</strong>: Add prompts for new configuration options</li>
+<li><strong>Update File Generators</strong>: Generate files based on new configuration</li>
+<li><strong>Update Documentation</strong>: Document new features in relevant files</li>
+<li><strong>Update GZLint</strong>: Add new validation rules if applicable</li>
+<li><strong>Test End-to-End</strong>: Verify entire workflow works</li>
+</ol>
+<h3>Refactoring Existing Code</h3>
+<ol>
+<li><strong>Maintain Compatibility</strong>: Old configs should still work</li>
+<li><strong>Update Tests</strong>: Ensure validation still passes</li>
+<li><strong>Update Documentation</strong>: Reflect structural changes</li>
+<li><strong>Incremental Changes</strong>: Small, focused refactorings</li>
+</ol>
+<h3>Breaking Changes</h3>
+<ol>
+<li><strong>Document Migration Path</strong>: Explain how to upgrade</li>
+<li><strong>Version Bump</strong>: Increment version numbers</li>
+<li><strong>Update Changelog</strong>: List breaking changes</li>
+<li><strong>Notify Users</strong>: Clear communication about changes</li>
+</ol>
+<hr/>
+<h2>📐 Architecture Patterns</h2>
+<h3>Setup Wizard Pattern</h3>
+<pre><code>Main Orchestrator (setup_site.py)
+├── UI Helpers (ui_helpers.py)
+├── Validators (validators.py)
+├── User Interaction (user_interaction.py)
+├── Configuration I/O (config_io.py)
+├── File Generators (file_generators.py)
+└── Backup Manager (backup_manager.py)
+</code></pre>
+<h4>Principles:</h4>
+<ul>
+<li>Main script orchestrates, doesn't implement</li>
+<li>Each module has single responsibility</li>
+<li>Absolute imports for direct execution</li>
+<li>No circular dependencies</li>
+</ul>
+<h3>Build Pipeline Pattern</h3>
+<pre><code>Validation → Sitemap Generation → Staging → Archiving
+    ↓              ↓                 ↓         ↓
+  Abort         Abort            Success    Success
+</code></pre>
+<h4>Principles:</h4>
+<ul>
+<li>Fail-fast: Stop on first error</li>
+<li>Clear feedback: Show progress at each stage</li>
+<li>Exit codes: Return proper status</li>
+<li>Rollback-safe: Don't modify originals until verified</li>
+</ul>
+<hr/>
+<h2>🎓 Learning Resources</h2>
+<h3>Project-Specific</h3>
+<ul>
+<li><code>README.md</code> - Project overview</li>
+<li><code>docs/SETUP_SITE.md</code> - Complete setup guide</li>
+<li><code>utils/gzlint/GZ_LINT_RULES.md</code> - Linting rules</li>
+<li><code>dev/00TODO/</code> - Development roadmap</li>
+</ul>
+<h3>External Resources</h3>
+<ul>
+<li><a href="https://pep8.org/">Python PEP 8</a> - Python style guide</li>
+<li><a href="https://toml.io/">TOML Spec</a> - TOML format specification</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html">Semantic HTML</a> - HTML best practices</li>
+<li><a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG Guidelines</a> - Accessibility standards</li>
+</ul>
+<hr/>
+<h2>📝 Final Notes</h2>
+<h3>When in Doubt</h3>
+<ol>
+<li><strong>Check Existing Code</strong>: Follow established patterns</li>
+<li><strong>Read Documentation</strong>: Comprehensive guides exist</li>
+<li><strong>Test Thoroughly</strong>: Run validation before committing</li>
+<li><strong>Ask Questions</strong>: Document unclear decisions</li>
+</ol>
+<h3>Contributing</h3>
+<p>When contributing to this project:</p>
+<ol>
+<li>✅ Follow these design rules</li>
+<li>✅ Write clear commit messages</li>
+<li>✅ Update documentation</li>
+<li>✅ Test on multiple platforms if possible</li>
+<li>✅ Run GZLint before committing</li>
+</ol>
+<hr/>
+<h2>🔄 Version History</h2>
+<p><strong>Version 2.0</strong> (October 23, 2025)</p>
+<ul>
+<li>Added comprehensive Module Architecture Standards section</li>
+<li>Documented environment-aware design (v2.0 architecture)</li>
+<li>Added gzconfig and gzlogging usage patterns</li>
+<li>Documented module maturity checklist (12 criteria)</li>
+<li>Updated build pipeline order (8-stage gzbuild process)</li>
+<li>Documented command line argument standards</li>
+<li>Added dry-run mode implementation guidelines</li>
+<li>Clarified logging vs console output separation</li>
+<li>Updated build and deployment section for v2.0 architecture</li>
+</ul>
+<p><strong>Version 1.0</strong> (October 19, 2025)</p>
+<ul>
+<li>Initial design rules document</li>
+<li>Established core principles and standards</li>
+<li>Documented architecture patterns</li>
+<li>Defined validation requirements</li>
+<li>Python file headers and UTF-8 handling</li>
+<li>Shell script standards (setlocal/endlocal)</li>
+<li>Subprocess Unicode handling patterns</li>
+</ul>
+<hr/>
+<h3>Questions or Suggestions?</h3>
+<p>Open an issue or submit a pull request with proposed changes to these rules.</p>
+<hr/>
+<p><em>"Good design is as little design as possible."</em> — Dieter Rams</p>
+<hr/>
+<h3>End of Design Rules</h3>
+<div>
+<br><br>
+<p><em>This content was automatically generated from <code>DESIGN_RULES.md</code></em></p>
+</div>

@@ -1,0 +1,1304 @@
+<h1>Deploy Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#deployment-history-tracking">Deployment History Tracking</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#security">Security</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#performance">Performance</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#environment-aware-deployment">Environment-Aware Deployment</a>
+</li>
+<li>
+<a href="#workflow">Workflow:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-examples">Log Examples</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#direct-module-execution">Direct Module Execution</a>
+</li>
+<li>
+<a href="#required-arguments">Required Arguments</a>
+</li>
+<li>
+<a href="#optional-arguments">Optional Arguments</a>
+</li>
+<li>
+<a href="#examples">Examples</a>
+</li>
+<li>
+<a href="#module-components">Module Components</a>
+</li>
+<li>
+<a href="#history-file-location">History File Location</a>
+</li>
+<li>
+<a href="#history-file-format">History File Format</a>
+</li>
+<li>
+<a href="#features-1">Features</a>
+</li>
+<li>
+<a href="#use-cases">Use Cases</a>
+</li>
+<li>
+<a href="#example-usage">Example Usage</a>
+</li>
+<li>
+<a href="#parsing-history-files">Parsing History Files</a>
+</li>
+<li>
+<a href="#deploy-configuration-file">Deploy Configuration File</a>
+</li>
+<li>
+<a href="#configuration-options">Configuration Options</a>
+</li>
+<li>
+<a href="#subdirectory-format">Subdirectory Format</a>
+</li>
+<li>
+<a href="#ftp-vs-ftps">FTP vs FTPS</a>
+</li>
+<li>
+<a href="#shell-scripts">Shell Scripts</a>
+</li>
+<li>
+<a href="#direct-python">Direct Python</a>
+</li>
+<li>
+<a href="#build-pipeline-integration">Build Pipeline Integration</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#integration">Integration</a>
+</li>
+<li>
+<a href="#credentials-protection">Credentials Protection</a>
+</li>
+<li>
+<a href="#recommended-practices">Recommended Practices</a>
+</li>
+<li>
+<a href="#cicd-integration">CI/CD Integration</a>
+</li>
+<li>
+<a href="#configuration-file-not-found">"Configuration file not found"</a>
+</li>
+<li>
+<a href="#no-package-found-for-environment">"No package found for environment"</a>
+</li>
+<li>
+<a href="#connection-refused-or-login-failed">"Connection refused" or "Login failed"</a>
+</li>
+<li>
+<a href="#cannot-access-target-directory">"Cannot access target directory"</a>
+</li>
+<li>
+<a href="#upload-failed-or-timeout">"Upload failed" or timeout</a>
+</li>
+<li>
+<a href="#dry-run-shows-wrong-server">Dry-run shows wrong server</a>
+</li>
+<li>
+<a href="#before-deploying">Before Deploying</a>
+</li>
+<li>
+<a href="#during-deployment">During Deployment</a>
+</li>
+<li>
+<a href="#after-deployment">After Deployment</a>
+</li>
+<li>
+<a href="#production-deployments">Production Deployments</a>
+</li>
+<li>
+<a href="#upload-speed">Upload Speed</a>
+</li>
+<li>
+<a href="#optimization-tips">Optimization Tips</a>
+<ul>
+<li>
+<a href="#successful-deployment">Successful Deployment:</a>
+</li>
+<li>
+<a href="#dry-run-mode">Dry-Run Mode:</a>
+</li>
+<li>
+<a href="#user-cancellation">User Cancellation:</a>
+</li>
+<li>
+<a href="#windows">Windows:</a>
+</li>
+<li>
+<a href="#linuxmac">Linux/Mac:</a>
+</li>
+<li>
+<a href="#entry-format">Entry Format:</a>
+</li>
+<li>
+<a href="#example-content">Example Content:</a>
+</li>
+<li>
+<a href="#output">Output:</a>
+</li>
+<li>
+<a href="#setup">Setup:</a>
+</li>
+<li>
+<a href="#example">Example:</a>
+</li>
+<li>
+<a href="#example-subdirectory-names">Example subdirectory names:</a>
+</li>
+<li>
+<a href="#ftps-recommended-default">FTPS (Recommended - Default)</a>
+</li>
+<li>
+<a href="#ftp-legacy-not-recommended">FTP (Legacy - Not Recommended)</a>
+</li>
+<li>
+<a href="#high-level">High-Level</a>
+</li>
+<li>
+<a href="#configuration-discovery">Configuration &amp; Discovery</a>
+</li>
+<li>
+<a href="#upload-utilities">Upload Utilities</a>
+</li>
+<li>
+<a href="#uses">Uses:</a>
+</li>
+<li>
+<a href="#used-by">Used By:</a>
+</li>
+<li>
+<a href="#security-measures">Security Measures:</a>
+</li>
+<li>
+<a href="#linuxmac-1">Linux/Mac:</a>
+</li>
+<li>
+<a href="#windows-1">Windows:</a>
+</li>
+<li>
+<a href="#github-actions-example">GitHub Actions Example:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+<li>
+<a href="#solution-5">Solution:</a>
+</li>
+<li>
+<a href="#typical-upload-times">Typical Upload Times:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Automated deployment of packaged websites to FTP/FTPS servers with timestamped subdirectories and progress tracking.</p>
+<p><strong>Version:</strong> 1.0<br/>
+<strong>Last Updated:</strong> October 23, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#direct-module-execution">Direct Module Execution</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a><ul>
+<li><a href="#deploy-configuration-file">Deploy Configuration File</a></li>
+<li><a href="#configuration-options">Configuration Options</a></li>
+<li><a href="#subdirectory-format">Subdirectory Format</a></li>
+<li><a href="#ftp-vs-ftps">FTP vs FTPS</a></li>
+</ul>
+</li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a><ul>
+<li><a href="#key-functions">Key Functions</a></li>
+<li><a href="#integration">Integration</a></li>
+</ul>
+</li>
+<li><a href="#security">Security</a><ul>
+<li><a href="#credentials-protection">Credentials Protection</a></li>
+<li><a href="#recommended-practices">Recommended Practices</a></li>
+<li><a href="#cicd-integration">CI/CD Integration</a></li>
+</ul>
+</li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The Deploy module handles automated deployment of packaged websites to remote FTP/FTPS servers. It provides a complete deployment workflow with:</p>
+<ul>
+<li><strong>Configuration Management</strong> - Reads FTP credentials and settings from <code>config/deploy.toml</code> via <code>gzconfig</code></li>
+<li><strong>Package Discovery</strong> - Automatically finds the latest package for the specified environment</li>
+<li><strong>Timestamped Subdirectories</strong> - Creates unique upload directories with timestamps and random postfixes</li>
+<li><strong>Secure Uploads</strong> - Supports both FTP and FTPS (FTP over TLS) protocols</li>
+<li><strong>Progress Tracking</strong> - Real-time upload progress display</li>
+<li><strong>Error Handling</strong> - Comprehensive network and FTP error management</li>
+<li><strong>Deployment Control</strong> - Requires <code>--deploy</code> or <code>--force</code> flag to enable deployment (prevents accidental uploads)</li>
+<li><strong>Dry-Run Mode</strong> - Preview deployment without actually uploading</li>
+</ul>
+<h3 id="environment-aware-deployment">Environment-Aware Deployment</h3>
+<p>The deploy module requires a mandatory <code>-e</code> argument to specify which environment's package to deploy:</p>
+<ul>
+<li><strong>dev</strong> - Deploys <code>publish/packages/package_dev_*.zip</code></li>
+<li><strong>staging</strong> - Deploys <code>publish/packages/package_staging_*.zip</code></li>
+<li><strong>prod</strong> - Deploys <code>publish/packages/package_prod_*.zip</code></li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The deploy module is the final step in the GAZTank content delivery pipeline:</p>
+<pre><code>Deployment Pipeline:
+  1. Package module creates package_{env}_{timestamp}.zip in publish/packages/
+  2. Deploy module:
+     a. Receives environment parameter (-e dev/staging/prod)
+     b. Checks for --deploy or --force flag (required to enable deployment)
+     c. Reads deploy.toml configuration via gzconfig
+     d. Finds latest package for specified environment
+     e. Displays package details and FTP settings
+     f. Connects to FTP/FTPS server
+     g. Changes to target directory
+     h. Creates timestamped subdirectory (.YYYYMMDD_HHMMSS_DDD_xxxxx)
+     i. Uploads package file
+     j. Verifies and reports completion
+  3. Package is live on remote server
+</code></pre>
+<p><strong>Purpose:</strong> Automated deployment to FTP/FTPS servers with organization and safety features</p>
+<p><strong>Location:</strong> Called via <code>scripts/deploy.cmd -e &lt;env&gt;</code> or <code>scripts/deploy.sh -e &lt;env&gt;</code></p>
+<h3 id="workflow">Workflow:</h3>
+<pre><code>-e environment → deploy.toml → find latest package → confirm → FTP upload → remote server
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Environment-specific package selection</li>
+<li>Timestamped subdirectories prevent file overwrites</li>
+<li>Secure FTPS support with TLS encryption</li>
+<li>User confirmation prevents accidental deployments</li>
+<li>Dry-run mode for testing</li>
+<li>Comprehensive logging of all operations</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<p>The deploy module uses the <strong>gzlogging</strong> infrastructure for environment-aware operational logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> Specified via <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>deploy</code></li>
+<li><strong>Log Files:</strong> <code>logs/{environment}/deploy_{YYYYMMDD}.log</code></li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<p><strong>Log File</strong> (<code>log.inf()</code>, <code>log.wrn()</code>, <code>log.err()</code>):</p>
+<ul>
+<li>Deploy started with environment</li>
+<li>Configuration loaded</li>
+<li>Package found with filename</li>
+<li>FTP connection details</li>
+<li>Directory operations</li>
+<li>Upload progress and completion</li>
+<li>Errors and warnings</li>
+<li>Deployment completion status</li>
+</ul>
+<p><strong>Console Output</strong> (<code>print()</code>):</p>
+<ul>
+<li>Deployment headers with emojis</li>
+<li>Package details (📦)</li>
+<li>Upload directory (📁)</li>
+<li>FTP server details (🌐 👤 🔒)</li>
+<li>Confirmation prompts</li>
+<li>Upload status (🚀)</li>
+<li>Success/error messages (✅ ❌)</li>
+</ul>
+<h3 id="log-examples">Log Examples</h3>
+<h4 id="successful-deployment">Successful Deployment:</h4>
+<pre><code>[2025-10-23 23:23:26] [dev] [INF] Deploy starting for environment: dev
+[2025-10-23 23:23:26] [dev] [INF] Looking for latest package for dev
+[2025-10-23 23:23:26] [dev] [INF] Found package: package_dev_20251023_203933.zip
+[2025-10-23 23:23:26] [dev] [INF] Upload subdirectory: .20251023_232326_296_lghex
+[2025-10-23 23:23:26] [dev] [INF] Connecting to FTP server localhost:2179
+[2025-10-23 23:23:26] [dev] [INF] Logging in as devup
+[2025-10-23 23:23:26] [dev] [INF] Connected to FTP server
+[2025-10-23 23:23:26] [dev] [INF] Changing to directory: /
+[2025-10-23 23:23:26] [dev] [INF] Creating subdirectory: .20251023_232326_296_lghex
+[2025-10-23 23:23:26] [dev] [INF] Created directory: .20251023_232326_296_lghex
+[2025-10-23 23:23:26] [dev] [INF] Changed to directory: .20251023_232326_296_lghex
+[2025-10-23 23:23:26] [dev] [INF] Uploading package_dev_20251023_203933.zip (2.45 MB)
+[2025-10-23 23:23:28] [dev] [INF] Upload complete: package_dev_20251023_203933.zip
+[2025-10-23 23:23:28] [dev] [INF] Updated deployment history: package_dev_20251023_203933.deploy_history.txt
+[2025-10-23 23:23:28] [dev] [INF] Deployment complete: package_dev_20251023_203933.zip → //.20251023_232326_296_lghex
+[2025-10-23 23:23:28] [dev] [INF] Closed FTP connection
+</code></pre>
+<h4 id="dry-run-mode">Dry-Run Mode:</h4>
+<pre><code>[2025-10-23 23:23:26] [dev] [INF] Deploy starting for environment: dev
+[2025-10-23 23:23:26] [dev] [INF] Looking for latest package for dev
+[2025-10-23 23:23:26] [dev] [INF] Found package: package_dev_20251023_203933.zip
+[2025-10-23 23:23:26] [dev] [INF] Upload subdirectory: .20251023_232326_296_lghex
+[2025-10-23 23:23:26] [dev] [INF] [DRY RUN] Would deploy package
+</code></pre>
+<h4 id="user-cancellation">User Cancellation:</h4>
+<pre><code>[2025-10-23 23:25:00] [dev] [INF] Deploy starting for environment: dev
+[2025-10-23 23:25:00] [dev] [INF] Looking for latest package for dev
+[2025-10-23 23:25:00] [dev] [INF] Found package: package_dev_20251023_203933.zip
+[2025-10-23 23:25:02] [dev] [INF] Deployment cancelled by user
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<h4 id="windows">Windows:</h4>
+<pre><code class="language-bash"># Deploy dev environment
+.\scripts\deploy.cmd -e dev --deploy
+
+# Dry-run mode (no actual upload)
+.\scripts\deploy.cmd -e dev --dry-run
+
+# Force mode (automatic deployment)
+.\scripts\deploy.cmd -e dev --force
+
+# Dry-run with force
+.\scripts\deploy.cmd -e dev --dry-run --force
+</code></pre>
+<h4 id="linuxmac">Linux/Mac:</h4>
+<pre><code class="language-bash"># Deploy staging environment
+./scripts/deploy.sh -e staging --deploy
+
+# Dry-run mode
+./scripts/deploy.sh -e staging --dry-run
+
+# Force mode
+./scripts/deploy.sh -e staging --force
+</code></pre>
+<h3 id="direct-module-execution">Direct Module Execution</h3>
+<pre><code class="language-bash"># From project root (with deploy flag)
+python -m utils.deploy -e prod --deploy
+
+# With help
+python -m utils.deploy --help
+
+# Dry-run
+python -m utils.deploy -e dev --dry-run
+
+# Without --deploy or --force (will skip deployment)
+python -m utils.deploy -e prod
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required-arguments">Required Arguments</h3>
+<ul>
+<li><strong><code>-e, --environment</code></strong> (required)<ul>
+<li>Target environment: <code>dev</code>, <code>staging</code>, or <code>prod</code></li>
+<li>Determines which package to deploy</li>
+<li>Example: <code>-e dev</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<ul>
+<li><p><strong><code>--dry-run</code></strong></p>
+<ul>
+<li>Preview deployment without uploading</li>
+<li>Shows what would be deployed</li>
+<li>Useful for testing configuration</li>
+<li>Example: <code>--dry-run</code></li>
+</ul>
+</li>
+<li><p><strong><code>--deploy</code></strong></p>
+<ul>
+<li>Enable deployment (required unless <code>--force</code> is used)</li>
+<li>Safety flag to prevent accidental deployments</li>
+<li>Example: <code>--deploy</code></li>
+</ul>
+</li>
+<li><p><strong><code>--force</code></strong></p>
+<ul>
+<li>Enable deployment and bypass all checks</li>
+<li>Useful for automated deployments</li>
+<li>Use with caution</li>
+<li>Example: <code>--force</code></li>
+</ul>
+</li>
+<li><p><strong><code>--help</code></strong></p>
+<ul>
+<li>Show help message and exit</li>
+<li>Lists all available arguments</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<pre><code class="language-bash"># Deploy with explicit flag
+python -m utils.deploy -e dev --deploy
+
+# Automated deployment (force mode)
+python -m utils.deploy -e prod --force
+
+# Test deployment configuration
+python -m utils.deploy -e staging --dry-run
+
+# Without --deploy or --force (deployment will be skipped)
+python -m utils.deploy -e dev
+
+# Help
+python -m utils.deploy --help
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>deploy/
+├── __init__.py      # Public API exports (main)
+├── __main__.py      # Entry point for python -m utils.deploy
+├── deployer.py      # Core deployment logic
+└── README.md        # This file
+</code></pre>
+<h3 id="module-components">Module Components</h3>
+<ul>
+<li><strong><code>__init__.py</code></strong> - Exports <code>main()</code> function</li>
+<li><strong><code>__main__.py</code></strong> - Enables <code>python -m utils.deploy</code> execution</li>
+<li><strong><code>deployer.py</code></strong> - Contains all deployment logic:<ul>
+<li>Configuration loading via <code>gzconfig</code></li>
+<li>Package discovery</li>
+<li>FTP/FTPS connection management</li>
+<li>File upload with error handling</li>
+<li>Logging and user interaction</li>
+</ul>
+</li>
+</ul>
+<h2 id="features">Features</h2>
+<p>✅ <strong>Environment-Aware</strong> - Deploys correct package for specified environment<br/>
+✅ <strong>Configuration Management</strong> - Uses <code>gzconfig</code> to read <code>deploy.toml</code><br/>
+✅ <strong>Automatic Package Discovery</strong> - Finds latest package by timestamp<br/>
+✅ <strong>Timestamped Subdirectories</strong> - Prevents overwrites with unique upload dirs<br/>
+✅ <strong>Deployment History Tracking</strong> - Maintains deployment log per package<br/>
+✅ <strong>FTPS Support</strong> - Secure FTP over TLS encryption<br/>
+✅ <strong>Progress Tracking</strong> - Real-time upload progress<br/>
+✅ <strong>Interactive Prompts</strong> - Confirms deployment before upload<br/>
+✅ <strong>Dry-Run Mode</strong> - Test without uploading<br/>
+✅ <strong>Force Mode</strong> - Skip prompts for automation<br/>
+✅ <strong>Error Handling</strong> - Network, FTP, and file system errors<br/>
+✅ <strong>Comprehensive Logging</strong> - All operations logged via <code>gzlogging</code><br/>
+✅ <strong>Exit Codes</strong> - Proper exit codes for automation<br/>
+✅ <strong>UTF-8 Support</strong> - Emoji output in console<br/>
+✅ <strong>Type Safety</strong> - Full type hints with Pylance compliance</p>
+<h2 id="deployment-history-tracking">Deployment History Tracking</h2>
+<p>The deploy module automatically maintains a deployment history file for each package, creating an audit trail of all deployments.</p>
+<h3 id="history-file-location">History File Location</h3>
+<p>For each package file, a corresponding history file is created in the same directory:</p>
+<pre><code>publish/packages/
+├── package_dev_20251023_203933.zip
+├── package_dev_20251023_203933.deploy_history.txt    ← History file
+├── package_staging_20251023_204512.zip
+└── package_staging_20251023_204512.deploy_history.txt
+</code></pre>
+<h3 id="history-file-format">History File Format</h3>
+<p><strong>Filename:</strong> <code>&lt;package_name_without_.zip&gt;.deploy_history.txt</code></p>
+<h4 id="entry-format">Entry Format:</h4>
+<pre><code>Deployed &lt;package_name&gt;.zip to "&lt;environment&gt;" at &lt;timestamp&gt; to dir &lt;remote_path&gt;
+</code></pre>
+<h4 id="example-content">Example Content:</h4>
+<pre><code>Deployed package_dev_20251023_203933.zip to "dev" at 2025-10-24 00:15:32 to dir /.20251024_001530_297_a3f9k
+Deployed package_dev_20251023_203933.zip to "dev" at 2025-10-24 01:22:45 to dir /.20251024_012245_297_x7b2m
+Deployed package_dev_20251023_203933.zip to "staging" at 2025-10-24 02:30:18 to dir /.20251024_023018_298_p5n8t
+</code></pre>
+<h3 id="features-1">Features</h3>
+<ul>
+<li><strong>Automatic Creation</strong> - History file created on first deployment</li>
+<li><strong>Append Mode</strong> - New deployments append to existing file</li>
+<li><strong>One Line Per Deployment</strong> - Simple, parseable format</li>
+<li><strong>Human Readable</strong> - Clear timestamps and environment names</li>
+<li><strong>Non-Fatal</strong> - Deployment continues even if history file can't be written</li>
+<li><strong>UTF-8 Encoding</strong> - Full Unicode support</li>
+<li><strong>Audit Trail</strong> - Track when and where packages were deployed</li>
+</ul>
+<h3 id="use-cases">Use Cases</h3>
+<ol>
+<li><strong>Audit &amp; Compliance</strong> - Track all package deployments for security audits</li>
+<li><strong>Troubleshooting</strong> - Identify when and where a specific package was deployed</li>
+<li><strong>Rollback Planning</strong> - Know which subdirectory contains each deployment</li>
+<li><strong>Deployment Verification</strong> - Confirm package was deployed to correct environment</li>
+<li><strong>Timeline Analysis</strong> - Understand deployment frequency and patterns</li>
+</ol>
+<h3 id="example-usage">Example Usage</h3>
+<p>After deploying a package multiple times:</p>
+<pre><code class="language-bash"># Deploy to dev
+python -m utils.deploy -e dev --deploy
+
+# Deploy to staging
+python -m utils.deploy -e staging --deploy
+
+# View deployment history
+cat publish/packages/package_dev_20251023_203933.deploy_history.txt
+</code></pre>
+<h4 id="output">Output:</h4>
+<pre><code>Deployed package_dev_20251023_203933.zip to "dev" at 2025-10-24 00:15:32 to dir /.20251024_001530_297_a3f9k
+Deployed package_dev_20251023_203933.zip to "staging" at 2025-10-24 01:22:45 to dir /.20251024_012245_297_x7b2m
+</code></pre>
+<h3 id="parsing-history-files">Parsing History Files</h3>
+<p>The simple format makes it easy to parse programmatically:</p>
+<pre><code class="language-python">from pathlib import Path
+import re
+
+history_file = Path('publish/packages/package_dev_20251023_203933.deploy_history.txt')
+
+# Read all deployments
+with open(history_file, 'r', encoding='utf-8') as f:
+    for line in f:
+        # Parse deployment entry
+        match = re.match(r'Deployed (.+) to "(.+)" at (.+) to dir (.+)', line)
+        if match:
+            package, env, timestamp, remote_dir = match.groups()
+            print(f"{timestamp}: {package} → {env} ({remote_dir})")
+</code></pre>
+<p><strong>Note:</strong> History files are stored alongside packages in <code>publish/packages/</code> and are not automatically cleaned up. Manage these files as part of your package retention policy.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="deploy-configuration-file">Deploy Configuration File</h3>
+<p><strong>Location:</strong> <code>config/deploy.toml</code></p>
+<p><strong>Note:</strong> This file contains sensitive credentials and is in <code>.gitignore</code>.</p>
+<h4 id="setup">Setup:</h4>
+<ol>
+<li>Copy <code>config/deploy.example.toml</code> to <code>config/deploy.toml</code></li>
+<li>Fill in your FTP server details</li>
+<li>Never commit this file to version control</li>
+</ol>
+<h4 id="example">Example:</h4>
+<pre><code class="language-toml">[ftp]
+server = "ftp.yourserver.com"
+username = "your-username"
+password = "your-password"
+target_dir = "/public_html"
+
+# Optional settings (with defaults shown)
+port = 21
+use_ftps = true
+upload_subdir_fmt = "%Y%m%d_%H%M%S_%j"
+upload_subdir_postfix_len = 5
+</code></pre>
+<h3 id="configuration-options">Configuration Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>server</code></td>
+<td>string</td>
+<td>-</td>
+<td>✅</td>
+<td>FTP/FTPS server hostname or IP</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td>string</td>
+<td>-</td>
+<td>✅</td>
+<td>FTP username</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>string</td>
+<td>-</td>
+<td>✅</td>
+<td>FTP password</td>
+</tr>
+<tr>
+<td><code>target_dir</code></td>
+<td>string</td>
+<td>-</td>
+<td>✅</td>
+<td>Remote directory path</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>integer</td>
+<td><code>21</code></td>
+<td>❌</td>
+<td>FTP server port</td>
+</tr>
+<tr>
+<td><code>use_ftps</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>❌</td>
+<td>Use FTPS (encrypted)</td>
+</tr>
+<tr>
+<td><code>upload_subdir_fmt</code></td>
+<td>string</td>
+<td><code>"%Y%m%d_%H%M%S_%j"</code></td>
+<td>❌</td>
+<td>Subdirectory timestamp format</td>
+</tr>
+<tr>
+<td><code>upload_subdir_postfix_len</code></td>
+<td>integer</td>
+<td><code>5</code></td>
+<td>❌</td>
+<td>Random postfix length (1-10)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="subdirectory-format">Subdirectory Format</h3>
+<p>The <code>upload_subdir_fmt</code> uses Python's <code>strftime</code> format codes:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%Y</code></td>
+<td>Year (4 digits)</td>
+<td><code>2025</code></td>
+</tr>
+<tr>
+<td><code>%m</code></td>
+<td>Month (01-12)</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>%d</code></td>
+<td>Day of month (01-31)</td>
+<td><code>23</code></td>
+</tr>
+<tr>
+<td><code>%H</code></td>
+<td>Hour (00-23)</td>
+<td><code>21</code></td>
+</tr>
+<tr>
+<td><code>%M</code></td>
+<td>Minute (00-59)</td>
+<td><code>45</code></td>
+</tr>
+<tr>
+<td><code>%S</code></td>
+<td>Second (00-59)</td>
+<td><code>30</code></td>
+</tr>
+<tr>
+<td><code>%j</code></td>
+<td>Day of year (001-366)</td>
+<td><code>296</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-subdirectory-names">Example subdirectory names:</h4>
+<ul>
+<li>Format: <code>%Y%m%d_%H%M%S_%j</code> → <code>.20251023_214530_296_a7k2q</code></li>
+<li>Format: <code>%Y-%m-%d</code> → <code>.2025-10-23_x9m3p</code></li>
+<li>Format: <code>deploy_%Y%m%d</code> → <code>.deploy_20251023_b4t8w</code></li>
+<li>Empty string <code>""</code> → No subdirectory (upload directly to <code>target_dir</code>)</li>
+</ul>
+<p><strong>Note:</strong> All subdirectories are prefixed with <code>.</code> (dot) and include a random alphanumeric postfix to prevent collisions.</p>
+<h3 id="ftp-vs-ftps">FTP vs FTPS</h3>
+<h4 id="ftps-recommended-default">FTPS (Recommended - Default)</h4>
+<pre><code class="language-toml">[ftp]
+use_ftps = true  # or omit (defaults to true)
+</code></pre>
+<h5>Advantages:</h5>
+<ul>
+<li>✅ Encrypted connection (TLS/SSL)</li>
+<li>✅ Credentials protected</li>
+<li>✅ Data transfer encrypted</li>
+<li>✅ Industry standard security</li>
+</ul>
+<h5>Requirements:</h5>
+<ul>
+<li>Server must support FTPS (FTP over TLS)</li>
+<li>Usually uses same port as FTP (21)</li>
+</ul>
+<h4 id="ftp-legacy-not-recommended">FTP (Legacy - Not Recommended)</h4>
+<pre><code class="language-toml">[ftp]
+use_ftps = false
+</code></pre>
+<h5>Disadvantages:</h5>
+<ul>
+<li>❌ Unencrypted connection</li>
+<li>❌ Credentials sent in plain text</li>
+<li>❌ Data transfer in plain text</li>
+<li>❌ Vulnerable to interception</li>
+</ul>
+<h5>Use only when:</h5>
+<ul>
+<li>Server doesn't support FTPS</li>
+<li>Testing on local network</li>
+<li>Legacy system requirements</li>
+</ul>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="shell-scripts">Shell Scripts</h3>
+<ul>
+<li><strong>Windows:</strong> <code>scripts\deploy.cmd -e &lt;environment&gt; [options]</code></li>
+<li><strong>Linux/Mac:</strong> <code>scripts/deploy.sh -e &lt;environment&gt; [options]</code></li>
+</ul>
+<h3 id="direct-python">Direct Python</h3>
+<ul>
+<li><strong>Module:</strong> <code>python -m utils.deploy -e &lt;environment&gt; [options]</code></li>
+<li><strong>From Code:</strong> <code>from utils.deploy import main; main()</code></li>
+</ul>
+<h3 id="build-pipeline-integration">Build Pipeline Integration</h3>
+<pre><code class="language-bash"># Manual deployment workflow
+.\scripts\package.cmd -e prod
+.\scripts\deploy.cmd -e prod --deploy
+
+# Automated CI/CD deployment
+python -m utils.package -e prod --force
+python -m utils.deploy -e prod --force
+</code></pre>
+<h2 id="development">Development</h2>
+<h3 id="key-functions">Key Functions</h3>
+<h4 id="high-level">High-Level</h4>
+<ul>
+<li><p><strong><code>main()</code></strong></p>
+<ul>
+<li>Entry point for module execution</li>
+<li>Parses command line arguments</li>
+<li>Initializes logging</li>
+<li>Calls <code>deploy_package()</code></li>
+<li>Returns exit code</li>
+</ul>
+</li>
+<li><p><strong><code>deploy_package(environment, dry_run, force)</code></strong></p>
+<ul>
+<li>Main deployment workflow function</li>
+<li>Loads configuration via <code>gzconfig</code></li>
+<li>Finds latest package</li>
+<li>Uploads to FTP server (if enabled via --deploy or --force)</li>
+<li>Returns exit code (0=success, 1=error)</li>
+</ul>
+</li>
+</ul>
+<h4 id="configuration-discovery">Configuration &amp; Discovery</h4>
+<ul>
+<li><p><strong><code>get_project_root()</code></strong></p>
+<ul>
+<li>Returns Path to project root directory</li>
+<li>Used for finding packages directory</li>
+</ul>
+</li>
+<li><p><strong><code>get_latest_package(environment)</code></strong></p>
+<ul>
+<li>Finds most recent <code>package_{env}_*.zip</code> file</li>
+<li>Returns Path object or None</li>
+<li>Sorted by modification time (newest first)</li>
+</ul>
+</li>
+</ul>
+<h4 id="upload-utilities">Upload Utilities</h4>
+<ul>
+<li><p><strong><code>create_upload_subdir_name(deploy_config)</code></strong></p>
+<ul>
+<li>Creates timestamped subdirectory name</li>
+<li>Adds random alphanumeric postfix</li>
+<li>Returns subdirectory name with dot prefix</li>
+</ul>
+</li>
+<li><p><strong><code>generate_random_string(length)</code></strong></p>
+<ul>
+<li>Generates random alphanumeric string</li>
+<li>Used for subdirectory postfix</li>
+<li>Returns lowercase letters + digits</li>
+</ul>
+</li>
+<li><p><strong><code>connect_ftp(deploy_config)</code></strong></p>
+<ul>
+<li>Connects to FTP or FTPS server</li>
+<li>Handles authentication</li>
+<li>Returns connected FTP object</li>
+<li>Raises ConnectionError on failure</li>
+</ul>
+</li>
+<li><p><strong><code>upload_file(ftp, local_path, remote_name)</code></strong></p>
+<ul>
+<li>Uploads file to FTP server</li>
+<li>Displays progress and filename</li>
+<li>Raises OSError on failure</li>
+</ul>
+</li>
+<li><p><strong><code>write_deployment_history(package_path, environment, remote_path)</code></strong></p>
+<ul>
+<li>Writes deployment record to history file</li>
+<li>Creates history file if it doesn't exist</li>
+<li>Appends entry with timestamp and deployment details</li>
+<li>Non-fatal: logs warning but doesn't fail deployment if write fails</li>
+<li>History filename: <code>&lt;package_name_without_.zip&gt;.deploy_history.txt</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="integration">Integration</h3>
+<h4 id="uses">Uses:</h4>
+<ul>
+<li><code>utils.gzconfig</code> - Configuration management<ul>
+<li><code>get_pipeline_config(environment)</code> - Environment directory info</li>
+<li><code>get_deploy_config()</code> - FTP credentials and settings</li>
+</ul>
+</li>
+<li><code>utils.gzlogging</code> - Logging infrastructure<ul>
+<li><code>get_logging_context(environment, 'deploy')</code> - Log context</li>
+</ul>
+</li>
+</ul>
+<h4 id="used-by">Used By:</h4>
+<ul>
+<li><code>scripts/deploy.cmd</code> - Windows launcher</li>
+<li><code>scripts/deploy.sh</code> - Linux/Mac launcher</li>
+<li>CI/CD pipelines - Automated deployments</li>
+</ul>
+<h2 id="security">Security</h2>
+<h3 id="credentials-protection">Credentials Protection</h3>
+<p>⚠️ <strong>CRITICAL:</strong> The <code>config/deploy.toml</code> file contains sensitive credentials that must be protected.</p>
+<h4 id="security-measures">Security Measures:</h4>
+<ol>
+<li><p><strong>Git Ignore</strong> ✅</p>
+<ul>
+<li><code>deploy.toml</code> is in <code>.gitignore</code></li>
+<li>Will never be committed to repository</li>
+<li>Always use <code>deploy.example.toml</code> for templates</li>
+</ul>
+</li>
+<li><p><strong>File Permissions</strong> ✅</p>
+<ul>
+<li>Restrict access to your user only</li>
+<li>See platform-specific commands below</li>
+</ul>
+</li>
+<li><p><strong>FTPS Encryption</strong> ✅</p>
+<ul>
+<li>Use <code>use_ftps = true</code> (default)</li>
+<li>Encrypts credentials and data in transit</li>
+<li>Prevents network sniffing</li>
+</ul>
+</li>
+<li><p><strong>No Hardcoding</strong> ✅</p>
+<ul>
+<li>Never hardcode credentials in scripts</li>
+<li>Always read from config file</li>
+<li>Use environment variables for CI/CD</li>
+</ul>
+</li>
+<li><p><strong>Password Masking</strong> ✅</p>
+<ul>
+<li>Passwords masked in logs and output</li>
+<li><code>repr()</code> shows <code>password='***'</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="recommended-practices">Recommended Practices</h3>
+<h4 id="linuxmac-1">Linux/Mac:</h4>
+<pre><code class="language-bash"># Restrict file permissions (owner read/write only)
+chmod 600 config/deploy.toml
+
+# Verify permissions
+ls -l config/deploy.toml
+# Should show: -rw------- 1 user group ...
+</code></pre>
+<h4 id="windows-1">Windows:</h4>
+<pre><code class="language-cmd"># Restrict NTFS permissions
+icacls config\deploy.toml /inheritance:r /grant:r "%USERNAME%:F"
+
+# Verify permissions
+icacls config\deploy.toml
+</code></pre>
+<h3 id="cicd-integration">CI/CD Integration</h3>
+<p>For automated deployments, use environment variables instead of config file:</p>
+<pre><code class="language-python"># Example: Dynamic configuration for CI/CD
+import os
+from utils.gzconfig.deploy import DeployConfig
+
+# Override with environment variables
+deploy_config = DeployConfig(
+    server=os.getenv('FTP_SERVER', 'ftp.example.com'),
+    username=os.getenv('FTP_USERNAME'),
+    password=os.getenv('FTP_PASSWORD'),
+    target_dir=os.getenv('FTP_TARGET_DIR', '/public_html'),
+    port=int(os.getenv('FTP_PORT', '21')),
+    use_ftps=os.getenv('FTP_USE_FTPS', 'true').lower() == 'true'
+)
+</code></pre>
+<h4 id="github-actions-example">GitHub Actions Example:</h4>
+<pre><code class="language-yaml">env:
+  FTP_SERVER: ${{ secrets.FTP_SERVER }}
+  FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+  FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+  FTP_TARGET_DIR: ${{ secrets.FTP_TARGET_DIR }}
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="configuration-file-not-found">"Configuration file not found"</h3>
+<p><strong>Problem:</strong> Cannot find <code>config/deploy.toml</code></p>
+<h4 id="solution">Solution:</h4>
+<ol>
+<li>Copy <code>config/deploy.example.toml</code> to <code>config/deploy.toml</code></li>
+<li>Fill in your FTP credentials</li>
+<li>Ensure file is in correct location relative to project root</li>
+<li>Check file permissions (must be readable)</li>
+</ol>
+<h3 id="no-package-found-for-environment">"No package found for environment"</h3>
+<p><strong>Problem:</strong> No packages in <code>publish/packages/</code> for the specified environment</p>
+<h4 id="solution-1">Solution:</h4>
+<ol>
+<li>Run package module first: <code>python -m utils.package -e &lt;environment&gt;</code></li>
+<li>Verify <code>publish/packages/</code> directory exists</li>
+<li>Check package file naming: <code>package_{environment}_*.zip</code></li>
+<li>Ensure package creation completed successfully</li>
+</ol>
+<h3 id="connection-refused-or-login-failed">"Connection refused" or "Login failed"</h3>
+<p><strong>Problem:</strong> Cannot connect to FTP server</p>
+<h4 id="solution-2">Solution:</h4>
+<ol>
+<li>Verify server hostname is correct</li>
+<li>Check username and password in <code>deploy.toml</code></li>
+<li>Ensure firewall allows FTP/FTPS (port 21 or custom)</li>
+<li>Test with <code>use_ftps = false</code> to isolate FTPS issues</li>
+<li>Confirm server supports FTPS if using encrypted connection</li>
+<li>Check if server is online and accessible</li>
+</ol>
+<h3 id="cannot-access-target-directory">"Cannot access target directory"</h3>
+<p><strong>Problem:</strong> FTP permission error accessing <code>target_dir</code></p>
+<h4 id="solution-3">Solution:</h4>
+<ol>
+<li>Verify <code>target_dir</code> path is correct (e.g., <code>/public_html</code>)</li>
+<li>Check FTP user has write permissions to directory</li>
+<li>Ensure directory exists on server</li>
+<li>Test by manually connecting with FTP client</li>
+<li>Check disk space on server</li>
+</ol>
+<h3 id="upload-failed-or-timeout">"Upload failed" or timeout</h3>
+<p><strong>Problem:</strong> Upload stops mid-transfer or times out</p>
+<h4 id="solution-4">Solution:</h4>
+<ol>
+<li>Check network connection stability</li>
+<li>Try smaller package sizes (split content)</li>
+<li>Increase FTP timeout settings (if possible)</li>
+<li>Check firewall/NAT settings for passive mode</li>
+<li>Try different network connection</li>
+<li>Verify server has sufficient disk space</li>
+</ol>
+<h3 id="dry-run-shows-wrong-server">Dry-run shows wrong server</h3>
+<p><strong>Problem:</strong> Dry-run displays unexpected FTP settings</p>
+<h4 id="solution-5">Solution:</h4>
+<ol>
+<li>Check <code>config/deploy.toml</code> for correct values</li>
+<li>Ensure no typos in server hostname</li>
+<li>Verify file was saved after editing</li>
+<li>Check for multiple <code>[ftp]</code> sections (only one allowed)</li>
+<li>Review gzconfig error messages in logs</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="before-deploying">Before Deploying</h3>
+<ol>
+<li><p><strong>Test with Dry-Run</strong></p>
+<pre><code class="language-bash">python -m utils.deploy -e dev --dry-run
+</code></pre>
+<ul>
+<li>Verify package is correct</li>
+<li>Check FTP settings</li>
+<li>Confirm upload directory</li>
+</ul>
+</li>
+<li><p><strong>Verify Package</strong></p>
+<ul>
+<li>Ensure package was recently created</li>
+<li>Check package size is reasonable</li>
+<li>Confirm package contains expected files</li>
+</ul>
+</li>
+<li><p><strong>Check Credentials</strong></p>
+<ul>
+<li>Verify <code>deploy.toml</code> has correct settings</li>
+<li>Test FTP connection manually if unsure</li>
+<li>Ensure FTPS is enabled for production</li>
+</ul>
+</li>
+</ol>
+<h3 id="during-deployment">During Deployment</h3>
+<ol>
+<li><p><strong>Monitor Progress</strong></p>
+<ul>
+<li>Watch console output for errors</li>
+<li>Check upload progress</li>
+<li>Wait for completion confirmation</li>
+</ul>
+</li>
+<li><p><strong>Check Logs</strong></p>
+<ul>
+<li>Review log file after deployment</li>
+<li>Look for warnings or errors</li>
+<li>Verify all steps completed</li>
+</ul>
+</li>
+</ol>
+<h3 id="after-deployment">After Deployment</h3>
+<ol>
+<li><p><strong>Verify Upload</strong></p>
+<ul>
+<li>Check FTP server manually</li>
+<li>Verify file was uploaded completely</li>
+<li>Confirm file size matches local package</li>
+</ul>
+</li>
+<li><p><strong>Test Website</strong></p>
+<ul>
+<li>Browse to deployed site</li>
+<li>Check key pages load correctly</li>
+<li>Verify no broken links or missing resources</li>
+</ul>
+</li>
+<li><p><strong>Document Deployment</strong></p>
+<ul>
+<li>Note deployment time and environment</li>
+<li>Record any issues encountered</li>
+<li>Keep deployment logs for audit</li>
+</ul>
+</li>
+</ol>
+<h3 id="production-deployments">Production Deployments</h3>
+<ol>
+<li><p><strong>Use Staging First</strong></p>
+<pre><code class="language-bash"># Deploy to staging
+python -m utils.deploy -e staging
+
+# Test thoroughly on staging
+
+# Deploy to production
+python -m utils.deploy -e prod
+</code></pre>
+</li>
+<li><p><strong>Backup Before Deploy</strong></p>
+<ul>
+<li>Keep previous package versions</li>
+<li>Document rollback procedure</li>
+<li>Have recovery plan ready</li>
+</ul>
+</li>
+<li><p><strong>Deploy During Low Traffic</strong></p>
+<ul>
+<li>Schedule deployments for off-peak hours</li>
+<li>Notify users of maintenance if needed</li>
+<li>Monitor server after deployment</li>
+</ul>
+</li>
+</ol>
+<h2 id="performance">Performance</h2>
+<h3 id="upload-speed">Upload Speed</h3>
+<p>Upload time depends on:</p>
+<ul>
+<li>Network bandwidth</li>
+<li>Server location and performance</li>
+<li>Package file size</li>
+<li>FTP vs FTPS overhead</li>
+<li>Network latency</li>
+</ul>
+<h4 id="typical-upload-times">Typical Upload Times:</h4>
+<table>
+<thead>
+<tr>
+<th>Package Size</th>
+<th>Connection Speed</th>
+<th>Estimated Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 MB</td>
+<td>1 Mbps</td>
+<td>~8 seconds</td>
+</tr>
+<tr>
+<td>5 MB</td>
+<td>1 Mbps</td>
+<td>~40 seconds</td>
+</tr>
+<tr>
+<td>10 MB</td>
+<td>1 Mbps</td>
+<td>~80 seconds</td>
+</tr>
+<tr>
+<td>1 MB</td>
+<td>10 Mbps</td>
+<td>&lt;1 second</td>
+</tr>
+<tr>
+<td>10 MB</td>
+<td>10 Mbps</td>
+<td>~8 seconds</td>
+</tr>
+<tr>
+<td>50 MB</td>
+<td>10 Mbps</td>
+<td>~40 seconds</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> FTPS adds ~5-10% overhead due to TLS encryption, but this is negligible compared to network latency.</p>
+<h3 id="optimization-tips">Optimization Tips</h3>
+<ol>
+<li><p><strong>Minimize Package Size</strong></p>
+<ul>
+<li>Remove unnecessary files</li>
+<li>Compress images before packaging</li>
+<li>Clean up temporary files</li>
+</ul>
+</li>
+<li><p><strong>Use FTPS Wisely</strong></p>
+<ul>
+<li>Use FTPS for production (security first)</li>
+<li>Use FTP for local testing (faster)</li>
+</ul>
+</li>
+<li><p><strong>Network Considerations</strong></p>
+<ul>
+<li>Deploy from stable network connection</li>
+<li>Avoid WiFi for large deployments</li>
+<li>Use wired connection when possible</li>
+</ul>
+</li>
+</ol>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Planned improvements:</p>
+<ul>
+<li>[x] <strong>Dry-run mode</strong> - Preview deployment without uploading</li>
+<li>[x] <strong>Timestamped subdirectories</strong> - Organize uploads with unique dirs</li>
+<li>[x] <strong>FTPS support</strong> - Secure encrypted uploads</li>
+<li>[x] <strong>Progress tracking</strong> - Real-time upload feedback</li>
+<li>[ ] <strong>SFTP support</strong> - SSH File Transfer Protocol</li>
+<li>[ ] <strong>Resume interrupted uploads</strong> - Continue partial uploads</li>
+<li>[ ] <strong>Incremental deployments</strong> - Upload only changed files</li>
+<li>[ ] <strong>Multi-server deployment</strong> - Deploy to multiple servers in parallel</li>
+<li>[ ] <strong>Deployment rollback</strong> - Revert to previous deployment</li>
+<li>[ ] <strong>Post-deployment verification</strong> - Automated health checks</li>
+<li>[ ] <strong>Webhook notifications</strong> - Notify on completion/failure</li>
+<li>[ ] <strong>Deployment history tracking</strong> - Database of all deployments</li>
+<li>[ ] <strong>AWS S3 support</strong> - Deploy to S3 buckets</li>
+<li>[ ] <strong>Azure Blob Storage support</strong> - Deploy to Azure</li>
+<li>[ ] <strong>CloudFlare Pages support</strong> - Deploy to CloudFlare</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../gzconfig/README.md">gzconfig Module</a></strong> - Configuration management</li>
+<li><strong><a href="../gzlogging/README.md">gzlogging Module</a></strong> - Logging infrastructure</li>
+<li><strong><a href="../package/README.md">package Module</a></strong> - Package creation</li>
+<li><strong><a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol">FTP Protocol</a></strong> - FTP specification</li>
+<li><strong><a href="https://en.wikipedia.org/wiki/FTPS">FTPS</a></strong> - FTP over TLS</li>
+<li><strong><a href="https://docs.python.org/3/library/ftplib.html">Python ftplib</a></strong> - Python FTP library</li>
+<li><strong><a href="https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior">strftime</a></strong> - Date format codes</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 23, 2025</em><br/>
+<em>Deploy version: 1.0</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

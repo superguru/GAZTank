@@ -1,0 +1,1504 @@
+<h1>Table of Contents (TOC) Generator Module</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#how-it-works">How It Works</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#implementation-details">Implementation Details</a>
+</li>
+<li>
+<a href="#customization">Customization</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#design-decisions">Design Decisions</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#why-build-time-toc">Why Build-Time TOC?</a>
+</li>
+<li>
+<a href="#workflow">Workflow:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-file-example">Log File Example</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#shell-scripts">Shell Scripts</a>
+</li>
+<li>
+<a href="#direct-module-execution">Direct Module Execution</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#argument-details">Argument Details</a>
+</li>
+<li>
+<a href="#usage-examples">Usage Examples</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#automatic-id-generation">✅ Automatic ID Generation</a>
+</li>
+<li>
+<a href="#hierarchical-toc-structure">✅ Hierarchical TOC Structure</a>
+</li>
+<li>
+<a href="#smart-injection">✅ Smart Injection</a>
+</li>
+<li>
+<a href="#environment-aware-processing">✅ Environment-Aware Processing</a>
+</li>
+<li>
+<a href="#intelligent-skip-logic">✅ Intelligent Skip Logic</a>
+</li>
+<li>
+<a href="#inverse-operation-strip-mode">✅ Inverse Operation (Strip Mode)</a>
+</li>
+<li>
+<a href="#seo-benefits">✅ SEO Benefits</a>
+</li>
+<li>
+<a href="#performance-benefits">✅ Performance Benefits</a>
+</li>
+<li>
+<a href="#pipeline-configuration">Pipeline Configuration</a>
+</li>
+<li>
+<a href="#how-configuration-is-used">How Configuration is Used</a>
+</li>
+<li>
+<a href="#configuration-access">Configuration Access</a>
+</li>
+<li>
+<a href="#direct-invocation">Direct Invocation</a>
+</li>
+<li>
+<a href="#build-pipeline-integration">Build Pipeline Integration</a>
+</li>
+<li>
+<a href="#called-by">Called By</a>
+</li>
+<li>
+<a href="#workflow-diagram">Workflow Diagram</a>
+</li>
+<li>
+<a href="#example-transformation">Example Transformation</a>
+</li>
+<li>
+<a href="#processing-logic">Processing Logic</a>
+</li>
+<li>
+<a href="#dependencies">Dependencies</a>
+</li>
+<li>
+<a href="#adding-new-features">Adding New Features</a>
+</li>
+<li>
+<a href="#testing">Testing</a>
+</li>
+<li>
+<a href="#code-quality">Code Quality</a>
+</li>
+<li>
+<a href="#id-slugification-algorithm">ID Slugification Algorithm</a>
+</li>
+<li>
+<a href="#duplicate-id-handling">Duplicate ID Handling</a>
+</li>
+<li>
+<a href="#heading-hierarchy">Heading Hierarchy</a>
+</li>
+<li>
+<a href="#file-skipping-logic">File Skipping Logic</a>
+</li>
+<li>
+<a href="#beautifulsoup-usage">BeautifulSoup Usage</a>
+</li>
+<li>
+<a href="#change-heading-levels">Change Heading Levels</a>
+</li>
+<li>
+<a href="#modify-slug-generation">Modify Slug Generation</a>
+</li>
+<li>
+<a href="#change-toc-html-structure">Change TOC HTML Structure</a>
+</li>
+<li>
+<a href="#add-css-classes">Add CSS Classes</a>
+</li>
+<li>
+<a href="#when-to-use-force">When to Use --force</a>
+</li>
+<li>
+<a href="#when-to-use-dry-run">When to Use --dry-run</a>
+</li>
+<li>
+<a href="#when-to-use-strip">When to Use --strip</a>
+</li>
+<li>
+<a href="#environment-workflow">Environment Workflow</a>
+</li>
+<li>
+<a href="#integration-with-build-pipeline">Integration with Build Pipeline</a>
+</li>
+<li>
+<a href="#no-html-files-found-to-process">No HTML files found to process</a>
+</li>
+<li>
+<a href="#failed-to-inject-toc">Failed to inject TOC</a>
+</li>
+<li>
+<a href="#duplicate-ids-in-output">Duplicate IDs in output</a>
+</li>
+<li>
+<a href="#toc-appears-twice">TOC appears twice</a>
+</li>
+<li>
+<a href="#encoding-errors-unicodeencodeerror">Encoding errors (UnicodeEncodeError)</a>
+</li>
+<li>
+<a href="#already-processed-use-force">Already processed, use --force</a>
+</li>
+<li>
+<a href="#environment-directory-not-found">Environment directory not found</a>
+</li>
+<li>
+<a href="#why-build-time-vs-runtime">Why Build-Time vs Runtime?</a>
+</li>
+<li>
+<a href="#why-environment-specific-processing">Why Environment-Specific Processing?</a>
+</li>
+<li>
+<a href="#why-skip-already-processed-files">Why Skip Already-Processed Files?</a>
+</li>
+<li>
+<a href="#why-h2h3h4-only">Why h2/h3/h4 Only?</a>
+</li>
+<li>
+<a href="#why-beautifulsoup">Why BeautifulSoup?</a>
+<ul>
+<li>
+<a href="#build-time-advantages">Build-Time Advantages:</a>
+</li>
+<li>
+<a href="#runtime-toc-disadvantages">Runtime TOC Disadvantages:</a>
+</li>
+<li>
+<a href="#logged-to-file-clean-operational-log">Logged to file (clean operational log):</a>
+</li>
+<li>
+<a href="#console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</a>
+</li>
+<li>
+<a href="#not-logged-kept-clean">Not logged (kept clean):</a>
+</li>
+<li>
+<a href="#normal-mode-skipping-already-processed-files">Normal mode (skipping already-processed files):</a>
+</li>
+<li>
+<a href="#force-mode-regenerating-all-files">Force mode (regenerating all files):</a>
+</li>
+<li>
+<a href="#strip-mode-removing-tocs">Strip mode (removing TOCs):</a>
+</li>
+<li>
+<a href="#windows-generate-toccmd">Windows (generate_toc.cmd):</a>
+</li>
+<li>
+<a href="#linuxmac-generate-tocsh">Linux/Mac (generate_toc.sh):</a>
+</li>
+<li>
+<a href="#process-multiple-files">Process multiple files:</a>
+</li>
+<li>
+<a href="#utility-functions">Utility functions:</a>
+</li>
+<li>
+<a href="#e-environment-devstagingprod-required">-e, --environment {dev,staging,prod} (Required)</a>
+</li>
+<li>
+<a href="#strip-optional">--strip (Optional)</a>
+</li>
+<li>
+<a href="#force-optional">--force (Optional)</a>
+</li>
+<li>
+<a href="#dry-run-optional">--dry-run (Optional)</a>
+</li>
+<li>
+<a href="#high-level-processing">High-Level Processing:</a>
+</li>
+<li>
+<a href="#id-generation">ID Generation:</a>
+</li>
+<li>
+<a href="#toc-building">TOC Building:</a>
+</li>
+<li>
+<a href="#utilities">Utilities:</a>
+</li>
+<li>
+<a href="#pipeline-execution-order">Pipeline execution order:</a>
+</li>
+<li>
+<a href="#input-html-before-processing">Input HTML (before processing):</a>
+</li>
+<li>
+<a href="#output-html-after-processing">Output HTML (after processing):</a>
+</li>
+<li>
+<a href="#skip-logic-without-force">Skip logic (without --force):</a>
+</li>
+<li>
+<a href="#force-logic-with-force">Force logic (with --force):</a>
+</li>
+<li>
+<a href="#strip-logic-with-strip">Strip logic (with --strip):</a>
+</li>
+<li>
+<a href="#core">Core:</a>
+</li>
+<li>
+<a href="#development-1">Development:</a>
+</li>
+<li>
+<a href="#to-add-support-for-h5h6-headings">To add support for h5/h6 headings:</a>
+</li>
+<li>
+<a href="#to-customize-toc-html-structure">To customize TOC HTML structure:</a>
+</li>
+<li>
+<a href="#to-change-slug-generation">To change slug generation:</a>
+</li>
+<li>
+<a href="#examples">Examples:</a>
+</li>
+<li>
+<a href="#development-cycle">Development cycle:</a>
+</li>
+<li>
+<a href="#typical-workflow">Typical workflow:</a>
+</li>
+<li>
+<a href="#causes">Causes:</a>
+</li>
+<li>
+<a href="#solutions">Solutions:</a>
+</li>
+<li>
+<a href="#causes-1">Causes:</a>
+</li>
+<li>
+<a href="#solutions-1">Solutions:</a>
+</li>
+<li>
+<a href="#expected-behavior">Expected behavior:</a>
+</li>
+<li>
+<a href="#if-it-occurs">If it occurs:</a>
+</li>
+<li>
+<a href="#expected-behavior-1">Expected behavior:</a>
+</li>
+<li>
+<a href="#if-it-occurs-1">If it occurs:</a>
+</li>
+<li>
+<a href="#context">Context:</a>
+</li>
+<li>
+<a href="#solutions-2">Solutions:</a>
+</li>
+<li>
+<a href="#causes-2">Causes:</a>
+</li>
+<li>
+<a href="#solutions-3">Solutions:</a>
+</li>
+<li>
+<a href="#causes-3">Causes:</a>
+</li>
+<li>
+<a href="#solutions-4">Solutions:</a>
+</li>
+<li>
+<a href="#build-time-toc-this-approach">Build-Time TOC (this approach):</a>
+</li>
+<li>
+<a href="#runtime-toc-javascript">Runtime TOC (JavaScript):</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Environment-aware HTML table of contents generator that adds IDs to headings and injects navigable TOC markup at build time. Processes HTML files in environment-specific publish directories (dev/staging/prod).</p>
+<p><strong>Version:</strong> 1.1.0<br/>
+<strong>Last Updated:</strong> October 23, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#shell-scripts">Shell Scripts</a></li>
+<li><a href="#direct-module-execution">Direct Module Execution</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#how-it-works">How It Works</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#implementation-details">Implementation Details</a></li>
+<li><a href="#customization">Customization</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#design-decisions">Design Decisions</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>This module processes HTML content files at build time to:</p>
+<ol>
+<li><strong>Add unique IDs</strong> to all <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, and <code>&lt;h4&gt;</code> headings for direct linking</li>
+<li><strong>Generate hierarchical TOC structure</strong> based on heading levels</li>
+<li><strong>Inject TOC HTML</strong> into content files (positioned after <code>&lt;h1&gt;</code>)</li>
+<li><strong>Enable SEO-friendly heading anchors</strong> for search engines and users</li>
+<li><strong>Eliminate runtime JavaScript processing</strong> for better performance</li>
+</ol>
+<p>This module eliminates runtime TOC generation, improving page load performance and SEO. It processes environment-specific output directories (dev/staging/prod) and integrates with the build pipeline.</p>
+<h3 id="why-build-time-toc">Why Build-Time TOC?</h3>
+<h4 id="build-time-advantages">Build-Time Advantages:</h4>
+<ul>
+<li>✅ Better SEO (IDs in static HTML visible to crawlers)</li>
+<li>✅ Faster page loads (no runtime parsing required)</li>
+<li>✅ Simpler JavaScript (only handles interactions)</li>
+<li>✅ Consistent results across all pages</li>
+<li>❌ Requires build step (acceptable trade-off)</li>
+</ul>
+<h4 id="runtime-toc-disadvantages">Runtime TOC Disadvantages:</h4>
+<ul>
+<li>❌ Slower (must parse HTML on every page load)</li>
+<li>❌ IDs not in static HTML (bad for SEO and direct links)</li>
+<li>❌ Complex JavaScript code required</li>
+<li>❌ Potential for inconsistent results</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The TOC generator is integrated into the GAZTank build pipeline:</p>
+<pre><code>Content Build Pipeline:
+  1. setup       - Apply site configuration (site.toml)
+  2. generate    - Convert markdown to HTML
+  3. toc         - Add IDs and inject TOC ← This module
+  4. sitemap     - Generate sitemap.xml with anchors
+  5. package     - Create deployment packages
+</code></pre>
+<p><strong>Purpose:</strong> Adds table of contents and heading anchors to HTML files</p>
+<p><strong>Location:</strong> Processes environment-specific directories: <code>publish/{environment}/</code></p>
+<h3 id="workflow">Workflow:</h3>
+<pre><code>pipeline.toml → toc.py → reads HTML → adds IDs + TOC → writes HTML
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Environment-aware processing (dev, staging, prod)</li>
+<li>Smart skip logic (only processes changed files)</li>
+<li>Force regeneration when needed</li>
+<li>Dry-run preview without modifying files</li>
+<li>Comprehensive logging and error handling</li>
+<li>Integrates with sitemap generator (anchors in sitemap)</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<p>The TOC generator uses <strong>gzlogging</strong> infrastructure for operational logging with environment-aware configuration.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> Specified via <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>toc</code></li>
+<li><strong>Log Location:</strong> <code>logs/{environment}/toc_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> File-only (console has separate rich formatting)</li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<h4 id="logged-to-file-clean-operational-log">Logged to file (clean operational log):</h4>
+<ul>
+<li>Table of Contents Generator started</li>
+<li>Environment name (dev/staging/prod)</li>
+<li>Mode settings (Generate/Strip, DRY RUN MODE, FORCE MODE)</li>
+<li>Pipeline configuration loaded successfully</li>
+<li>Target directory path</li>
+<li>Scanning directory and file count</li>
+<li>Processing status for each file with relative paths</li>
+<li>Summary statistics (processed, skipped, errors)</li>
+<li>Completion status (success or errors)</li>
+<li>Error messages without emoji/formatting</li>
+</ul>
+<h4 id="console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</h4>
+<ul>
+<li>Section headers with separators (============)</li>
+<li>Mode indicators: ⚠️ DRY RUN MODE, 🔄 FORCE MODE</li>
+<li>Progress indicators: 📂 for scanning</li>
+<li>Success/failure indicators: ✅ ❌ for completion</li>
+<li>File processing results with ✓ symbols</li>
+<li>Statistics summary in formatted box</li>
+<li>Blank lines for visual spacing</li>
+<li>User-facing messages with emoji</li>
+</ul>
+<h4 id="not-logged-kept-clean">Not logged (kept clean):</h4>
+<ul>
+<li>No blank lines in log files</li>
+<li>No separator lines (===) in logs</li>
+<li>No emoji or formatting characters in log files</li>
+<li>No decorative elements</li>
+</ul>
+<h3 id="log-file-example">Log File Example</h3>
+<h4 id="normal-mode-skipping-already-processed-files">Normal mode (skipping already-processed files):</h4>
+<pre><code class="language-log">[2025-10-23 09:44:38] [dev] [INF] Table of Contents Generator started
+[2025-10-23 09:44:38] [dev] [INF] Environment: dev
+[2025-10-23 09:44:38] [dev] [INF] Mode: Generate TOC and IDs
+[2025-10-23 09:44:38] [dev] [DBG] Pipeline configuration loaded successfully
+[2025-10-23 09:44:38] [dev] [INF] Target directory: D:\Projects\www\GAZTank\publish\dev
+[2025-10-23 09:44:38] [dev] [INF] Scanning: D:\Projects\www\GAZTank\publish\dev
+[2025-10-23 09:44:38] [dev] [INF] Found 17 HTML files
+[2025-10-23 09:44:38] [dev] [INF] Processing HTML files...
+[2025-10-23 09:44:38] [dev] [DBG] content\about.html: Skipped (no h2/h3/h4 headings)
+[2025-10-23 09:44:38] [dev] [DBG] content\setup\README.html: Skipped (already processed, use --force to regenerate)
+[2025-10-23 09:44:38] [dev] [INF] Summary: 0 processed, 17 skipped, 0 errors
+[2025-10-23 09:44:38] [dev] [INF] TOC generate completed successfully
+</code></pre>
+<h4 id="force-mode-regenerating-all-files">Force mode (regenerating all files):</h4>
+<pre><code class="language-log">[2025-10-23 09:47:29] [staging] [INF] Table of Contents Generator started
+[2025-10-23 09:47:29] [staging] [INF] Environment: staging
+[2025-10-23 09:47:29] [staging] [INF] Mode: Generate TOC and IDs
+[2025-10-23 09:47:29] [staging] [INF] DRY RUN MODE enabled
+[2025-10-23 09:47:29] [staging] [INF] FORCE MODE enabled
+[2025-10-23 09:47:29] [staging] [DBG] Pipeline configuration loaded successfully
+[2025-10-23 09:47:29] [staging] [INF] Target directory: D:\Projects\www\GAZTank\publish\staging
+[2025-10-23 09:47:29] [staging] [INF] Scanning: D:\Projects\www\GAZTank\publish\staging
+[2025-10-23 09:47:29] [staging] [INF] Found 17 HTML files
+[2025-10-23 09:47:29] [staging] [INF] Processing HTML files...
+[2025-10-23 09:47:29] [staging] [INF] content\setup\DESIGN_RULES.html: ✓ TOC added (17 h2, 49 h3, 42 h4)
+[2025-10-23 09:47:29] [staging] [INF] content\setup\DEVELOPER_SETUP.html: ✓ TOC added (14 h2, 37 h3, 36 h4)
+[2025-10-23 09:47:29] [staging] [INF] Summary: 10 processed, 7 skipped, 0 errors
+[2025-10-23 09:47:29] [staging] [INF] TOC generate completed successfully
+</code></pre>
+<h4 id="strip-mode-removing-tocs">Strip mode (removing TOCs):</h4>
+<pre><code class="language-log">[2025-10-23 09:48:15] [dev] [INF] Table of Contents Generator started
+[2025-10-23 09:48:15] [dev] [INF] Environment: dev
+[2025-10-23 09:48:15] [dev] [INF] Mode: Strip TOC and IDs
+[2025-10-23 09:48:15] [dev] [DBG] Pipeline configuration loaded successfully
+[2025-10-23 09:48:15] [dev] [INF] Target directory: D:\Projects\www\GAZTank\publish\dev
+[2025-10-23 09:48:15] [dev] [INF] Scanning: D:\Projects\www\GAZTank\publish\dev
+[2025-10-23 09:48:15] [dev] [INF] Found 17 HTML files
+[2025-10-23 09:48:15] [dev] [INF] Stripping HTML files...
+[2025-10-23 09:48:15] [dev] [INF] content\setup\README.html: ✓ TOC removed, 54 IDs removed
+[2025-10-23 09:48:15] [dev] [INF] Summary: 10 processed, 7 skipped, 0 errors
+[2025-10-23 09:48:15] [dev] [INF] TOC strip completed successfully
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<p><strong>Recommended: Use shell scripts</strong> (automatically handles PYTHONPATH and encoding)</p>
+<pre><code class="language-bash"># Windows - Add TOC to dev environment
+.\scripts\generate_toc.cmd -e dev
+
+# Windows - Add TOC to staging environment
+.\scripts\generate_toc.cmd -e staging
+
+# Linux/Mac - Add TOC to dev environment
+./scripts/generate_toc.sh -e dev
+
+# Windows - Remove TOC (strip mode)
+.\scripts\generate_toc.cmd -e dev --strip
+
+# Linux/Mac - Remove TOC (strip mode)
+./scripts/generate_toc.sh -e dev --strip
+
+# Preview changes without writing files
+.\scripts\generate_toc.cmd -e dev --dry-run
+</code></pre>
+<h3 id="shell-scripts">Shell Scripts</h3>
+<h4 id="windows-generate-toccmd">Windows (generate_toc.cmd):</h4>
+<pre><code class="language-batch">.\scripts\generate_toc.cmd -e dev
+.\scripts\generate_toc.cmd -e staging --force
+.\scripts\generate_toc.cmd -e prod --dry-run
+.\scripts\generate_toc.cmd -e dev --strip
+</code></pre>
+<h4 id="linuxmac-generate-tocsh">Linux/Mac (generate_toc.sh):</h4>
+<pre><code class="language-bash">./scripts/generate_toc.sh -e dev
+./scripts/generate_toc.sh -e staging --force
+./scripts/generate_toc.sh -e prod --dry-run
+./scripts/generate_toc.sh -e dev --strip
+</code></pre>
+<h3 id="direct-module-execution">Direct Module Execution</h3>
+<pre><code class="language-bash"># From project root - Add TOC to dev environment
+python -m utils.toc -e dev
+
+# Add TOC to staging or prod
+python -m utils.toc -e staging
+python -m utils.toc -e prod
+
+# Remove TOC and heading IDs (inverse operation)
+python -m utils.toc -e dev --strip
+
+# Preview changes without writing files
+python -m utils.toc -e dev --dry-run
+python -m utils.toc -e dev --strip --dry-run
+
+# With explicit PYTHONPATH
+set PYTHONPATH=%CD%;%PYTHONPATH%           # Windows
+export PYTHONPATH="$PWD:$PYTHONPATH"       # Linux/Mac
+python -m utils.toc -e dev
+</code></pre>
+<h3 id="as-a-module">As a Module</h3>
+<p>Import and use in your own Python scripts:</p>
+<pre><code class="language-python">from utils.toc.toc import process_html_file, strip_toc_from_file, scan_html_files
+from pathlib import Path
+
+# Note: When using as a module, you need to specify the environment directory
+# The environment directory comes from config/pipeline.toml
+
+# Process a single file - Add TOC
+file_path = Path('publish/dev/content/about.html')
+success, message = process_html_file(file_path)
+print(f"{file_path}: {message}")
+
+# Strip TOC from a single file
+success, message = strip_toc_from_file(file_path)
+print(f"{file_path}: {message}")
+</code></pre>
+<h4 id="process-multiple-files">Process multiple files:</h4>
+<pre><code class="language-python"># Process all HTML files in an environment directory
+env_dir = Path('publish/dev')
+html_files = scan_html_files(env_dir)
+
+for html_file in html_files:
+    success, message = process_html_file(html_file)
+    print(f"{html_file}: {message}")
+</code></pre>
+<h4 id="utility-functions">Utility functions:</h4>
+<pre><code class="language-python">from utils.toc.toc import slugify, add_ids_to_headings, build_toc_structure
+from bs4 import BeautifulSoup
+
+# Generate slug from heading text
+slug = slugify("1. Meta Tags (index.html)")
+# Returns: "meta-tags-index-html"
+
+# Add IDs to headings in HTML
+html = '&lt;h2&gt;My Heading&lt;/h2&gt;&lt;h3&gt;Subheading&lt;/h3&gt;'
+soup = BeautifulSoup(html, 'html.parser')
+headings = add_ids_to_headings(soup)
+# headings = [
+#   {'level': 'h2', 'text': 'My Heading', 'id': 'my-heading', 'element': &lt;h2&gt;},
+#   {'level': 'h3', 'text': 'Subheading', 'id': 'subheading', 'element': &lt;h3&gt;}
+# ]
+
+# Build TOC HTML from headings
+toc_html = build_toc_structure(headings)
+# Returns: complete &lt;nav&gt; HTML with nested lists
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-e, --environment</code></td>
+<td><strong>Yes</strong></td>
+<td>-</td>
+<td>Environment to process: <code>dev</code>, <code>staging</code>, or <code>prod</code></td>
+</tr>
+<tr>
+<td><code>--strip</code></td>
+<td>No</td>
+<td>False</td>
+<td>Remove TOC and heading IDs (inverse operation)</td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td>No</td>
+<td>False</td>
+<td>Force processing of all files (ignore existing TOCs)</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>No</td>
+<td>False</td>
+<td>Preview changes without writing to files</td>
+</tr>
+<tr>
+<td><code>-h, --help</code></td>
+<td>No</td>
+<td>-</td>
+<td>Show help message and exit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="argument-details">Argument Details</h3>
+<h4 id="e-environment-devstagingprod-required"><code>-e, --environment {dev,staging,prod}</code> (Required)</h4>
+<ul>
+<li>Specifies which environment directory to process</li>
+<li>Corresponds to sections in <code>config/pipeline.toml</code></li>
+<li>Determines output directory: <code>publish/{environment}/</code></li>
+<li>Examples: <code>-e dev</code>, <code>-e staging</code>, <code>-e prod</code></li>
+</ul>
+<h4 id="strip-optional"><code>--strip</code> (Optional)</h4>
+<ul>
+<li>Removes TOC navigation elements from HTML</li>
+<li>Removes <code>id</code> attributes from h2, h3, h4 headings</li>
+<li>Inverse operation of normal processing</li>
+<li>Useful for reverting changes or testing</li>
+</ul>
+<h4 id="force-optional"><code>--force</code> (Optional)</h4>
+<ul>
+<li>Processes all files regardless of existing content</li>
+<li>Without <code>--force</code>: Skips files that already have TOC and heading IDs</li>
+<li>With <code>--force</code>: Regenerates TOC for all files</li>
+<li>Useful after TOC template changes or heading updates</li>
+<li>Can be combined with <code>--dry-run</code> to preview forced regeneration</li>
+</ul>
+<h4 id="dry-run-optional"><code>--dry-run</code> (Optional)</h4>
+<ul>
+<li>Shows what would be done without modifying files</li>
+<li>All logic executes normally (parsing, TOC generation)</li>
+<li>No files are written to disk</li>
+<li>Logging reflects dry-run mode</li>
+<li>Useful for testing and verification</li>
+</ul>
+<h3 id="usage-examples">Usage Examples</h3>
+<pre><code class="language-bash"># Standard processing (skip already-processed files)
+python -m utils.toc -e dev
+
+# Force regeneration of all TOCs
+python -m utils.toc -e staging --force
+
+# Preview what would be processed
+python -m utils.toc -e prod --dry-run
+
+# Preview forced regeneration
+python -m utils.toc -e dev --force --dry-run
+
+# Remove all TOCs and heading IDs
+python -m utils.toc -e dev --strip
+
+# Preview TOC removal
+python -m utils.toc -e dev --strip --dry-run
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>toc/
+├── __init__.py        # Module initialization and exports
+├── __main__.py        # Entry point for python -m toc
+├── toc.py             # Core TOC generation logic
+└── README.md          # This file (comprehensive documentation)
+</code></pre>
+<h3 id="key-functions">Key Functions</h3>
+<h4 id="high-level-processing">High-Level Processing:</h4>
+<ul>
+<li><strong><code>main()</code></strong> - Entry point for command-line usage</li>
+<li><strong><code>scan_html_files(src_dir)</code></strong> - Recursively find all .html files (skip index.html)</li>
+<li><strong><code>process_html_file(file_path, dry_run=False, force=False)</code></strong> - Process single file (add TOC)</li>
+<li><strong><code>strip_toc_from_file(file_path, dry_run=False, force=False)</code></strong> - Strip TOC from single file</li>
+</ul>
+<h4 id="id-generation">ID Generation:</h4>
+<ul>
+<li><strong><code>slugify(text)</code></strong> - Convert heading text to URL-friendly slug</li>
+<li><strong><code>add_ids_to_headings(soup)</code></strong> - Add unique IDs to h2, h3, h4 tags</li>
+</ul>
+<h4 id="toc-building">TOC Building:</h4>
+<ul>
+<li><strong><code>build_toc_structure(headings)</code></strong> - Generate hierarchical TOC HTML</li>
+<li><strong><code>inject_toc(soup, toc_html)</code></strong> - Inject TOC into HTML document</li>
+<li><strong><code>remove_existing_toc(soup)</code></strong> - Remove existing TOC from document</li>
+</ul>
+<h4 id="utilities">Utilities:</h4>
+<ul>
+<li><strong><code>remove_ids_from_headings(soup)</code></strong> - Remove IDs from h2, h3, h4 tags</li>
+</ul>
+<h2 id="features">Features</h2>
+<h3 id="automatic-id-generation">✅ Automatic ID Generation</h3>
+<ul>
+<li><p><strong>Converts heading text to URL-friendly slugs</strong></p>
+<ul>
+<li>Example: <code>"1. Meta Tags (index.html)"</code> → <code>"meta-tags-index-html"</code></li>
+<li>Removes HTML tags, leading numbers, special characters</li>
+<li>Replaces spaces with hyphens</li>
+<li>Converts to lowercase</li>
+</ul>
+</li>
+<li><p><strong>Ensures uniqueness across document</strong></p>
+<ul>
+<li>Tracks used IDs in a set</li>
+<li>Appends <code>-1</code>, <code>-2</code>, etc. for duplicates</li>
+<li>Example: Second "Introduction" becomes <code>"introduction-1"</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="hierarchical-toc-structure">✅ Hierarchical TOC Structure</h3>
+<ul>
+<li><p><strong>Properly nested lists based on heading levels</strong></p>
+<ul>
+<li>h2 → Top-level items</li>
+<li>h3 → Nested under parent h2</li>
+<li>h4 → Nested under parent h3</li>
+</ul>
+</li>
+<li><p><strong>Semantic HTML structure</strong></p>
+<ul>
+<li>Uses <code>&lt;nav&gt;</code> element with <code>table-of-contents</code> class</li>
+<li>Nested <code>&lt;ul&gt;</code> lists for hierarchy</li>
+<li>Anchor links to heading IDs</li>
+</ul>
+</li>
+</ul>
+<h3 id="smart-injection">✅ Smart Injection</h3>
+<ul>
+<li><strong>Positions TOC after h1 (main heading)</strong><ul>
+<li>Fallback: Insert before first content element</li>
+<li>Skips files with no h2/h3/h4 headings</li>
+<li>Removes existing TOC before generating new one</li>
+</ul>
+</li>
+</ul>
+<h3 id="environment-aware-processing">✅ Environment-Aware Processing</h3>
+<ul>
+<li><strong>Processes environment-specific directories</strong><ul>
+<li>Uses <code>config/pipeline.toml</code> for configuration</li>
+<li>Targets <code>publish/{environment}/</code> directories</li>
+<li>Supports dev, staging, prod environments</li>
+</ul>
+</li>
+</ul>
+<h3 id="intelligent-skip-logic">✅ Intelligent Skip Logic</h3>
+<ul>
+<li><p><strong>Without --force:</strong> Skips already-processed files</p>
+<ul>
+<li>Checks for existing TOC navigation</li>
+<li>Checks for heading IDs</li>
+<li>Displays helpful message: "already processed, use --force"</li>
+</ul>
+</li>
+<li><p><strong>With --force:</strong> Regenerates all TOCs</p>
+<ul>
+<li>Useful after template changes</li>
+<li>Useful after heading content updates</li>
+<li>Ensures consistency across all files</li>
+</ul>
+</li>
+</ul>
+<h3 id="inverse-operation-strip-mode">✅ Inverse Operation (Strip Mode)</h3>
+<ul>
+<li><strong>Remove TOC:</strong> Strips <code>&lt;nav class="table-of-contents"&gt;</code> from HTML</li>
+<li><strong>Remove IDs:</strong> Removes <code>id</code> attributes from h2, h3, h4 headings</li>
+<li><strong>Clean source:</strong> Returns HTML to pre-processed state</li>
+<li><strong>Dry-run support:</strong> Preview removal without writing</li>
+</ul>
+<h3 id="seo-benefits">✅ SEO Benefits</h3>
+<ul>
+<li><strong>All heading IDs in static HTML</strong> (visible to search crawlers)</li>
+<li><strong>Direct linking to sections</strong> works immediately on page load</li>
+<li><strong>Better content structure</strong> signals for search engines</li>
+<li><strong>No JavaScript required</strong> for basic TOC functionality</li>
+<li><strong>Faster indexing</strong> (no need to execute JavaScript)</li>
+</ul>
+<h3 id="performance-benefits">✅ Performance Benefits</h3>
+<ul>
+<li><strong>No runtime HTML parsing</strong> (all done at build time)</li>
+<li><strong>Faster page loads</strong> (no JavaScript processing overhead)</li>
+<li><strong>Better caching</strong> (static HTML changes less frequently)</li>
+<li><strong>Reduced JavaScript complexity</strong> (only handles interactions)</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>The TOC generator uses <code>config/pipeline.toml</code> for environment configuration.</p>
+<h3 id="pipeline-configuration">Pipeline Configuration</h3>
+<p><strong>File:</strong> <code>config/pipeline.toml</code></p>
+<pre><code class="language-toml"># Build Pipeline Configuration
+# Each environment has:
+# - dir: Directory name under publish/ where build artifacts are stored
+# - httpd_port: Default port for the development server
+# - description: Human-readable description of the environment
+
+[environments.dev]
+dir = "dev"
+httpd_port = 7190
+description = "Development environment with verbose logging"
+
+[environments.staging]
+dir = "staging"
+httpd_port = 7191
+description = "Staging environment for pre-production testing"
+
+[environments.prod]
+dir = "prod"
+httpd_port = 7192
+description = "Production-ready build for deployment"
+</code></pre>
+<h3 id="how-configuration-is-used">How Configuration is Used</h3>
+<ol>
+<li><strong>Environment argument</strong> (<code>-e dev</code>) selects configuration section</li>
+<li><strong>gzconfig module</strong> reads <code>pipeline.toml</code> and provides typed access</li>
+<li><strong>Directory path</strong> (<code>publish/dev/</code>) is derived from <code>dir</code> setting</li>
+<li><strong>Module processes</strong> all HTML files in environment directory</li>
+</ol>
+<h3 id="configuration-access">Configuration Access</h3>
+<p>The module uses <strong>gzconfig</strong> for configuration access:</p>
+<pre><code class="language-python">from utils.gzconfig import get_pipeline_config
+
+# Get environment configuration
+env_config = get_pipeline_config('dev')
+
+# Access environment directory
+env_dir = env_config.directory_path  # Returns Path('publish/dev')
+
+# Environment description (for logging)
+description = env_config.description
+</code></pre>
+<h2 id="invocation-points">Invocation Points</h2>
+<h3 id="direct-invocation">Direct Invocation</h3>
+<pre><code class="language-bash"># Windows shell scripts
+.\scripts\generate_toc.cmd -e dev
+.\scripts\generate_toc.cmd -e staging --force
+
+# Linux/Mac shell scripts
+./scripts/generate_toc.sh -e dev
+./scripts/generate_toc.sh -e staging --force
+
+# Direct Python module
+python -m utils.toc -e dev
+python -m utils.toc -e staging --force
+</code></pre>
+<h3 id="build-pipeline-integration">Build Pipeline Integration</h3>
+<p>Called automatically as part of the content generation pipeline:</p>
+<pre><code class="language-bash"># Windows pipeline script
+.\scripts\gzbuild.cmd -e dev
+
+# Linux/Mac pipeline script
+./scripts/gzbuild.sh -e dev
+</code></pre>
+<h4 id="pipeline-execution-order">Pipeline execution order:</h4>
+<pre><code>1. clean      - Remove orphaned files
+2. setup      - Apply site configuration
+3. gzlint     - Run linting checks
+4. generate   - Generate content files
+5. sitemap    - Generate sitemap.xml
+6. toc        - Add TOC and heading IDs (this module)
+7. package    - Sync, minify, and archive
+8. deploy     - Deploy to environment
+</code></pre>
+<h3 id="called-by">Called By</h3>
+<ul>
+<li><code>scripts/generate_toc.cmd</code> - Windows launcher</li>
+<li><code>scripts/generate_toc.sh</code> - Linux/Mac launcher</li>
+<li><code>scripts/gzbuild.cmd</code> - Windows build pipeline</li>
+<li><code>scripts/gzbuild.sh</code> - Linux/Mac build pipeline</li>
+<li>Build automation scripts</li>
+<li>Developer workflows</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<h3 id="workflow-diagram">Workflow Diagram</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    TOC GENERATOR WORKFLOW                   │
+├─────────────────────────────────────────────────────────────┤
+│  [1/5] Parse Arguments &amp; Initialize                         │
+│     ├─ Parse -e environment argument (required)             │
+│     ├─ Parse --strip, --force, --dry-run flags              │
+│     ├─ Initialize gzlogging (console=False)                 │
+│     └─ Print console header with mode indicators            │
+│                                                             │
+│  [2/5] Load Configuration                                   │
+│     ├─ Use gzconfig to read pipeline.toml                   │
+│     ├─ Get environment directory (publish/{env}/)           │
+│     └─ Validate directory exists                            │
+│                                                             │
+│  [3/5] Scan Files                                           │
+│     ├─ Recursively find *.html in environment dir           │
+│     ├─ Skip index.html (main SPA file)                      │
+│     └─ Report file count to console and log                 │
+│                                                             │
+│  [4/5] Process Each File                                    │
+│     ├─ Read and parse HTML with BeautifulSoup               │
+│     ├─ Check if processing needed (skip if not forced)      │
+│     ├─ Remove existing TOC (if present)                     │
+│     ├─ Add unique IDs to h2, h3, h4 headings                │
+│     ├─ Build hierarchical TOC HTML structure                │
+│     ├─ Inject TOC after &lt;h1&gt; (or at top of content)         │
+│     ├─ Write modified HTML (unless dry-run)                 │
+│     └─ Log result (processed/skipped/error)                 │
+│                                                             │
+│  [5/5] Report Results                                       │
+│     ├─ Print statistics to console (formatted box)          │
+│     ├─ Log summary (processed, skipped, errors)             │
+│     └─ Return exit code (0=success, 1=errors)               │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="example-transformation">Example Transformation</h3>
+<h4 id="input-html-before-processing">Input HTML (before processing):</h4>
+<pre><code class="language-html">&lt;h1&gt;SEO Implementation Summary&lt;/h1&gt;
+&lt;h2&gt;Meta Tags (index.html)&lt;/h2&gt;
+&lt;p&gt;Content about meta tags...&lt;/p&gt;
+&lt;h3&gt;Primary Meta Tags&lt;/h3&gt;
+&lt;p&gt;More details...&lt;/p&gt;
+&lt;h3&gt;Social Media Tags&lt;/h3&gt;
+&lt;p&gt;Open Graph and Twitter Cards...&lt;/p&gt;
+&lt;h2&gt;Structured Data&lt;/h2&gt;
+&lt;p&gt;JSON-LD implementation...&lt;/p&gt;
+</code></pre>
+<h4 id="output-html-after-processing">Output HTML (after processing):</h4>
+<pre><code class="language-html">&lt;h1&gt;SEO Implementation Summary&lt;/h1&gt;
+&lt;nav class="table-of-contents"&gt;
+  &lt;div class="toc-header"&gt;
+    &lt;div class="toc-header-left"&gt;
+      &lt;ul&gt;
+        &lt;li class="toc-section"&gt;
+          &lt;div class="toc-section-header"&gt;
+            &lt;button class="toc-section-toggle" data-section="headings"&gt;▼&lt;/button&gt;
+            &lt;span class="toc-section-title"&gt;Contents&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;ul class="toc-section-content" data-section="headings"&gt;
+            &lt;li&gt;
+              &lt;a href="#meta-tags-index-html"&gt;Meta Tags (index.html)&lt;/a&gt;
+              &lt;ul&gt;
+                &lt;li&gt;
+                  &lt;a href="#primary-meta-tags"&gt;Primary Meta Tags&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li&gt;
+                  &lt;a href="#social-media-tags"&gt;Social Media Tags&lt;/a&gt;
+                &lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;a href="#structured-data"&gt;Structured Data&lt;/a&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class="toc-header-right"&gt;
+      &lt;button class="toc-toggle" aria-label="Toggle table of contents"&gt;▼&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+&lt;h2 id="meta-tags-index-html"&gt;Meta Tags (index.html)&lt;/h2&gt;
+&lt;p&gt;Content about meta tags...&lt;/p&gt;
+&lt;h3 id="primary-meta-tags"&gt;Primary Meta Tags&lt;/h3&gt;
+&lt;p&gt;More details...&lt;/p&gt;
+&lt;h3 id="social-media-tags"&gt;Social Media Tags&lt;/h3&gt;
+&lt;p&gt;Open Graph and Twitter Cards...&lt;/p&gt;
+&lt;h2 id="structured-data"&gt;Structured Data&lt;/h2&gt;
+&lt;p&gt;JSON-LD implementation...&lt;/p&gt;
+</code></pre>
+<h3 id="processing-logic">Processing Logic</h3>
+<h4 id="skip-logic-without-force">Skip logic (without --force):</h4>
+<ol>
+<li>Check if file has <code>&lt;nav class="table-of-contents"&gt;</code></li>
+<li>Check if h2/h3/h4 headings have <code>id</code> attributes</li>
+<li>If both exist → Skip with message "already processed"</li>
+<li>Otherwise → Process the file</li>
+</ol>
+<h4 id="force-logic-with-force">Force logic (with --force):</h4>
+<ol>
+<li>Process all files regardless of existing content</li>
+<li>Remove existing TOC if present</li>
+<li>Remove existing heading IDs</li>
+<li>Regenerate everything from scratch</li>
+</ol>
+<h4 id="strip-logic-with-strip">Strip logic (with --strip):</h4>
+<ol>
+<li>Find <code>&lt;nav class="table-of-contents"&gt;</code> and remove</li>
+<li>Remove <code>id</code> attributes from h2, h3, h4 headings</li>
+<li>Report what was removed (TOC, ID count)</li>
+</ol>
+<h2 id="development">Development</h2>
+<h3 id="dependencies">Dependencies</h3>
+<h4 id="core">Core:</h4>
+<ul>
+<li><strong>Python 3.8+</strong> - Required for type hints and pathlib</li>
+<li><strong>BeautifulSoup4</strong> - HTML parsing and manipulation</li>
+<li><strong>gzconfig</strong> - Configuration management (pipeline.toml)</li>
+<li><strong>gzlogging</strong> - Environment-aware logging</li>
+</ul>
+<h4 id="development-1">Development:</h4>
+<ul>
+<li>Type hints for IDE support</li>
+<li>Pathlib for cross-platform paths</li>
+<li>UTF-8 encoding throughout</li>
+</ul>
+<h3 id="adding-new-features">Adding New Features</h3>
+<h4 id="to-add-support-for-h5h6-headings">To add support for h5/h6 headings:</h4>
+<pre><code class="language-python"># In toc.py
+def add_ids_to_headings(soup):
+    """Update to include h5, h6"""
+    for tag_name in ['h2', 'h3', 'h4', 'h5', 'h6']:  # Add h5, h6
+        # ... rest of function
+</code></pre>
+<h4 id="to-customize-toc-html-structure">To customize TOC HTML structure:</h4>
+<pre><code class="language-python"># In toc.py
+def build_toc_structure(headings):
+    """Modify HTML output structure"""
+    html_parts = []
+    html_parts.append('&lt;div class="my-custom-toc"&gt;')  # Custom wrapper
+    html_parts.append('  &lt;h3&gt;Page Contents&lt;/h3&gt;')     # Custom heading
+    # ... build nested list structure ...
+    html_parts.append('&lt;/div&gt;')
+    return '\n'.join(html_parts)
+</code></pre>
+<h4 id="to-change-slug-generation">To change slug generation:</h4>
+<pre><code class="language-python"># In toc.py
+def slugify(text: str) -&gt; str:
+    """Customize slug generation"""
+    # Keep numbers in slugs:
+    # Comment out: text = re.sub(r'^[\d\.\)\]\}\s]+', '', text)
+    
+    # Use underscores instead of hyphens:
+    text = re.sub(r'[\s-]+', '_', text)
+    
+    # ... rest of function
+</code></pre>
+<h3 id="testing">Testing</h3>
+<pre><code class="language-bash"># Test with dry-run to preview changes
+python -m utils.toc -e dev --dry-run
+
+# Test force regeneration
+python -m utils.toc -e dev --force --dry-run
+
+# Test strip operation
+python -m utils.toc -e dev --strip --dry-run
+
+# Verify logging
+Get-Content logs/dev/toc_YYYYMMDD.log
+
+# Test on specific environment
+python -m utils.toc -e staging --dry-run
+</code></pre>
+<h3 id="code-quality">Code Quality</h3>
+<ul>
+<li>Type hints on all function signatures</li>
+<li>Comprehensive docstrings with Args/Returns</li>
+<li>Consistent error handling with try/except</li>
+<li>Separation of concerns (parse, process, inject)</li>
+<li>Clean logging (file vs console separation)</li>
+</ul>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="id-slugification-algorithm">ID Slugification Algorithm</h3>
+<pre><code class="language-python">def slugify(text: str) -&gt; str:
+    """
+    Conversion steps:
+    1. Remove HTML tags:     "&lt;strong&gt;Text&lt;/strong&gt;" → "Text"
+    2. Convert to lowercase: "Text" → "text"
+    3. Remove leading nums:  "1. Text" → "Text"
+    4. Remove special chars: "Text (v2)" → "Text v2"
+    5. Replace spaces:       "Text v2" → "text-v2"
+    6. Strip hyphens:        "-text-v2-" → "text-v2"
+    """
+</code></pre>
+<h4 id="examples">Examples:</h4>
+<ul>
+<li><code>"1. Meta Tags (index.html)"</code> → <code>"meta-tags-index-html"</code></li>
+<li><code>"Getting Started"</code> → <code>"getting-started"</code></li>
+<li><code>"FAQ: Common Questions"</code> → <code>"faq-common-questions"</code></li>
+</ul>
+<h3 id="duplicate-id-handling">Duplicate ID Handling</h3>
+<p>IDs are tracked in a set to ensure uniqueness:</p>
+<pre><code class="language-python"># First "Introduction" → id="introduction"
+# Second "Introduction" → id="introduction-1"
+# Third "Introduction" → id="introduction-2"
+</code></pre>
+<h3 id="heading-hierarchy">Heading Hierarchy</h3>
+<p>The TOC respects semantic heading levels:</p>
+<pre><code>h2                ← Level 1 (top-level items)
+  h3              ← Level 2 (nested under h2)
+    h4            ← Level 3 (nested under h3)
+  h3              ← Level 2 (sibling of previous h3)
+h2                ← Level 1 (sibling of first h2)
+</code></pre>
+<h3 id="file-skipping-logic">File Skipping Logic</h3>
+<p>Files are skipped if:</p>
+<ul>
+<li>They are <code>index.html</code> (main SPA file)</li>
+<li>They have no h2, h3, or h4 headings</li>
+<li>They only have h1 (insufficient structure for TOC)</li>
+<li>They already have TOC and IDs (unless <code>--force</code> is used)</li>
+</ul>
+<h3 id="beautifulsoup-usage">BeautifulSoup Usage</h3>
+<ul>
+<li><strong>Parser:</strong> <code>'html.parser'</code> (built-in, no external dependencies)</li>
+<li><strong>Encoding:</strong> UTF-8 for reading and writing</li>
+<li><strong>Manipulation:</strong> Clean DOM API for adding IDs and injecting elements</li>
+<li><strong>Robustness:</strong> Handles malformed HTML gracefully</li>
+</ul>
+<h2 id="customization">Customization</h2>
+<h3 id="change-heading-levels">Change Heading Levels</h3>
+<p>To include h5 and h6 in TOC:</p>
+<pre><code class="language-python"># In toc.py
+def add_ids_to_headings(soup):
+    for tag_name in ['h2', 'h3', 'h4', 'h5', 'h6']:  # Add h5, h6
+        # ... rest of function
+</code></pre>
+<h3 id="modify-slug-generation">Modify Slug Generation</h3>
+<p>To keep numbers in IDs:</p>
+<pre><code class="language-python">def slugify(text: str) -&gt; str:
+    # ... existing code ...
+    
+    # Comment out this line:
+    # text = re.sub(r'^[\d\.\)\]\}\s]+', '', text)
+    
+    # ... rest of function
+</code></pre>
+<h3 id="change-toc-html-structure">Change TOC HTML Structure</h3>
+<p>Modify <code>build_toc_structure()</code> to change HTML output:</p>
+<pre><code class="language-python">def build_toc_structure(headings):
+    html_parts = []
+    html_parts.append('&lt;div class="my-custom-toc"&gt;')  # Custom wrapper
+    html_parts.append('  &lt;h3&gt;Contents&lt;/h3&gt;')           # Custom heading
+    # ... build list structure ...
+    html_parts.append('&lt;/div&gt;')
+    return '\n'.join(html_parts)
+</code></pre>
+<h3 id="add-css-classes">Add CSS Classes</h3>
+<p>Modify HTML generation to add custom classes:</p>
+<pre><code class="language-python"># Add class to individual TOC links
+html_parts.append(f'  &lt;a href="#{id}" class="toc-link"&gt;{text}&lt;/a&gt;')
+
+# Add level-based classes
+html_parts.append(f'  &lt;li class="toc-level-{level_num}"&gt;')
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="when-to-use-force">When to Use --force</h3>
+<p>Use <code>--force</code> when:</p>
+<ul>
+<li>TOC template HTML structure has changed</li>
+<li>Heading content has been significantly updated</li>
+<li>Testing TOC generation on all files</li>
+<li>Debugging TOC issues across the site</li>
+<li>After modifying TOC CSS classes</li>
+</ul>
+<p>Don't use <code>--force</code> for:</p>
+<ul>
+<li>Normal incremental builds (wastes time)</li>
+<li>Files that haven't changed (no benefit)</li>
+</ul>
+<h3 id="when-to-use-dry-run">When to Use --dry-run</h3>
+<p>Use <code>--dry-run</code> to:</p>
+<ul>
+<li>Preview what would be processed before committing changes</li>
+<li>Verify skip logic is working correctly</li>
+<li>Test new features without modifying files</li>
+<li>Debug issues without affecting production files</li>
+<li>Check statistics before bulk processing</li>
+</ul>
+<h3 id="when-to-use-strip">When to Use --strip</h3>
+<p>Use <code>--strip</code> to:</p>
+<ul>
+<li>Remove TOC for testing purposes</li>
+<li>Revert to pre-processed HTML state</li>
+<li>Prepare files for manual editing</li>
+<li>Debug TOC-related issues</li>
+<li>Clean up before regenerating with new structure</li>
+</ul>
+<h3 id="environment-workflow">Environment Workflow</h3>
+<h4 id="development-cycle">Development cycle:</h4>
+<pre><code class="language-bash"># 1. Work in dev environment
+python -m utils.toc -e dev
+
+# 2. Test changes
+python -m utils.toc -e dev --force --dry-run
+
+# 3. Stage for testing
+python -m utils.toc -e staging
+
+# 4. Deploy to production
+python -m utils.toc -e prod
+</code></pre>
+<h3 id="integration-with-build-pipeline">Integration with Build Pipeline</h3>
+<h4 id="typical-workflow">Typical workflow:</h4>
+<pre><code class="language-bash"># 1. Generate HTML from markdown
+python -m utils.generate
+
+# 2. Add TOC to generated HTML (this module)
+python -m utils.toc -e dev
+
+# 3. Generate sitemap with anchors
+python -m utils.sitemap -e dev
+
+# 4. Package for deployment
+python -m utils.package -e dev
+</code></pre>
+<p>Or use the all-in-one pipeline:</p>
+<pre><code class="language-bash">.\scripts\gzbuild.cmd -e dev
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="no-html-files-found-to-process">No HTML files found to process</h3>
+<p><strong>Problem:</strong> Module can't find HTML files</p>
+<h4 id="causes">Causes:</h4>
+<ul>
+<li>Environment directory doesn't exist</li>
+<li>No build has been run for the environment</li>
+<li>Wrong environment argument</li>
+</ul>
+<h4 id="solutions">Solutions:</h4>
+<ol>
+<li>Verify environment directory exists: <code>publish/{environment}/</code></li>
+<li>Run a build first: <code>python -m utils.generate</code> then setup/file copy</li>
+<li>Check environment argument: <code>-e dev</code>, <code>-e staging</code>, or <code>-e prod</code></li>
+<li>Ensure HTML files have <code>.html</code> extension</li>
+</ol>
+<h3 id="failed-to-inject-toc">Failed to inject TOC</h3>
+<p><strong>Problem:</strong> TOC generation succeeds but injection fails</p>
+<h4 id="causes-1">Causes:</h4>
+<ul>
+<li>Malformed HTML structure</li>
+<li>Missing or multiple h1 tags</li>
+<li>Empty or invalid file</li>
+</ul>
+<h4 id="solutions-1">Solutions:</h4>
+<ol>
+<li>Verify HTML file has valid structure</li>
+<li>Check if there's an <code>&lt;h1&gt;</code> tag in the file</li>
+<li>Ensure file is not empty or corrupted</li>
+<li>Use <code>--dry-run</code> to see error details without modifying</li>
+</ol>
+<h3 id="duplicate-ids-in-output">Duplicate IDs in output</h3>
+<p><strong>Problem:</strong> Multiple headings get the same ID</p>
+<h4 id="expected-behavior">Expected behavior:</h4>
+<ul>
+<li>This should NOT happen due to uniqueness checking</li>
+<li>Module automatically appends <code>-1</code>, <code>-2</code>, etc. for duplicates</li>
+</ul>
+<h4 id="if-it-occurs">If it occurs:</h4>
+<ol>
+<li>File a bug report with sample HTML</li>
+<li>Check for special characters in heading text</li>
+<li>Verify BeautifulSoup version is up to date</li>
+</ol>
+<h3 id="toc-appears-twice">TOC appears twice</h3>
+<p><strong>Problem:</strong> Running generator multiple times creates duplicate TOCs</p>
+<h4 id="expected-behavior-1">Expected behavior:</h4>
+<ul>
+<li>This should NOT happen due to <code>remove_existing_toc()</code></li>
+<li>Module removes old TOC before generating new one</li>
+</ul>
+<h4 id="if-it-occurs-1">If it occurs:</h4>
+<ol>
+<li>Check for TOCs with different class names</li>
+<li>Verify only one <code>&lt;nav class="table-of-contents"&gt;</code> exists</li>
+<li>Use <code>--strip</code> to remove all TOCs, then regenerate</li>
+</ol>
+<h3 id="encoding-errors-unicodeencodeerror">Encoding errors (UnicodeEncodeError)</h3>
+<p><strong>Problem:</strong> Non-ASCII characters cause errors</p>
+<h4 id="context">Context:</h4>
+<ul>
+<li>Only occurs when redirecting output (e.g., <code>2&gt;&amp;1 |</code>)</li>
+<li>Normal console output works fine with emojis</li>
+<li>Windows console encoding issue</li>
+</ul>
+<h4 id="solutions-2">Solutions:</h4>
+<ol>
+<li><strong>Normal usage:</strong> Run commands directly (no redirection)</li>
+<li><strong>If you must redirect:</strong> Error is expected on Windows</li>
+<li><strong>Log files:</strong> Always work correctly (UTF-8)</li>
+<li><strong>Emojis in console:</strong> Work correctly in normal usage</li>
+</ol>
+<h3 id="already-processed-use-force">Already processed, use --force</h3>
+<p><strong>Problem:</strong> Files are skipped even though they should be processed</p>
+<h4 id="causes-2">Causes:</h4>
+<ul>
+<li>Files have existing TOC and heading IDs</li>
+<li>Skip logic is working as designed</li>
+</ul>
+<h4 id="solutions-3">Solutions:</h4>
+<ol>
+<li>Use <code>--force</code> to regenerate: <code>python -m utils.toc -e dev --force</code></li>
+<li>This is normal behavior (saves time on unchanged files)</li>
+<li>Force regeneration when headings change significantly</li>
+</ol>
+<h3 id="environment-directory-not-found">Environment directory not found</h3>
+<p><strong>Problem:</strong> Error message about missing environment directory</p>
+<h4 id="causes-3">Causes:</h4>
+<ul>
+<li>Build hasn't been run for the environment</li>
+<li>Typo in environment argument</li>
+<li>Wrong project directory</li>
+</ul>
+<h4 id="solutions-4">Solutions:</h4>
+<ol>
+<li>Run build first: <code>python -m utils.generate</code></li>
+<li>Copy files to publish directory (via setup module)</li>
+<li>Verify environment argument is correct: <code>dev</code>, <code>staging</code>, or <code>prod</code></li>
+<li>Check you're in the project root directory</li>
+</ol>
+<h2 id="design-decisions">Design Decisions</h2>
+<h3 id="why-build-time-vs-runtime">Why Build-Time vs Runtime?</h3>
+<h4 id="build-time-toc-this-approach">Build-Time TOC (this approach):</h4>
+<ul>
+<li>✅ Better SEO (IDs in static HTML)</li>
+<li>✅ Faster page loads (no parsing overhead)</li>
+<li>✅ Simpler JavaScript (just interactions)</li>
+<li>✅ Consistent results across pages</li>
+<li>❌ Requires build step (acceptable)</li>
+</ul>
+<h4 id="runtime-toc-javascript">Runtime TOC (JavaScript):</h4>
+<ul>
+<li>✅ No build step required</li>
+<li>❌ Slower (must parse on every load)</li>
+<li>❌ IDs not in static HTML (bad SEO)</li>
+<li>❌ Complex JavaScript required</li>
+<li>❌ Potential for inconsistent results</li>
+</ul>
+<h3 id="why-environment-specific-processing">Why Environment-Specific Processing?</h3>
+<ul>
+<li>Different environments have different content</li>
+<li>Allows testing in dev before deploying</li>
+<li>Staging can be used for pre-production validation</li>
+<li>Production gets only verified, tested content</li>
+</ul>
+<h3 id="why-skip-already-processed-files">Why Skip Already-Processed Files?</h3>
+<ul>
+<li>Improves performance for large documentation sets</li>
+<li>Prevents unnecessary file writes (reduces disk I/O)</li>
+<li>Preserves file timestamps for cache invalidation</li>
+<li>Use <code>--force</code> when you need to regenerate all files</li>
+</ul>
+<h3 id="why-h2h3h4-only">Why h2/h3/h4 Only?</h3>
+<ul>
+<li>h1 is the page title (not part of content TOC)</li>
+<li>h2-h4 provides sufficient depth for most content</li>
+<li>Deeper nesting (h5/h6) rarely needed</li>
+<li>Can be extended if needed (see Customization)</li>
+</ul>
+<h3 id="why-beautifulsoup">Why BeautifulSoup?</h3>
+<ul>
+<li>Well-maintained, stable library</li>
+<li>Clean API for HTML manipulation</li>
+<li>Handles malformed HTML gracefully</li>
+<li>No heavy dependencies</li>
+<li>Works with built-in <code>html.parser</code></li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ul>
+<li>[ ] Support for h5/h6 headings (configurable depth)</li>
+<li>[ ] Wildcard file patterns in configuration</li>
+<li>[ ] Automatic detection of heading changes (timestamp comparison)</li>
+<li>[ ] Custom TOC templates (configurable HTML structure)</li>
+<li>[ ] TOC position customization (before/after h1, custom selector)</li>
+<li>[ ] Multi-language slug generation (transliteration support)</li>
+<li>[ ] TOC caching to improve regeneration performance</li>
+<li>[ ] Parallel processing for large file sets</li>
+<li>[ ] Custom ID prefix/suffix options</li>
+<li>[ ] TOC fragment links validation (check all IDs exist)</li>
+<li>[ ] Integration with linting tools (validate heading structure)</li>
+<li>[ ] Markdown TOC generation (for source files)</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong>Pipeline Configuration:</strong> <code>config/pipeline.toml</code> - Environment settings</li>
+<li><strong>Build Pipeline:</strong> <code>utils/generate/README.md</code> - Overall content generation</li>
+<li><strong>Sitemap Generator:</strong> <code>utils/sitemap/README.md</code> - Integrates with TOC anchors</li>
+<li><strong>Setup Module:</strong> <code>utils/setup/README.md</code> - Site configuration</li>
+<li><strong>Logging System:</strong> <code>utils/gzlogging/README.md</code> - Logging infrastructure</li>
+<li><strong>Configuration Module:</strong> <code>utils/gzconfig/README.md</code> - Configuration management</li>
+<li><strong>Project Structure:</strong> <code>dev/PROJECT_STRUCTURE.md</code> - Overall project organization</li>
+<li><strong>Module Structure:</strong> <code>dev/MODULE_README_STRUCTURE.md</code> - README template</li>
+</ul>
+<h2 id="license">License</h2>
+<p>This module is part of the GAZTank project.</p>
+<p><strong>License:</strong> GPL v3.0 or later<br/>
+<strong>SPDX-License-Identifier:</strong> GPL-3.0-or-later</p>
+<p>See <code>LICENSE</code> file in project root for full license text.</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<p><em>Last updated: October 23, 2025</em><br/>
+<em>TOC Generator version: 1.1.0</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

@@ -1,0 +1,135 @@
+[setup]
+last_configured = "202510241153"
+version = "1.0"
+
+[site]
+name = "GAZ Tank"
+tagline = "GAZ Tank Website System"
+short_name = "GAZ Tank"
+domain = "mygaztank.com"
+description = "Welcome to the canonical implementation of the GAZ Tank Website System. Explore our content and resources."
+author = "superguru"
+author_secondary = "gazorper"
+twitter_handle = ""
+facebook_url = ""
+linkedin_url = ""
+
+[theme]
+# Header Colors - Site header and navigation
+header_text_color = "#0066CC"
+header_background_color = "#062323"
+
+# Footer Colors - Site footer area
+footer_text_color = "#B5BDBD"
+footer_background_color = "#062323"
+footer_link_text_color = "#FFFFFF"
+footer_link_hover_text_color = "#FFFFFF"
+
+# Sidebar Colors - Navigation sidebar
+sidebar_background_color = "#062323"
+sidebar_highlight_background_color = "#0066CC"
+sidebar_hover_background_color = "#35A2A2"
+sidebar_toggle_button_background_color = "#0066CC"
+sidebar_left_accent_color = "#FF0000"
+sidebar_submenu_overlay_color = "#000000"
+
+# Content Colors - Main content area
+content_text_color = "#FFFFFF"
+content_background_color = "#0B3030"
+image_loading_background_color = "#E58822"
+
+# Breadcrumb Colors - Breadcrumb navigation
+breadcrumb_text_color = "#A1B09F"
+
+# TOC Colors - Table of Contents widget
+toc_background_color = "#0C3535"
+toc_heading_text_color = "#D5D584"
+toc_link_text_color = "#FFFFFF"
+toc_link_hover_text_color = "#FFFFFF"
+
+# Hashtag Colors - Hashtag elements
+hashtag_text_color = "#0066CC"
+hashtag_background_color = "#B2B8BD"
+
+# Global Link Colors - All link elements
+link_text_color = "#0066CC"
+link_visited_text_color = "#6F42C1"
+link_hover_text_color = "#0052A3"
+
+# Text Colors - General typography
+body_text_color = "#212529"  # Main body text color (fallback)
+muted_text_color = "#6C757D"  # Muted/secondary text color
+
+# Keyboard Navigation Colors - Focus indicators for accessibility
+keyboard_focus_outline_color = "#FFD700"  # Color for keyboard focus outlines
+keyboard_focus_background_color = "#FFD700"  # Base color for keyboard focus backgrounds
+keyboard_hover_background_color = "#D47A1A"  # Color for keyboard navigation hover states
+
+# Layout Dimensions - Structural spacing and sizing
+header_height = "70px"  # Height of the main site header/navigation bar
+header_logo_size = "50px"  # Size of the logo image in the header
+sidebar_width = "240px"  # Width of the navigation sidebar when expanded
+sidebar_collapsed_width = "30px"  # Width of the navigation sidebar when collapsed
+
+# Typography Settings - Font configuration and text sizing
+font_family = "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif"  # System font stack for optimal readability
+font_size_base = "16px"  # Base font size for body text
+font_size_small = "0.9rem"  # Smaller font size for captions and fine print
+font_size_large = "1.2rem"  # Larger font size for emphasis and subheadings
+
+[layout]
+max_content_width = "none"
+sidebar_default_collapsed_mobile = true
+toc_max_width = "640px"
+
+[images]
+logo_512 = "gaztank_logo_512x512.webp"
+logo_256 = "gaztank_logo_256x256.webp"
+logo_128 = "gaztank_logo_128x128.webp"
+logo_75 = "gaztank_logo_75x75.webp"
+logo_50 = "gaztank_logo_50x50.webp"
+favicon_32 = "gaztank_favicon_32x32.webp"
+favicon_16 = "gaztank_favicon_16x16.webp"
+og_image = "site_logo_256x256.webp"
+logo_alt_text = "GAZ Tank Website Logo"
+
+[features]
+enable_breadcrumbs = true
+enable_toc = true
+enable_lazy_loading = true
+enable_sidebar_toggle = true
+enable_focus_management = true
+enable_hashtags = true
+enable_syntax_highlighting = true
+enable_mermaid_diagrams = true
+
+[seo]
+google_site_verification = ""
+bing_site_verification = ""
+canonical_base = "https://mygaztank.com/"
+site_type = "WebSite"
+default_content_type = "Article"
+keywords = "gaming, mods, campaigns, 7 days to die, game walkthroughs, gaming content, gazorper, superguru"
+robots_directive = "index, follow"
+
+[analytics]
+plausible_domain = ""
+google_analytics_id = ""
+matomo_url = ""
+matomo_site_id = ""
+
+[security]
+csp_enabled = true
+hsts_enabled = false
+hsts_max_age = 31536000
+
+[content]
+home_page = "home"
+error_page_fallback = "home"
+default_meta_description = "Explore content and resources."
+
+[performance]
+enable_compression = true
+enable_minification = true
+cache_css_js_seconds = 300
+cache_images_seconds = 3600

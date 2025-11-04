@@ -1,0 +1,1451 @@
+<h1>GAZTank Build Pipeline Orchestrator</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">Table of Contents</a>
+</li>
+<li>
+<a href="#purpose">Purpose</a>
+</li>
+<li>
+<a href="#build-pipeline">Build Pipeline</a>
+</li>
+<li>
+<a href="#logging">Logging</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#command-line-arguments">Command Line Arguments</a>
+</li>
+<li>
+<a href="#module-structure">Module Structure</a>
+</li>
+<li>
+<a href="#features">Features</a>
+</li>
+<li>
+<a href="#pipeline-stages">Pipeline Stages</a>
+</li>
+<li>
+<a href="#timing-metrics">Timing Metrics</a>
+</li>
+<li>
+<a href="#invocation-points">Invocation Points</a>
+</li>
+<li>
+<a href="#development">Development</a>
+</li>
+<li>
+<a href="#best-practices">Best Practices</a>
+</li>
+<li>
+<a href="#troubleshooting">Troubleshooting</a>
+</li>
+<li>
+<a href="#future-enhancements">Future Enhancements</a>
+</li>
+<li>
+<a href="#related-documentation">Related Documentation</a>
+</li>
+<li>
+<a href="#license">License</a>
+</li>
+<li>
+<a href="#authors">Authors</a>
+<ul>
+<li>
+<a href="#pipeline-execution-order">Pipeline Execution Order</a>
+</li>
+<li>
+<a href="#environment-aware-operation">Environment-Aware Operation</a>
+</li>
+<li>
+<a href="#argument-pass-through">Argument Pass-Through</a>
+</li>
+<li>
+<a href="#workflow">Workflow:</a>
+</li>
+<li>
+<a href="#benefits">Benefits:</a>
+</li>
+<li>
+<a href="#log-configuration">Log Configuration</a>
+</li>
+<li>
+<a href="#what-gets-logged">What Gets Logged</a>
+</li>
+<li>
+<a href="#log-file-example">Log File Example</a>
+</li>
+<li>
+<a href="#viewing-logs">Viewing Logs</a>
+</li>
+<li>
+<a href="#command-line">Command Line</a>
+</li>
+<li>
+<a href="#as-a-module">As a Module</a>
+</li>
+<li>
+<a href="#required-arguments">Required Arguments</a>
+</li>
+<li>
+<a href="#optional-arguments">Optional Arguments</a>
+</li>
+<li>
+<a href="#argument-pass-through-behavior">Argument Pass-Through Behavior</a>
+</li>
+<li>
+<a href="#console-output-modes">Console Output Modes</a>
+</li>
+<li>
+<a href="#architecture">Architecture</a>
+</li>
+<li>
+<a href="#key-classes">Key Classes</a>
+</li>
+<li>
+<a href="#key-functions">Key Functions</a>
+</li>
+<li>
+<a href="#pipeline-module-imports">Pipeline Module Imports</a>
+</li>
+<li>
+<a href="#core-features">Core Features</a>
+</li>
+<li>
+<a href="#stop-on-error-behavior">Stop-on-Error Behavior</a>
+</li>
+<li>
+<a href="#simplified-argument-handling">Simplified Argument Handling</a>
+</li>
+<li>
+<a href="#stage-1-identify-orphaned-files">Stage 1: Identify Orphaned Files</a>
+</li>
+<li>
+<a href="#stage-2-generate-source-content">Stage 2: Generate Source Content</a>
+</li>
+<li>
+<a href="#stage-4-run-lint-checks">Stage 4: Run Lint Checks</a>
+</li>
+<li>
+<a href="#stage-5-normalize-markdown-formatting">Stage 5: Normalize Markdown Formatting</a>
+</li>
+<li>
+<a href="#stage-6-generate-content">Stage 6: Generate Content</a>
+</li>
+<li>
+<a href="#stage-7-generate-sitemap">Stage 7: Generate Sitemap</a>
+</li>
+<li>
+<a href="#stage-8-generate-table-of-contents">Stage 8: Generate Table of Contents</a>
+</li>
+<li>
+<a href="#stage-9-package-site-files">Stage 9: Package Site Files</a>
+</li>
+<li>
+<a href="#stage-10-deploy-to-environment">Stage 10: Deploy to Environment</a>
+</li>
+<li>
+<a href="#build-time">Build Time</a>
+</li>
+<li>
+<a href="#deployment-time">Deployment Time</a>
+</li>
+<li>
+<a href="#total-time">Total Time</a>
+</li>
+<li>
+<a href="#timing-display-format">Timing Display Format</a>
+</li>
+<li>
+<a href="#example-timing-output">Example Timing Output</a>
+</li>
+<li>
+<a href="#direct-command-line-usage">1. Direct Command-Line Usage</a>
+</li>
+<li>
+<a href="#cicd-pipeline">2. CI/CD Pipeline</a>
+</li>
+<li>
+<a href="#development-workflow">3. Development Workflow</a>
+</li>
+<li>
+<a href="#integration-points">Integration Points</a>
+</li>
+<li>
+<a href="#file-locations">File Locations</a>
+</li>
+<li>
+<a href="#adding-new-pipeline-modules">Adding New Pipeline Modules</a>
+</li>
+<li>
+<a href="#design-principles">Design Principles</a>
+</li>
+<li>
+<a href="#code-style">Code Style</a>
+</li>
+<li>
+<a href="#when-to-run-gzbuild">When to Run gzbuild</a>
+</li>
+<li>
+<a href="#workflow-recommendations">Workflow Recommendations</a>
+</li>
+<li>
+<a href="#individual-module-vs-full-pipeline">Individual Module vs Full Pipeline</a>
+</li>
+<li>
+<a href="#performance-tips">Performance Tips</a>
+</li>
+<li>
+<a href="#troubleshooting-individual-steps">Troubleshooting Individual Steps</a>
+</li>
+<li>
+<a href="#missing-e-argument">Missing -e Argument</a>
+</li>
+<li>
+<a href="#invalid-environment">Invalid Environment</a>
+</li>
+<li>
+<a href="#step-failure">Step Failure</a>
+</li>
+<li>
+<a href="#module-doesnt-support-argument">Module Doesn't Support Argument</a>
+</li>
+<li>
+<a href="#clean-all-mode-confusion">Clean-All Mode Confusion</a>
+</li>
+<li>
+<a href="#timing-shows-0m-0s">Timing Shows 0m 0s</a>
+</li>
+<li>
+<a href="#permission-denied">Permission Denied</a>
+</li>
+<li>
+<a href="#logs-not-found">Logs Not Found</a>
+</li>
+<li>
+<a href="#emojis-not-displaying">Emojis Not Displaying</a>
+</li>
+<li>
+<a href="#completed-features">Completed Features</a>
+</li>
+<li>
+<a href="#planned-features">Planned Features</a>
+</li>
+<li>
+<a href="#integration-enhancements">Integration Enhancements</a>
+</li>
+<li>
+<a href="#performance-improvements">Performance Improvements</a>
+</li>
+<li>
+<a href="#internal-documentation">Internal Documentation</a>
+</li>
+<li>
+<a href="#external-resources">External Resources</a>
+</li>
+<li>
+<a href="#changelog">Changelog:</a>
+<ul>
+<li>
+<a href="#logged-to-file-clean-operational-log">Logged to file (clean operational log):</a>
+</li>
+<li>
+<a href="#console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</a>
+</li>
+<li>
+<a href="#not-logged-kept-clean">Not logged (kept clean):</a>
+</li>
+<li>
+<a href="#launcher-scripts">Launcher Scripts:</a>
+</li>
+<li>
+<a href="#example">Example:</a>
+</li>
+<li>
+<a href="#default-mode-with-per-step-timing">Default mode with per-step timing:</a>
+</li>
+<li>
+<a href="#clean-all-or-clean-orphaned-mode">Clean-all or clean-orphaned mode:</a>
+</li>
+<li>
+<a href="#pipelinestep-dataclass">PipelineStep (dataclass)</a>
+</li>
+<li>
+<a href="#pipeline">Pipeline</a>
+</li>
+<li>
+<a href="#run-pipeline-function">run_pipeline() Function</a>
+</li>
+<li>
+<a href="#pipelinestep-dataclass-1">PipelineStep (dataclass)</a>
+</li>
+<li>
+<a href="#pipeline-1">Pipeline</a>
+</li>
+<li>
+<a href="#builderpy">builder.py</a>
+</li>
+<li>
+<a href="#what-happens-on-failure">What happens on failure:</a>
+</li>
+<li>
+<a href="#implementation">Implementation:</a>
+</li>
+<li>
+<a href="#benefits-1">Benefits:</a>
+</li>
+<li>
+<a href="#use-individual-modules-when">Use individual modules when:</a>
+</li>
+<li>
+<a href="#use-gzbuild-when">Use gzbuild when:</a>
+</li>
+<li>
+<a href="#solution">Solution:</a>
+</li>
+<li>
+<a href="#solution-1">Solution:</a>
+</li>
+<li>
+<a href="#diagnosis">Diagnosis:</a>
+</li>
+<li>
+<a href="#solution-2">Solution:</a>
+</li>
+<li>
+<a href="#solution-3">Solution:</a>
+</li>
+<li>
+<a href="#solution-4">Solution:</a>
+</li>
+<li>
+<a href="#diagnosis-1">Diagnosis:</a>
+</li>
+<li>
+<a href="#solution-5">Solution:</a>
+</li>
+<li>
+<a href="#solution-6">Solution:</a>
+</li>
+<li>
+<a href="#solution-7">Solution:</a>
+</li>
+<li>
+<a href="#solution-8">Solution:</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
+<p>Complete build pipeline orchestration system that runs all GAZTank build steps in sequence. Coordinates execution of clean, setup, lint, normalise, generate, sitemap, toc, package, and deploy modules in the correct order with unified argument handling.</p>
+<p><strong>Version:</strong> 1.1<br/>
+<strong>Last Updated:</strong> November 4, 2025</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#build-pipeline">Build Pipeline</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#command-line">Command Line</a></li>
+<li><a href="#as-a-module">As a Module</a></li>
+</ul>
+</li>
+<li><a href="#command-line-arguments">Command Line Arguments</a></li>
+<li><a href="#module-structure">Module Structure</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#pipeline-stages">Pipeline Stages</a></li>
+<li><a href="#timing-metrics">Timing Metrics</a></li>
+<li><a href="#invocation-points">Invocation Points</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#future-enhancements">Future Enhancements</a></li>
+<li><a href="#related-documentation">Related Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>The GAZTank Build Pipeline Orchestrator provides a single command to execute the complete website build and deployment workflow. It acts as a coordinator that:</p>
+<ul>
+<li>Executes all pipeline modules in the correct sequence</li>
+<li>Passes arguments through to each module consistently</li>
+<li>Tracks execution time for build steps and deployment separately</li>
+<li>Provides unified error handling and reporting</li>
+<li>Manages clean-all mode for environment cleanup</li>
+<li>Offers rich console output with progress indicators</li>
+<li>Generates comprehensive operational logs</li>
+</ul>
+<h3 id="pipeline-execution-order">Pipeline Execution Order</h3>
+<p>The orchestrator runs 10 steps in this sequence:</p>
+<ol>
+<li><strong>Clean</strong> - Identify orphaned files in environment (no deletion by default)</li>
+<li><strong>Compose</strong> - Generate source content (e.g., humans.txt from template)</li>
+<li><strong>Setup</strong> - Apply site configuration (forced)</li>
+<li><strong>Lint</strong> - Run HTML, JavaScript, and config validation</li>
+<li><strong>Normalise</strong> - Normalize markdown file formatting</li>
+<li><strong>Generate</strong> - Convert markdown to HTML content</li>
+<li><strong>Sitemap</strong> - Generate sitemap.xml for SEO</li>
+<li><strong>TOC</strong> - Add table of contents to HTML files</li>
+<li><strong>Package</strong> - Sync, minify, and archive site files</li>
+<li><strong>Deploy</strong> - Upload package to remote FTP/FTPS server</li>
+</ol>
+<h3 id="environment-aware-operation">Environment-Aware Operation</h3>
+<p>The orchestrator requires a mandatory <code>-e</code> argument to specify the target environment:</p>
+<ul>
+<li><strong>dev</strong> - Development environment for local testing</li>
+<li><strong>staging</strong> - Pre-production environment for validation</li>
+<li><strong>prod</strong> - Production environment for live deployment</li>
+</ul>
+<p>All downstream modules receive this environment parameter automatically.</p>
+<h3 id="argument-pass-through">Argument Pass-Through</h3>
+<p>The orchestrator uses a simplified argument handling approach:</p>
+<ul>
+<li>Only validates <code>-e</code> (required) and <code>-h</code> (help)</li>
+<li>Passes all other arguments through to every pipeline module</li>
+<li>Each module decides which arguments it supports</li>
+<li>Enables flexible workflows without code changes</li>
+</ul>
+<h2 id="build-pipeline">Build Pipeline</h2>
+<p>The orchestrator coordinates the complete GAZTank build workflow:</p>
+<pre><code>Build Pipeline Flow:
+  1. Parse -e environment argument (required)
+  2. Initialize logging for gzbuild
+  3. Handle --clean-all or --clean-orphaned modes (if specified):
+     → Run clean module with all arguments
+     → Exit without running pipeline
+  4. Execute 10-step pipeline:
+     a. Identify orphaned files (no deletion)
+     b. Generate source content
+     c. Apply site configuration (with --force)
+     d. Run lint checks
+     e. Normalize markdown formatting
+     f. Generate content
+     g. Generate sitemap
+     h. Generate table of contents
+     i. Package site files
+     [Build timing captured here]
+     j. Deploy to environment
+     [Deployment timing captured here]
+  5. Report timing metrics (build, deploy, total)
+  6. Return exit code for automation
+</code></pre>
+<p><strong>Purpose:</strong> Single-command full website build and deployment</p>
+<p><strong>Location:</strong> Called via <code>scripts/gzbuild.cmd -e &lt;env&gt;</code> or <code>scripts/gzbuild.sh -e &lt;env&gt;</code></p>
+<h3 id="workflow">Workflow:</h3>
+<pre><code>gzbuild -e env [options] → validates environment → passes args to 10 modules → reports timing → exit
+</code></pre>
+<h3 id="benefits">Benefits:</h3>
+<ul>
+<li>Single command builds and deploys entire site</li>
+<li>Consistent argument handling across all modules</li>
+<li>Separate timing for build (steps 1-9) and deployment (step 10)</li>
+<li>Stop-on-error behavior prevents invalid deployments</li>
+<li>Rich console output with emojis and progress indicators</li>
+<li>Clean operational logs without formatting</li>
+<li>Safe default: clean step identifies orphaned files without deleting</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<p>The orchestrator uses the <strong>gzlogging</strong> infrastructure for environment-aware operational logging.</p>
+<h3 id="log-configuration">Log Configuration</h3>
+<ul>
+<li><strong>Environment:</strong> Specified via <code>-e</code> argument (dev/staging/prod)</li>
+<li><strong>Tool Name:</strong> <code>gzbuild</code></li>
+<li><strong>Log Location:</strong> <code>logs/{environment}/gzbuild_YYYYMMDD.log</code></li>
+<li><strong>Output Mode:</strong> File-only (console has its own formatting)</li>
+<li><strong>Encoding:</strong> UTF-8</li>
+</ul>
+<h3 id="what-gets-logged">What Gets Logged</h3>
+<h4 id="logged-to-file-clean-operational-log">Logged to file (clean operational log):</h4>
+<ul>
+<li>GAZTank Build Pipeline started</li>
+<li>Project root path</li>
+<li>Target environment</li>
+<li>Step 1/8 through Step 8/8 with descriptive names</li>
+<li>Step failures with error messages</li>
+<li>Build steps completed with formatted time</li>
+<li>Deployment completed with formatted time</li>
+<li>Build/deployment/total time metrics</li>
+<li>Pipeline execution completed successfully</li>
+<li>Pipeline execution failed (on error)</li>
+</ul>
+<h4 id="console-output-rich-formatting-with-emojis">Console output (rich formatting with emojis):</h4>
+<ul>
+<li>Pipeline header with separator (🏗️)</li>
+<li>Progress indicators: [1/8] through [8/8]</li>
+<li>Step emojis: 🧹🧰🔍📄🗺️📑📦🚀</li>
+<li>Success banner with checkmarks (✅)</li>
+<li>Timing summary with clock emoji (⏱️)</li>
+<li>Clean-all mode banner (🧹)</li>
+<li>Blank lines for visual spacing</li>
+</ul>
+<h4 id="not-logged-kept-clean">Not logged (kept clean):</h4>
+<ul>
+<li>No blank lines in log files</li>
+<li>No separator lines (===) in logs</li>
+<li>No emoji or formatting characters in log files</li>
+<li>Individual module output (each module logs separately)</li>
+</ul>
+<h3 id="log-file-example">Log File Example</h3>
+<pre><code class="language-log">[2025-11-04 01:15:32] [dev] [INF] GAZTank Build Pipeline started
+[2025-11-04 01:15:32] [dev] [INF] Project root: D:\Projects\www\GAZTank
+[2025-11-04 01:15:32] [dev] [INF] Target environment: dev
+[2025-11-04 01:15:32] [dev] [INF] Step 1/10: Identifying orphaned files
+[2025-11-04 01:15:33] [dev] [INF] Step 2/10: Generating source content
+[2025-11-04 01:15:34] [dev] [INF] Step 3/10: Applying site configuration
+[2025-11-04 01:15:36] [dev] [INF] Step 4/10: Running lint checks
+[2025-11-04 01:15:37] [dev] [INF] Step 5/10: Normalizing markdown files
+[2025-11-04 01:15:38] [dev] [INF] Step 6/10: Generating content files
+[2025-11-04 01:15:39] [dev] [INF] Step 7/10: Generating sitemap
+[2025-11-04 01:15:40] [dev] [INF] Step 8/10: Generating table of contents
+[2025-11-04 01:15:41] [dev] [INF] Step 9/10: Packaging site files
+[2025-11-04 01:15:43] [dev] [INF] Build steps completed in 0m 11s
+[2025-11-04 01:15:43] [dev] [INF] Step 10/10: Deploying to target environment
+[2025-11-04 01:16:00] [dev] [INF] Deployment completed in 0m 17s
+[2025-11-04 01:16:00] [dev] [INF] Build time: 0m 11s, Deployment time: 0m 17s, Total time: 0m 28s
+[2025-11-04 01:16:00] [dev] [INF] GAZTank Build Pipeline completed successfully
+</code></pre>
+<p>In clean-all or clean-orphaned mode:</p>
+<pre><code class="language-log">[2025-11-04 01:20:15] [dev] [INF] GAZTank Build Pipeline started in CLEAN-ALL mode
+[2025-11-04 01:20:15] [dev] [INF] Project root: D:\Projects\www\GAZTank
+[2025-11-04 01:20:15] [dev] [INF] Target environment: dev
+</code></pre>
+<h3 id="viewing-logs">Viewing Logs</h3>
+<pre><code class="language-bash"># View today's log (Linux/Mac)
+cat logs/dev/gzbuild_$(date +%Y%m%d).log
+
+# View today's log (PowerShell)
+Get-Content "logs\dev\gzbuild_$(Get-Date -Format 'yyyyMMdd').log"
+
+# Tail recent entries
+Get-Content -Tail 30 "logs\dev\gzbuild_$(Get-Date -Format 'yyyyMMdd').log"
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="command-line">Command Line</h3>
+<pre><code class="language-bash"># Using the launcher script (recommended)
+scripts\gzbuild.cmd -e dev                    # Windows - build dev environment
+scripts\gzbuild.cmd -e staging                # Windows - build staging environment
+scripts\gzbuild.cmd -e prod                   # Windows - build production environment
+./scripts/gzbuild.sh -e dev                   # Linux/Mac - build dev environment
+
+# With command-line options
+scripts\gzbuild.cmd -e dev --force            # Force all operations
+scripts\gzbuild.cmd -e dev --dry-run          # Preview without changes
+scripts\gzbuild.cmd -e dev --force --dry-run  # Preview forced operations
+scripts\gzbuild.cmd -e dev --clean-all        # Clean environment and exit
+
+# Direct invocation
+python -m gzbuild -e dev
+python -m gzbuild -e staging --force
+python -m gzbuild -e prod --dry-run
+python -m gzbuild --help
+</code></pre>
+<h4 id="launcher-scripts">Launcher Scripts:</h4>
+<ul>
+<li><code>scripts/gzbuild.cmd</code> - Windows launcher with UTF-8 encoding</li>
+<li><code>scripts/gzbuild.sh</code> - Linux/Mac launcher with UTF-8 encoding</li>
+</ul>
+<p>Both scripts:</p>
+<ul>
+<li>Set <code>PYTHONIOENCODING=utf-8</code> for emoji support in console</li>
+<li>Call <code>python -m gzbuild</code> module pattern</li>
+<li>Pass all arguments (including <code>-e environment</code>) through to the Python module</li>
+<li>Return the module's exit code for build automation</li>
+</ul>
+<h3 id="as-a-module">As a Module</h3>
+<p>You can import and use the orchestrator functions in your own Python scripts:</p>
+<pre><code class="language-python">from utils.gzbuild.builder import run_pipeline
+from utils.gzlogging import get_logging_context
+
+# Initialize logging
+log = get_logging_context('dev', 'gzbuild')
+
+# Build pass-through arguments
+pass_through_args = ['-e', 'dev', '--force']
+
+# Run the complete pipeline
+success, build_time, deploy_time, total_time = run_pipeline(pass_through_args)
+
+if success:
+    print(f"Pipeline completed in {total_time}s")
+else:
+    print("Pipeline failed")
+</code></pre>
+<p>For simpler integration:</p>
+<pre><code class="language-python">from utils.gzbuild.builder import main
+import sys
+
+# Set up arguments
+sys.argv = ['gzbuild', '-e', 'dev', '--force']
+
+# Run the orchestrator
+main()  # Will exit with appropriate code
+</code></pre>
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+<h3 id="required-arguments">Required Arguments</h3>
+<ul>
+<li><strong><code>-e</code>, <code>--environment</code></strong> - Target environment for build and deployment (REQUIRED)<ul>
+<li><strong>Choices:</strong> <code>dev</code>, <code>staging</code>, <code>prod</code></li>
+<li><strong>Purpose:</strong> Specifies which environment to build and deploy</li>
+<li><strong>Passed to:</strong> All 8 pipeline modules automatically</li>
+<li><strong>Examples:</strong><ul>
+<li><code>-e dev</code> → builds and deploys to dev environment</li>
+<li><code>-e staging</code> → builds and deploys to staging environment</li>
+<li><code>-e prod</code> → builds and deploys to production environment</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<ul>
+<li><p><strong><code>--force</code></strong> - Force operations even if validation fails</p>
+<ul>
+<li>Passed through to all modules that support it</li>
+<li>Each module interprets --force according to its needs</li>
+<li>Example: <code>scripts\gzbuild.cmd -e dev --force</code></li>
+</ul>
+</li>
+<li><p><strong><code>--dry-run</code></strong> - Preview operations without making changes</p>
+<ul>
+<li>Passed through to all modules that support it</li>
+<li>Modules that don't fully implement dry-run may warn</li>
+<li>Does not prevent pipeline execution</li>
+<li>Example: <code>scripts\gzbuild.cmd -e dev --dry-run</code></li>
+</ul>
+</li>
+<li><p><strong><code>--clean-all</code></strong> - Clean all generated files and exit</p>
+<ul>
+<li>Runs only the clean module with --clean-all flag</li>
+<li>Exits immediately without running pipeline</li>
+<li>Requires confirmation prompt (type "yes" to proceed)</li>
+<li>Useful for complete environment reset</li>
+<li>Example: <code>scripts\gzbuild.cmd -e dev --clean-all</code></li>
+</ul>
+</li>
+<li><p><strong><code>--clean-orphaned</code></strong> - Clean orphaned files and exit</p>
+<ul>
+<li>Runs only the clean module with --clean-orphaned flag</li>
+<li>Exits immediately without running pipeline</li>
+<li>Removes files in environment that don't exist in source</li>
+<li>Requires confirmation prompt (type "yes" to proceed)</li>
+<li>Example: <code>scripts\gzbuild.cmd -e dev --clean-orphaned</code></li>
+</ul>
+</li>
+<li><p><strong><code>-h</code>, <code>--help</code></strong> - Display usage information</p>
+<ul>
+<li>Shows all available command-line options</li>
+<li>Lists all 10 pipeline stages</li>
+<li>Displays usage examples</li>
+<li>Example: <code>python -m gzbuild --help</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="argument-pass-through-behavior">Argument Pass-Through Behavior</h3>
+<p>The orchestrator uses a <strong>simplified pass-through model</strong>:</p>
+<ol>
+<li><strong>Validates only:</strong> <code>-e</code> (required) and <code>-h</code> (help)</li>
+<li><strong>Passes through:</strong> All other arguments to every module</li>
+<li><strong>Module responsibility:</strong> Each module decides which arguments it supports</li>
+<li><strong>Benefits:</strong> No code changes needed to add new arguments</li>
+</ol>
+<h4 id="example">Example:</h4>
+<pre><code class="language-bash">scripts\gzbuild.cmd -e dev --force --dry-run --custom-arg
+</code></pre>
+<p>What happens:</p>
+<ul>
+<li><code>gzbuild</code> validates <code>-e dev</code> is valid</li>
+<li>Passes <code>['-e', 'dev', '--force', '--dry-run', '--custom-arg']</code> to all 10 modules</li>
+<li>Modules that support <code>--force</code> use it</li>
+<li>Modules that support <code>--dry-run</code> use it</li>
+<li>Modules that don't recognize <code>--custom-arg</code> ignore it or error</li>
+</ul>
+<h3 id="console-output-modes">Console Output Modes</h3>
+<h4 id="default-mode-with-per-step-timing">Default mode with per-step timing:</h4>
+<pre><code>============================================================
+  🏗️  GAZ Tank - Complete Pipeline Execution
+============================================================
+
+🧹 [1/10] Identifying orphaned files...
+
+✏️  [2/10] Generating source content...
+
+⚙️  [3/10] Applying site configuration...
+
+🔍 [4/10] Running lint checks...
+
+� [5/10] Normalizing markdown files...
+
+�📄 [6/10] Generating content...
+
+🗺️  [7/10] Generating sitemap...
+
+📑 [8/10] Generating table of contents...
+
+📦 [9/10] Packaging site files...
+
+🚀 [10/10] Deploying to environment...
+
+============================================================
+  ✅ Pipeline Complete!
+============================================================
+  All pipeline stages executed successfully.
+  Your site has been:
+    - 🧹 Identifying orphaned files    ⏱️  7ms
+    - ✏️  Generating source content     ⏱️  45ms
+    - ⚙️  Applying site configuration  ⏱️  407ms
+    - 🔍 Running lint checks           ⏱️  12ms
+    - 📏 Normalizing markdown files    ⏱️  28ms
+    - 📄 Generating content            ⏱️  17ms
+    - 🗺️  Generating sitemap           ⏱️  8ms
+    - 📑 Generating table of contents  ⏱️  99ms
+    - 📦 Packaging site files          ⏱️  8ms
+    - 🚀 Deploying to environment      ⏱️  3ms
+
+  ⏱️  Total time: 634ms
+============================================================
+</code></pre>
+<h4 id="clean-all-or-clean-orphaned-mode">Clean-all or clean-orphaned mode:</h4>
+<pre><code>============================================================
+  🧹 GAZ Tank - Clean Mode
+============================================================
+
+🧹 Cleaning files...
+
+============================================================
+  ✅ Clean Complete!
+============================================================
+  Files have been removed (or identified).
+============================================================
+</code></pre>
+<h2 id="module-structure">Module Structure</h2>
+<pre><code>gzbuild/
+├── __init__.py      # Package initialization with version
+├── __main__.py      # Entry point for python -m gzbuild
+├── builder.py       # Main orchestrator (this module)
+└── README.md        # This file
+</code></pre>
+<h3 id="architecture">Architecture</h3>
+<p>The module uses an object-oriented design with two main classes:</p>
+<h4 id="pipelinestep-dataclass">PipelineStep (dataclass)</h4>
+<p>Encapsulates configuration and execution logic for a single pipeline step.</p>
+<h5>Responsibilities:</h5>
+<ul>
+<li>Store step configuration (icon, module, function, description, args)</li>
+<li>Execute the module with proper argument handling</li>
+<li>Track execution timing in milliseconds</li>
+<li>Generate formatted summary lines with aligned timing</li>
+<li>Log step progress and results</li>
+</ul>
+<h5>Benefits:</h5>
+<ul>
+<li>Clean separation of step configuration from execution</li>
+<li>Reusable for any pipeline module</li>
+<li>Pre-calculates full_description in <strong>post_init</strong> for performance</li>
+<li>Type-safe with dataclass field definitions</li>
+</ul>
+<h4 id="pipeline">Pipeline</h4>
+<p>Manages the collection of steps and orchestrates their execution.</p>
+<h5>Responsibilities:</h5>
+<ul>
+<li>Maintain ordered list of PipelineStep instances</li>
+<li>Automatically track max_desc_len as steps are added</li>
+<li>Execute all steps sequentially with stop-on-error behavior</li>
+<li>Extract deployment timing from flagged steps</li>
+<li>Display formatted completion summary with aligned per-step timings</li>
+</ul>
+<h5>Benefits:</h5>
+<ul>
+<li>Automatic alignment tracking eliminates manual calculation</li>
+<li>Single source of truth for step collection</li>
+<li>Encapsulates execution loop and summary display</li>
+<li>Easy to extend with new methods (e.g., parallel execution, filtering)</li>
+</ul>
+<h4 id="run-pipeline-function">run_pipeline() Function</h4>
+<p>High-level coordinator that uses the Pipeline API.</p>
+<h5>Responsibilities:</h5>
+<ul>
+<li>Create Pipeline instance</li>
+<li>Configure and add 8 pipeline steps</li>
+<li>Execute pipeline and handle results</li>
+<li>Calculate timing metrics (build, deploy, total)</li>
+<li>Coordinate logging of completion status</li>
+</ul>
+<h5>Benefits:</h5>
+<ul>
+<li>Clean, declarative step configuration</li>
+<li>Simple API: pipeline.add(), pipeline.execute_all(), pipeline.print_summary()</li>
+<li>Easy to modify step order or add new steps</li>
+<li>Separation of concerns: configuration vs execution vs summary</li>
+</ul>
+<h3 id="key-classes">Key Classes</h3>
+<h4 id="pipelinestep-dataclass-1">PipelineStep (dataclass)</h4>
+<p>A dataclass representing a single step in the build pipeline.</p>
+<h5>Fields:</h5>
+<ul>
+<li><code>icon: str</code> - Emoji icon for visual identification</li>
+<li><code>module_name: str</code> - Name of the module being executed</li>
+<li><code>main_func: Callable</code> - Main function of the module to execute</li>
+<li><code>description: str</code> - Human-readable description of the step</li>
+<li><code>extra_args: list</code> - Additional arguments to pass to module (default: [])</li>
+<li><code>display_timing: bool</code> - Whether to highlight this step's timing (default: False)</li>
+<li><code>time_ms: int</code> - Execution time in milliseconds (computed, not initialized)</li>
+<li><code>step_num: int</code> - Step number in pipeline (computed, not initialized)</li>
+<li><code>full_description: str</code> - Concatenated icon + description (computed in <strong>post_init</strong>)</li>
+</ul>
+<h5>Methods:</h5>
+<ul>
+<li><code>__post_init__()</code> - Calculates full_description after initialization</li>
+<li><code>get_summary_line(max_desc_len)</code> - Returns formatted string with aligned timing for summary display</li>
+<li><code>execute(step_num, total_steps, pass_through_args)</code> - Executes the module, tracks timing, logs results; returns True on success</li>
+</ul>
+<h4 id="pipeline-1">Pipeline</h4>
+<p>A class that manages a collection of pipeline steps and orchestrates their execution.</p>
+<h5>Attributes:</h5>
+<ul>
+<li><code>steps: list[PipelineStep]</code> - List of pipeline steps to execute</li>
+<li><code>max_desc_len: int</code> - Maximum description length for aligned display (auto-updated)</li>
+</ul>
+<h5>Methods:</h5>
+<ul>
+<li><code>add(step)</code> - Adds a step to the pipeline and automatically updates max_desc_len</li>
+<li><code>execute_all(pass_through_args)</code> - Executes all steps in sequence, returns True if all succeed</li>
+<li><code>get_deploy_time()</code> - Returns deployment time from step marked with display_timing=True</li>
+<li><code>print_summary(total_time)</code> - Prints formatted completion summary with aligned per-step timings</li>
+</ul>
+<h3 id="key-functions">Key Functions</h3>
+<h4 id="builderpy">builder.py</h4>
+<ul>
+<li><strong><code>main()</code></strong> - Entry point with argument parsing and pipeline execution</li>
+<li><strong><code>get_project_root()</code></strong> - Returns project root directory Path</li>
+<li><strong><code>format_time(milliseconds)</code></strong> - Formats milliseconds into flexible time display format</li>
+<li><strong><code>run_pipeline(pass_through_args)</code></strong> - Creates Pipeline, adds 8 steps, executes them, returns (success, build_time_ms, deploy_time_ms, total_time_ms)</li>
+</ul>
+<h3 id="pipeline-module-imports">Pipeline Module Imports</h3>
+<pre><code class="language-python">from utils.clean.cleaner import main as clean_main
+from utils.compose.composer import main as compose_main
+from utils.setup.setup import main as setup_main
+from utils.gzlint.gzlinter import main as lint_main
+from utils.normalise.batch import main as normalise_main
+from utils.generate.generator import main as generate_main
+from utils.sitemap.sitemapper import main as sitemap_main
+from utils.toc.toc import main as toc_main
+from utils.package.packager import main as package_main
+from utils.deploy.deployer import main as deploy_main
+</code></pre>
+<h2 id="features">Features</h2>
+<h3 id="core-features">Core Features</h3>
+<ul>
+<li><strong>Sequential execution</strong>: Runs 10 pipeline modules in correct order</li>
+<li><strong>Stop-on-error</strong>: Halts pipeline if any step fails</li>
+<li><strong>Argument pass-through</strong>: Simplifies adding new arguments</li>
+<li><strong>Clean modes</strong>: Dedicated cleanup without pipeline (--clean-all, --clean-orphaned)</li>
+<li><strong>Safe defaults</strong>: Clean step identifies orphaned files without deleting</li>
+<li><strong>Timing metrics</strong>: Separate tracking for build, deployment, and total time</li>
+<li><strong>Per-step timing display</strong>: Shows execution time for each individual step in summary</li>
+<li><strong>Aligned output</strong>: Column-aligned timing display for easy reading</li>
+<li><strong>Rich console output</strong>: Emojis and progress indicators for better UX</li>
+<li><strong>Clean logging</strong>: Operational logs without formatting or blank lines</li>
+<li><strong>Exit codes</strong>: Returns proper codes for build automation (0 success, 1 failure)</li>
+<li><strong>UTF-8 support</strong>: Full Unicode and emoji support in console output</li>
+<li><strong>Environment-aware</strong>: All modules receive environment parameter</li>
+<li><strong>Object-oriented design</strong>: Clean separation with PipelineStep and Pipeline classes</li>
+</ul>
+<h3 id="stop-on-error-behavior">Stop-on-Error Behavior</h3>
+<p>The orchestrator uses exception handling to detect failures:</p>
+<pre><code class="language-python">try:
+    module_main()
+except SystemExit as e:
+    if e.code != 0:
+        log.err("Step X/8 failed: Module Name")
+        return False, 0, 0, 0
+</code></pre>
+<h4 id="what-happens-on-failure">What happens on failure:</h4>
+<ul>
+<li>Pipeline stops immediately</li>
+<li>Error logged to gzbuild log file</li>
+<li>Console shows which step failed</li>
+<li>Returns exit code 1 for automation</li>
+<li>No subsequent steps execute</li>
+<li>Invalid builds never reach deployment</li>
+</ul>
+<h3 id="simplified-argument-handling">Simplified Argument Handling</h3>
+<p><strong>Philosophy:</strong> The orchestrator should not need code changes to support new arguments.</p>
+<h4 id="implementation">Implementation:</h4>
+<pre><code class="language-python"># Only validate -e and -h
+environment = extract_environment_from_argv()
+
+# Pass everything else through
+pass_through_args = sys.argv[1:]  # Include -e and all other args
+
+# Each module receives same args
+sys.argv = ['module_name'] + pass_through_args
+module_main()
+</code></pre>
+<h4 id="benefits-1">Benefits:</h4>
+<ul>
+<li>No explicit <code>--force</code>, <code>--dry-run</code> argument definitions</li>
+<li>Easy to add new arguments in the future</li>
+<li>Modules control their own argument support</li>
+<li>Consistent argument handling across pipeline</li>
+</ul>
+<h2 id="pipeline-stages">Pipeline Stages</h2>
+<p>The orchestrator executes 10 stages in sequence:</p>
+<h3 id="stage-1-identify-orphaned-files">Stage 1: Identify Orphaned Files</h3>
+<p><strong>Module:</strong> <code>utils.clean.cleaner</code><br/>
+<strong>Purpose:</strong> Identify files in environment that don't exist in source (no deletion)<br/>
+<strong>Arguments:</strong> Receives all pass-through args (runs in identify-only mode by default)<br/>
+<strong>Console:</strong> 🧹 [1/10] Identifying orphaned files...<br/>
+<strong>Note:</strong> Does NOT delete files by default - use <code>--clean-orphaned</code> separately if cleanup needed</p>
+<h3 id="stage-2-generate-source-content">Stage 2: Generate Source Content</h3>
+<p><strong>Module:</strong> <code>utils.compose.composer</code><br/>
+<strong>Purpose:</strong> Generate source content files from templates (e.g., humans.txt)<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> ✏️  [2/10] Generating source content...</p>
+<p><strong>Module:</strong> <code>utils.setup.setup</code><br/>
+<strong>Purpose:</strong> Apply site.toml configuration to environment<br/>
+<strong>Arguments:</strong> Receives <code>--force</code> plus all pass-through args<br/>
+<strong>Console:</strong> ⚙️  [3/10] Applying site configuration...<br/>
+<strong>Note:</strong> Always runs in force mode to ensure consistent configuration</p>
+<h3 id="stage-4-run-lint-checks">Stage 4: Run Lint Checks</h3>
+<p><strong>Module:</strong> <code>utils.gzlint.gzlinter</code><br/>
+<strong>Purpose:</strong> Validate HTML, JavaScript, and config files<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 🔍 [4/10] Running lint checks...</p>
+<h3 id="stage-5-normalize-markdown-formatting">Stage 5: Normalize Markdown Formatting</h3>
+<p><strong>Module:</strong> <code>utils.normalise.batch</code><br/>
+<strong>Purpose:</strong> Normalize markdown file formatting for consistency<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 📏 [5/10] Normalizing markdown files...</p>
+<h3 id="stage-6-generate-content">Stage 6: Generate Content</h3>
+<p><strong>Module:</strong> <code>utils.generate.generator</code><br/>
+<strong>Purpose:</strong> Convert markdown to HTML content<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 📄 [6/10] Generating content...</p>
+<h3 id="stage-7-generate-sitemap">Stage 7: Generate Sitemap</h3>
+<p><strong>Module:</strong> <code>utils.sitemap.sitemapper</code><br/>
+<strong>Purpose:</strong> Create sitemap.xml for search engines<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 🗺️  [7/10] Generating sitemap...</p>
+<h3 id="stage-8-generate-table-of-contents">Stage 8: Generate Table of Contents</h3>
+<p><strong>Module:</strong> <code>utils.toc.toc</code><br/>
+<strong>Purpose:</strong> Add TOC navigation to HTML files<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 📑 [8/10] Generating table of contents...</p>
+<h3 id="stage-9-package-site-files">Stage 9: Package Site Files</h3>
+<p><strong>Module:</strong> <code>utils.package.packager</code><br/>
+<strong>Purpose:</strong> Sync, minify, and archive site for deployment<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 📦 [9/10] Packaging site files...<br/>
+<strong>Timing:</strong> Build time captured after this step</p>
+<h3 id="stage-10-deploy-to-environment">Stage 10: Deploy to Environment</h3>
+<p><strong>Module:</strong> <code>utils.deploy.deployer</code><br/>
+<strong>Purpose:</strong> Upload package to remote FTP/FTPS server<br/>
+<strong>Arguments:</strong> Receives all pass-through args<br/>
+<strong>Console:</strong> 🚀 [10/10] Deploying to environment...<br/>
+<strong>Timing:</strong> Deployment time captured for this step only</p>
+<h2 id="timing-metrics">Timing Metrics</h2>
+<p>The orchestrator tracks three timing metrics with millisecond precision:</p>
+<h3 id="build-time">Build Time</h3>
+<p><strong>Measured:</strong> From pipeline start through step 9 (package)<br/>
+<strong>Includes:</strong> Clean, compose, setup, lint, normalise, generate, sitemap, toc, package<br/>
+<strong>Excludes:</strong> Deployment (step 10)<br/>
+<strong>Purpose:</strong> Track local build operations performance<br/>
+<strong>Precision:</strong> Milliseconds<br/>
+<strong>Display:</strong> Flexible format based on duration</p>
+<h3 id="deployment-time">Deployment Time</h3>
+<p><strong>Measured:</strong> Step 10 (deploy) only<br/>
+<strong>Includes:</strong> FTP/FTPS upload to remote server<br/>
+<strong>Excludes:</strong> All build steps<br/>
+<strong>Purpose:</strong> Track network upload performance separately<br/>
+<strong>Precision:</strong> Milliseconds<br/>
+<strong>Display:</strong> Flexible format based on duration</p>
+<h3 id="total-time">Total Time</h3>
+<p><strong>Measured:</strong> From pipeline start to end<br/>
+<strong>Includes:</strong> All 10 steps<br/>
+<strong>Formula:</strong> Build time + Deployment time<br/>
+<strong>Purpose:</strong> Overall pipeline duration<br/>
+<strong>Precision:</strong> Milliseconds<br/>
+<strong>Display:</strong> Flexible format based on duration</p>
+<h3 id="timing-display-format">Timing Display Format</h3>
+<p>Time is formatted flexibly based on duration:</p>
+<ul>
+<li><strong>Under 1 second:</strong> "XXXms" (e.g., "450ms", "892ms")</li>
+<li><strong>1-59 seconds:</strong> "Xs XXXms" (e.g., "5s 234ms", "42s 891ms")</li>
+<li><strong>60+ seconds:</strong> "Xm Ys XXXms" (e.g., "2m 15s 340ms", "15m 0s 120ms")</li>
+<li>Milliseconds omitted if zero (e.g., "3s", "2m 15s")</li>
+</ul>
+<h3 id="example-timing-output">Example Timing Output</h3>
+<pre><code>============================================================
+  ✅ Pipeline Complete!
+============================================================
+  All pipeline stages executed successfully.
+  Your site has been:
+    - 🧹 Cleaning orphaned files       ⏱️  7ms
+    - ⚙️  Applying site configuration  ⏱️  407ms
+    - 🔍 Running lint checks           ⏱️  12ms
+    - 📄 Generating content            ⏱️  17ms
+    - 🗺️  Generating sitemap           ⏱️  8ms
+    - 📑 Generating table of contents  ⏱️  99ms
+    - 📦 Packaging site files          ⏱️  8ms
+    - 🚀 Deploying to environment      ⏱️  3ms
+
+  ⏱️  Total time: 566ms
+============================================================
+</code></pre>
+<h2 id="invocation-points">Invocation Points</h2>
+<p>The orchestrator is the main entry point for full website builds:</p>
+<h3 id="direct-command-line-usage">1. Direct Command-Line Usage</h3>
+<p>Primary method for running full builds:</p>
+<pre><code class="language-bash"># Windows
+scripts\gzbuild.cmd -e dev
+
+# Linux/Mac
+./scripts/gzbuild.sh -e dev
+</code></pre>
+<p><strong>Purpose:</strong> Complete build and deployment workflow<br/>
+<strong>Location:</strong> <code>scripts/gzbuild.cmd</code> and <code>scripts/gzbuild.sh</code></p>
+<h3 id="cicd-pipeline">2. CI/CD Pipeline</h3>
+<p>Continuous integration systems call gzbuild for automated deployments:</p>
+<pre><code class="language-yaml"># Example CI/CD step
+- name: Build and Deploy
+  run: scripts/gzbuild.cmd -e prod --force
+</code></pre>
+<p><strong>Purpose:</strong> Automated production deployments</p>
+<h3 id="development-workflow">3. Development Workflow</h3>
+<p>Developers use gzbuild for testing complete workflows:</p>
+<pre><code class="language-bash"># Test full build without deploying
+scripts\gzbuild.cmd -e dev --dry-run
+
+# Force complete rebuild
+scripts\gzbuild.cmd -e dev --force
+</code></pre>
+<p><strong>Purpose:</strong> Development and testing</p>
+<h3 id="integration-points">Integration Points</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Launcher Scripts</strong></td>
+<td><code>scripts/gzbuild.*</code></td>
+<td>Command-line interface</td>
+</tr>
+<tr>
+<td><strong>Pipeline Modules</strong></td>
+<td><code>utils/{module}/</code></td>
+<td>10 modules orchestrated</td>
+</tr>
+<tr>
+<td><strong>Logging</strong></td>
+<td><code>utils/gzlogging/</code></td>
+<td>Centralized logging</td>
+</tr>
+<tr>
+<td><strong>Configuration</strong></td>
+<td><code>config/*.toml</code></td>
+<td>All module configs</td>
+</tr>
+<tr>
+<td><strong>Environments</strong></td>
+<td><code>publish/{env}/</code></td>
+<td>Target directories</td>
+</tr>
+<tr>
+<td><strong>Packages</strong></td>
+<td><code>publish/packages/</code></td>
+<td>Deployment archives</td>
+</tr>
+</tbody>
+</table>
+<h2 id="development">Development</h2>
+<p>The module follows standard Python packaging conventions with a focus on simplicity and maintainability.</p>
+<h3 id="file-locations">File Locations</h3>
+<pre><code>GAZTank/
+├── config/
+│   └── *.toml                       # All module configurations
+│
+├── logs/
+│   └── {environment}/
+│       └── gzbuild_YYYYMMDD.log     # Daily orchestrator logs
+│       └── {module}_YYYYMMDD.log    # Module-specific logs
+│
+├── scripts/
+│   ├── gzbuild.cmd                  # Windows launcher
+│   └── gzbuild.sh                   # Linux/Mac launcher
+│
+├── publish/
+│   ├── dev/                         # Dev environment output
+│   ├── staging/                     # Staging environment output
+│   ├── prod/                        # Production environment output
+│   └── packages/                    # Deployment archives
+│
+└── utils/
+    ├── gzbuild/                     # This module
+    │   ├── __init__.py              # Package initialization
+    │   ├── __main__.py              # Entry point
+    │   ├── builder.py               # Main orchestrator
+    │   └── README.md                # This file
+    │
+    ├── clean/                       # Pipeline module 1
+    ├── compose/                     # Pipeline module 2
+    ├── setup/                       # Pipeline module 3
+    ├── gzlint/                      # Pipeline module 4
+    ├── normalise/                   # Pipeline module 5
+    ├── generate/                    # Pipeline module 6
+    ├── sitemap/                     # Pipeline module 7
+    ├── toc/                         # Pipeline module 8
+    ├── package/                     # Pipeline module 9
+    ├── deploy/                      # Pipeline module 10
+    │
+    ├── gzlogging/                   # Logging infrastructure
+    └── gzconfig/                    # Configuration library
+</code></pre>
+<h3 id="adding-new-pipeline-modules">Adding New Pipeline Modules</h3>
+<p>To add a new module to the pipeline:</p>
+<ol>
+<li>Create the module following GAZTank standards</li>
+<li>Import the module's main function in <code>builder.py</code>:<pre><code class="language-python">from utils.newmodule.newmodule import main as newmodule_main
+</code></pre>
+</li>
+<li>Add a step to the Pipeline in <code>run_pipeline()</code> function:<pre><code class="language-python">pipeline.add(PipelineStep(
+    "🔧",              # Icon emoji
+    "newmodule",       # Module name
+    newmodule_main,    # Main function
+    "Running new module"  # Description
+))
+</code></pre>
+</li>
+<li>Update total step count (currently 10) in console output and documentation</li>
+<li>The Pipeline class automatically:<ul>
+<li>Tracks max_desc_len for alignment</li>
+<li>Numbers steps sequentially</li>
+<li>Displays timing in summary</li>
+<li>Handles execution and error reporting</li>
+</ul>
+</li>
+</ol>
+<h3 id="design-principles">Design Principles</h3>
+<ul>
+<li><strong>Orchestration not implementation</strong>: Delegates all work to modules</li>
+<li><strong>Stop-on-error</strong>: Fail fast to prevent invalid deployments</li>
+<li><strong>Argument pass-through</strong>: Minimize orchestrator responsibilities</li>
+<li><strong>Timing transparency</strong>: Show where time is spent (total and per-step)</li>
+<li><strong>Clean separation</strong>: Build time vs deployment time</li>
+<li><strong>Rich console UX</strong>: Visual progress for users</li>
+<li><strong>Clean logs</strong>: Operational audit trail</li>
+<li><strong>Exit codes matter</strong>: Proper codes for automation</li>
+<li><strong>Object-oriented architecture</strong>: PipelineStep dataclass and Pipeline class for maintainability</li>
+<li><strong>Single responsibility</strong>: Each class has focused purpose (PipelineStep = execution, Pipeline = orchestration)</li>
+</ul>
+<h3 id="code-style">Code Style</h3>
+<p>The module follows GAZTank Python coding standards:</p>
+<ul>
+<li><strong>UTF-8 encoding</strong> with BOM markers in Python files</li>
+<li><strong>Type hints</strong> for function signatures (Path, Tuple, Optional, Callable, list[Type])</li>
+<li><strong>Dataclasses</strong> with @dataclass decorator and field() for clean class definitions</li>
+<li><strong>Docstrings</strong> for all public functions and classes</li>
+<li><strong>Clean logging</strong> - no separators or blank lines in log files</li>
+<li><strong>Rich console</strong> - emojis and formatting for user experience</li>
+<li><strong>Error handling</strong> - try/except with proper logging</li>
+<li><strong>Exit codes</strong> - 0 for success, 1 for failure</li>
+<li><strong>Object-oriented design</strong> - Classes with single responsibility principle</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="when-to-run-gzbuild">When to Run gzbuild</h3>
+<ol>
+<li><p><strong>Complete site updates</strong></p>
+<ul>
+<li>Changes across multiple content files</li>
+<li>Configuration updates that affect entire site</li>
+<li>Full rebuild and deployment needed</li>
+</ul>
+</li>
+<li><p><strong>Before production deployments</strong></p>
+<ul>
+<li>Use <code>gzbuild -e prod --force</code> for clean builds</li>
+<li>Ensures all steps execute freshly</li>
+<li>Validates entire workflow before going live</li>
+</ul>
+</li>
+<li><p><strong>Development testing</strong></p>
+<ul>
+<li>Use <code>gzbuild -e dev --dry-run</code> to test changes</li>
+<li>Preview full pipeline without modifications</li>
+<li>Verify configuration changes</li>
+</ul>
+</li>
+<li><p><strong>Environment resets</strong></p>
+<ul>
+<li>Use <code>gzbuild -e dev --clean-all</code> to clear environment completely</li>
+<li>Use <code>gzbuild -e dev --clean-orphaned</code> to remove only orphaned files</li>
+<li>Both require confirmation prompts (add <code>--force</code> to skip)</li>
+<li>Start fresh for troubleshooting</li>
+</ul>
+</li>
+<li><p><strong>Check for orphaned files</strong></p>
+<ul>
+<li>Run normal pipeline: <code>gzbuild -e dev</code> (clean step identifies only)</li>
+<li>Review console output for orphaned files</li>
+<li>Use <code>--clean-orphaned</code> separately if cleanup needed</li>
+</ul>
+</li>
+</ol>
+<h3 id="workflow-recommendations">Workflow Recommendations</h3>
+<pre><code class="language-bash"># 1. Preview full build
+scripts\gzbuild.cmd -e dev --dry-run
+
+# 2. If satisfied, run for real (identifies orphaned files, doesn't delete)
+scripts\gzbuild.cmd -e dev
+
+# 3. If orphaned files found, clean them separately (requires confirmation)
+scripts\gzbuild.cmd -e dev --clean-orphaned
+
+# 4. Force complete rebuild if needed
+scripts\gzbuild.cmd -e dev --force
+
+# 5. Clean environment completely for fresh start (requires confirmation)
+scripts\gzbuild.cmd -e dev --clean-all
+
+# 6. Deploy to production with force
+scripts\gzbuild.cmd -e prod --force
+</code></pre>
+<h3 id="individual-module-vs-full-pipeline">Individual Module vs Full Pipeline</h3>
+<h4 id="use-individual-modules-when">Use individual modules when:</h4>
+<ul>
+<li>Working on specific content (generate only)</li>
+<li>Testing module changes (sitemap, toc)</li>
+<li>Iterating quickly on single aspect</li>
+<li>Example: <code>scripts\generate.cmd -e dev</code></li>
+</ul>
+<h4 id="use-gzbuild-when">Use gzbuild when:</h4>
+<ul>
+<li>Need complete build workflow</li>
+<li>Deploying to staging or production</li>
+<li>Want consistent, repeatable process</li>
+<li>Example: <code>scripts\gzbuild.cmd -e prod</code></li>
+</ul>
+<h3 id="performance-tips">Performance Tips</h3>
+<ul>
+<li><strong>Leverage module timestamp checking</strong>: Most modules skip up-to-date files automatically</li>
+<li><strong>Use --dry-run first</strong>: Preview operations before committing</li>
+<li><strong>Force only when necessary</strong>: Full rebuilds take longer</li>
+<li><strong>Monitor timing metrics</strong>: Identify slow steps for optimization</li>
+<li><strong>Clean periodically</strong>: Use --clean-all to remove cruft</li>
+</ul>
+<h3 id="troubleshooting-individual-steps">Troubleshooting Individual Steps</h3>
+<p>When pipeline fails at a specific step:</p>
+<ol>
+<li>Note which step failed from console output</li>
+<li>Check module-specific log file: <code>logs/{env}/{module}_YYYYMMDD.log</code></li>
+<li>Run that module individually for detailed debugging</li>
+<li>Fix the issue</li>
+<li>Re-run full pipeline</li>
+</ol>
+<p>Example:</p>
+<pre><code class="language-bash"># Pipeline failed at step 4 (generate)
+# Run generate individually with verbose output
+scripts\generate.cmd -e dev
+
+# Fix any issues, then re-run full pipeline
+scripts\gzbuild.cmd -e dev
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="missing-e-argument">Missing -e Argument</h3>
+<p><strong>Problem:</strong> <code>Error: -e ENVIRONMENT is required</code></p>
+<h4 id="solution">Solution:</h4>
+<ul>
+<li>Add <code>-e</code> parameter with valid environment</li>
+<li>Valid environments: dev, staging, prod</li>
+<li>Example: <code>scripts\gzbuild.cmd -e dev</code></li>
+</ul>
+<h3 id="invalid-environment">Invalid Environment</h3>
+<p><strong>Problem:</strong> <code>Error: Invalid environment 'xyz'. Must be dev, staging, or prod</code></p>
+<h4 id="solution-1">Solution:</h4>
+<ul>
+<li>Check spelling of environment name</li>
+<li>Only dev, staging, prod are valid</li>
+<li>Use lowercase (not Dev, STAGING, etc.)</li>
+</ul>
+<h3 id="step-failure">Step Failure</h3>
+<p><strong>Problem:</strong> Pipeline stops at specific step: <code>Step X/8 failed: Module Name</code></p>
+<h4 id="diagnosis">Diagnosis:</h4>
+<ul>
+<li>Console shows which step failed</li>
+<li>Check gzbuild log for step error</li>
+<li>Check module-specific log for details</li>
+</ul>
+<h4 id="solution-2">Solution:</h4>
+<ol>
+<li>Note failing step from console (e.g., "Step 4/8 failed: Content generation")</li>
+<li>Check module log: <code>logs/{env}/generate_YYYYMMDD.log</code></li>
+<li>Run failing module individually: <code>scripts\generate.cmd -e dev</code></li>
+<li>Fix underlying issue</li>
+<li>Re-run pipeline: <code>scripts\gzbuild.cmd -e dev</code></li>
+</ol>
+<h3 id="module-doesnt-support-argument">Module Doesn't Support Argument</h3>
+<p><strong>Problem:</strong> <code>error: unrecognized arguments: --custom-arg</code></p>
+<p><strong>Cause:</strong> Passed an argument that a module doesn't support</p>
+<h4 id="solution-3">Solution:</h4>
+<ul>
+<li>Check which step failed from console</li>
+<li>Review module's <code>--help</code> to see supported arguments</li>
+<li>Either add support to module or remove argument</li>
+<li>Example: Some modules may not support <code>--dry-run</code> yet</li>
+</ul>
+<h3 id="clean-all-mode-confusion">Clean-All Mode Confusion</h3>
+<p><strong>Problem:</strong> Pipeline exits immediately after clean step</p>
+<p><strong>Cause:</strong> Used <code>--clean-all</code> flag, which is intentional behavior</p>
+<h4 id="solution-4">Solution:</h4>
+<ul>
+<li><code>--clean-all</code> is designed to clean and exit</li>
+<li>Remove <code>--clean-all</code> flag for normal pipeline execution</li>
+<li>Use <code>--clean-all</code> only when you want to reset environment</li>
+</ul>
+<h3 id="timing-shows-0m-0s">Timing Shows 0m 0s</h3>
+<p><strong>Problem:</strong> Timing metrics show unrealistic zero values</p>
+<p><strong>Cause:</strong> Pipeline failed before timing capture</p>
+<h4 id="diagnosis-1">Diagnosis:</h4>
+<ul>
+<li>Check for error messages in console</li>
+<li>Review gzbuild log for failures</li>
+<li>Look for step failure messages</li>
+</ul>
+<h4 id="solution-5">Solution:</h4>
+<ul>
+<li>Fix the underlying pipeline failure</li>
+<li>Timing will show correctly on successful run</li>
+</ul>
+<h3 id="permission-denied">Permission Denied</h3>
+<p><strong>Problem:</strong> <code>PermissionError: [Errno 13] Permission denied</code></p>
+<h4 id="solution-6">Solution:</h4>
+<ul>
+<li>Check permissions on logs, publish directories</li>
+<li>Close any programs using output files</li>
+<li>Ensure not running in read-only location</li>
+<li>Run with appropriate permissions (avoid admin unless necessary)</li>
+</ul>
+<h3 id="logs-not-found">Logs Not Found</h3>
+<p><strong>Problem:</strong> Can't find log file for today</p>
+<h4 id="solution-7">Solution:</h4>
+<ul>
+<li>Logs are in: <code>logs/{environment}/gzbuild_YYYYMMDD.log</code></li>
+<li>Check you're looking in correct environment folder</li>
+<li>Verify date format: YYYYMMDD (e.g., 20251024)</li>
+<li>Log only created when pipeline runs</li>
+</ul>
+<h3 id="emojis-not-displaying">Emojis Not Displaying</h3>
+<p><strong>Problem:</strong> Console shows squares or question marks instead of emojis</p>
+<h4 id="solution-8">Solution:</h4>
+<ul>
+<li>Launcher scripts set <code>PYTHONIOENCODING=utf-8</code> automatically</li>
+<li>Ensure terminal supports UTF-8 encoding</li>
+<li>On Windows: Use Windows Terminal or PowerShell 7+</li>
+<li>Check terminal font supports emoji glyphs</li>
+<li>Note: Log files never contain emojis (by design)</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<h3 id="completed-features">Completed Features</h3>
+<ul>
+<li>✅ <strong>Timing metrics</strong>: Separate tracking for build, deployment, and total time (v1.0)</li>
+<li>✅ <strong>Simplified argument handling</strong>: Pass-through model eliminates explicit argument definitions (v1.0)</li>
+<li>✅ <strong>Clean-all mode</strong>: Dedicated environment cleanup without running pipeline (v1.0)</li>
+<li>✅ <strong>Rich console output</strong>: Emojis and progress indicators for better UX (v1.0)</li>
+<li>✅ <strong>Clean logging</strong>: Operational logs without formatting or blank lines (v1.0)</li>
+<li>✅ <strong>PipelineStep dataclass</strong>: Clean configuration with @dataclass decorator and field() (v1.0)</li>
+<li>✅ <strong>Per-step timing</strong>: Individual step execution times displayed in summary (v1.0)</li>
+<li>✅ <strong>Aligned timing display</strong>: Column-aligned output for easy reading (v1.0)</li>
+<li>✅ <strong>Pipeline class</strong>: Automatic step management with add(), execute_all(), print_summary() (v1.0)</li>
+<li>✅ <strong>Automatic tracking</strong>: max_desc_len updated incrementally during Pipeline.add() (v1.0)</li>
+</ul>
+<h3 id="planned-features">Planned Features</h3>
+<ul>
+<li><strong>Selective module execution</strong>: Run specific steps only (e.g., <code>--steps=1,3,5</code> or <code>--skip=8</code>)</li>
+<li><strong>Parallel execution</strong>: Run independent steps concurrently where possible</li>
+<li><strong>Resume capability</strong>: Continue from failed step without restarting</li>
+<li><strong>Configuration validation</strong>: Pre-flight checks before running pipeline</li>
+<li><strong>Rollback support</strong>: Revert to previous deployment on failure</li>
+<li><strong>Pipeline profiles</strong>: Named configurations for common workflows (e.g., <code>--profile=quick-test</code>)</li>
+<li><strong>Module timing breakdown</strong>: Show timing for each individual step</li>
+<li><strong>Summary statistics</strong>: File counts, size totals across all steps</li>
+<li><strong>Summary statistics</strong>: File counts, size totals across all steps</li>
+<li><strong>Verbose mode</strong>: <code>--verbose</code> flag for detailed operation logging</li>
+<li><strong>Quiet mode</strong>: <code>--quiet</code> flag for minimal console output</li>
+</ul>
+<h3 id="integration-enhancements">Integration Enhancements</h3>
+<ul>
+<li><strong>Pre/post hooks</strong>: Run custom scripts before/after pipeline or steps</li>
+<li><strong>Notification system</strong>: Email/Slack notifications on completion/failure</li>
+<li><strong>Metric export</strong>: Export timing and statistics to monitoring systems</li>
+<li><strong>Configuration hot-reload</strong>: Detect config changes without restart</li>
+<li><strong>Module discovery</strong>: Automatically detect and integrate new modules</li>
+</ul>
+<h3 id="performance-improvements">Performance Improvements</h3>
+<ul>
+<li><strong>Caching layer</strong>: Cache module results to skip unnecessary work</li>
+<li><strong>Dependency graph</strong>: Only run modules affected by changes</li>
+<li><strong>Incremental builds</strong>: Smart detection of what needs rebuilding</li>
+<li><strong>Progress streaming</strong>: Real-time progress updates for long operations</li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<h3 id="internal-documentation">Internal Documentation</h3>
+<ul>
+<li><strong><a href="../clean/README.md">Clean Module</a></strong> - Orphaned file cleanup (step 1)</li>
+<li><strong><a href="../setup/README.md">Setup Module</a></strong> - Site configuration (step 2)</li>
+<li><strong><a href="../gzlint/README.md">GZLint Module</a></strong> - HTML/JS validation (step 3)</li>
+<li><strong><a href="../generate/README.md">Generate Module</a></strong> - Content generation (step 4)</li>
+<li><strong><a href="../sitemap/README.md">Sitemap Module</a></strong> - Sitemap generation (step 5)</li>
+<li><strong><a href="../toc/README.md">TOC Module</a></strong> - Table of contents (step 6)</li>
+<li><strong><a href="../package/README.md">Package Module</a></strong> - Site packaging (step 7)</li>
+<li><strong><a href="../deploy/README.md">Deploy Module</a></strong> - FTP/FTPS deployment (step 8)</li>
+<li><strong><a href="../gzlogging/README.md">GZLogging</a></strong> - Logging infrastructure</li>
+<li><strong><a href="../gzconfig/README.md">GZConfig</a></strong> - Configuration library</li>
+<li><strong><a href="../../dev/MODULE_README_STRUCTURE.md">Module README Structure</a></strong> - README template</li>
+<li><strong><a href="../FLOW_PIPELINE.md">Pipeline Flow</a></strong> - Overall pipeline documentation</li>
+</ul>
+<h3 id="external-resources">External Resources</h3>
+<ul>
+<li><strong>Python sys.argv</strong>: <a href="https://docs.python.org/3/library/sys.html#sys.argv">https://docs.python.org/3/library/sys.html#sys.argv</a> - Command-line argument handling</li>
+<li><strong>Python SystemExit</strong>: <a href="https://docs.python.org/3/library/exceptions.html#SystemExit">https://docs.python.org/3/library/exceptions.html#SystemExit</a> - Exit code handling</li>
+<li><strong>Python time module</strong>: <a href="https://docs.python.org/3/library/time.html">https://docs.python.org/3/library/time.html</a> - Timing functions</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPL-3.0-or-later</p>
+<h2 id="authors">Authors</h2>
+<p>superguru, gazorper</p>
+<hr/>
+<h3 id="changelog">Changelog:</h3>
+<ul>
+<li><strong>v1.1</strong> (November 4, 2025): Updated to 10-step pipeline (added compose, normalise); clean step now identifies only (no deletion by default); added --clean-orphaned mode</li>
+<li><strong>v1.0</strong> (October 24, 2025): Initial 8-step pipeline with timing metrics, per-step timing display, PipelineStep/Pipeline classes</li>
+</ul>
+<hr/>
+<p><em>Last updated: November 4, 2025</em><br/>
+<em>gzbuild module version: 1.1</em></p>
+<div>
+<br/><br/>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

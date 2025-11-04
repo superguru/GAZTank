@@ -1,0 +1,25 @@
+<h1>GAZ Tank Build Pipeline</h1>
+<h2>Pipeline Overview</h2>
+<p>The complete build pipeline consists of 10 sequential steps that transform source files into deployable website packages.</p>
+<pre class="mermaid">
+graph TD
+    Start([Start Build]) --&gt; Step1[🧹 Step 1: Clean<br/>Remove Orphaned Files]
+    Step1 --&gt; Step2[🔨 Step 2: Compose<br/>HTML from Components]
+    Step2 --&gt; Step3[⚙️ Step 3: Setup<br/>Apply Site Configuration]
+    Step3 --&gt; Step4[🔍 Step 4: Lint<br/>Validate HTML/JS/Config]
+    Step4 --&gt; Step5[� Step 5: Normalize<br/>Markdown Structure]
+    Step5 --&gt; Step6[�📄 Step 6: Generate<br/>Convert Markdown to HTML]
+    Step6 --&gt; Step7[🗺️ Step 7: Sitemap<br/>Generate sitemap.xml]
+    Step7 --&gt; Step8[📑 Step 8: TOC<br/>Generate Table of Contents]
+    Step8 --&gt; Step9[📦 Step 9: Package<br/>Create Deployment Archive]
+    Step9 --&gt; Step10{🚀 Step 10: Deploy<br/>--deploy flag?}
+    Step10 -- Yes --&gt; Deploy[Upload to Server]
+    Step10 -- No --&gt; Skip[Skip Deployment]
+    Deploy --&gt; End([Build Complete])
+    Skip --&gt; End
+
+</pre>
+<div>
+<br><br>
+<p><em>This content was automatically generated from <code>README.md</code></em></p>
+</div>

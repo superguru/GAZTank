@@ -1,0 +1,23 @@
+# GZLogging - Log Rotation Configuration
+#
+# Global defaults for log file management. These values apply to all tools
+# but can be overridden per-tool in tools.toml by specifying the same
+# attributes with different values.
+#
+# All log files are stored in .\logs with rotated logs in .\logs\00rotated
+
+[rotation]
+# compress: Compress old log files when rotating (true/false)
+#   true  = rotated files are compressed to .zip format
+#   false = rotated files remain as .log format
+compress = true
+
+# rotation_count: Maximum number of rotated log files to keep per tool
+#   When the count is exceeded, the oldest rotated files are deleted
+#   Only rotated files in .\logs\00rotated are counted
+#   The active (current day) log file is NOT included in this count
+#   Both .log and .zip files are counted (setting can change over time)
+rotation_count = 5
+
+# Note: Rotation happens automatically when a new log file is created
+# (typically once per day). The rotation logic is hidden from module users.
