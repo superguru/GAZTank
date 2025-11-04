@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Content Security Policy for CDN Scripts** (November 4, 2025)
+  - Updated CSP in `.htaccess` to allow external CDN scripts
+  - Added `https://cdn.jsdelivr.net` for Mermaid.js library
+  - Added `https://cdnjs.cloudflare.com` for Prism.js syntax highlighting
+  - Fixes mermaid diagram rendering on production site
+
 ### Added
 - **10-Step Pipeline Architecture** (November 4, 2025)
   - **Compose Module**: Source content generation from templates (step 2)
