@@ -189,10 +189,13 @@ pip install -r requirements.txt
 
 This installs:
 - **beautifulsoup4** (>=4.12.0) - HTML parsing and manipulation
+- **lxml** (>=5.0.0) - Fast XML/HTML parser for BeautifulSoup (performance)
 - **tomlkit** (>=0.12.0) - TOML config with comment preservation
 - **mistune** (>=3.0.0) - Markdown to HTML conversion
+- **tomli** (>=2.0.0) - TOML parsing for Python < 3.11 (fallback)
 - **rcssmin** (>=1.1.0) - CSS minification (optional)
 - **rjsmin** (>=1.2.0) - JavaScript minification (optional)
+- **pyftpdlib** (>=1.5.0) - FTP server for testing deployments (optional)
 
 #### Manual Installation (Alternative)
 If you prefer to install packages individually:
@@ -200,17 +203,19 @@ If you prefer to install packages individually:
 ```bash
 # Core dependencies
 pip install beautifulsoup4    # HTML parsing and manipulation
+pip install lxml             # Fast XML/HTML parser (performance)
 pip install tomlkit          # TOML config with comment preservation
 pip install mistune          # Markdown to HTML conversion
 
-# Optional (for minification)
+# Optional (for minification and testing)
 pip install rcssmin          # CSS minification
 pip install rjsmin           # JavaScript minification
+pip install pyftpdlib        # FTP server for deployment testing
 ```
 
 #### Quick Install (All at Once)
 ```bash
-pip install beautifulsoup4 tomlkit mistune rcssmin rjsmin
+pip install beautifulsoup4 lxml tomlkit mistune rcssmin rjsmin pyftpdlib
 ```
 
 ### 3. Verify Python Environment
@@ -218,14 +223,14 @@ pip install beautifulsoup4 tomlkit mistune rcssmin rjsmin
 Run this command to check all dependencies:
 
 ```bash
-python -c "import bs4, tomlkit, mistune, rcssmin, rjsmin; print('All dependencies installed successfully!')"
+python -c "import bs4, lxml, tomlkit, mistune; print('Core dependencies installed successfully!')"
 ```
 
 To see installed package versions:
 ```bash
-pip list | grep -E "beautifulsoup4|tomlkit|mistune|rcssmin|rjsmin"
+pip list | grep -E "beautifulsoup4|lxml|tomlkit|mistune|rcssmin|rjsmin|pyftpdlib"
 # On Windows PowerShell:
-pip list | Select-String "beautifulsoup4|tomlkit|mistune|rcssmin|rjsmin"
+pip list | Select-String "beautifulsoup4|lxml|tomlkit|mistune|rcssmin|rjsmin|pyftpdlib"
 ```
 
 ---
@@ -305,7 +310,8 @@ Create/update `.vscode/launch.json`:
             "name": "Python: Development Server",
             "type": "python",
             "request": "launch",
-            "module": "utils.gzserve",
+            "module": "gzserve",
+            "args": ["-e", "dev"],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
         },
@@ -313,7 +319,8 @@ Create/update `.vscode/launch.json`:
             "name": "Python: Setup Wizard",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/utils/setup/setup_site.py",
+            "module": "setup",
+            "args": ["-e", "dev"],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
         },
@@ -321,7 +328,8 @@ Create/update `.vscode/launch.json`:
             "name": "Python: GZLint",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/utils/gzlint/",
+            "module": "gzlint",
+            "args": ["-e", "dev"],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
         },
@@ -329,7 +337,17 @@ Create/update `.vscode/launch.json`:
             "name": "Python: Package Site",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/utils/package/",
+            "module": "package",
+            "args": ["-e", "dev"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Python: Deploy Site",
+            "type": "python",
+            "request": "launch",
+            "module": "deploy",
+            "args": ["-e", "prod"],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
         }
@@ -349,7 +367,7 @@ Create/update `.vscode/tasks.json`:
             "label": "Start Dev Server",
             "type": "shell",
             "command": "python",
-            "args": ["-m", "utils.gzserve"],
+            "args": ["-m", "gzserve", "-e", "dev"],
             "problemMatcher": [],
             "presentation": {
                 "reveal": "always",
@@ -360,7 +378,7 @@ Create/update `.vscode/tasks.json`:
             "label": "Run GZLint",
             "type": "shell",
             "command": "python",
-            "args": ["-m", "utils.gzlint"],
+            "args": ["-m", "gzlint", "-e", "dev"],
             "problemMatcher": [],
             "group": {
                 "kind": "test",
@@ -371,21 +389,28 @@ Create/update `.vscode/tasks.json`:
             "label": "Generate Sitemap",
             "type": "shell",
             "command": "python",
-            "args": ["utils/sitemap/"],
+            "args": ["-m", "sitemap", "-e", "dev"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate TOC",
+            "type": "shell",
+            "command": "python",
+            "args": ["-m", "toc", "-e", "dev"],
             "problemMatcher": []
         },
         {
             "label": "Package Site",
             "type": "shell",
             "command": "python",
-            "args": ["utils/package/"],
+            "args": ["-m", "package", "-e", "dev"],
             "problemMatcher": []
         },
         {
-            "label": "Convert Markdown to HTML",
+            "label": "Build Complete Pipeline",
             "type": "shell",
             "command": "python",
-            "args": ["utils/generate/md_to_html.py"],
+            "args": ["-m", "gzbuild", "-e", "dev"],
             "problemMatcher": []
         }
     ]
@@ -452,7 +477,7 @@ For a comprehensive directory structure with detailed descriptions, see [PROJECT
 
 ##### Using Python module directly:
 ```bash
-python -m utils.serve
+python -m gzserve
 ```
 
 ##### Using VS Code task:
@@ -513,12 +538,12 @@ GZLint checks for:
 When editing markdown documentation in `docs/`:
 
 ```bash
-# Convert markdown to HTML
-python utils/generate/md_to_html.py
+# Convert markdown to HTML using generate module
+python -m utils.generate -e dev
 
 # Or use launcher script
-# Windows: .\scripts\md_to_html.cmd
-# Linux/Mac: ./scripts/md_to_html.sh
+# Windows: .\scripts\generate.cmd -e dev
+# Linux/Mac: ./scripts/generate.sh -e dev
 ```
 
 This converts documentation to HTML in `src/content/setup/` for web viewing.
@@ -530,10 +555,10 @@ When changing site configuration in `config/site.toml`:
 ```bash
 # Apply configuration changes (force mode - no prompts)
 # Windows
-.\scripts\setup_site.cmd --force-apply
+.\scripts\setup_site.cmd -e dev --force
 
 # Linux/Mac
-./scripts/setup_site.sh --force
+./scripts/setup_site.sh -e dev --force
 ```
 
 This updates:
@@ -595,14 +620,14 @@ Follow our coding standards:
 #### 4. Test Your Changes
 ```bash
 # Run all tests
-python -m utils.gzlint
+python -m gzlint -e dev
 
 # Test in browser
-python -m utils.serve
+python -m gzserve -e dev
 # Visit http://localhost:7190
 
 # Build package to ensure no build errors
-python -m utils.package
+python -m package -e dev
 ```
 
 #### 5. Submit Pull Request
@@ -694,7 +719,7 @@ python utils/sitemap/
 Remove orphaned files or completely clean an environment:
 
 ```bash
-# Remove orphaned files (files in publish/{env}/ not in src/)
+# Identify orphaned files (no deletion - default mode)
 # Windows
 .\scripts\gzclean.cmd -e dev
 
@@ -704,23 +729,33 @@ Remove orphaned files or completely clean an environment:
 # Preview what would be removed (dry-run)
 .\scripts\gzclean.cmd -e dev --dry-run
 
-# Remove ALL files from environment (prompts for confirmation)
+# Remove orphaned files only (requires confirmation)
+.\scripts\gzclean.cmd -e dev --clean-orphaned
+
+# Remove orphaned files without confirmation
+.\scripts\gzclean.cmd -e dev --clean-orphaned --force
+
+# Remove ALL files from environment (requires confirmation)
 .\scripts\gzclean.cmd -e dev --clean-all
 
 # Remove ALL files without confirmation (use with caution!)
 .\scripts\gzclean.cmd -e dev --clean-all --force
 ```
 
-#### Clean Module Features:
-- **Orphaned File Removal**: Default mode removes files that exist in environment but not in source
+#### Clean Module Features (v1.2 - November 2025):
+- **Identify-Only Default**: Default mode identifies orphaned files but doesn't delete them
+- **Clean Orphaned Mode**: `--clean-orphaned` removes only orphaned files (files in environment but not in source)
 - **Clean-All Mode**: `--clean-all` removes ALL files from environment directory
-- **Safety Confirmation**: `--clean-all` prompts for 'yes' confirmation unless `--force` is used
+- **Safety Confirmation**: Both clean modes prompt for 'yes' confirmation unless `--force` is used
 - **Dry-Run Preview**: `--dry-run` shows what would be deleted without actually deleting
+- **Automatic Backup Cleanup**: Removes old deploy backup directories (`.YYYYMMDD_*`) every run
 
 #### Use Cases:
-- Regular cleaning: Remove orphaned files after restructuring `src/`
-- Fresh rebuild: Use `--clean-all` before regenerating entire environment
-- Troubleshooting: Clear all cached/stale files with `--clean-all --force`
+- **Planning**: Default mode identifies what needs cleaning without making changes
+- **Regular cleaning**: Use `--clean-orphaned` to remove stale files after restructuring `src/`
+- **Fresh rebuild**: Use `--clean-all` before regenerating entire environment
+- **Automation**: Add `--force` flag for CI/CD pipelines (skips confirmation prompts)
+- **Troubleshooting**: Preview changes with `--dry-run` before committing to cleanup
 
 **⚠️ WARNING:** `--clean-all --force` is destructive and irreversible! Always preview with `--dry-run` first.
 
@@ -737,14 +772,16 @@ Runs the complete pipeline from start to finish:
 ```
 
 This executes all pipeline stages in order:
-1. `clean` (remove orphaned files)
-2. `setup --force` (apply configuration)
-3. `gzlint` (run linting checks)
-4. `generate` (generate content)
-5. `sitemap` (generate sitemap.xml)
-6. `toc` (generate table of contents)
-7. `package` (sync, minify, archive)
-8. `deploy` (deploy to environment)
+1. `clean` (identify orphaned files - no deletion by default)
+2. `compose` (generate source content from templates)
+3. `setup --force` (apply configuration)
+4. `gzlint` (run linting checks)
+5. `normalise` (normalize markdown formatting)
+6. `generate` (generate content)
+7. `sitemap` (generate sitemap.xml)
+8. `toc` (generate table of contents)
+9. `package` (sync, minify, archive)
+10. `deploy` (deploy to environment)
 
 ---
 
@@ -825,7 +862,7 @@ pip install -r requirements.txt
 ##### Solution:
 ```bash
 # Use different port (override config)
-python -m utils.serve -e dev -p 8080
+python -m gzserve -e dev -p 8080
 
 # Or find and kill process on the occupied port
 # Windows (replace 7190 with your port)
@@ -944,8 +981,8 @@ pip install tomlkit
 ### Week 3: Build Tools
 1. Run GZLint and fix any issues
 2. Use the package script and examine output
-3. Try markdown to HTML conversion
-4. Modify a config value and use `--force-apply`
+3. Try markdown to HTML conversion with generate module
+4. Modify a config value and use `--force` to apply changes
 
 ### Week 4: Making Changes
 1. Create a new content page
@@ -965,30 +1002,36 @@ source venv/bin/activate         # Activate (Linux/Mac)
 pip install -r requirements.txt  # Install all dependencies
 
 # Development
-python -m utils.serve -e dev     # Start dev server
-python -m utils.gzlint -e dev    # Run linter
-python -m utils.sitemap -e dev   # Generate sitemap
+python -m gzserve -e dev         # Start dev server
+python -m gzlint -e dev          # Run linter
+python -m sitemap -e dev         # Generate sitemap
+python -m toc -e dev             # Generate table of contents
 
 # Clean Environment
-python -m utils.clean -e dev                    # Remove orphaned files
-python -m utils.clean -e dev --dry-run          # Preview cleanup
-python -m utils.clean -e dev --clean-all        # Remove ALL files (with confirmation)
-python -m utils.clean -e dev --clean-all --force  # Remove ALL files (no confirmation)
+python -m clean -e dev                        # Identify orphaned files (no deletion)
+python -m clean -e dev --dry-run              # Preview what would be cleaned
+python -m clean -e dev --clean-orphaned       # Remove orphaned files (with confirmation)
+python -m clean -e dev --clean-orphaned --force  # Remove orphaned files (no confirmation)
+python -m clean -e dev --clean-all            # Remove ALL files (with confirmation)
+python -m clean -e dev --clean-all --force    # Remove ALL files (no confirmation)
 
 # Build & Deploy
-python -m utils.package -e dev   # Package for production
-python -m utils.deploy -e prod   # Deploy to server
+python -m package -e dev         # Package for production
+python -m deploy -e prod         # Deploy to server
+python -m gzhost -e dev          # Start FTP test server
 
 # Configuration
-python utils/setup/setup_site.py            # Interactive setup
-python utils/setup/setup_site.py --force-apply  # Apply config only
+python -m setup -e dev           # Interactive setup
+python -m setup -e dev --force   # Apply config only (skip prompts)
 
-# Documentation
-python utils/generate/md_to_html.py  # Convert markdown to HTML
+# Content Generation
+python -m utils.generate -e dev  # Generate content from markdown
+python -m utils.compose -e dev   # Generate source from templates
+python -m normalise -e dev       # Normalize markdown formatting
 
 # Complete Pipeline
-.\scripts\gzbuild.cmd -e dev     # Windows: Run full pipeline
-./scripts/gzbuild.sh -e dev      # Linux/Mac: Run full pipeline
+.\scripts\gzbuild.cmd -e dev     # Windows: Run full 10-step pipeline
+./scripts/gzbuild.sh -e dev      # Linux/Mac: Run full 10-step pipeline
 ```
 
 ---

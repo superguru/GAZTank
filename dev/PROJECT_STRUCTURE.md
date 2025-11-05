@@ -7,8 +7,16 @@ This document provides a comprehensive overview of the GAZTank project directory
 ```
 GAZTank/
 ├── src/                          # Source files
-│   ├── index.html               # Main HTML file with navigation structure
+│   ├── index.html               # Main HTML file (generated from components, gitignored)
 │   ├── .htaccess                # Apache server configuration
+│   ├── components/              # HTML source components (tracked in git)
+│   │   ├── index-base.html      # Main HTML structure with composition markers
+│   │   ├── sidebar.md           # Navigation sidebar in markdown format
+│   │   ├── mermaid-css.html     # Mermaid.js CSS component
+│   │   ├── mermaid-js.html      # Mermaid.js JavaScript component
+│   │   ├── prism-css.html       # Prism.js CSS component
+│   │   ├── prism-js.html        # Prism.js JavaScript component
+│   │   └── README.md            # Component documentation
 │   ├── css/
 │   │   ├── styles.css           # All styles (Grid, Flexbox, components)
 │   │   └── variables.css        # CSS custom properties and theme variables
@@ -44,11 +52,16 @@ GAZTank/
 │
 ├── utils/                        # Utility modules
 │   ├── 00MODULE_MATURITY.md     # Module maturity tracking document
-│   ├── FLOW_PIPELINE.md         # Pipeline flow documentation
-│   ├── clean/                   # Orphaned file cleanup module
+│   ├── README.md                # Utilities overview
+│   ├── clean/                   # Orphaned file cleanup module (v1.2)
 │   │   ├── __init__.py
 │   │   ├── __main__.py
 │   │   ├── cleaner.py           # Core cleanup logic
+│   │   └── README.md
+│   ├── compose/                 # Source content composition module
+│   │   ├── __init__.py
+│   │   ├── __main__.py
+│   │   ├── composer.py          # Core composition logic
 │   │   └── README.md
 │   ├── deploy/                  # FTP/FTPS deployment module
 │   │   ├── __init__.py
@@ -58,15 +71,28 @@ GAZTank/
 │   ├── generate/                # Content generation module
 │   │   ├── __init__.py
 │   │   ├── __main__.py
-│   │   ├── generate.py          # Core generation logic
+│   │   ├── generator.py         # Core generation logic
+│   │   └── README.md
+│   ├── gzbuild/                 # Complete pipeline orchestration module
+│   │   ├── __init__.py
+│   │   ├── __main__.py
+│   │   ├── builder.py           # Pipeline orchestration logic
 │   │   └── README.md
 │   ├── gzconfig/                # Configuration management library
 │   │   ├── __init__.py
+│   │   ├── compose.py           # Compose configuration
 │   │   ├── deploy.py            # Deploy configuration
+│   │   ├── ftp_users.py         # FTP users configuration
 │   │   ├── generate.py          # Generate configuration
 │   │   ├── pipeline.py          # Pipeline configuration
 │   │   ├── site.py              # Site configuration
-│   │   └── tools.py             # Tools configuration
+│   │   ├── tools.py             # Tools configuration
+│   │   └── README.md
+│   ├── gzhost/                  # FTP test server module
+│   │   ├── __init__.py
+│   │   ├── __main__.py
+│   │   ├── server.py            # FTP server implementation
+│   │   └── README.md
 │   ├── gzlint/                  # HTML/JS linting module
 │   │   ├── __init__.py
 │   │   ├── __main__.py
@@ -76,21 +102,21 @@ GAZTank/
 │   │   ├── __init__.py
 │   │   ├── logger.py            # Core logging infrastructure
 │   │   └── README.md
+│   ├── gzserve/                 # Development server module
+│   │   ├── __init__.py
+│   │   ├── __main__.py
+│   │   ├── server.py            # HTTP server implementation
+│   │   └── README.md
 │   ├── normalise/               # Markdown normalization module
 │   │   ├── __init__.py
 │   │   ├── __main__.py
 │   │   ├── normaliser.py        # Core normalization logic
-│   │   ├── example_usage.py
+│   │   ├── batch.py             # Batch normalizer for pipeline
 │   │   └── README.md
 │   ├── package/                 # Build/package module
 │   │   ├── __init__.py
 │   │   ├── __main__.py
 │   │   ├── packager.py          # Core packaging logic
-│   │   └── README.md
-│   ├── gzserve/                 # Development server module
-│   │   ├── __init__.py
-│   │   ├── __main__.py
-│   │   ├── server.py            # HTTP server implementation
 │   │   └── README.md
 │   ├── setup/                   # Interactive site configuration
 │   │   ├── __init__.py
@@ -118,11 +144,13 @@ GAZTank/
 │
 ├── config/                       # Configuration files (TOML format)
 │   ├── site.toml                # Site configuration (colors, branding, SEO)
+│   ├── compose.toml             # Compose module configuration
 │   ├── deploy.toml              # FTP deployment credentials (gitignored)
 │   ├── deploy.example.toml      # Deployment config template
+│   ├── environments.toml        # Environment-specific configuration (ports, paths)
+│   ├── ftp_users.toml           # FTP test server users configuration
 │   ├── generate.toml            # Content generation configuration
 │   ├── gzlogrotate.toml         # Log rotation configuration
-│   ├── environments.toml        # Environment-specific configuration (ports, paths)
 │   └── tools.toml               # Tools configuration
 │
 ├── docs/                         # Documentation (Markdown sources)
@@ -140,8 +168,8 @@ GAZTank/
 │   └── backups/                 # Configuration backups with timestamps
 │
 ├── scripts/                      # Cross-platform launcher scripts
-│   ├── gzclean.cmd              # Windows cleanup launcher
-│   ├── gzclean.sh               # Linux/Unix cleanup launcher
+│   ├── compose.cmd              # Windows compose launcher
+│   ├── compose.sh               # Linux/Unix compose launcher
 │   ├── deploy.cmd               # Windows deployment launcher
 │   ├── deploy.sh                # Linux/Unix deployment launcher
 │   ├── generate.cmd             # Windows content generator launcher
@@ -152,14 +180,18 @@ GAZTank/
 │   ├── generate_toc.sh          # Linux/Unix TOC generator launcher
 │   ├── gzbuild.cmd              # Windows complete pipeline build
 │   ├── gzbuild.sh               # Linux/Unix complete pipeline build
+│   ├── gzclean.cmd              # Windows cleanup launcher
+│   ├── gzclean.sh               # Linux/Unix cleanup launcher
+│   ├── gzhost.cmd               # Windows FTP test server launcher
+│   ├── gzhost.sh                # Linux/Unix FTP test server launcher
 │   ├── gzlint.cmd               # Windows linter launcher
 │   ├── gzlint.sh                # Linux/Unix linter launcher
+│   ├── gzserve.cmd              # Windows dev server launcher
+│   ├── gzserve.sh               # Linux/Unix dev server launcher
 │   ├── normalise.cmd            # Windows markdown normalizer launcher
 │   ├── normalise.sh             # Linux/Unix markdown normalizer launcher
 │   ├── package.cmd              # Windows package launcher
 │   ├── package.sh               # Linux/Unix package launcher
-│   ├── server.cmd               # Windows dev server launcher
-│   ├── server.sh                # Linux/Unix dev server launcher
 │   ├── setup_site.cmd           # Windows setup wizard launcher
 │   └── setup_site.sh            # Linux/Unix setup wizard launcher
 │
@@ -209,28 +241,52 @@ GAZTank/
 
 ### `/src/` - Source Files
 The main source directory containing all files that will be deployed to the web server:
-- **index.html**: Single-page application shell with navigation structure
+- **components/**: Source HTML components (tracked in git)
+  - **index-base.html**: Main HTML structure with composition markers
+  - **sidebar.md**: Navigation sidebar in markdown format
+  - **mermaid-css/js.html**: Mermaid.js diagram library components
+  - **prism-css/js.html**: Prism.js syntax highlighting components
+  - **README.md**: Component usage and workflow documentation
+- **index.html**: Single-page application shell (generated from components, gitignored)
 - **css/**: Stylesheets with CSS custom properties for theming
 - **js/**: Client-side JavaScript for SPA functionality
 - **content/**: HTML content files loaded dynamically by the SPA
 - **images/**: Optimized images (WebP format with responsive sizes)
 
+#### Components Workflow:
+1. Edit source components in `src/components/`
+2. Run compose module: `python -m utils.compose -e dev`
+3. Output generated to `src/index.html` (gitignored)
+4. Composition markers like `<!-- COMPOSE:SIDEBAR:enable_sidebar_toggle -->` control conditional inclusion based on `config/site.toml` feature flags
+
 ### `/utils/` - Utility Modules
 Python modules following a consistent structure:
 - Each module has: `__init__.py`, `__main__.py`, core logic file, and `README.md`
 - **Foundational modules**: gzconfig (configuration), gzlogging (logging)
-- **Pipeline modules**: clean, deploy, generate, gzlint, normalise, package, gzserve, setup, sitemap, toc
+- **Pipeline modules**: clean, compose, deploy, generate, gzbuild, gzhost, gzlint, gzserve, normalise, package, setup, sitemap, toc
 - All modules are environment-aware (require `-e` argument)
 - All modules use gzconfig for configuration management
 - All modules use gzlogging for centralized logging
 
+#### Clean Module (v1.2) Safety Features:
+- **Identify-Only Default**: Default mode identifies orphaned files without deletion
+- **Three Operating Modes**:
+  - Default: Identify orphaned files (safe, no changes)
+  - `--clean-orphaned`: Remove only orphaned files (requires confirmation)
+  - `--clean-all`: Remove ALL files from environment (requires confirmation)
+- **Confirmation Prompts**: Both clean modes require typing "yes" to proceed (unless `--force` is used)
+- **Automatic Backup Cleanup**: Removes old deploy backup directories every run
+- **Dry-Run Preview**: `--dry-run` flag shows what would be deleted without making changes
+
 ### `/config/` - Configuration Files
 TOML configuration files accessed via gzconfig library:
 - **site.toml**: Site settings (colors, branding, SEO metadata)
+- **compose.toml**: Compose module configuration for template-based content generation
 - **deploy.toml**: FTP/FTPS credentials (gitignored, use deploy.example.toml as template)
+- **environments.toml**: Environment-specific directory paths and server ports (dev/staging/prod)
+- **ftp_users.toml**: FTP test server user credentials for gzhost module
 - **generate.toml**: Content generation file groups and mappings
 - **gzlogrotate.toml**: Log rotation settings
-- **environments.toml**: Environment-specific directory paths and server ports (dev/staging/prod)
 - **tools.toml**: Tools and utilities configuration
 
 ### `/docs/` - Documentation Sources
@@ -284,28 +340,33 @@ utils/{module}/
 2. **gzlogging** - Centralized logging infrastructure
 
 #### Pipeline:
-3. **clean** - Remove orphaned files from environment directories
-4. **deploy** - FTP/FTPS deployment to web server
-5. **generate** - Environment-aware content generation
-6. **gzlint** - HTML/JS linting and validation
-7. **normalise** - Markdown file normalization
-8. **package** - Build system with minification and archiving
-9. **gzserve** - Development HTTP server
-10. **setup** - Interactive site configuration wizard
-11. **sitemap** - XML sitemap generation
-12. **toc** - Table of contents generation for HTML files
+3. **clean** - Identify and remove orphaned files from environment directories (v1.2)
+4. **compose** - Generate source content from templates
+5. **deploy** - FTP/FTPS deployment to web server
+6. **generate** - Environment-aware content generation (markdown to HTML)
+7. **gzbuild** - Complete pipeline orchestration (10-step build process)
+8. **gzhost** - FTP test server for deployment testing
+9. **gzlint** - HTML/JS linting and validation
+10. **gzserve** - Development HTTP server
+11. **normalise** - Markdown file formatting normalization
+12. **package** - Build system with minification and archiving
+13. **setup** - Interactive site configuration wizard
+14. **sitemap** - XML sitemap generation
+15. **toc** - Table of contents generation for HTML files
 
 ## Build Pipeline
 
-The complete build process (`gzbuild.cmd/sh`) runs:
-1. **clean** - Remove orphaned files from target environment
-2. **setup --force** - Apply site configuration and regenerate config-driven files
-3. **gzlint** - Run linting checks on all content
-4. **generate** - Generate fresh content files
-5. **sitemap** - Generate sitemap.xml
-6. **toc** - Add table of contents to HTML files
-7. **package** - Sync, minify, and archive site files
-8. **deploy** - Deploy to target environment
+The complete build process (`gzbuild.cmd/sh`) runs 10 steps:
+1. **clean** - Identify orphaned files (no deletion by default)
+2. **compose** - Generate source content from templates
+3. **setup --force** - Apply site configuration and regenerate config-driven files
+4. **gzlint** - Run linting checks on all content
+5. **normalise** - Normalize markdown file formatting
+6. **generate** - Generate content files (markdown to HTML)
+7. **sitemap** - Generate sitemap.xml
+8. **toc** - Add table of contents to HTML files
+9. **package** - Sync, minify, and archive site files
+10. **deploy** - Deploy to target environment
 
 ## Key Features
 
@@ -313,6 +374,13 @@ The complete build process (`gzbuild.cmd/sh`) runs:
 - Site colors, branding, and SEO in `config/site.toml`
 - No hardcoded values in code
 - Easy customization and rebranding
+
+### Component-Based Architecture
+- Source components tracked in git (`src/components/`)
+- Generated files gitignored (`src/index.html`)
+- Composition markers for conditional inclusion based on feature flags
+- Compose module generates final HTML from components
+- Supports HTML and markdown component formats
 
 ### Single-Page Application (SPA)
 - Client-side routing without page reloads

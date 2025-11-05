@@ -62,12 +62,12 @@ enabled = true
 input_type = "markdown"
 output_dir = "setup"
 files = [
+    "README.md",
     "docs/SETUP_SITE.md",
     "docs/DESIGN_RULES.md",
     "docs/DEVELOPER_SETUP.md",
     "docs/SEO_IMPLEMENTATION.md",
     "docs/RESPONSIVE_IMAGES.md",
-    "README.md",
     "dev/PROJECT_STRUCTURE.md",
 ]
 
