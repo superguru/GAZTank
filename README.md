@@ -1,6 +1,6 @@
 # GAZ Tank
 
-![GitHub release](https://img.shields.io/github/v/release/superguru/GAZTank)
+![GitHub tag](https://img.shields.io/github/v/tag/superguru/GAZTank)
 ![License](https://img.shields.io/github/license/superguru/GAZTank)
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![Issues](https://img.shields.io/github/issues/superguru/GAZTank)
