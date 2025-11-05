@@ -90,7 +90,7 @@ logo_75 = "gaztank_logo_75x75.webp"
 logo_50 = "gaztank_logo_50x50.webp"
 favicon_32 = "gaztank_favicon_32x32.webp"
 favicon_16 = "gaztank_favicon_16x16.webp"
-og_image = "site_logo_256x256.webp"
+og_image = "gaztank_logo_256x256.webp"
 logo_alt_text = "GAZ Tank Website Logo"
 
 [features]
