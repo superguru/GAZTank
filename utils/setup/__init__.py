@@ -30,7 +30,6 @@ from .backup_manager import create_backup, cleanup_old_backups
 from .config_io import (
     load_existing_config,
     is_first_time_setup,
-    update_config_file,
     backup_all_config_files
 )
 
@@ -71,7 +70,6 @@ __all__ = [
     # Config I/O
     'load_existing_config',
     'is_first_time_setup',
-    'update_config_file',
     'backup_all_config_files',
     # User Interaction
     'get_input',

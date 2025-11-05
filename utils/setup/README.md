@@ -279,7 +279,7 @@ from setup import (
     
     # Config I/O
     load_existing_config, is_first_time_setup,
-    update_config_file, backup_all_config_files,
+    backup_all_config_files,
     
     # User Interaction
     get_input, get_yes_no, interactive_setup,
@@ -478,8 +478,8 @@ python -m setup -e dev
 from setup import config_io, file_generators
 
 config = config_io.load_existing_config()
-config['site_name'] = 'New Name'
-config_io.update_config_file(config)
+# Note: Direct config writing is handled by specific functions like update_canonical_base()
+# To update site.toml, edit the file directly or use gzconfig module (future)
 file_generators.generate_css_variables(config)
 ```
 
