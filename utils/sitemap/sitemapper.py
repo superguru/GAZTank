@@ -23,6 +23,7 @@ from xml.dom import minidom
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from utils.gzlogging import get_logging_context
 from utils.gzconfig import get_pipeline_config
+from utils.setup.config_io import load_existing_config
 
 
 def get_content_files(content_dir, log):
@@ -411,8 +412,17 @@ Environments are configured in config/environments.toml
     index_file = env_dir / 'index.html'
     output_file = env_dir / 'sitemap.xml'
     
-    # Base URL for the site
-    base_url = 'https://mygaztank.com/'
+    # Load site configuration to get canonical base URL
+    try:
+        site_config = load_existing_config()
+        base_url = site_config.get('canonical_base', 'https://gaztank.org/')
+        if log:
+            log.inf(f"Using base URL from site config: {base_url}")
+    except Exception as e:
+        base_url = 'https://gaztank.org/'
+        if log:
+            log.wrn(f"Could not load site config, using default base URL: {base_url}")
+        print(f"⚠️  Warning: Could not load site config, using default base URL: {base_url}")
     
     # Validate directories exist
     if not content_dir.exists():

@@ -274,6 +274,13 @@ def load_existing_config():
                 'toc_max_width': layout.get('toc_max_width', fallback_defaults['toc_max_width']),  # type: ignore[union-attr]
             })
         
+        # SEO
+        if 'seo' in config:
+            seo = config['seo']  # type: ignore[index]
+            existing_config.update({
+                'canonical_base': seo.get('canonical_base', f"https://{existing_config.get('domain', 'example.com')}/"),  # type: ignore[union-attr]
+            })
+        
         # Fill in any missing values with fallbacks
         for key, value in fallback_defaults.items():
             if key not in existing_config:
@@ -284,6 +291,41 @@ def load_existing_config():
     except Exception as e:
         print_warning(f"Error reading existing config: {e}")
         return fallback_defaults
+
+
+def update_canonical_base(domain):
+    """Update canonical_base in site.toml based on domain
+    
+    Args:
+        domain: Domain name (e.g., 'gaztank.org')
+    """
+    config_path = Path("config/site.toml")
+    
+    if not config_path.exists():
+        print_warning(f"Configuration file not found: {config_path}")
+        return
+    
+    try:
+        # Load existing TOML file
+        with open(config_path, 'r') as f:
+            config = tomlkit.load(f)
+        
+        # Ensure seo section exists
+        if 'seo' not in config:
+            config['seo'] = {}  # type: ignore[index]
+        
+        # Update canonical_base
+        new_canonical_base = f"https://{domain}/"
+        config['seo']['canonical_base'] = new_canonical_base  # type: ignore[index]
+        
+        # Write back to file
+        with open(config_path, 'w') as f:
+            tomlkit.dump(config, f)
+        
+        print_info(f"Updated canonical_base to: {new_canonical_base}")
+        
+    except Exception as e:
+        print_warning(f"Could not update canonical_base: {e}")
 
 
 def is_first_time_setup():

@@ -1,199 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://mygaztank.com/#home</loc>
+        <loc>https://gaztank.org/#home</loc>
         <lastmod>2025-10-21</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup_guide</loc>
+        <loc>https://gaztank.org/#setup_guide</loc>
         <lastmod>2025-10-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#about</loc>
+        <loc>https://gaztank.org/#about</loc>
         <lastmod>2025-10-20</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#contact</loc>
+        <loc>https://gaztank.org/#contact</loc>
         <lastmod>2025-10-20</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#future</loc>
+        <loc>https://gaztank.org/#future</loc>
         <lastmod>2025-10-20</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#nesting/brother_node</loc>
+        <loc>https://gaztank.org/#nesting/brother_node</loc>
         <lastmod>2025-10-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#nesting/middle_child</loc>
+        <loc>https://gaztank.org/#nesting/middle_child</loc>
         <lastmod>2025-10-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#nesting/nesting</loc>
+        <loc>https://gaztank.org/#nesting/nesting</loc>
         <lastmod>2025-10-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#nesting/sister_node</loc>
+        <loc>https://gaztank.org/#nesting/sister_node</loc>
         <lastmod>2025-10-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/clean/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/clean/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/compose/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/compose/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/deploy/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/deploy/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/generate/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/generate/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/gzbuild/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/gzbuild/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/gzconfig/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/gzconfig/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/gzhost/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/gzhost/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/gzlint/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/gzlint/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/gzlogging/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/gzlogging/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/gzserve/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/gzserve/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/normalise/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/normalise/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/package/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/package/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/setup/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/setup/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/sitemap/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/sitemap/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#pipeline-docs/toc/README</loc>
+        <loc>https://gaztank.org/#pipeline-docs/toc/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/DEVELOPER_SETUP</loc>
+        <loc>https://gaztank.org/#setup/DEVELOPER_SETUP</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/README</loc>
+        <loc>https://gaztank.org/#setup/README</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/RESPONSIVE_IMAGES</loc>
+        <loc>https://gaztank.org/#setup/RESPONSIVE_IMAGES</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/SEO_IMPLEMENTATION</loc>
+        <loc>https://gaztank.org/#setup/SEO_IMPLEMENTATION</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/SETUP_SITE</loc>
+        <loc>https://gaztank.org/#setup/SETUP_SITE</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#test_lazy_loading</loc>
+        <loc>https://gaztank.org/#test_lazy_loading</loc>
         <lastmod>2025-10-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/DESIGN_RULES</loc>
+        <loc>https://gaztank.org/#setup/DESIGN_RULES</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://mygaztank.com/#setup/PROJECT_STRUCTURE</loc>
+        <loc>https://gaztank.org/#setup/PROJECT_STRUCTURE</loc>
         <lastmod>2025-11-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>

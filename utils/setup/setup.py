@@ -49,6 +49,7 @@ print_setup_completion = ui_helpers.print_setup_completion
 load_existing_config = config_io.load_existing_config
 is_first_time_setup = config_io.is_first_time_setup
 backup_all_config_files = config_io.backup_all_config_files
+update_canonical_base = config_io.update_canonical_base
 
 generate_css_variables = file_generators.generate_css_variables
 update_domain_references = file_generators.update_domain_references
@@ -194,6 +195,8 @@ def main():
     # Ensure canonical_base is updated based on domain
     if 'domain' in config_data and config_data['domain']:
         config_data['canonical_base'] = f"https://{config_data['domain']}/"
+        # Write canonical_base back to site.toml
+        update_canonical_base(config_data['domain'])
     
     # Apply the configuration
     return apply_configuration(config_data, args.environment, force=args.force)
