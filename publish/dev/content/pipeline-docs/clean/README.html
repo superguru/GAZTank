@@ -274,13 +274,14 @@
 <p>The clean module <strong>automatically removes old deploy backup directories</strong> every time it runs, regardless of operating mode or arguments. This cleanup:</p>
 <ul>
 <li><strong>Runs automatically</strong>: No flags needed, no prompts shown</li>
-<li><strong>Targets backup directories</strong>: Removes directories starting with <code>.</code> (except <code>.metainfo</code>)</li>
+<li><strong>Targets backup directories</strong>: Removes directories starting with <code>.2</code> (date-based deploy backups)</li>
 <li><strong>Examples of removed directories</strong>: <code>.20251105_092533_309_tnfs2</code>, <code>.20251105_092921_309_iom87</code></li>
+<li><strong>Preserved directories</strong>: <code>.metainfo</code> and other dot-directories not starting with <code>.2</code></li>
 <li><strong>Created by</strong>: Deploy module when uploading files via FTP</li>
 <li><strong>Safe to remove</strong>: These are temporary backup directories from deployment operations</li>
 <li><strong>Always logged</strong>: Backup removal is logged and included in statistics</li>
 </ul>
-<p>Deploy backups are created by the deploy module during FTP uploads to prevent data loss. Once confirmed successful, these backups can be safely removed to save disk space.</p>
+<p>Deploy backups are created by the deploy module during FTP uploads to prevent data loss. Once confirmed successful, these backups can be safely removed to save disk space. The clean module specifically targets date-based backup directories (starting with <code>.2</code> for year 2xxx) while preserving system directories like <code>.metainfo</code>.</p>
 <h3 id="orphaned-file-detection-logic">Orphaned File Detection Logic</h3>
 <p>The cleaner determines orphaned files by:</p>
 <ol>
