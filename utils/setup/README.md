@@ -278,8 +278,7 @@ from setup import (
     create_backup, cleanup_old_backups,
     
     # Config I/O
-    load_existing_config, is_first_time_setup,
-    backup_all_config_files,
+    load_existing_config, backup_all_config_files,
     
     # User Interaction
     get_input, get_yes_no, interactive_setup,

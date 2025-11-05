@@ -47,7 +47,6 @@ print_error = ui_helpers.print_error
 print_setup_completion = ui_helpers.print_setup_completion
 
 load_existing_config = config_io.load_existing_config
-is_first_time_setup = config_io.is_first_time_setup
 backup_all_config_files = config_io.backup_all_config_files
 update_canonical_base = config_io.update_canonical_base
 
