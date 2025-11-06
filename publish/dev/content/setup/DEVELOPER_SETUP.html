@@ -1,7 +1,299 @@
-<h1>🛠️ GAZ Tank Developer Environment Setup</h1>
+<h1>🛠️ GAZ Tank Developer Environment Setup</h1><nav class="table-of-contents">
+<div class="toc-header">
+<div class="toc-header-left">
+<ul>
+<li class="toc-section">
+<div class="toc-section-header">
+<button class="toc-section-toggle" data-section="headings">▼</button>
+<span class="toc-section-title">Contents</span>
+</div>
+<ul class="toc-section-content" data-section="headings">
+<li>
+<a href="#table-of-contents">📋 Table of Contents</a>
+</li>
+<li>
+<a href="#prerequisites">🎯 Prerequisites</a>
+</li>
+<li>
+<a href="#required-software">📦 Required Software</a>
+</li>
+<li>
+<a href="#python-environment-setup">🐍 Python Environment Setup</a>
+</li>
+<li>
+<a href="#ide-configuration-vs-code">🎨 IDE Configuration (VS Code)</a>
+</li>
+<li>
+<a href="#project-structure-for-development">📂 Project Structure for Development</a>
+</li>
+<li>
+<a href="#development-workflow">🔄 Development Workflow</a>
+</li>
+<li>
+<a href="#contributing-to-gaz-tank">🤝 Contributing to GAZ Tank</a>
+</li>
+<li>
+<a href="#build-tools">🔨 Build Tools</a>
+</li>
+<li>
+<a href="#testing-and-validation">✅ Testing and Validation</a>
+</li>
+<li>
+<a href="#troubleshooting">🐛 Troubleshooting</a>
+</li>
+<li>
+<a href="#additional-resources">📚 Additional Resources</a>
+</li>
+<li>
+<a href="#learning-path-for-new-developers">🎓 Learning Path for New Developers</a>
+</li>
+<li>
+<a href="#quick-command-reference">✨ Quick Command Reference</a>
+<ul>
+<li>
+<a href="#operating-system-support">Operating System Support</a>
+</li>
+<li>
+<a href="#required-knowledge">Required Knowledge</a>
+</li>
+<li>
+<a href="#python-311-or-later">1. Python 3.11 or Later</a>
+</li>
+<li>
+<a href="#git">2. Git</a>
+</li>
+<li>
+<a href="#visual-studio-code-recommended-ide">3. Visual Studio Code (Recommended IDE)</a>
+</li>
+<li>
+<a href="#web-browser-with-devtools">4. Web Browser with DevTools</a>
+</li>
+<li>
+<a href="#create-a-virtual-environment-optional-but-recommended">1. Create a Virtual Environment (Optional but Recommended)</a>
+</li>
+<li>
+<a href="#install-required-python-packages">2. Install Required Python Packages</a>
+</li>
+<li>
+<a href="#verify-python-environment">3. Verify Python Environment</a>
+</li>
+<li>
+<a href="#open-project-in-vs-code">1. Open Project in VS Code</a>
+</li>
+<li>
+<a href="#configure-python-interpreter">2. Configure Python Interpreter</a>
+</li>
+<li>
+<a href="#recommended-vs-code-settings">3. Recommended VS Code Settings</a>
+</li>
+<li>
+<a href="#create-launch-configuration-for-debugging">4. Create Launch Configuration for Debugging</a>
+</li>
+<li>
+<a href="#create-tasks-configuration">5. Create Tasks Configuration</a>
+</li>
+<li>
+<a href="#development-focused-overview">Development-Focused Overview:</a>
+</li>
+<li>
+<a href="#initial-setup">Initial Setup</a>
+</li>
+<li>
+<a href="#daily-development-workflow">Daily Development Workflow</a>
+</li>
+<li>
+<a href="#pre-commit-checklist">Pre-Commit Checklist</a>
+</li>
+<li>
+<a href="#before-you-start">Before You Start</a>
+</li>
+<li>
+<a href="#contribution-process">Contribution Process</a>
+</li>
+<li>
+<a href="#coding-standards">Coding Standards</a>
+</li>
+<li>
+<a href="#security">Security</a>
+</li>
+<li>
+<a href="#package-for-production">Package for Production</a>
+</li>
+<li>
+<a href="#generate-sitemap">Generate Sitemap</a>
+</li>
+<li>
+<a href="#clean-environment">Clean Environment</a>
+</li>
+<li>
+<a href="#build-complete-pipeline">Build Complete Pipeline</a>
+</li>
+<li>
+<a href="#manual-testing">Manual Testing</a>
+</li>
+<li>
+<a href="#automated-validation">Automated Validation</a>
+</li>
+<li>
+<a href="#browser-devtools-checks">Browser DevTools Checks</a>
+</li>
+<li>
+<a href="#common-issues">Common Issues</a>
+</li>
+<li>
+<a href="#project-documentation">Project Documentation</a>
+</li>
+<li>
+<a href="#contributing-community">Contributing &amp; Community</a>
+</li>
+<li>
+<a href="#external-resources">External Resources</a>
+</li>
+<li>
+<a href="#week-1-environment-basics">Week 1: Environment &amp; Basics</a>
+</li>
+<li>
+<a href="#week-2-understanding-the-codebase">Week 2: Understanding the Codebase</a>
+</li>
+<li>
+<a href="#week-3-build-tools">Week 3: Build Tools</a>
+</li>
+<li>
+<a href="#week-4-making-changes">Week 4: Making Changes</a>
+</li>
+<li>
+<a href="#happy-coding">Happy coding! 🚀</a>
+<ul>
+<li>
+<a href="#windows">Windows:</a>
+</li>
+<li>
+<a href="#linuxmac">Linux/Mac:</a>
+</li>
+<li>
+<a href="#windows-1">Windows:</a>
+</li>
+<li>
+<a href="#linux">Linux:</a>
+</li>
+<li>
+<a href="#mac">Mac:</a>
+</li>
+<li>
+<a href="#required-vs-code-extensions">Required VS Code Extensions</a>
+</li>
+<li>
+<a href="#optional-but-recommended-extensions">Optional but Recommended Extensions</a>
+</li>
+<li>
+<a href="#windows-powershell">Windows (PowerShell):</a>
+</li>
+<li>
+<a href="#linuxmac-1">Linux/Mac:</a>
+</li>
+<li>
+<a href="#manual-installation-alternative">Manual Installation (Alternative)</a>
+</li>
+<li>
+<a href="#quick-install-all-at-once">Quick Install (All at Once)</a>
+</li>
+<li>
+<a href="#start-development-server">1. Start Development Server</a>
+</li>
+<li>
+<a href="#make-changes">2. Make Changes</a>
+</li>
+<li>
+<a href="#validate-code">3. Validate Code</a>
+</li>
+<li>
+<a href="#update-documentation">4. Update Documentation</a>
+</li>
+<li>
+<a href="#update-configuration">5. Update Configuration</a>
+</li>
+<li>
+<a href="#required-reading">Required Reading:</a>
+</li>
+<li>
+<a href="#report-issues">1. Report Issues</a>
+</li>
+<li>
+<a href="#fork-and-branch">2. Fork and Branch</a>
+</li>
+<li>
+<a href="#make-changes-1">3. Make Changes</a>
+</li>
+<li>
+<a href="#test-your-changes">4. Test Your Changes</a>
+</li>
+<li>
+<a href="#submit-pull-request">5. Submit Pull Request</a>
+</li>
+<li>
+<a href="#commit-message-format">Commit Message Format</a>
+</li>
+<li>
+<a href="#code-style">Code Style</a>
+</li>
+<li>
+<a href="#found-a-vulnerability">Found a vulnerability?</a>
+</li>
+<li>
+<a href="#build-pipeline">Build pipeline:</a>
+</li>
+<li>
+<a href="#output">Output:</a>
+</li>
+<li>
+<a href="#clean-module-features-v12-november-2025">Clean Module Features (v1.2 - November 2025):</a>
+</li>
+<li>
+<a href="#use-cases">Use Cases:</a>
+</li>
+<li>
+<a href="#gzlint-htmljs">GZLint (HTML/JS)</a>
+</li>
+<li>
+<a href="#w3c-html-validator-optional">W3C HTML Validator (Optional)</a>
+</li>
+<li>
+<a href="#python-import-errors">1. Python Import Errors</a>
+</li>
+<li>
+<a href="#server-wont-start">2. Server Won't Start</a>
+</li>
+<li>
+<a href="#permission-denied-on-scripts">3. Permission Denied on Scripts</a>
+</li>
+<li>
+<a href="#powershell-execution-policy">4. PowerShell Execution Policy</a>
+</li>
+<li>
+<a href="#cssjs-not-minifying">5. CSS/JS Not Minifying</a>
+</li>
+<li>
+<a href="#markdown-conversion-fails">6. Markdown Conversion Fails</a>
+</li>
+<li>
+<a href="#toml-config-errors">7. TOML Config Errors</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toc-header-right">
+<button aria-label="Toggle table of contents" class="toc-toggle">▼</button>
+</div>
+</div>
+</nav>
 <p>This guide covers setting up a complete development environment for working on the GAZ Tank Website System.</p>
 <hr/>
-<h2>📋 Table of Contents</h2>
+<h2 id="table-of-contents">📋 Table of Contents</h2>
 <ul>
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#required-software">Required Software</a></li>
@@ -14,14 +306,14 @@
 <li><a href="#troubleshooting">Troubleshooting</a></li>
 </ul>
 <hr/>
-<h2>🎯 Prerequisites</h2>
-<h3>Operating System Support</h3>
+<h2 id="prerequisites">🎯 Prerequisites</h2>
+<h3 id="operating-system-support">Operating System Support</h3>
 <ul>
 <li><strong>Windows 10/11</strong> (with PowerShell 5.1+ or PowerShell Core 7+)</li>
 <li><strong>Linux</strong> (Ubuntu 20.04+, Debian 10+, or similar)</li>
 <li><strong>macOS</strong> (10.15+)</li>
 </ul>
-<h3>Required Knowledge</h3>
+<h3 id="required-knowledge">Required Knowledge</h3>
 <ul>
 <li>Basic command line usage (PowerShell/Bash)</li>
 <li>HTML, CSS, and JavaScript fundamentals</li>
@@ -29,10 +321,10 @@
 <li>Git version control</li>
 </ul>
 <hr/>
-<h2>📦 Required Software</h2>
-<h3>1. Python 3.11 or Later</h3>
+<h2 id="required-software">📦 Required Software</h2>
+<h3 id="python-311-or-later">1. Python 3.11 or Later</h3>
 <p><strong>Why:</strong> All build tools, setup wizards, and utilities are written in Python.</p>
-<h4>Windows:</h4>
+<h4 id="windows">Windows:</h4>
 <p>Download from <a href="https://www.python.org/downloads/">python.org</a></p>
 <p>During installation:</p>
 <ul>
@@ -46,7 +338,7 @@
 pip --version
 # Should show: pip 23.x or later
 </code></pre>
-<h4>Linux/Mac:</h4>
+<h4 id="linuxmac">Linux/Mac:</h4>
 <pre><code class="language-bash"># Ubuntu/Debian
 sudo apt update
 sudo apt install python3.11 python3-pip python3-venv
@@ -58,23 +350,23 @@ brew install python@3.11
 python3 --version
 pip3 --version
 </code></pre>
-<h3>2. Git</h3>
+<h3 id="git">2. Git</h3>
 <p><strong>Why:</strong> Version control for code management and collaboration.</p>
-<h4>Windows:</h4>
+<h4 id="windows-1">Windows:</h4>
 <p>Download from <a href="https://git-scm.com/download/win">git-scm.com</a></p>
-<h4>Linux:</h4>
+<h4 id="linux">Linux:</h4>
 <pre><code class="language-bash">sudo apt install git  # Ubuntu/Debian
 </code></pre>
-<h4>Mac:</h4>
+<h4 id="mac">Mac:</h4>
 <pre><code class="language-bash">brew install git
 </code></pre>
 <p>Verify:</p>
 <pre><code class="language-bash">git --version
 </code></pre>
-<h3>3. Visual Studio Code (Recommended IDE)</h3>
+<h3 id="visual-studio-code-recommended-ide">3. Visual Studio Code (Recommended IDE)</h3>
 <p><strong>Why:</strong> Best-in-class support for web development with excellent extensions.</p>
 <p>Download from <a href="https://code.visualstudio.com/">code.visualstudio.com</a></p>
-<h4>Required VS Code Extensions</h4>
+<h4 id="required-vs-code-extensions">Required VS Code Extensions</h4>
 <p>Install via Extensions panel (<code>Ctrl+Shift+X</code> / <code>Cmd+Shift+X</code>):</p>
 <ol>
 <li><p><strong>Python</strong> (<code>ms-python.python</code>)</p>
@@ -103,7 +395,7 @@ pip3 --version
 </ul>
 </li>
 </ol>
-<h4>Optional but Recommended Extensions</h4>
+<h4 id="optional-but-recommended-extensions">Optional but Recommended Extensions</h4>
 <ol start="6">
 <li><p><strong>Live Server</strong> (<code>ritwickdey.LiveServer</code>)</p>
 <ul>
@@ -132,7 +424,7 @@ pip3 --version
 </ul>
 </li>
 </ol>
-<h3>4. Web Browser with DevTools</h3>
+<h3 id="web-browser-with-devtools">4. Web Browser with DevTools</h3>
 <p><strong>Required:</strong> Modern browser for testing and debugging.</p>
 <p>Recommended browsers:</p>
 <ul>
@@ -140,10 +432,10 @@ pip3 --version
 <li><strong>Firefox Developer Edition</strong></li>
 </ul>
 <hr/>
-<h2>🐍 Python Environment Setup</h2>
-<h3>1. Create a Virtual Environment (Optional but Recommended)</h3>
+<h2 id="python-environment-setup">🐍 Python Environment Setup</h2>
+<h3 id="create-a-virtual-environment-optional-but-recommended">1. Create a Virtual Environment (Optional but Recommended)</h3>
 <p>Virtual environments isolate project dependencies from system Python.</p>
-<h4>Windows (PowerShell):</h4>
+<h4 id="windows-powershell">Windows (PowerShell):</h4>
 <pre><code class="language-powershell"># Navigate to project root
 cd D:\Projects\www\GAZTank
 
@@ -156,7 +448,7 @@ python -m venv venv
 # If execution policy error, run:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 </code></pre>
-<h4>Linux/Mac:</h4>
+<h4 id="linuxmac-1">Linux/Mac:</h4>
 <pre><code class="language-bash"># Navigate to project root
 cd ~/Projects/GAZTank
 
@@ -167,7 +459,7 @@ python3 -m venv venv
 source venv/bin/activate
 </code></pre>
 <p><strong>Note:</strong> When virtual environment is active, you'll see <code>(venv)</code> in your prompt.</p>
-<h3>2. Install Required Python Packages</h3>
+<h3 id="install-required-python-packages">2. Install Required Python Packages</h3>
 <p>The project includes a <code>requirements.txt</code> file with all dependencies:</p>
 <pre><code class="language-bash"># Install all dependencies from requirements.txt
 pip install -r requirements.txt
@@ -183,7 +475,7 @@ pip install -r requirements.txt
 <li><strong>rjsmin</strong> (&gt;=1.2.0) - JavaScript minification (optional)</li>
 <li><strong>pyftpdlib</strong> (&gt;=1.5.0) - FTP server for testing deployments (optional)</li>
 </ul>
-<h4>Manual Installation (Alternative)</h4>
+<h4 id="manual-installation-alternative">Manual Installation (Alternative)</h4>
 <p>If you prefer to install packages individually:</p>
 <pre><code class="language-bash"># Core dependencies
 pip install beautifulsoup4    # HTML parsing and manipulation
@@ -196,10 +488,10 @@ pip install rcssmin          # CSS minification
 pip install rjsmin           # JavaScript minification
 pip install pyftpdlib        # FTP server for deployment testing
 </code></pre>
-<h4>Quick Install (All at Once)</h4>
+<h4 id="quick-install-all-at-once">Quick Install (All at Once)</h4>
 <pre><code class="language-bash">pip install beautifulsoup4 lxml tomlkit mistune rcssmin rjsmin pyftpdlib
 </code></pre>
-<h3>3. Verify Python Environment</h3>
+<h3 id="verify-python-environment">3. Verify Python Environment</h3>
 <p>Run this command to check all dependencies:</p>
 <pre><code class="language-bash">python -c "import bs4, lxml, tomlkit, mistune; print('Core dependencies installed successfully!')"
 </code></pre>
@@ -209,18 +501,18 @@ pip install pyftpdlib        # FTP server for deployment testing
 pip list | Select-String "beautifulsoup4|lxml|tomlkit|mistune|rcssmin|rjsmin|pyftpdlib"
 </code></pre>
 <hr/>
-<h2>🎨 IDE Configuration (VS Code)</h2>
-<h3>1. Open Project in VS Code</h3>
+<h2 id="ide-configuration-vs-code">🎨 IDE Configuration (VS Code)</h2>
+<h3 id="open-project-in-vs-code">1. Open Project in VS Code</h3>
 <pre><code class="language-bash"># From project root
 code .
 </code></pre>
-<h3>2. Configure Python Interpreter</h3>
+<h3 id="configure-python-interpreter">2. Configure Python Interpreter</h3>
 <ol>
 <li>Press <code>Ctrl+Shift+P</code> (Windows/Linux) or <code>Cmd+Shift+P</code> (macOS)</li>
 <li>Type "Python: Select Interpreter"</li>
 <li>Choose the virtual environment: <code>./venv/bin/python</code> or <code>.\venv\Scripts\python.exe</code></li>
 </ol>
-<h3>3. Recommended VS Code Settings</h3>
+<h3 id="recommended-vs-code-settings">3. Recommended VS Code Settings</h3>
 <p>Create/update <code>.vscode/settings.json</code> in project root:</p>
 <pre><code class="language-json">{
     "python.defaultInterpreterPath": "${workspaceFolder}/venv",
@@ -264,7 +556,7 @@ code .
     "liveServer.settings.CustomBrowser": "chrome"
 }
 </code></pre>
-<h3>4. Create Launch Configuration for Debugging</h3>
+<h3 id="create-launch-configuration-for-debugging">4. Create Launch Configuration for Debugging</h3>
 <p>Create/update <code>.vscode/launch.json</code>:</p>
 <pre><code class="language-json">{
     "version": "0.2.0",
@@ -317,7 +609,7 @@ code .
     ]
 }
 </code></pre>
-<h3>5. Create Tasks Configuration</h3>
+<h3 id="create-tasks-configuration">5. Create Tasks Configuration</h3>
 <p>Create/update <code>.vscode/tasks.json</code>:</p>
 <pre><code class="language-json">{
     "version": "2.0.0",
@@ -376,9 +668,9 @@ code .
 }
 </code></pre>
 <hr/>
-<h2>📂 Project Structure for Development</h2>
+<h2 id="project-structure-for-development">📂 Project Structure for Development</h2>
 <p>For a comprehensive directory structure with detailed descriptions, see <a href="#setup/PROJECT_STRUCTURE">PROJECT_STRUCTURE.md</a>.</p>
-<h3>Development-Focused Overview:</h3>
+<h3 id="development-focused-overview">Development-Focused Overview:</h3>
 <ul>
 <li><strong><code>src/</code></strong> - Your main work area (HTML, CSS, JS, content)</li>
 <li><strong><code>utils/</code></strong> - Build tools and utilities (modular Python scripts)</li>
@@ -391,8 +683,8 @@ code .
 <li><strong><code>venv/</code></strong> - Python virtual environment (gitignored)</li>
 </ul>
 <hr/>
-<h2>🔄 Development Workflow</h2>
-<h3>Initial Setup</h3>
+<h2 id="development-workflow">🔄 Development Workflow</h2>
+<h3 id="initial-setup">Initial Setup</h3>
 <ol>
 <li><p><strong>Clone the repository</strong> (if not done already):</p>
 <pre><code class="language-bash">git clone &lt;repository-url&gt; GAZTank
@@ -422,8 +714,8 @@ pip install -r requirements.txt
 </code></pre>
 </li>
 </ol>
-<h3>Daily Development Workflow</h3>
-<h4>1. Start Development Server</h4>
+<h3 id="daily-development-workflow">Daily Development Workflow</h3>
+<h4 id="start-development-server">1. Start Development Server</h4>
 <h5>Using Python module directly:</h5>
 <pre><code class="language-bash">python -m gzserve
 </code></pre>
@@ -443,7 +735,7 @@ pip install -r requirements.txt
 </code></pre>
 <p>Visit: <code>http://localhost:7190</code> (dev) or <code>http://localhost:7191</code> (staging)</p>
 <p><strong>Environment Configuration:</strong> Ports and directories are configured in <code>config/environments.toml</code></p>
-<h4>2. Make Changes</h4>
+<h4 id="make-changes">2. Make Changes</h4>
 <p>Work on files in the <code>src/</code> directory:</p>
 <ul>
 <li>HTML: <code>src/index.html</code> and <code>src/content/*.html</code></li>
@@ -453,7 +745,7 @@ pip install -r requirements.txt
 </ul>
 <p><strong>Note:</strong> In the new pipeline architecture, the server serves from <code>publish/{environment}/</code> directories. For development, copy <code>src/</code> contents to <code>publish/dev/</code> before starting the server.</p>
 <p><strong>Hot Reload:</strong> The server includes no-cache headers for development, so just refresh the browser to see changes.</p>
-<h4>3. Validate Code</h4>
+<h4 id="validate-code">3. Validate Code</h4>
 <p>Run GZLint before committing:</p>
 <pre><code class="language-bash"># Using Python directly
 python utils/gzlint/
@@ -472,7 +764,7 @@ python utils/gzlint/
 <li>Malformed/mismatched tags</li>
 <li>JavaScript console.log statements</li>
 </ul>
-<h4>4. Update Documentation</h4>
+<h4 id="update-documentation">4. Update Documentation</h4>
 <p>When editing markdown documentation in <code>docs/</code>:</p>
 <pre><code class="language-bash"># Convert markdown to HTML using generate module
 python -m utils.generate -e dev
@@ -482,7 +774,7 @@ python -m utils.generate -e dev
 # Linux/Mac: ./scripts/generate.sh -e dev
 </code></pre>
 <p>This converts documentation to HTML in <code>src/content/setup/</code> for web viewing.</p>
-<h4>5. Update Configuration</h4>
+<h4 id="update-configuration">5. Update Configuration</h4>
 <p>When changing site configuration in <code>config/site.toml</code>:</p>
 <pre><code class="language-bash"># Apply configuration changes (force mode - no prompts)
 # Windows
@@ -498,7 +790,7 @@ python -m utils.generate -e dev
 <li><code>src/sitemap.xml</code> (if domain changed)</li>
 <li>Other config-driven files</li>
 </ul>
-<h3>Pre-Commit Checklist</h3>
+<h3 id="pre-commit-checklist">Pre-Commit Checklist</h3>
 <p>Before committing changes:</p>
 <ol>
 <li>✅ <strong>Run GZLint</strong>: <code>python utils/gzlint/</code></li>
@@ -509,23 +801,23 @@ python -m utils.generate -e dev
 <li>✅ <strong>Generate sitemap</strong>: If you added/removed pages</li>
 </ol>
 <hr/>
-<h2>🤝 Contributing to GAZ Tank</h2>
-<h3>Before You Start</h3>
-<h4>Required Reading:</h4>
+<h2 id="contributing-to-gaz-tank">🤝 Contributing to GAZ Tank</h2>
+<h3 id="before-you-start">Before You Start</h3>
+<h4 id="required-reading">Required Reading:</h4>
 <ul>
 <li><code>CONTRIBUTING.md</code> - Comprehensive contribution guidelines</li>
 <li><code>SECURITY.md</code> - Security policy and vulnerability reporting</li>
 <li><code>LICENSE</code> - MIT License terms</li>
 <li><code>CHANGELOG.md</code> - Version history and changelog format</li>
 </ul>
-<h3>Contribution Process</h3>
-<h4>1. Report Issues</h4>
+<h3 id="contribution-process">Contribution Process</h3>
+<h4 id="report-issues">1. Report Issues</h4>
 <p>Use GitHub Issues with the appropriate template:</p>
 <ul>
 <li><strong>Bug Reports:</strong> <code>.github/ISSUE_TEMPLATE/bug_report.md</code></li>
 <li><strong>Feature Requests:</strong> <code>.github/ISSUE_TEMPLATE/feature_request.md</code></li>
 </ul>
-<h4>2. Fork and Branch</h4>
+<h4 id="fork-and-branch">2. Fork and Branch</h4>
 <pre><code class="language-bash"># Fork the repository on GitHub
 # Clone your fork
 git clone https://github.com/YOUR_USERNAME/GAZTank.git
@@ -536,7 +828,7 @@ git checkout -b feature/your-feature-name
 # or
 git checkout -b fix/issue-description
 </code></pre>
-<h4>3. Make Changes</h4>
+<h4 id="make-changes-1">3. Make Changes</h4>
 <p>Follow our coding standards:</p>
 <ul>
 <li><strong>Python:</strong> PEP 8 style guide</li>
@@ -544,7 +836,7 @@ git checkout -b fix/issue-description
 <li><strong>HTML/CSS:</strong> See <code>docs/DESIGN_RULES.md</code></li>
 <li><strong>Commits:</strong> Conventional Commits format</li>
 </ul>
-<h4>4. Test Your Changes</h4>
+<h4 id="test-your-changes">4. Test Your Changes</h4>
 <pre><code class="language-bash"># Run all tests
 python -m gzlint -e dev
 
@@ -555,7 +847,7 @@ python -m gzserve -e dev
 # Build package to ensure no build errors
 python -m package -e dev
 </code></pre>
-<h4>5. Submit Pull Request</h4>
+<h4 id="submit-pull-request">5. Submit Pull Request</h4>
 <p>Use the PR template (<code>.github/pull_request_template.md</code>):</p>
 <ul>
 <li>Clear description of changes</li>
@@ -563,8 +855,8 @@ python -m package -e dev
 <li>Confirm testing checklist</li>
 <li>Note any breaking changes</li>
 </ul>
-<h3>Coding Standards</h3>
-<h4>Commit Message Format</h4>
+<h3 id="coding-standards">Coding Standards</h3>
+<h4 id="commit-message-format">Commit Message Format</h4>
 <pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
 
 &lt;body&gt;
@@ -580,23 +872,23 @@ Uses CSS Grid for responsive layout.
 
 Closes #123
 </code></pre>
-<h4>Code Style</h4>
+<h4 id="code-style">Code Style</h4>
 <ul>
 <li><strong>Python:</strong> 4 spaces, max line 100 characters</li>
 <li><strong>JavaScript:</strong> 2 spaces, semicolons required</li>
 <li><strong>HTML/CSS:</strong> 2 spaces, attributes double-quoted</li>
 <li>See <code>.editorconfig</code> for full rules</li>
 </ul>
-<h3>Security</h3>
-<h4>Found a vulnerability?</h4>
+<h3 id="security">Security</h3>
+<h4 id="found-a-vulnerability">Found a vulnerability?</h4>
 <ul>
 <li><strong>DO NOT</strong> open a public issue</li>
 <li>Email: [See SECURITY.md for contact details]</li>
 <li>Include: Description, steps to reproduce, impact assessment</li>
 </ul>
 <hr/>
-<h2>🔨 Build Tools</h2>
-<h3>Package for Production</h3>
+<h2 id="build-tools">🔨 Build Tools</h2>
+<h3 id="package-for-production">Package for Production</h3>
 <p>Creates a production-ready build with validation and minification:</p>
 <pre><code class="language-bash"># Using Python directly
 python -m package
@@ -605,7 +897,7 @@ python -m package
 # Windows: .\scripts\package.cmd
 # Linux/Mac: ./scripts/package.sh
 </code></pre>
-<h4>Build pipeline:</h4>
+<h4 id="build-pipeline">Build pipeline:</h4>
 <ol>
 <li>Pre-flight validation (GZLint)</li>
 <li>Markdown to HTML conversion</li>
@@ -616,19 +908,19 @@ python -m package
 <li>ZIP archive creation</li>
 <li>Backup management (keeps last 3 packages)</li>
 </ol>
-<h4>Output:</h4>
+<h4 id="output">Output:</h4>
 <ul>
 <li>Staging: <code>publish/staging/</code> (ready to deploy)</li>
 <li>Package: <code>publish/packages/package_YYYYMMDD_HHMMSS.zip</code></li>
 </ul>
-<h3>Generate Sitemap</h3>
+<h3 id="generate-sitemap">Generate Sitemap</h3>
 <pre><code class="language-bash">python utils/sitemap/
 
 # Or use launcher
 # Windows: .\scripts\generate_sitemap.cmd
 # Linux/Mac: ./scripts/generate_sitemap.sh
 </code></pre>
-<h3>Clean Environment</h3>
+<h3 id="clean-environment">Clean Environment</h3>
 <p>Remove orphaned files or completely clean an environment:</p>
 <pre><code class="language-bash"># Identify orphaned files (no deletion - default mode)
 # Windows
@@ -652,7 +944,7 @@ python -m package
 # Remove ALL files without confirmation (use with caution!)
 .\scripts\gzclean.cmd -e dev --clean-all --force
 </code></pre>
-<h4>Clean Module Features (v1.2 - November 2025):</h4>
+<h4 id="clean-module-features-v12-november-2025">Clean Module Features (v1.2 - November 2025):</h4>
 <ul>
 <li><strong>Identify-Only Default</strong>: Default mode identifies orphaned files but doesn't delete them</li>
 <li><strong>Clean Orphaned Mode</strong>: <code>--clean-orphaned</code> removes only orphaned files (files in environment but not in source)</li>
@@ -661,7 +953,7 @@ python -m package
 <li><strong>Dry-Run Preview</strong>: <code>--dry-run</code> shows what would be deleted without actually deleting</li>
 <li><strong>Automatic Backup Cleanup</strong>: Removes old deploy backup directories (<code>.YYYYMMDD_*</code>) every run</li>
 </ul>
-<h4>Use Cases:</h4>
+<h4 id="use-cases">Use Cases:</h4>
 <ul>
 <li><strong>Planning</strong>: Default mode identifies what needs cleaning without making changes</li>
 <li><strong>Regular cleaning</strong>: Use <code>--clean-orphaned</code> to remove stale files after restructuring <code>src/</code></li>
@@ -670,7 +962,7 @@ python -m package
 <li><strong>Troubleshooting</strong>: Preview changes with <code>--dry-run</code> before committing to cleanup</li>
 </ul>
 <p><strong>⚠️ WARNING:</strong> <code>--clean-all --force</code> is destructive and irreversible! Always preview with <code>--dry-run</code> first.</p>
-<h3>Build Complete Pipeline</h3>
+<h3 id="build-complete-pipeline">Build Complete Pipeline</h3>
 <p>Runs the complete pipeline from start to finish:</p>
 <pre><code class="language-bash"># Windows
 .\scripts\gzbuild.cmd -e dev
@@ -692,8 +984,8 @@ python -m package
 <li><code>deploy</code> (deploy to environment)</li>
 </ol>
 <hr/>
-<h2>✅ Testing and Validation</h2>
-<h3>Manual Testing</h3>
+<h2 id="testing-and-validation">✅ Testing and Validation</h2>
+<h3 id="manual-testing">Manual Testing</h3>
 <ol>
 <li><p><strong>Browser Testing:</strong></p>
 <ul>
@@ -722,8 +1014,8 @@ python -m package
 </ul>
 </li>
 </ol>
-<h3>Automated Validation</h3>
-<h4>GZLint (HTML/JS)</h4>
+<h3 id="automated-validation">Automated Validation</h3>
+<h4 id="gzlint-htmljs">GZLint (HTML/JS)</h4>
 <pre><code class="language-bash">python utils/gzlint/
 </code></pre>
 <p>Validates:</p>
@@ -732,20 +1024,20 @@ python -m package
 <li>Heading hierarchy</li>
 <li>JavaScript quality</li>
 </ul>
-<h4>W3C HTML Validator (Optional)</h4>
+<h4 id="w3c-html-validator-optional">W3C HTML Validator (Optional)</h4>
 <p>Use online: <a href="https://validator.w3.org/nu/">https://validator.w3.org/nu/</a></p>
 <ul>
 <li>Upload <code>src/index.html</code></li>
 <li>Check for HTML5 compliance errors</li>
 </ul>
-<h3>Browser DevTools Checks</h3>
+<h3 id="browser-devtools-checks">Browser DevTools Checks</h3>
 <p><strong>Console:</strong> No errors or warnings<br/>
 <strong>Network:</strong> All resources loading (200 status)<br/>
 <strong>Application:</strong> sessionStorage working correctly</p>
 <hr/>
-<h2>🐛 Troubleshooting</h2>
-<h3>Common Issues</h3>
-<h4>1. Python Import Errors</h4>
+<h2 id="troubleshooting">🐛 Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="python-import-errors">1. Python Import Errors</h4>
 <p><strong>Problem:</strong> <code>ModuleNotFoundError: No module named 'bs4'</code> (or similar)</p>
 <h5>Solution:</h5>
 <pre><code class="language-bash"># Ensure virtual environment is activated
@@ -758,7 +1050,7 @@ pip install beautifulsoup4
 # Or install all requirements
 pip install -r requirements.txt
 </code></pre>
-<h4>2. Server Won't Start</h4>
+<h4 id="server-wont-start">2. Server Won't Start</h4>
 <p><strong>Problem:</strong> <code>Address already in use</code> or port occupied</p>
 <h5>Solution:</h5>
 <pre><code class="language-bash"># Use different port (override config)
@@ -775,14 +1067,14 @@ lsof -ti:7190 | xargs kill -9
 # Or use a different environment (different default port)
 .\scripts\gzserve.cmd -e staging  # Uses port 7191
 </code></pre>
-<h4>3. Permission Denied on Scripts</h4>
+<h4 id="permission-denied-on-scripts">3. Permission Denied on Scripts</h4>
 <p><strong>Problem:</strong> <code>./scripts/gzserve.sh: Permission denied</code></p>
 <h5>Solution (Linux/Mac):</h5>
 <pre><code class="language-bash"># Make scripts executable
 chmod +x scripts/*.sh
 chmod +x dev/*.sh
 </code></pre>
-<h4>4. PowerShell Execution Policy</h4>
+<h4 id="powershell-execution-policy">4. PowerShell Execution Policy</h4>
 <p><strong>Problem:</strong> <code>cannot be loaded because running scripts is disabled</code></p>
 <h5>Solution (Windows):</h5>
 <pre><code class="language-powershell"># Set execution policy for current user
@@ -791,7 +1083,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 # Or run with bypass
 powershell -ExecutionPolicy Bypass -File .\scripts\gzserve.cmd
 </code></pre>
-<h4>5. CSS/JS Not Minifying</h4>
+<h4 id="cssjs-not-minifying">5. CSS/JS Not Minifying</h4>
 <p><strong>Problem:</strong> Build works but files not minified</p>
 <h5>Solution:</h5>
 <pre><code class="language-bash"># Install optional minification libraries
@@ -800,19 +1092,19 @@ pip install rcssmin rjsmin
 # Verify installation
 python -c "import rcssmin, rjsmin; print('Minification libraries installed')"
 </code></pre>
-<h4>6. Markdown Conversion Fails</h4>
+<h4 id="markdown-conversion-fails">6. Markdown Conversion Fails</h4>
 <p><strong>Problem:</strong> <code>ModuleNotFoundError: No module named 'mistune'</code></p>
 <h5>Solution:</h5>
 <pre><code class="language-bash">pip install mistune
 </code></pre>
-<h4>7. TOML Config Errors</h4>
+<h4 id="toml-config-errors">7. TOML Config Errors</h4>
 <p><strong>Problem:</strong> <code>Error: tomlkit library not found</code></p>
 <h5>Solution:</h5>
 <pre><code class="language-bash">pip install tomlkit
 </code></pre>
 <hr/>
-<h2>📚 Additional Resources</h2>
-<h3>Project Documentation</h3>
+<h2 id="additional-resources">📚 Additional Resources</h2>
+<h3 id="project-documentation">Project Documentation</h3>
 <ul>
 <li><strong>Setup Guide:</strong> <code>docs/SETUP_SITE.md</code></li>
 <li><strong>SEO Implementation:</strong> <code>docs/SEO_IMPLEMENTATION.md</code></li>
@@ -824,7 +1116,7 @@ python -c "import rcssmin, rjsmin; print('Minification libraries installed')"
 <li><strong>Version History:</strong> <code>CHANGELOG.md</code></li>
 <li><strong>Repo Setup Tracking:</strong> <code>dev/00TODO/PROFESSIONAL_REPO_SETUP.md</code></li>
 </ul>
-<h3>Contributing &amp; Community</h3>
+<h3 id="contributing-community">Contributing &amp; Community</h3>
 <ul>
 <li><strong>Contribution Guidelines:</strong> <code>CONTRIBUTING.md</code> - Read this before making changes</li>
 <li><strong>Code of Conduct:</strong> See <code>CONTRIBUTING.md</code></li>
@@ -833,7 +1125,7 @@ python -c "import rcssmin, rjsmin; print('Minification libraries installed')"
 <li><strong>Pull Requests:</strong> Follow <code>.github/pull_request_template.md</code></li>
 <li><strong>License:</strong> MIT License - See <code>LICENSE</code> file</li>
 </ul>
-<h3>External Resources</h3>
+<h3 id="external-resources">External Resources</h3>
 <ul>
 <li><a href="https://docs.python.org/3/">Python Documentation</a></li>
 <li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup Documentation</a></li>
@@ -843,29 +1135,29 @@ python -c "import rcssmin, rjsmin; print('Minification libraries installed')"
 <li><a href="https://code.visualstudio.com/docs">VS Code Documentation</a></li>
 </ul>
 <hr/>
-<h2>🎓 Learning Path for New Developers</h2>
-<h3>Week 1: Environment &amp; Basics</h3>
+<h2 id="learning-path-for-new-developers">🎓 Learning Path for New Developers</h2>
+<h3 id="week-1-environment-basics">Week 1: Environment &amp; Basics</h3>
 <ol>
 <li>Set up Python environment and VS Code</li>
 <li>Install all dependencies</li>
 <li>Run development server and explore the site</li>
 <li>Read <code>SETUP_SITE.md</code> and <code>README.md</code></li>
 </ol>
-<h3>Week 2: Understanding the Codebase</h3>
+<h3 id="week-2-understanding-the-codebase">Week 2: Understanding the Codebase</h3>
 <ol>
 <li>Study <code>src/js/app.js</code> (routing and navigation)</li>
 <li>Review <code>src/css/styles.css</code> (layout and styling)</li>
 <li>Understand <code>config/site.toml</code> structure</li>
 <li>Run setup wizard and see what it updates</li>
 </ol>
-<h3>Week 3: Build Tools</h3>
+<h3 id="week-3-build-tools">Week 3: Build Tools</h3>
 <ol>
 <li>Run GZLint and fix any issues</li>
 <li>Use the package script and examine output</li>
 <li>Try markdown to HTML conversion with generate module</li>
 <li>Modify a config value and use <code>--force</code> to apply changes</li>
 </ol>
-<h3>Week 4: Making Changes</h3>
+<h3 id="week-4-making-changes">Week 4: Making Changes</h3>
 <ol>
 <li>Create a new content page</li>
 <li>Add navigation menu item</li>
@@ -873,7 +1165,7 @@ python -c "import rcssmin, rjsmin; print('Minification libraries installed')"
 <li>Test responsive design</li>
 </ol>
 <hr/>
-<h2>✨ Quick Command Reference</h2>
+<h2 id="quick-command-reference">✨ Quick Command Reference</h2>
 <pre><code class="language-bash"># Environment
 python -m venv venv              # Create virtual environment
 source venv/bin/activate         # Activate (Linux/Mac)
@@ -913,9 +1205,9 @@ python -m normalise -e dev       # Normalize markdown formatting
 ./scripts/gzbuild.sh -e dev      # Linux/Mac: Run full 10-step pipeline
 </code></pre>
 <hr/>
-<h3>Happy coding! 🚀</h3>
+<h3 id="happy-coding">Happy coding! 🚀</h3>
 <p>If you encounter issues not covered in this guide, check existing documentation or open an issue on GitHub.</p>
 <div>
-<br><br>
+<br/><br/>
 <p><em>This content was automatically generated from <code>DEVELOPER_SETUP.md</code></em></p>
 </div>
