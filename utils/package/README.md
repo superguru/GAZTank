@@ -46,7 +46,7 @@ The package module **does NOT** perform:
 These are separate pipeline steps that must run **before** packaging. The correct build order is:
 
 ```
-setup -> generate -> toc -> sitemap -> clean -> package -> deploy
+clean -> generate -> compose -> setup -> gzlint -> normalise -> sitemap -> toc -> package -> deploy
 ```
 
 ## Build Pipeline

@@ -558,13 +558,15 @@ Called automatically as part of the content generation pipeline:
 #### Pipeline execution order:
 ```
 1. clean      - Remove orphaned files
-2. setup      - Apply site configuration
-3. gzlint     - Run linting checks
-4. generate   - Generate content files
-5. sitemap    - Generate sitemap.xml
-6. toc        - Add TOC and heading IDs (this module)
-7. package    - Sync, minify, and archive
-8. deploy     - Deploy to environment
+2. generate   - Generate content files
+3. compose    - Assemble HTML from components
+4. setup      - Apply site configuration
+5. gzlint     - Run linting checks
+6. normalise  - Normalize markdown structure
+7. sitemap    - Generate sitemap.xml
+8. toc        - Add TOC and heading IDs (this module)
+9. package    - Sync, minify, and archive
+10. deploy    - Deploy to environment
 ```
 
 ### Called By

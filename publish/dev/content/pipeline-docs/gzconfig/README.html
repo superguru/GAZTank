@@ -117,6 +117,9 @@
 <a href="#deploy-configuration-configdeploytoml">Deploy Configuration (config/deploy.toml)</a>
 </li>
 <li>
+<a href="#package-configuration-configpackagetoml">Package Configuration (config/package.toml)</a>
+</li>
+<li>
 <a href="#ftp-users-configuration-configftp-userstoml">FTP Users Configuration (config/ftp_users.toml)</a>
 </li>
 <li>
@@ -258,10 +261,19 @@
 <a href="#get-ftp-users-config">get_ftp_users_config()</a>
 </li>
 <li>
+<a href="#get-package-config">get_package_config()</a>
+</li>
+<li>
 <a href="#ftpuserenvironment">FTPUserEnvironment</a>
 </li>
 <li>
 <a href="#ftpusersconfig">FTPUsersConfig</a>
+</li>
+<li>
+<a href="#packageconfig">PackageConfig</a>
+</li>
+<li>
+<a href="#packageexclusions">PackageExclusions</a>
 </li>
 <li>
 <a href="#example">Example:</a>
@@ -282,10 +294,25 @@
 <a href="#structure-2">Structure:</a>
 </li>
 <li>
+<a href="#field-descriptions-1">Field Descriptions:</a>
+</li>
+<li>
+<a href="#glob-pattern-examples">Glob Pattern Examples:</a>
+</li>
+<li>
 <a href="#setup-1">Setup:</a>
 </li>
 <li>
-<a href="#field-descriptions-1">Field Descriptions:</a>
+<a href="#best-practices-1">Best Practices:</a>
+</li>
+<li>
+<a href="#structure-3">Structure:</a>
+</li>
+<li>
+<a href="#setup-2">Setup:</a>
+</li>
+<li>
+<a href="#field-descriptions-2">Field Descriptions:</a>
 </li>
 <li>
 <a href="#automatic-file-change-detection">Automatic File Change Detection:</a>
@@ -419,6 +446,13 @@
 <li>Target directory paths</li>
 </ul>
 </li>
+<li><strong>Package Configuration</strong> (<code>package.toml</code>) - Website packaging settings<ul>
+<li>Maximum backup retention count</li>
+<li>Directory exclusion rules (e.g., components/, pages/)</li>
+<li>File pattern exclusions (e.g., *.psd, .DS_Store, Thumbs.db)</li>
+<li>Glob pattern support for flexible filtering</li>
+</ul>
+</li>
 <li><strong>Generate Configuration</strong> (<code>generate.toml</code>) - Content generation rules</li>
 <li><strong>Tools Configuration</strong> (<code>tools.toml</code>) - Tool-specific settings (logging, etc.)</li>
 <li><strong>FTP Users Configuration</strong> (<code>ftp_users.toml</code>) - FTP server user accounts<ul>
@@ -438,12 +472,13 @@
   ├─ gzserve → uses gzconfig (environment directories, ports)
   ├─ setup → uses gzconfig (environment directories)
   ├─ sitemap → uses gzconfig (environment directories)
+  ├─ package → uses gzconfig (environment directories, exclusions)
   ├─ generate → will use gzconfig (environment directories)
-  ├─ package → will use gzconfig (environment directories)
   └─ deploy → will use gzconfig (environment directories)
 
 All tools read from:
   config/pipeline.toml
+  config/package.toml
 </code></pre>
 <h3 id="purpose-in-pipeline">Purpose in Pipeline:</h3>
 <ul>
@@ -575,6 +610,7 @@ DeployConfig(server='ftp.example.com', port=21, use_ftps=True, username='your-us
 ├── __init__.py          # Module exports
 ├── pipeline.py          # Pipeline configuration (environments, ports, directories)
 ├── deploy.py            # Deploy configuration (FTP/FTPS settings)
+├── package.py           # Package configuration (exclusions, backups)
 ├── generate.py          # Generate configuration (content generation rules)
 ├── tools.py             # Tools configuration (tool-specific settings)
 ├── ftp_users.py         # FTP users configuration (FTP server accounts)
@@ -830,6 +866,42 @@ user1 = get_ftp_users_config('dev')
 # ... edit ftp_users.toml ...
 user2 = get_ftp_users_config('dev')  # Automatically reloaded if file changed
 </code></pre>
+<h4 id="get-package-config"><code>get_package_config()</code></h4>
+<p>Load and access package module configuration.</p>
+<h5>Parameters:</h5>
+<ul>
+<li>None</li>
+</ul>
+<h5>Returns:</h5>
+<ul>
+<li><code>PackageConfig</code> object with packaging settings</li>
+</ul>
+<h5>Raises:</h5>
+<ul>
+<li><code>FileNotFoundError</code>: If <code>package.toml</code> doesn't exist</li>
+<li><code>ValueError</code>: If required fields are missing or validation fails</li>
+</ul>
+<h5>Note:</h5>
+<p>Configuration is read fresh each time (no caching).</p>
+<h5>Examples:</h5>
+<pre><code class="language-python"># Get package configuration
+config = get_package_config()
+
+# Access backup settings
+print(f"Max backups: {config.max_backups}")
+
+# Access exclusion rules
+print(f"Excluded directories: {config.exclusions.directories}")
+print(f"Excluded file patterns: {config.exclusions.files}")
+
+# Use in packaging logic
+for directory in config.exclusions.directories:
+    print(f"Skipping directory: {directory}")
+
+for pattern in config.exclusions.files:
+    if fnmatch.fnmatch(filename, pattern):
+        print(f"Excluding file: {filename} (matches {pattern})")
+</code></pre>
 <h4 id="ftpuserenvironment"><code>FTPUserEnvironment</code></h4>
 <p>FTP user configuration for a specific environment. Immutable dataclass.</p>
 <h5>Properties:</h5>
@@ -876,6 +948,64 @@ print(dev_user.username)  # devup
 # Iterate through all users
 for env_name, user in config.environments.items():
     print(f"{env_name}: {user.username} -&gt; {user.home_directory}")
+</code></pre>
+<h4 id="packageconfig"><code>PackageConfig</code></h4>
+<p>Package module configuration from package.toml. Immutable dataclass.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>max_backups</code> (int): Maximum number of package backups to retain (default: 4, minimum: 1)</li>
+<li><code>exclusions</code> (PackageExclusions): File and directory exclusion rules</li>
+</ul>
+<h5>Validation:</h5>
+<ul>
+<li><code>max_backups</code> must be a positive integer (&gt;= 1)</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">config = get_package_config()
+
+print(f"Maximum backups: {config.max_backups}")
+print(f"Excluded directories: {config.exclusions.directories}")
+print(f"Excluded file patterns: {config.exclusions.files}")
+
+# Use in rotation logic
+if backup_count &gt; config.max_backups:
+    remove_old_backups()
+</code></pre>
+<h4 id="packageexclusions"><code>PackageExclusions</code></h4>
+<p>Package exclusion rules. Immutable dataclass.</p>
+<h5>Properties:</h5>
+<ul>
+<li><code>directories</code> (list[str]): List of directory names to exclude from packaging (e.g., ['components', 'pages'])</li>
+<li><code>files</code> (list[str]): List of file glob patterns to exclude (e.g., ['<em>.psd', '</em>.pdn', '.DS_Store'])</li>
+</ul>
+<h5>Pattern Matching:</h5>
+<ul>
+<li>Uses Python <code>fnmatch</code> module for glob pattern matching</li>
+<li>Supports wildcards: <code>*</code> (any characters), <code>?</code> (single character)</li>
+<li>Patterns are case-sensitive on Unix-like systems, case-insensitive on Windows</li>
+</ul>
+<h5>Example:</h5>
+<pre><code class="language-python">import fnmatch
+from pathlib import Path
+
+config = get_package_config()
+
+# Check if directory should be excluded
+def is_excluded_directory(dir_name: str) -&gt; bool:
+    return dir_name in config.exclusions.directories
+
+# Check if file should be excluded
+def is_excluded_file(file_path: Path) -&gt; bool:
+    filename = file_path.name
+    return any(fnmatch.fnmatch(filename, pattern) 
+               for pattern in config.exclusions.files)
+
+# Usage
+if is_excluded_directory("components"):
+    print("Skipping components/ directory")
+
+if is_excluded_file(Path("design.psd")):
+    print("Excluding design.psd (matches *.psd)")
 </code></pre>
 <h2 id="configuration-files">Configuration Files</h2>
 <h3 id="pipeline-configuration-configpipelinetoml">Pipeline Configuration (<code>config/pipeline.toml</code>)</h3>
@@ -977,11 +1107,68 @@ upload_subdir_postfix_len = 5           # Random alphanumeric postfix (1-10)
 # .2025-10-23_k3p9a
 </code></pre>
 <p><strong>Note:</strong> Subdirectory names are prefixed with a dot (.) to distinguish deployment uploads from other content.</p>
+<h3 id="package-configuration-configpackagetoml">Package Configuration (<code>config/package.toml</code>)</h3>
+<p><strong>Location:</strong> <code>config/package.toml</code> (automatically located from project root)</p>
+<p><strong>Purpose:</strong> Defines packaging behavior, exclusion rules, and backup retention for the package module.</p>
+<h4 id="structure-2">Structure:</h4>
+<pre><code class="language-toml"># Package Configuration
+# Controls website packaging behavior and exclusions
+
+[package]
+# Maximum number of package backups to retain
+max_backups = 4
+
+[exclusions]
+# Directories to exclude from packaging (by name)
+directories = [
+    "components",  # Source component files (not needed in package)
+    "pages"        # Base page templates (not needed in package)
+]
+
+# File patterns to exclude (glob patterns)
+files = [
+    "*.psd",       # Photoshop files
+    "*.pdn",       # Paint.NET files
+    ".DS_Store",   # macOS metadata
+    "Thumbs.db",   # Windows thumbnails
+    "desktop.ini", # Windows folder config
+    "*.tmp",       # Temporary files
+    "*.bak"        # Backup files
+]
+</code></pre>
+<h4 id="field-descriptions-1">Field Descriptions:</h4>
+<ul>
+<li><code>max_backups</code> (int): Maximum number of backup packages to keep. Older backups are automatically deleted. Default: 4, Minimum: 1</li>
+<li><code>exclusions.directories</code> (list[str]): Directory names to exclude from packaging (exact match)</li>
+<li><code>exclusions.files</code> (list[str]): File patterns to exclude using glob syntax (supports <code>*</code>, <code>?</code> wildcards)</li>
+</ul>
+<h4 id="glob-pattern-examples">Glob Pattern Examples:</h4>
+<pre><code class="language-python"># Pattern matching examples
+"*.psd"        # Matches: design.psd, photo.psd
+"test_*.py"    # Matches: test_main.py, test_utils.py
+"file?.txt"    # Matches: file1.txt, fileA.txt (single character)
+".*"           # Matches: .gitignore, .DS_Store (hidden files)
+</code></pre>
+<h4 id="setup-1">Setup:</h4>
+<ol>
+<li>Create <code>config/package.toml</code> or copy from example</li>
+<li>Customize exclusions based on your project needs</li>
+<li>Adjust <code>max_backups</code> based on available disk space</li>
+</ol>
+<h4 id="best-practices-1">Best Practices:</h4>
+<ul>
+<li><strong>Exclude source files</strong>: Components, templates, design files that aren't needed in final package</li>
+<li><strong>Exclude system files</strong>: OS-specific files (<code>.DS_Store</code>, <code>Thumbs.db</code>, <code>desktop.ini</code>)</li>
+<li><strong>Exclude work files</strong>: Temporary files, backups, cache files</li>
+<li><strong>Keep backups reasonable</strong>: Set <code>max_backups</code> based on disk space and rollback needs</li>
+<li><strong>Use glob patterns</strong>: Leverage wildcards for flexible file matching</li>
+</ul>
+<p><strong>Note:</strong> The package module automatically uses these exclusions when copying files to the package directory.</p>
 <h3 id="ftp-users-configuration-configftp-userstoml">FTP Users Configuration (<code>config/ftp_users.toml</code>)</h3>
 <p><strong>Location:</strong> <code>config/ftp_users.toml</code> (automatically located from project root)</p>
 <p><strong>Note:</strong> <code>ftp_users.toml</code> is in <code>.gitignore</code> and should not be committed (contains passwords).</p>
 <p><strong>Purpose:</strong> Defines FTP user accounts for the local FTP server (gzhost) used for testing deployment workflows.</p>
-<h4 id="structure-2">Structure:</h4>
+<h4 id="structure-3">Structure:</h4>
 <pre><code class="language-toml"># FTP Users Configuration
 # User accounts for local FTP server (gzhost)
 # Copy from config/ftp_users.example.toml and customize
@@ -1004,13 +1191,13 @@ password = "produp"
 home_directory = "publish/prod"
 permissions = "elradfmwMT"
 </code></pre>
-<h4 id="setup-1">Setup:</h4>
+<h4 id="setup-2">Setup:</h4>
 <ol>
 <li>Copy <code>config/ftp_users.example.toml</code> to <code>config/ftp_users.toml</code></li>
 <li>Customize usernames and passwords as needed</li>
 <li>Never commit <code>ftp_users.toml</code> (it's in <code>.gitignore</code>)</li>
 </ol>
-<h4 id="field-descriptions-1">Field Descriptions:</h4>
+<h4 id="field-descriptions-2">Field Descriptions:</h4>
 <ul>
 <li><code>username</code>: FTP username for this environment</li>
 <li><code>password</code>: FTP password (masked in logs and repr)</li>
@@ -1119,6 +1306,14 @@ try:
 except ValueError as e:
     print(e)
     # "upload_subdir_postfix_len must be between 1 and 10, got 20"
+
+# Invalid max_backups
+try:
+    # If package.toml has max_backups = -1
+    config = get_package_config()
+except ValueError as e:
+    print(e)
+    # "max_backups must be a positive integer, got -1"
 </code></pre>
 <h2 id="migration-guide">Migration Guide</h2>
 <p>GZConfig eliminates the need for duplicate TOML-reading code. Here's how to migrate existing code:</p>
@@ -1667,8 +1862,10 @@ def get_config():
 <li><strong><a href="../gzserve/README.md">gzserve</a></strong> - Development server (uses gzconfig)</li>
 <li><strong><a href="../setup/README.md">setup</a></strong> - Site setup wizard (uses gzconfig)</li>
 <li><strong><a href="../sitemap/README.md">sitemap</a></strong> - Sitemap generator (uses gzconfig)</li>
+<li><strong><a href="../package/README.md">package</a></strong> - Website packager (uses gzconfig)</li>
 <li><strong><a href="../generate/README.md">generate</a></strong> - Content generator (will use gzconfig)</li>
 <li><strong>Python tomllib:</strong> <a href="https://docs.python.org/3/library/tomllib.html">https://docs.python.org/3/library/tomllib.html</a></li>
+<li><strong>Python fnmatch:</strong> <a href="https://docs.python.org/3/library/fnmatch.html">https://docs.python.org/3/library/fnmatch.html</a></li>
 <li><strong>TOML specification:</strong> <a href="https://toml.io/">https://toml.io/</a></li>
 </ul>
 <h2 id="license">License</h2>

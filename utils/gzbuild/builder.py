@@ -9,11 +9,11 @@ Complete pipeline execution that orchestrates all build steps in order.
 
 This module runs the complete GAZTank build pipeline:
 1. Clean orphaned files
-2. Compose HTML from components
-3. Apply site configuration
-4. Run linting checks
-5. Normalize markdown structure
-6. Generate content files
+2. Generate content files
+3. Compose HTML from components
+4. Apply site configuration
+5. Run linting checks
+6. Normalize markdown structure
 7. Generate sitemap
 8. Generate table of contents
 9. Package site files
@@ -259,11 +259,11 @@ def run_pipeline(pass_through_args: list) -> Tuple[bool, int, int, int]:
     # Create pipeline and add steps
     pipeline = Pipeline()
     pipeline.add(PipelineStep("🧹", "clean", clean_main, "Cleaning orphaned files"))
+    pipeline.add(PipelineStep("🪄", "generate", generate_main, "Generating content"))
     pipeline.add(PipelineStep("🔨", "compose", compose_main, "Composing HTML from components"))
     pipeline.add(PipelineStep("⚙️", "setup_site", setup_main, "Applying site configuration", extra_args=["--force"]))
     pipeline.add(PipelineStep("🔍", "gzlint", lint_main, "Running lint checks"))
-    pipeline.add(PipelineStep("�", "normalise", normalise_main, "Normalizing markdown structure"))
-    pipeline.add(PipelineStep("�📄", "generate", generate_main, "Generating content"))
+    pipeline.add(PipelineStep("⚖️", "normalise", normalise_main, "Normalizing markdown structure"))
     pipeline.add(PipelineStep("🗺️", "sitemap", sitemap_main, "Generating sitemap"))
     pipeline.add(PipelineStep("📑", "toc", toc_main, "Generating table of contents"))
     pipeline.add(PipelineStep("📦", "package", package_main, "Packaging site files"))
@@ -309,11 +309,11 @@ def main() -> None:
         print("")
         print("Pipeline stages:")
         print("  1. Clean orphaned files")
-        print("  2. Compose HTML from components")
-        print("  3. Apply site configuration")
-        print("  4. Run lint checks")
-        print("  5. Normalize markdown structure")
-        print("  6. Generate content")
+        print("  2. Generate content")
+        print("  3. Compose HTML from components")
+        print("  4. Apply site configuration")
+        print("  5. Run lint checks")
+        print("  6. Normalize markdown structure")
         print("  7. Generate sitemap")
         print("  8. Generate table of contents")
         print("  9. Package site files")

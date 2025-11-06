@@ -358,11 +358,11 @@ utils/{module}/
 
 The complete build process (`gzbuild.cmd/sh`) runs 10 steps:
 1. **clean** - Identify orphaned files (no deletion by default)
-2. **compose** - Generate source content from templates
-3. **setup --force** - Apply site configuration and regenerate config-driven files
-4. **gzlint** - Run linting checks on all content
-5. **normalise** - Normalize markdown file formatting
-6. **generate** - Generate content files (markdown to HTML)
+2. **generate** - Generate content files (markdown to HTML)
+3. **compose** - Generate source content from templates
+4. **setup --force** - Apply site configuration and regenerate config-driven files
+5. **gzlint** - Run linting checks on all content
+6. **normalise** - Normalize markdown file formatting
 7. **sitemap** - Generate sitemap.xml
 8. **toc** - Add table of contents to HTML files
 9. **package** - Sync, minify, and archive site files

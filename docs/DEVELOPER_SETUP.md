@@ -773,11 +773,11 @@ Runs the complete pipeline from start to finish:
 
 This executes all pipeline stages in order:
 1. `clean` (identify orphaned files - no deletion by default)
-2. `compose` (generate source content from templates)
-3. `setup --force` (apply configuration)
-4. `gzlint` (run linting checks)
-5. `normalise` (normalize markdown formatting)
-6. `generate` (generate content)
+2. `generate` (generate content)
+3. `compose` (generate source content from templates)
+4. `setup --force` (apply configuration)
+5. `gzlint` (run linting checks)
+6. `normalise` (normalize markdown formatting)
 7. `sitemap` (generate sitemap.xml)
 8. `toc` (generate table of contents)
 9. `package` (sync, minify, archive)

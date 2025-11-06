@@ -859,13 +859,15 @@ The complete build pipeline (`scripts/gzbuild.cmd|sh`) runs modules in this orde
 
 ```
 1. clean -e {env}           # Remove orphaned files
-2. setup -e {env} --force   # Apply site configuration  
-3. gzlint -e {env}          # Validate code quality
-4. generate -e {env}        # Generate content files
-5. sitemap -e {env}         # Generate sitemap.xml
-6. toc -e {env}             # Add table of contents
-7. package -e {env}         # Sync, minify, archive
-8. deploy -e {env}          # Deploy to environment
+2. generate -e {env}        # Generate content files
+3. compose -e {env}         # Assemble HTML from components
+4. setup -e {env} --force   # Apply site configuration  
+5. gzlint -e {env}          # Validate code quality
+6. normalise -e {env}       # Normalize markdown formatting
+7. sitemap -e {env}         # Generate sitemap.xml
+8. toc -e {env}             # Add table of contents
+9. package -e {env}         # Sync, minify, archive
+10. deploy -e {env}         # Deploy to environment
 ```
 
 See `utils/FLOW_PIPELINE.md` for detailed execution flow documentation.

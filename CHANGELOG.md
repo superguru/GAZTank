@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **10-Step Pipeline Architecture** (November 4, 2025)
   - **Compose Module**: Source content generation from templates (step 2)
   - **Normalise Module**: Markdown file formatting normalization (step 5)
-  - Pipeline now: clean → compose → setup → gzlint → normalise → generate → sitemap → toc → package → deploy
+  - Pipeline now: clean → generate → compose → setup → gzlint → normalise → sitemap → toc → package → deploy
   - Separation of concerns: normalise handles formatting, generate handles conversion
   - Batch normaliser (`utils/normalise/batch.py`) for pipeline integration
   
@@ -156,7 +156,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **10-Step Build Pipeline**
   - Added compose module for source content generation
   - Added normalise module for markdown formatting
-  - Complete pipeline: clean → compose → setup → gzlint → normalise → generate → sitemap → toc → package → deploy
+  - Complete pipeline: clean → generate → compose → setup → gzlint → normalise → sitemap → toc → package → deploy
   - Better separation of concerns between modules
 
 - **Enhanced Clean Module (v1.2)**

@@ -28,6 +28,8 @@ Complete build pipeline orchestration system that runs all GAZTank build steps i
 
 ## Purpose
 
+> **See also:** [../README.md](../README.md) for visual pipeline overview with Mermaid diagram.
+
 The GAZTank Build Pipeline Orchestrator provides a single command to execute the complete website build and deployment workflow. It acts as a coordinator that:
 
 - Executes all pipeline modules in the correct sequence
@@ -43,11 +45,11 @@ The GAZTank Build Pipeline Orchestrator provides a single command to execute the
 The orchestrator runs 10 steps in this sequence:
 
 1. **Clean** - Identify orphaned files in environment (no deletion by default)
-2. **Compose** - Generate source content (e.g., humans.txt from template)
-3. **Setup** - Apply site configuration (forced)
-4. **Lint** - Run HTML, JavaScript, and config validation
-5. **Normalise** - Normalize markdown file formatting
-6. **Generate** - Convert markdown to HTML content
+2. **Generate** - Convert markdown to HTML content
+3. **Compose** - Generate source content (e.g., humans.txt from template)
+4. **Setup** - Apply site configuration (forced)
+5. **Lint** - Run HTML, JavaScript, and config validation
+6. **Normalise** - Normalize markdown file formatting
 7. **Sitemap** - Generate sitemap.xml for SEO
 8. **TOC** - Add table of contents to HTML files
 9. **Package** - Sync, minify, and archive site files
@@ -671,7 +673,7 @@ The orchestrator tracks three timing metrics with millisecond precision:
 ### Build Time
 
 **Measured:** From pipeline start through step 9 (package)  
-**Includes:** Clean, compose, setup, lint, normalise, generate, sitemap, toc, package  
+**Includes:** Clean, generate, compose, setup, lint, normalise, sitemap, toc, package  
 **Excludes:** Deployment (step 10)  
 **Purpose:** Track local build operations performance  
 **Precision:** Milliseconds  

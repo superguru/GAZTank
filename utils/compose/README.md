@@ -58,19 +58,20 @@ The Composition Module assembles HTML files from source components, enabling:
 
 ## Build Pipeline
 
-The composition module is **Step 0** in the GAZTank build pipeline:
+The composition module is **Step 3** in the GAZTank build pipeline:
 
 ```
 Build Pipeline:
-  0. compose  → Assemble index.html from src/components/
   1. clean    → Clean orphaned files
-  2. setup    → Apply config to composed index.html
-  3. gzlint   → Lint checks
-  4. generate → Markdown to HTML
-  5. sitemap  → Generate sitemap
-  6. toc      → Generate TOC
-  7. package  → Package files
-  8. deploy   → Deploy to environment
+  2. generate → Markdown to HTML
+  3. compose  → Assemble index.html from src/components/
+  4. setup    → Apply config to composed index.html
+  5. gzlint   → Lint checks
+  6. normalise → Normalize markdown
+  7. sitemap  → Generate sitemap
+  8. toc      → Generate TOC
+  9. package  → Package files
+ 10. deploy   → Deploy to environment
 ```
 
 ### Typical Workflow:
