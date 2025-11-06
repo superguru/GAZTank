@@ -81,6 +81,12 @@
 <a href="#key-functions">Key Functions</a>
 </li>
 <li>
+<a href="#environment-configuration-configpipelinetoml">Environment Configuration (config/pipeline.toml)</a>
+</li>
+<li>
+<a href="#package-configuration-configpackagetoml">Package Configuration (config/package.toml)</a>
+</li>
+<li>
 <a href="#purpose-1">Purpose</a>
 </li>
 <li>
@@ -96,7 +102,21 @@
 <a href="#source-directory-not-found">"Source directory not found"</a>
 </li>
 <li>
+<a href="#package-configuration-error">"Package Configuration Error"</a>
+</li>
+<li>
+<a href="#files-unexpectedly-excluded">Files unexpectedly excluded</a>
+</li>
+<li>
 <a href="#no-files-copied">No files copied</a>
+<ul>
+<li>
+<a href="#exclusion-rules">Exclusion Rules</a>
+</li>
+<li>
+<a href="#adding-custom-exclusions">Adding Custom Exclusions</a>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -110,8 +130,8 @@
 </div>
 </nav>
 <p>Environment-aware packaging system that prepares website files for deployment by synchronizing, minifying, and archiving the specified environment directory.</p>
-<p><strong>Version:</strong> 1.3<br/>
-<strong>Last Updated:</strong> October 23, 2025</p>
+<p><strong>Version:</strong> 1.4<br/>
+<strong>Last Updated:</strong> November 6, 2025</p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li><a href="#purpose">Purpose</a></li>
@@ -220,19 +240,22 @@ success = package_site(environment='dev', force=False, dry_run=False)
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Environment-aware</strong>: Supports dev, staging, and prod environments</li>
+<li><strong>Configuration-driven exclusions</strong>: Customize excluded files/directories in <code>config/package.toml</code></li>
 <li><strong>Timestamp-aware</strong>: Only copies files when source is newer</li>
 <li><strong>Force mode</strong>: <code>--force</code> flag to package all files</li>
 <li><strong>Dry-run mode</strong>: <code>--dry-run</code> flag to preview changes</li>
 <li><strong>Asset minification</strong>: Optimizes CSS and JavaScript (rcssmin, rjsmin)</li>
 <li><strong>Package metadata</strong>: Creates <code>.metainfo/&lt;env&gt;.txt</code> with environment name and timestamp</li>
 <li><strong>Backup creation</strong>: Timestamped zip archives</li>
-<li><strong>Backup retention</strong>: Keeps 4 most recent packages</li>
+<li><strong>Configurable backup retention</strong>: Max backups set in <code>config/package.toml</code></li>
 <li><strong>Exit codes</strong>: 0 for success, 1 for failure</li>
 <li><strong>Integrated logging</strong>: Uses gzlogging infrastructure</li>
 </ul>
 <p><strong>Note:</strong> For orphaned file removal, use the <code>clean</code> module before running <code>package</code>.</p>
 <h2 id="configuration">Configuration</h2>
-<p>Environment settings from <code>config/pipeline.toml</code>:</p>
+<p>The package module uses two configuration files:</p>
+<h3 id="environment-configuration-configpipelinetoml">Environment Configuration (<code>config/pipeline.toml</code>)</h3>
+<p>Defines environment-specific settings:</p>
 <pre><code class="language-toml">[environments.dev]
 dir = "dev"
 httpd_port = 7190
@@ -247,6 +270,60 @@ description = "Staging environment"
 dir = "prod"
 httpd_port = 7192
 description = "Production environment"
+</code></pre>
+<h3 id="package-configuration-configpackagetoml">Package Configuration (<code>config/package.toml</code>)</h3>
+<p>Defines packaging behavior and exclusions:</p>
+<pre><code class="language-toml">[package]
+# Maximum number of backup packages to retain per environment
+max_backups = 4
+
+[exclusions]
+# Directories to exclude from packaging (relative to src/ directory)
+directories = [
+    "components",      # HTML source components (composition sources)
+    "pages",          # Page templates (composition sources)
+]
+
+# File patterns to exclude (glob patterns)
+files = [
+    "*.psd",          # Photoshop files
+    "*.ai",           # Adobe Illustrator files
+    "*.sketch",       # Sketch files
+    "*.fig",          # Figma files
+    "*.xcf",          # GIMP files
+    "*.pdn",          # Paint.NET files
+    ".DS_Store",      # macOS metadata
+    "Thumbs.db",      # Windows thumbnails
+    "desktop.ini",    # Windows folder settings
+]
+</code></pre>
+<h4 id="exclusion-rules">Exclusion Rules</h4>
+<ul>
+<li><strong>Directories</strong>: Matched at any level in the <code>src/</code> tree<ul>
+<li>Example: <code>"components"</code> excludes <code>src/components/</code> and <code>src/subfolder/components/</code></li>
+</ul>
+</li>
+<li><strong>File Patterns</strong>: Use glob syntax (<code>*</code> = any characters, <code>?</code> = single character)<ul>
+<li>Example: <code>"*.psd"</code> excludes all Photoshop files</li>
+</ul>
+</li>
+<li><strong>Case Sensitivity</strong>: Case-sensitive on Linux/Mac, case-insensitive on Windows</li>
+</ul>
+<h4 id="adding-custom-exclusions">Adding Custom Exclusions</h4>
+<p>To exclude additional files or directories, edit <code>config/package.toml</code>:</p>
+<pre><code class="language-toml">[exclusions]
+directories = [
+    "components",
+    "pages",
+    "drafts",          # Add your custom directory
+    "temp",            # Add another custom directory
+]
+
+files = [
+    "*.psd",
+    "*.bak",           # Add backup files
+    "*.tmp",           # Add temporary files
+]
 </code></pre>
 <h2 id="best-practices">Best Practices</h2>
 <ol>
@@ -289,6 +366,10 @@ description = "Production environment"
 <p>Note: Optional - files copied without minification if unavailable.</p>
 <h3 id="source-directory-not-found">"Source directory not found"</h3>
 <p>Ensure running from project root and <code>src/</code> directory exists.</p>
+<h3 id="package-configuration-error">"Package Configuration Error"</h3>
+<p>Check that <code>config/package.toml</code> exists and is valid TOML. Copy from the template if missing.</p>
+<h3 id="files-unexpectedly-excluded">Files unexpectedly excluded</h3>
+<p>Check <code>config/package.toml</code> exclusions section. Verify directory names and file patterns match your intent.</p>
 <h3 id="no-files-copied">No files copied</h3>
 <p>Normal if all files up-to-date. Use <code>--force</code> to copy regardless.</p>
 <h2 id="exit-codes">Exit Codes</h2>
@@ -326,17 +407,18 @@ description = "Production environment"
 <h2 id="future-enhancements">Future Enhancements</h2>
 <ul>
 <li>[ ] Parallel minification for faster processing</li>
-<li>[ ] Configurable backup retention</li>
 <li>[ ] Additional minification options (source maps)</li>
 <li>[ ] Support for additional asset types (images)</li>
 <li>[ ] Checksum verification</li>
-<li>[ ] Package manifest generation</li>
+<li>[ ] Package manifest generation with exclusion statistics</li>
 <li>[ ] CDN invalidation integration</li>
 <li>[ ] Pre-compression (gzip, brotli)</li>
 <li>[ ] Package comparison tool</li>
+<li>[ ] Configurable exclusion patterns per environment</li>
 </ul>
 <h2 id="related-documentation">Related Documentation</h2>
 <ul>
+<li><a href="../../config/package.toml">Package Configuration</a> - Exclusions and settings</li>
 <li><a href="../generate/README.md">Generate Module</a> - Content generation</li>
 <li><a href="../gzlogging/README.md">GZLogging Module</a> - Logging infrastructure</li>
 <li><a href="../gzconfig/README.md">GZConfig Module</a> - Configuration management</li>
@@ -347,8 +429,8 @@ description = "Production environment"
 <h2 id="authors">Authors</h2>
 <p>superguru, gazorper</p>
 <hr/>
-<p><em>Last updated: October 23, 2025</em><br/>
-<em>Package module version: 1.2</em></p>
+<p><em>Last updated: November 6, 2025</em><br/>
+<em>Package module version: 1.4</em></p>
 <div>
 <br/><br/>
 <p><em>This content was automatically generated from <code>README.md</code></em></p>
