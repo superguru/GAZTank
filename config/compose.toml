@@ -26,7 +26,7 @@
 [[compositions]]
 # Main index.html composition
 output = "src/index.html"
-base = "src/components/index-base.html"
+base = "src/pages/index-base.html"
 description = "Main site HTML with conditional sidebar navigation"
 
 [[compositions.components]]
