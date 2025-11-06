@@ -28,6 +28,7 @@ from .ftp_users import get_ftp_users_config, FTPUserEnvironment, FTPUsersConfig
 from .deploy import get_deploy_config, DeployConfig
 from .site import get_site_config
 from .compose import get_compose_config
+from .package import get_package_config, PackageConfig, PackageExclusions
 
 __all__ = [
     'get_pipeline_config',
@@ -46,6 +47,9 @@ __all__ = [
     'DeployConfig',
     'get_site_config',
     'get_compose_config',
+    'get_package_config',
+    'PackageConfig',
+    'PackageExclusions',
 ]
 
 __version__ = '1.0.0'

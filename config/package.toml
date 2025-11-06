@@ -1,0 +1,43 @@
+# Package Module Configuration
+# ============================
+# Configuration for the website packager module
+#
+# This file defines which files and directories should be excluded
+# from the packaging process when copying from src/ to publish/{env}/
+#
+# Usage:
+#   python -m package -e dev
+#   scripts\package.cmd -e staging
+#   scripts\package.sh -e prod
+
+[package]
+# Maximum number of backup packages to retain per environment
+max_backups = 4
+
+[exclusions]
+# Directories to exclude from packaging (relative to src/ directory)
+# These are source files that should not be copied to the environment
+directories = [
+    "components",       # HTML source components (composition sources)
+    "includes",         # HTML and Markdown includes (not standalone)
+    "pages",            # Page templates (composition sources)
+]
+
+# File patterns to exclude (glob patterns)
+# Add specific file patterns that should never be packaged
+files = [
+    "*.psd",          # Photoshop files
+    "*.ai",           # Adobe Illustrator files
+    "*.sketch",       # Sketch files
+    "*.fig",          # Figma files
+    "*.xcf",          # GIMP files
+    "*.pdn",          # Paint.NET files
+    ".DS_Store",      # macOS metadata
+    "Thumbs.db",      # Windows thumbnails
+    "desktop.ini",    # Windows folder settings
+]
+
+# Notes:
+# - Directory names are matched at any level in the src/ tree
+# - File patterns use glob syntax (* = any characters, ? = single character)
+# - Paths are case-sensitive on Linux/Mac, case-insensitive on Windows

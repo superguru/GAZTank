@@ -32,7 +32,8 @@ import zipfile
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from utils.gzlogging import get_logging_context
-from utils.gzconfig import get_pipeline_config, PipelineEnvironment
+from utils.gzconfig import get_pipeline_config, PipelineEnvironment, get_package_config, PackageConfig
+from fnmatch import fnmatch
 
 # Try to import minification libraries
 try:
@@ -60,7 +61,7 @@ def backup_previous_package(
     env_dir: Path,
     packages_dir: Path,
     environment: str,
-    max_backups: int = 3,
+    max_backups: int,
     dry_run: bool = False
 ) -> Optional[Path]:
     """
@@ -418,6 +419,21 @@ def package_site(environment: str, force: bool = False, dry_run: bool = False) -
             log.err(error_msg)
         return False
     
+    # Load package configuration
+    try:
+        pkg_config: PackageConfig = get_package_config()
+        if log:
+            log.dbg("Package configuration loaded successfully")
+            log.dbg(f"Max backups: {pkg_config.max_backups}")
+            log.dbg(f"Excluded directories: {pkg_config.exclusions.directories}")
+            log.dbg(f"Excluded file patterns: {pkg_config.exclusions.files}")
+    except (FileNotFoundError, ValueError) as e:
+        error_msg = f"Package Configuration Error: {e}"
+        print(f"❌ {error_msg}")
+        if log:
+            log.err(error_msg)
+        return False
+    
     src_dir = project_root / 'src'
     publish_dir = project_root / 'publish'
     packages_dir = publish_dir / 'packages'
@@ -467,13 +483,37 @@ def package_site(environment: str, force: bool = False, dry_run: bool = False) -
     
     copied_count = 0
     skipped_count = 0
+    excluded_count = 0
     
     for item in src_dir.rglob('*'):
         if item.is_file():
             relative_path = item.relative_to(src_dir)
             
-            # Skip files in components directory (composition source files)
-            if str(relative_path).startswith('components' + str(Path('/')) ) or str(relative_path).startswith('components\\'):
+            # Check if file should be excluded based on configuration
+            should_exclude = False
+            
+            # Check excluded directories
+            for excluded_dir in pkg_config.exclusions.directories:
+                if str(relative_path).startswith(excluded_dir + str(Path('/'))) or \
+                   str(relative_path).startswith(excluded_dir + '\\'):
+                    should_exclude = True
+                    excluded_count += 1
+                    if log:
+                        log.dbg(f"Excluded (directory): {relative_path}")
+                    break
+            
+            # Check excluded file patterns
+            if not should_exclude:
+                for pattern in pkg_config.exclusions.files:
+                    if fnmatch(item.name, pattern):
+                        should_exclude = True
+                        excluded_count += 1
+                        if log:
+                            log.dbg(f"Excluded (pattern '{pattern}'): {relative_path}")
+                        break
+            
+            # Skip excluded files
+            if should_exclude:
                 continue
             
             target_path = env_dir / relative_path
@@ -507,13 +547,15 @@ def package_site(environment: str, force: bool = False, dry_run: bool = False) -
     if dry_run:
         print(f"  ℹ️  [DRY RUN] Would copy {copied_count} modified/new files")
         print(f"  ℹ️  [DRY RUN] Would skip {skipped_count} unchanged files")
+        print(f"  ℹ️  [DRY RUN] Excluded {excluded_count} files (per config)")
         if log:
-            log.inf(f"[DRY RUN] Would copy {copied_count} modified/new files, skip {skipped_count} unchanged files")
+            log.inf(f"[DRY RUN] Would copy {copied_count}, skip {skipped_count}, excluded {excluded_count}")
     else:
         print(f"  ✓ Copied {copied_count} modified/new files")
         print(f"  ✓ Skipped {skipped_count} unchanged files")
+        print(f"  ✓ Excluded {excluded_count} files (per config)")
         if log:
-            log.inf(f"Copied {copied_count} modified/new files, skipped {skipped_count} unchanged files")
+            log.inf(f"Copied {copied_count}, skipped {skipped_count}, excluded {excluded_count}")
     
     # Step 2.5: Minify CSS and JavaScript files
     minify_assets(env_dir, dry_run)
@@ -526,7 +568,13 @@ def package_site(environment: str, force: bool = False, dry_run: bool = False) -
     if log:
         log.inf("Creating package archive")
     
-    backup_path = backup_previous_package(env_dir, packages_dir, environment, max_backups=4, dry_run=dry_run)
+    backup_path = backup_previous_package(
+        env_dir, 
+        packages_dir, 
+        environment, 
+        max_backups=pkg_config.max_backups, 
+        dry_run=dry_run
+    )
     
     print("\n" + "=" * 60)
     if dry_run:

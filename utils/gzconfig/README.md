@@ -62,6 +62,11 @@ GZConfig provides centralized configuration management for all GAZTank modules a
   - FTPS security settings
   - Upload subdirectory formatting with timestamps
   - Target directory paths
+- **Package Configuration** (`package.toml`) - Website packaging settings
+  - Maximum backup retention count
+  - Directory exclusion rules (e.g., components/, pages/)
+  - File pattern exclusions (e.g., *.psd, .DS_Store, Thumbs.db)
+  - Glob pattern support for flexible filtering
 - **Generate Configuration** (`generate.toml`) - Content generation rules
 - **Tools Configuration** (`tools.toml`) - Tool-specific settings (logging, etc.)
 - **FTP Users Configuration** (`ftp_users.toml`) - FTP server user accounts
@@ -82,12 +87,13 @@ GAZTank Build Pipeline:
   ├─ gzserve → uses gzconfig (environment directories, ports)
   ├─ setup → uses gzconfig (environment directories)
   ├─ sitemap → uses gzconfig (environment directories)
+  ├─ package → uses gzconfig (environment directories, exclusions)
   ├─ generate → will use gzconfig (environment directories)
-  ├─ package → will use gzconfig (environment directories)
   └─ deploy → will use gzconfig (environment directories)
 
 All tools read from:
   config/pipeline.toml
+  config/package.toml
 ```
 
 ### Purpose in Pipeline:
@@ -242,6 +248,7 @@ gzconfig/
 ├── __init__.py          # Module exports
 ├── pipeline.py          # Pipeline configuration (environments, ports, directories)
 ├── deploy.py            # Deploy configuration (FTP/FTPS settings)
+├── package.py           # Package configuration (exclusions, backups)
 ├── generate.py          # Generate configuration (content generation rules)
 ├── tools.py             # Tools configuration (tool-specific settings)
 ├── ftp_users.py         # FTP users configuration (FTP server accounts)
@@ -504,6 +511,44 @@ user1 = get_ftp_users_config('dev')
 user2 = get_ftp_users_config('dev')  # Automatically reloaded if file changed
 ```
 
+#### `get_package_config()`
+
+Load and access package module configuration.
+
+##### Parameters:
+- None
+
+##### Returns:
+- `PackageConfig` object with packaging settings
+
+##### Raises:
+- `FileNotFoundError`: If `package.toml` doesn't exist
+- `ValueError`: If required fields are missing or validation fails
+
+##### Note:
+Configuration is read fresh each time (no caching).
+
+##### Examples:
+```python
+# Get package configuration
+config = get_package_config()
+
+# Access backup settings
+print(f"Max backups: {config.max_backups}")
+
+# Access exclusion rules
+print(f"Excluded directories: {config.exclusions.directories}")
+print(f"Excluded file patterns: {config.exclusions.files}")
+
+# Use in packaging logic
+for directory in config.exclusions.directories:
+    print(f"Skipping directory: {directory}")
+
+for pattern in config.exclusions.files:
+    if fnmatch.fnmatch(filename, pattern):
+        print(f"Excluding file: {filename} (matches {pattern})")
+```
+
 #### `FTPUserEnvironment`
 
 FTP user configuration for a specific environment. Immutable dataclass.
@@ -553,6 +598,68 @@ print(dev_user.username)  # devup
 # Iterate through all users
 for env_name, user in config.environments.items():
     print(f"{env_name}: {user.username} -> {user.home_directory}")
+```
+
+#### `PackageConfig`
+
+Package module configuration from package.toml. Immutable dataclass.
+
+##### Properties:
+- `max_backups` (int): Maximum number of package backups to retain (default: 4, minimum: 1)
+- `exclusions` (PackageExclusions): File and directory exclusion rules
+
+##### Validation:
+- `max_backups` must be a positive integer (>= 1)
+
+##### Example:
+```python
+config = get_package_config()
+
+print(f"Maximum backups: {config.max_backups}")
+print(f"Excluded directories: {config.exclusions.directories}")
+print(f"Excluded file patterns: {config.exclusions.files}")
+
+# Use in rotation logic
+if backup_count > config.max_backups:
+    remove_old_backups()
+```
+
+#### `PackageExclusions`
+
+Package exclusion rules. Immutable dataclass.
+
+##### Properties:
+- `directories` (list[str]): List of directory names to exclude from packaging (e.g., ['components', 'pages'])
+- `files` (list[str]): List of file glob patterns to exclude (e.g., ['*.psd', '*.pdn', '.DS_Store'])
+
+##### Pattern Matching:
+- Uses Python `fnmatch` module for glob pattern matching
+- Supports wildcards: `*` (any characters), `?` (single character)
+- Patterns are case-sensitive on Unix-like systems, case-insensitive on Windows
+
+##### Example:
+```python
+import fnmatch
+from pathlib import Path
+
+config = get_package_config()
+
+# Check if directory should be excluded
+def is_excluded_directory(dir_name: str) -> bool:
+    return dir_name in config.exclusions.directories
+
+# Check if file should be excluded
+def is_excluded_file(file_path: Path) -> bool:
+    filename = file_path.name
+    return any(fnmatch.fnmatch(filename, pattern) 
+               for pattern in config.exclusions.files)
+
+# Usage
+if is_excluded_directory("components"):
+    print("Skipping components/ directory")
+
+if is_excluded_file(Path("design.psd")):
+    print("Excluding design.psd (matches *.psd)")
 ```
 
 ## Configuration Files
@@ -669,6 +776,68 @@ upload_subdir_postfix_len = 5           # Random alphanumeric postfix (1-10)
 ```
 
 **Note:** Subdirectory names are prefixed with a dot (.) to distinguish deployment uploads from other content.
+
+### Package Configuration (`config/package.toml`)
+
+**Location:** `config/package.toml` (automatically located from project root)
+
+**Purpose:** Defines packaging behavior, exclusion rules, and backup retention for the package module.
+
+#### Structure:
+```toml
+# Package Configuration
+# Controls website packaging behavior and exclusions
+
+[package]
+# Maximum number of package backups to retain
+max_backups = 4
+
+[exclusions]
+# Directories to exclude from packaging (by name)
+directories = [
+    "components",  # Source component files (not needed in package)
+    "pages"        # Base page templates (not needed in package)
+]
+
+# File patterns to exclude (glob patterns)
+files = [
+    "*.psd",       # Photoshop files
+    "*.pdn",       # Paint.NET files
+    ".DS_Store",   # macOS metadata
+    "Thumbs.db",   # Windows thumbnails
+    "desktop.ini", # Windows folder config
+    "*.tmp",       # Temporary files
+    "*.bak"        # Backup files
+]
+```
+
+#### Field Descriptions:
+- `max_backups` (int): Maximum number of backup packages to keep. Older backups are automatically deleted. Default: 4, Minimum: 1
+- `exclusions.directories` (list[str]): Directory names to exclude from packaging (exact match)
+- `exclusions.files` (list[str]): File patterns to exclude using glob syntax (supports `*`, `?` wildcards)
+
+#### Glob Pattern Examples:
+```python
+# Pattern matching examples
+"*.psd"        # Matches: design.psd, photo.psd
+"test_*.py"    # Matches: test_main.py, test_utils.py
+"file?.txt"    # Matches: file1.txt, fileA.txt (single character)
+".*"           # Matches: .gitignore, .DS_Store (hidden files)
+```
+
+#### Setup:
+1. Create `config/package.toml` or copy from example
+2. Customize exclusions based on your project needs
+3. Adjust `max_backups` based on available disk space
+
+#### Best Practices:
+- **Exclude source files**: Components, templates, design files that aren't needed in final package
+- **Exclude system files**: OS-specific files (`.DS_Store`, `Thumbs.db`, `desktop.ini`)
+- **Exclude work files**: Temporary files, backups, cache files
+- **Keep backups reasonable**: Set `max_backups` based on disk space and rollback needs
+- **Use glob patterns**: Leverage wildcards for flexible file matching
+
+**Note:** The package module automatically uses these exclusions when copying files to the package directory.
 
 ### FTP Users Configuration (`config/ftp_users.toml`)
 
@@ -832,6 +1001,14 @@ try:
 except ValueError as e:
     print(e)
     # "upload_subdir_postfix_len must be between 1 and 10, got 20"
+
+# Invalid max_backups
+try:
+    # If package.toml has max_backups = -1
+    config = get_package_config()
+except ValueError as e:
+    print(e)
+    # "max_backups must be a positive integer, got -1"
 ```
 
 ## Migration Guide
@@ -1475,8 +1652,10 @@ See [GitHub Issues](https://github.com/gazorper/GAZTank/issues) for tracking and
 - **[gzserve](../gzserve/README.md)** - Development server (uses gzconfig)
 - **[setup](../setup/README.md)** - Site setup wizard (uses gzconfig)
 - **[sitemap](../sitemap/README.md)** - Sitemap generator (uses gzconfig)
+- **[package](../package/README.md)** - Website packager (uses gzconfig)
 - **[generate](../generate/README.md)** - Content generator (will use gzconfig)
 - **Python tomllib:** https://docs.python.org/3/library/tomllib.html
+- **Python fnmatch:** https://docs.python.org/3/library/fnmatch.html
 - **TOML specification:** https://toml.io/
 
 ## License

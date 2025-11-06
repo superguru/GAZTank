@@ -2,8 +2,8 @@
 
 Environment-aware packaging system that prepares website files for deployment by synchronizing, minifying, and archiving the specified environment directory.
 
-**Version:** 1.3  
-**Last Updated:** October 23, 2025
+**Version:** 1.4  
+**Last Updated:** November 6, 2025
 
 ## Table of Contents
 
@@ -137,13 +137,14 @@ package/
 ## Features
 
 - **Environment-aware**: Supports dev, staging, and prod environments
+- **Configuration-driven exclusions**: Customize excluded files/directories in `config/package.toml`
 - **Timestamp-aware**: Only copies files when source is newer
 - **Force mode**: `--force` flag to package all files
 - **Dry-run mode**: `--dry-run` flag to preview changes
 - **Asset minification**: Optimizes CSS and JavaScript (rcssmin, rjsmin)
 - **Package metadata**: Creates `.metainfo/<env>.txt` with environment name and timestamp
 - **Backup creation**: Timestamped zip archives
-- **Backup retention**: Keeps 4 most recent packages
+- **Configurable backup retention**: Max backups set in `config/package.toml`
 - **Exit codes**: 0 for success, 1 for failure
 - **Integrated logging**: Uses gzlogging infrastructure
 
@@ -151,7 +152,11 @@ package/
 
 ## Configuration
 
-Environment settings from `config/pipeline.toml`:
+The package module uses two configuration files:
+
+### Environment Configuration (`config/pipeline.toml`)
+
+Defines environment-specific settings:
 
 ```toml
 [environments.dev]
@@ -168,6 +173,64 @@ description = "Staging environment"
 dir = "prod"
 httpd_port = 7192
 description = "Production environment"
+```
+
+### Package Configuration (`config/package.toml`)
+
+Defines packaging behavior and exclusions:
+
+```toml
+[package]
+# Maximum number of backup packages to retain per environment
+max_backups = 4
+
+[exclusions]
+# Directories to exclude from packaging (relative to src/ directory)
+directories = [
+    "components",      # HTML source components (composition sources)
+    "pages",          # Page templates (composition sources)
+]
+
+# File patterns to exclude (glob patterns)
+files = [
+    "*.psd",          # Photoshop files
+    "*.ai",           # Adobe Illustrator files
+    "*.sketch",       # Sketch files
+    "*.fig",          # Figma files
+    "*.xcf",          # GIMP files
+    "*.pdn",          # Paint.NET files
+    ".DS_Store",      # macOS metadata
+    "Thumbs.db",      # Windows thumbnails
+    "desktop.ini",    # Windows folder settings
+]
+```
+
+#### Exclusion Rules
+
+- **Directories**: Matched at any level in the `src/` tree
+  - Example: `"components"` excludes `src/components/` and `src/subfolder/components/`
+- **File Patterns**: Use glob syntax (`*` = any characters, `?` = single character)
+  - Example: `"*.psd"` excludes all Photoshop files
+- **Case Sensitivity**: Case-sensitive on Linux/Mac, case-insensitive on Windows
+
+#### Adding Custom Exclusions
+
+To exclude additional files or directories, edit `config/package.toml`:
+
+```toml
+[exclusions]
+directories = [
+    "components",
+    "pages",
+    "drafts",          # Add your custom directory
+    "temp",            # Add another custom directory
+]
+
+files = [
+    "*.psd",
+    "*.bak",           # Add backup files
+    "*.tmp",           # Add temporary files
+]
 ```
 
 ## Best Practices
@@ -229,6 +292,14 @@ Note: Optional - files copied without minification if unavailable.
 
 Ensure running from project root and `src/` directory exists.
 
+### "Package Configuration Error"
+
+Check that `config/package.toml` exists and is valid TOML. Copy from the template if missing.
+
+### Files unexpectedly excluded
+
+Check `config/package.toml` exclusions section. Verify directory names and file patterns match your intent.
+
 ### No files copied
 
 Normal if all files up-to-date. Use `--force` to copy regardless.
@@ -249,17 +320,18 @@ Normal if all files up-to-date. Use `--force` to copy regardless.
 ## Future Enhancements
 
 - [ ] Parallel minification for faster processing
-- [ ] Configurable backup retention
 - [ ] Additional minification options (source maps)
 - [ ] Support for additional asset types (images)
 - [ ] Checksum verification
-- [ ] Package manifest generation
+- [ ] Package manifest generation with exclusion statistics
 - [ ] CDN invalidation integration
 - [ ] Pre-compression (gzip, brotli)
 - [ ] Package comparison tool
+- [ ] Configurable exclusion patterns per environment
 
 ## Related Documentation
 
+- [Package Configuration](../../config/package.toml) - Exclusions and settings
 - [Generate Module](../generate/README.md) - Content generation
 - [GZLogging Module](../gzlogging/README.md) - Logging infrastructure
 - [GZConfig Module](../gzconfig/README.md) - Configuration management
@@ -275,5 +347,5 @@ superguru, gazorper
 
 ---
 
-*Last updated: October 23, 2025*  
-*Package module version: 1.2*
+*Last updated: November 6, 2025*  
+*Package module version: 1.4*
